@@ -63,6 +63,18 @@ class TaskModelTests(unittest.TestCase):
         )
         self.assertIn("Dependencies", str(plan))
 
+    def test_task_plan_str_includes_generated_at_when_set(self) -> None:
+        plan = TaskPlan(
+            project_name="p",
+            summary="s",
+            tasks=[],
+            generated_at="2026-05-26 10:00 UTC",
+            model_used="test-model",
+        )
+        text = str(plan)
+        self.assertIn("Generated: 2026-05-26 10:00 UTC", text)
+        self.assertIn("Model: test-model", text)
+
     def test_task_pydantic_validation_rejects_bad_priority(self) -> None:
         from pydantic import ValidationError
 

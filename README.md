@@ -1,5 +1,20 @@
 # lane
 
+
+## AI Cost Tracking
+
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.18-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.2h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+
+- 🤖 **LLM usage:** $0.1832 (4 commits)
+- 👤 **Human dev:** ~$216 (2.2h @ $100/h, 30min dedup)
+
+Generated on 2026-05-26 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+
+---
+
+
+
 `lane` is a Python package that inspects the current project state, reads recent git history, adds a user question for an LLM, and returns a concrete plan for the next 10 engineering tasks.
 
 ## What is included
@@ -45,6 +60,55 @@ Validate a saved plan file:
 lane validate plan.json
 ```
 
+## CLI Reference
+
+### `lane plan`
+Generate a 10-task engineering plan for a repository.
+
+**Usage:**
+```bash
+lane plan [REPO_PATH] [OPTIONS]
+```
+
+**Options:**
+- `--extra-context, -e TEXT`: Additional prompt context for the LLM
+- `--model, -m TEXT`: Override the LLM model name
+- `--base-url TEXT`: Override the API base URL
+- `--json`: Output plan as JSON instead of formatted text
+- `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
+
+### `lane print-context`
+Print the assembled project and git context without calling the LLM.
+
+**Usage:**
+```bash
+lane print-context [REPO_PATH] [OPTIONS]
+```
+
+**Options:**
+- `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
+- `--raw`: Print raw text instead of Rich panels
+
+### `lane print-prompt`
+Print the full prompt that would be sent to the LLM.
+
+**Usage:**
+```bash
+lane print-prompt [REPO_PATH] [OPTIONS]
+```
+
+**Options:**
+- `--extra-context, -e TEXT`: Additional prompt context for the LLM
+- `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
+
+### `lane validate`
+Validate a saved JSON plan file against the TaskPlan schema.
+
+**Usage:**
+```bash
+lane validate PLAN_FILE
+```
+
 ## Configuration
 
 All settings are read from environment variables:
@@ -68,9 +132,43 @@ All settings are read from environment variables:
 - `httpx>=0.27`
 - `tenacity>=8`
 
+## Examples
+
+### Generate a plan for a Python project
+```bash
+export OPENROUTER_API_KEY="your-api-key"
+lane plan /path/to/project --extra-context "Focus on improving test coverage"
+```
+
+### Use a custom model
+```bash
+lane plan . --model "openrouter/anthropic/claude-3.5-sonnet"
+```
+
+### Inspect what data is sent to the LLM
+```bash
+lane print-prompt . --extra-context "Review security issues"
+```
+
+### Generate a plan and save as JSON
+```bash
+lane plan . --json > plan.json
+lane validate plan.json
+```
+
+### Analyze a project with limited git history
+```bash
+lane plan . --max-commits 10
+```
+
 ## Development
 
 ```bash
 pip install -e ".[dev]"
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
+
+
+## License
+
+Licensed under Apache-2.0.

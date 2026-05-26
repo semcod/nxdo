@@ -1,6 +1,7 @@
 import unittest
+from unittest.mock import MagicMock, patch
 
-from lane.llm_client import build_user_prompt, parse_task_plan_response
+from lane.llm_client import build_user_prompt, parse_task_plan_response, OpenAICompatibleLLMClient
 
 
 class LLMClientTests(unittest.TestCase):
@@ -55,6 +56,47 @@ class LLMClientTests(unittest.TestCase):
         })
         with self.assertRaises(ValueError):
             parse_task_plan_response(raw, "p", "m")
+
+    @patch("lane.llm_client.OpenAICompatProvider")
+    def test_openai_llm_client_initialization(self, mock_provider: MagicMock) -> None:
+        mock_provider_instance = MagicMock()
+        mock_provider.return_value = mock_provider_instance
+        mock_provider_instance.api_key = "test-key"
+        mock_provider_instance.model = "test-model"
+        mock_provider_instance.base_url = "http://test"
+
+        client = OpenAICompatibleLLMClient(
+            api_key="test-key",
+            model="test-model",
+            base_url="http://test",
+        )
+
+        self.assertEqual(client.api_key, "test-key")
+        self.assertEqual(client.model, "test-model")
+        self.assertEqual(client.base_url, "http://test")
+
+    @patch("lane.llm_client.OpenAICompatProvider")
+    def test_openai_llm_client_generate_task_plan(self, mock_provider: MagicMock) -> None:
+        from lane.models import TaskPlan
+
+        mock_provider_instance = MagicMock()
+        mock_provider.return_value = mock_provider_instance
+        mock_provider_instance.api_key = "test-key"
+        mock_provider_instance.model = "test-model"
+        mock_provider_instance.base_url = "http://test"
+
+        mock_plan = TaskPlan(
+            project_name="test",
+            summary="test",
+            tasks=[],
+        )
+        mock_provider_instance.generate_plan.return_value = mock_plan
+
+        client = OpenAICompatibleLLMClient(api_key="test-key")
+        result = client.generate_task_plan("project", "git", "test", "extra")
+
+        self.assertEqual(result.project_name, "test")
+        mock_provider_instance.generate_plan.assert_called_once()
 
 
 if __name__ == "__main__":

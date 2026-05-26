@@ -2,7 +2,14 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from lane.project_analyzer import analyze_project, _parse_pyproject, _readme_summary
+from lane.project_analyzer import (
+    analyze_project,
+    _parse_pyproject,
+    _readme_summary,
+    _parse_package_json,
+    _parse_cargo,
+    _detect_stack,
+)
 
 
 class ProjectAnalyzerTests(unittest.TestCase):
@@ -69,6 +76,104 @@ class ProjectAnalyzerTests(unittest.TestCase):
             snapshot = analyze_project(root)
 
         self.assertEqual(snapshot.description, "Demo project")
+
+    def test_parse_package_json(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            pkg_file = root / "package.json"
+            pkg_file.write_text('{"name": "myapp", "description": "A JS app"}', encoding="utf-8")
+            name, desc = _parse_package_json(pkg_file, "fallback")
+        self.assertEqual(name, "myapp")
+        self.assertEqual(desc, "A JS app")
+
+    def test_parse_package_json_invalid(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            pkg_file = root / "package.json"
+            pkg_file.write_text("{invalid json", encoding="utf-8")
+            name, desc = _parse_package_json(pkg_file, "fallback")
+        self.assertEqual(name, "fallback")
+        self.assertEqual(desc, "")
+
+    def test_parse_cargo_toml(self) -> None:
+        text = 'name = "mycrate"\ndescription = "A Rust crate"'
+        name, desc = _parse_cargo(text, "fallback")
+        self.assertEqual(name, "mycrate")
+        self.assertEqual(desc, "A Rust crate")
+
+    def test_detect_stack_python(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "pyproject.toml").write_text("[project]\n", encoding="utf-8")
+            stack = _detect_stack(root)
+        self.assertIn("Python", stack)
+
+    def test_detect_stack_javascript(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "package.json").write_text("{}", encoding="utf-8")
+            stack = _detect_stack(root)
+        self.assertIn("JavaScript/TypeScript", stack)
+
+    def test_detect_stack_rust(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "Cargo.toml").write_text("", encoding="utf-8")
+            stack = _detect_stack(root)
+        self.assertIn("Rust", stack)
+
+    def test_detect_stack_by_extension(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "src").mkdir()
+            (root / "src" / "main.py").write_text("", encoding="utf-8")
+            stack = _detect_stack(root)
+        self.assertIn("Python", stack)
+
+    def test_analyze_project_handles_oserror_on_file_read(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "README.md").write_text("# test\n", encoding="utf-8")
+            # Create a file that can't be read (simulate by making it unreadable after creation)
+            unreadable = root / "pyproject.toml"
+            unreadable.write_text("[project]\n", encoding="utf-8")
+            # On Unix, make it unreadable
+            try:
+                unreadable.chmod(0o000)
+                snapshot = analyze_project(root)
+                # Should still succeed, just skip the unreadable file
+                self.assertIsNotNone(snapshot)
+            finally:
+                # Restore permissions for cleanup
+                try:
+                    unreadable.chmod(0o644)
+                except:
+                    pass
+
+    def test_analyze_project_truncates_large_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            large_content = "x" * 4000  # Larger than MAX_FILE_CHARS (3000)
+            (root / "README.md").write_text("# test\n", encoding="utf-8")
+            (root / "CHANGELOG.md").write_text(large_content, encoding="utf-8")
+            snapshot = analyze_project(root)
+            self.assertIn("truncated", snapshot.file_contents["CHANGELOG.md"])
+
+    def test_analyze_project_uses_package_json_parser(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "package.json").write_text('{"name": "jsapp", "description": "JS app"}', encoding="utf-8")
+            snapshot = analyze_project(root)
+            self.assertEqual(snapshot.name, "jsapp")
+            self.assertEqual(snapshot.description, "JS app")
+
+    def test_analyze_project_uses_cargo_parser(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "Cargo.toml").write_text('name = "rustcrate"\ndescription = "Rust crate"', encoding="utf-8")
+            snapshot = analyze_project(root)
+            self.assertEqual(snapshot.name, "rustcrate")
+            self.assertEqual(snapshot.description, "Rust crate")
 
 
 if __name__ == "__main__":

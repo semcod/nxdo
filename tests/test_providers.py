@@ -73,6 +73,61 @@ class OpenAICompatProviderTests(unittest.TestCase):
         self.assertEqual(plan.project_name, "demo")
         self.assertEqual(len(plan.tasks), 1)
 
+    @patch("lane.providers.openai_compat.httpx.Client")
+    def test_call_api_constructs_correct_payload(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.raise_for_status.return_value = None
+        mock_response.json.return_value = {
+            "choices": [{"message": {"content": _VALID_RAW}}]
+        }
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test", model="test-model")
+        result = provider._call_api("user prompt")
+
+        mock_client.post.assert_called_once()
+        call_args = mock_client.post.call_args
+        self.assertIn("json", call_args.kwargs)
+        payload = call_args.kwargs["json"]
+        self.assertEqual(payload["model"], "test-model")
+        self.assertEqual(len(payload["messages"]), 2)
+        self.assertEqual(payload["messages"][1]["content"], "user prompt")
+
+    @patch("lane.providers.openai_compat.httpx.Client")
+    def test_call_api_sets_correct_headers(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.raise_for_status.return_value = None
+        mock_response.json.return_value = {
+            "choices": [{"message": {"content": _VALID_RAW}}]
+        }
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test", app_name="test-app")
+        provider._call_api("prompt")
+
+        call_args = mock_client.post.call_args
+        headers = call_args.kwargs["headers"]
+        self.assertEqual(headers["Authorization"], "Bearer sk-test")
+        self.assertEqual(headers["X-Title"], "test-app")
+
+    @patch("lane.providers.openai_compat.httpx.Client")
+    def test_call_api_handles_unexpected_response(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.raise_for_status.return_value = None
+        mock_response.json.return_value = {"invalid": "structure"}
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test")
+        with self.assertRaises(ValueError) as ctx:
+            provider._call_api("prompt")
+        self.assertIn("Unexpected LLM response", str(ctx.exception))
+
 
 if __name__ == "__main__":
     unittest.main()

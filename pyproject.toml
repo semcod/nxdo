@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lane"
-version = "0.1.0"
+version = "0.2.1"
 description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
-authors = [{ name = "semcod" }]
+license = "Apache-2.0"
+authors = [{ name = "semcod" }, {name = "Tom Sapletta",email = "tom@sapletta.com"}]
 keywords = ["planning", "llm", "git", "roadmap", "tasks"]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -17,7 +17,6 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "License :: OSI Approved :: Apache Software License",
   "Topic :: Software Development",
 ]
 dependencies = [
@@ -35,7 +34,15 @@ dev = [
   "pytest-mock",
   "ruff",
   "mypy",
+  "goal>=2.1.0",
+  "costs>=0.1.20",
+  "pfix>=0.1.60",
 ]
+
+[project.urls]
+Homepage = "https://github.com/semcod/lane"
+Repository = "https://github.com/semcod/lane"
+Issues = "https://github.com/semcod/lane/issues"
 
 [project.scripts]
 lane = "lane.cli:app_entry"
@@ -55,3 +62,32 @@ python_version = "3.10"
 strict = false
 ignore_missing_imports = true
 
+
+[tool.pfix]
+# Self-healing Python configuration
+model = "openrouter/qwen/qwen3-coder-next"
+auto_apply = true
+auto_install_deps = true
+auto_restart = false
+max_retries = 3
+create_backups = false
+git_auto_commit = false
+
+[tool.pfix.runtime_todo]
+enabled = true
+todo_file = "TODO.md"
+min_severity = "low"
+deduplicate = true
+
+[tool.costs]
+# AI Cost tracking configuration
+badge = true
+update_readme = true
+readme_path = "README.md"
+default_model = "openrouter/qwen/qwen3-coder-next"
+analysis_mode = "byok"
+full_history = true
+max_commits = 500
+
+# Cost thresholds for badge colors (USD)
+badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }
