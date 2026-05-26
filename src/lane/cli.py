@@ -15,6 +15,7 @@ from .output import render_context, render_plan, render_plan_json
 from .planner import generate_next_tasks
 from .project_analyzer import analyze_project
 from .providers import OpenAICompatProvider
+from .ticket_generator import export_to_planfile_yaml, sync_to_todo_md, task_plan_to_tickets
 
 app = typer.Typer(
     name="lane",
@@ -107,6 +108,61 @@ def cmd_validate(
         raise typer.Exit(code=1)
 
     console.print(f"[bold green]✓[/bold green] Plan '{plan.project_name}' is valid ({len(plan.tasks)} tasks).")
+
+
+@app.command("tickets")
+def cmd_tickets(
+    repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
+    extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
+    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
+    base_url: Optional[str] = typer.Option(None, "--base-url", help="Override the API base URL."),
+    max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
+    sync_todo: bool = typer.Option(False, "--sync-todo", help="Sync tasks to TODO.md checkboxes."),
+    export_yaml: bool = typer.Option(False, "--export-yaml", help="Export to planfile YAML format."),
+    output_path: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
+) -> None:
+    """Generate tickets from a plan using planfile integration."""
+    cfg = get_settings()
+    if max_commits != 30:
+        cfg.max_commits = max_commits  # type: ignore[misc]
+
+    provider = OpenAICompatProvider(model=model, base_url=base_url, settings=cfg)
+
+    try:
+        plan = generate_next_tasks(
+            repo_path=repo.resolve(),
+            extra_context=extra_context,
+            provider=provider,
+            settings=cfg,
+        )
+    except ValueError as exc:
+        err_console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(code=1)
+
+    # Generate tickets from plan
+    tickets = task_plan_to_tickets(plan)
+    console.print(f"[green]✓[/green] Generated {len(tickets)} tickets from plan")
+
+    # Sync to TODO.md if requested
+    if sync_todo:
+        report = sync_to_todo_md(plan, repo.resolve())
+        if report.get("enabled"):
+            console.print(f"[green]✓[/green] Synced {report.get('updated', 0)} tasks to TODO.md")
+        else:
+            console.print("[yellow]⚠[/yellow] TODO.md sync not enabled or planfile not available")
+
+    # Export to planfile YAML if requested
+    if export_yaml:
+        output = output_path or repo.resolve() / "strategy.yaml"
+        export_to_planfile_yaml(plan, output)
+
+    # Display tickets
+    for ticket in tickets:
+        priority = ticket.get("priority", "medium")
+        priority_emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}.get(priority, "⚪")
+        console.print(f"{priority_emoji} [{ticket['id']}] {ticket['title']}")
+        if ticket.get("description"):
+            console.print(f"    {ticket['description'][:100]}...")
 
 
 def app_entry() -> None:

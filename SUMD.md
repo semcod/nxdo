@@ -20,7 +20,7 @@ Generate the next 10 project tasks from project state, git history and an LLM pr
 ## Metadata
 
 - **name**: `lane`
-- **version**: `0.2.5`
+- **version**: `0.2.6`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: lane;
-  version: 0.2.5;
+  version: 0.2.6;
 }
 
 dependencies {
@@ -138,7 +138,7 @@ CONFIG[2]{key, value}:
 ```yaml
 project:
   name: lane
-  version: 0.2.5
+  version: 0.2.6
   env: local
 ```
 
@@ -357,7 +357,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('lane', '0.2.5', 'python').
+project_metadata('lane', '0.2.6', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -602,62 +602,62 @@ sumd_interface('cli', '').
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
+| `cmd_plan` *(in src.lane.cli)* | 4 | 0 | 16 | **16** |
 | `_build_tree` *(in src.lane.project_analyzer)* | 8 | 2 | 14 | **16** |
 | `_create_task_from_dict` *(in src.lane.providers.openai_compat)* | 2 | 1 | 15 | **16** |
-| `cmd_plan` *(in src.lane.cli)* | 4 | 0 | 16 | **16** |
 | `cmd_print_context` *(in src.lane.cli)* | 2 | 0 | 14 | **14** |
 | `cmd_print_prompt` *(in src.lane.cli)* | 1 | 0 | 13 | **13** |
 | `read_git_context` *(in src.lane.git_reader)* | 2 | 4 | 8 | **12** |
+| `generate_next_tasks` *(in src.lane.planner)* | 3 | 2 | 8 | **10** |
 | `_parse_response` *(in src.lane.providers.openai_compat)* | 1 | 2 | 8 | **10** |
-| `_parse_commits` *(in src.lane.git_reader)* | 7 | 1 | 9 | **10** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/lane
-# generated in 0.02s
+# generated in 0.03s
 # nodes: 48 | edges: 53 | modules: 7
 # CC̄=2.6
 
 HUBS[20]:
+  src.lane.cli.cmd_plan
+    CC=4  in:0  out:16  total:16
   src.lane.project_analyzer._build_tree
     CC=8  in:2  out:14  total:16
   src.lane.providers.openai_compat._create_task_from_dict
     CC=2  in:1  out:15  total:16
-  src.lane.cli.cmd_plan
-    CC=4  in:0  out:16  total:16
   src.lane.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
   src.lane.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
   src.lane.git_reader.read_git_context
     CC=2  in:4  out:8  total:12
+  src.lane.planner.generate_next_tasks
+    CC=3  in:2  out:8  total:10
   src.lane.providers.openai_compat._parse_response
     CC=1  in:2  out:8  total:10
   src.lane.git_reader._parse_commits
     CC=7  in:1  out:9  total:10
-  src.lane.planner.generate_next_tasks
-    CC=3  in:2  out:8  total:10
   src.lane.project_analyzer.analyze_project
     CC=1  in:4  out:5  total:9
   src.lane.git_reader._run
     CC=3  in:5  out:2  total:7
-  src.lane.providers.openai_compat._parse_json_response
-    CC=3  in:1  out:5  total:6
-  src.lane.project_analyzer._resolve_name_and_description
-    CC=3  in:1  out:5  total:6
   src.lane.project_analyzer._parse_pyproject_tomllib
     CC=4  in:1  out:5  total:6
-  src.lane.config.get_settings
-    CC=2  in:4  out:1  total:5
-  src.lane.project_analyzer._parse_package_json
-    CC=2  in:1  out:4  total:5
-  src.lane.providers.openai_compat._strip_markdown_fences
-    CC=3  in:1  out:4  total:5
-  src.lane.project_analyzer._parse_cargo
-    CC=3  in:1  out:4  total:5
-  src.lane.llm_client.build_user_prompt
-    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._resolve_name_and_description
+    CC=3  in:1  out:5  total:6
+  src.lane.providers.openai_compat._parse_json_response
+    CC=3  in:1  out:5  total:6
   src.lane.project_analyzer._detect_stack
     CC=4  in:1  out:4  total:5
+  src.lane.config.get_settings
+    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._parse_cargo
+    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._parse_pyproject_regex
+    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._parse_package_json
+    CC=2  in:1  out:4  total:5
+  src.lane.providers.openai_compat._parse_tasks_from_data
+    CC=2  in:1  out:4  total:5
 
 MODULES:
   src.lane.cli  [3 funcs]

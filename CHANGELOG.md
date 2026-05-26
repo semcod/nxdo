@@ -2,7 +2,34 @@
 
 ## [Unreleased]
 
+## [0.2.7] - 2026-05-26
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+
+### Test
+- Update tests/test_ticket_generator.py
+
+### Other
+- Update app.doql.less
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update uv.lock
+
 ## [0.2.6] - 2026-05-26
+
+### Refactor
+- Remove code duplication in git_reader.py - extract _run_git_command helper
+- Remove code duplication in project_analyzer.py - extract _get_tree_symbol helper
+- Refactor _parse_pyproject (CC=6 → CC=4) - extract _parse_pyproject_tomllib and _parse_pyproject_regex
+- Refactor _detect_stack (CC=6 → CC=4) - extract _check_pattern_match helper
+- Refactor _resolve_name_and_description (CC=5 → CC=3) - use data-driven approach
+- Refactor _collect_file_contents (CC=5 → CC=4) - extract _truncate_file_content helper
+- Refactor _get_file_frequency (CC=4 → CC=1) - extract _count_file_frequencies and _format_file_summary helpers
+- Improve overall code complexity: CC̄=3.7 → CC̄=2.6
 
 ### Docs
 - Update README.md

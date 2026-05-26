@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `lane`
-- **version**: `0.2.5`
+- **version**: `0.2.6`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: lane;
-  version: 0.2.5;
+  version: 0.2.6;
 }
 
 dependencies {
@@ -113,62 +113,62 @@ pfix>=0.1.60
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
+| `cmd_plan` *(in src.lane.cli)* | 4 | 0 | 16 | **16** |
 | `_build_tree` *(in src.lane.project_analyzer)* | 8 | 2 | 14 | **16** |
 | `_create_task_from_dict` *(in src.lane.providers.openai_compat)* | 2 | 1 | 15 | **16** |
-| `cmd_plan` *(in src.lane.cli)* | 4 | 0 | 16 | **16** |
 | `cmd_print_context` *(in src.lane.cli)* | 2 | 0 | 14 | **14** |
 | `cmd_print_prompt` *(in src.lane.cli)* | 1 | 0 | 13 | **13** |
 | `read_git_context` *(in src.lane.git_reader)* | 2 | 4 | 8 | **12** |
+| `generate_next_tasks` *(in src.lane.planner)* | 3 | 2 | 8 | **10** |
 | `_parse_response` *(in src.lane.providers.openai_compat)* | 1 | 2 | 8 | **10** |
-| `_parse_commits` *(in src.lane.git_reader)* | 7 | 1 | 9 | **10** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/lane
-# generated in 0.02s
+# generated in 0.03s
 # nodes: 48 | edges: 53 | modules: 7
 # CC̄=2.6
 
 HUBS[20]:
+  src.lane.cli.cmd_plan
+    CC=4  in:0  out:16  total:16
   src.lane.project_analyzer._build_tree
     CC=8  in:2  out:14  total:16
   src.lane.providers.openai_compat._create_task_from_dict
     CC=2  in:1  out:15  total:16
-  src.lane.cli.cmd_plan
-    CC=4  in:0  out:16  total:16
   src.lane.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
   src.lane.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
   src.lane.git_reader.read_git_context
     CC=2  in:4  out:8  total:12
+  src.lane.planner.generate_next_tasks
+    CC=3  in:2  out:8  total:10
   src.lane.providers.openai_compat._parse_response
     CC=1  in:2  out:8  total:10
   src.lane.git_reader._parse_commits
     CC=7  in:1  out:9  total:10
-  src.lane.planner.generate_next_tasks
-    CC=3  in:2  out:8  total:10
   src.lane.project_analyzer.analyze_project
     CC=1  in:4  out:5  total:9
   src.lane.git_reader._run
     CC=3  in:5  out:2  total:7
-  src.lane.providers.openai_compat._parse_json_response
-    CC=3  in:1  out:5  total:6
-  src.lane.project_analyzer._resolve_name_and_description
-    CC=3  in:1  out:5  total:6
   src.lane.project_analyzer._parse_pyproject_tomllib
     CC=4  in:1  out:5  total:6
-  src.lane.config.get_settings
-    CC=2  in:4  out:1  total:5
-  src.lane.project_analyzer._parse_package_json
-    CC=2  in:1  out:4  total:5
-  src.lane.providers.openai_compat._strip_markdown_fences
-    CC=3  in:1  out:4  total:5
-  src.lane.project_analyzer._parse_cargo
-    CC=3  in:1  out:4  total:5
-  src.lane.llm_client.build_user_prompt
-    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._resolve_name_and_description
+    CC=3  in:1  out:5  total:6
+  src.lane.providers.openai_compat._parse_json_response
+    CC=3  in:1  out:5  total:6
   src.lane.project_analyzer._detect_stack
     CC=4  in:1  out:4  total:5
+  src.lane.config.get_settings
+    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._parse_cargo
+    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._parse_pyproject_regex
+    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._parse_package_json
+    CC=2  in:1  out:4  total:5
+  src.lane.providers.openai_compat._parse_tasks_from_data
+    CC=2  in:1  out:4  total:5
 
 MODULES:
   src.lane.cli  [3 funcs]
@@ -287,51 +287,51 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/lane
-# generated in 0.02s
+# generated in 0.03s
 # nodes: 48 | edges: 53 | modules: 7
 # CC̄=2.6
 
 HUBS[20]:
+  src.lane.cli.cmd_plan
+    CC=4  in:0  out:16  total:16
   src.lane.project_analyzer._build_tree
     CC=8  in:2  out:14  total:16
   src.lane.providers.openai_compat._create_task_from_dict
     CC=2  in:1  out:15  total:16
-  src.lane.cli.cmd_plan
-    CC=4  in:0  out:16  total:16
   src.lane.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
   src.lane.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
   src.lane.git_reader.read_git_context
     CC=2  in:4  out:8  total:12
+  src.lane.planner.generate_next_tasks
+    CC=3  in:2  out:8  total:10
   src.lane.providers.openai_compat._parse_response
     CC=1  in:2  out:8  total:10
   src.lane.git_reader._parse_commits
     CC=7  in:1  out:9  total:10
-  src.lane.planner.generate_next_tasks
-    CC=3  in:2  out:8  total:10
   src.lane.project_analyzer.analyze_project
     CC=1  in:4  out:5  total:9
   src.lane.git_reader._run
     CC=3  in:5  out:2  total:7
-  src.lane.providers.openai_compat._parse_json_response
-    CC=3  in:1  out:5  total:6
-  src.lane.project_analyzer._resolve_name_and_description
-    CC=3  in:1  out:5  total:6
   src.lane.project_analyzer._parse_pyproject_tomllib
     CC=4  in:1  out:5  total:6
-  src.lane.config.get_settings
-    CC=2  in:4  out:1  total:5
-  src.lane.project_analyzer._parse_package_json
-    CC=2  in:1  out:4  total:5
-  src.lane.providers.openai_compat._strip_markdown_fences
-    CC=3  in:1  out:4  total:5
-  src.lane.project_analyzer._parse_cargo
-    CC=3  in:1  out:4  total:5
-  src.lane.llm_client.build_user_prompt
-    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._resolve_name_and_description
+    CC=3  in:1  out:5  total:6
+  src.lane.providers.openai_compat._parse_json_response
+    CC=3  in:1  out:5  total:6
   src.lane.project_analyzer._detect_stack
     CC=4  in:1  out:4  total:5
+  src.lane.config.get_settings
+    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._parse_cargo
+    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._parse_pyproject_regex
+    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._parse_package_json
+    CC=2  in:1  out:4  total:5
+  src.lane.providers.openai_compat._parse_tasks_from_data
+    CC=2  in:1  out:4  total:5
 
 MODULES:
   src.lane.cli  [3 funcs]
@@ -433,7 +433,7 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 19f 1915L | python:13,yaml:3,txt:1,shell:1,toml:1 | 2026-05-26
+# code2llm | 19f 1915L | python:13,yaml:3,toml:1,txt:1,shell:1 | 2026-05-26
 # generated in 0.00s
 # CC̅=2.6 | critical:0/64 | dups:0 | cycles:1
 
@@ -527,7 +527,7 @@ SUMMARY:
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   6
-  scan_ms:       2276
+  scan_ms:       3610
 
 HOTSPOTS[2] (files with most duplication):
   src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.5%)
@@ -542,20 +542,22 @@ DUPLICATES[2] (ranked by impact):
       src/lane/project_analyzer.py:234-236  (_get_extension)
 
 REFACTOR[2] (ranked by priority):
-  [1] ○ extract_function   → src/lane/utils/_get_git_branch.py
+  [1] ✓ COMPLETED   → src/lane/git_reader.py:_run_git_command
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: src/lane/git_reader.py
-  [2] ○ extract_function   → src/lane/utils/_get_connector.py
+      STATUS: Extracted _run_git_command helper, _get_git_branch and _get_git_remote now use it
+  [2] ✓ COMPLETED   → src/lane/project_analyzer.py:_get_tree_symbol
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: src/lane/project_analyzer.py
+      STATUS: Extracted _get_tree_symbol helper, _get_connector and _get_extension now use it
 
 EFFORT_ESTIMATE (total ≈ 0.2h):
-  easy   _get_git_branch                     saved=3L  ~6min
-  easy   _get_connector                      saved=3L  ~6min
+  COMPLETED   _get_git_branch                     saved=3L  ~6min
+  COMPLETED   _get_connector                      saved=3L  ~6min
 
 METRICS-TARGET:
-  dup_groups:  2 → 0
-  saved_lines: 6 lines recoverable
+  dup_groups:  2 → 0 (COMPLETED)
+  saved_lines: 6 lines recovered
 ```
 
 ### Evolution / Churn (`project/evolution.toon.yaml`)
@@ -605,7 +607,15 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=2.6 → now CC̄=2.6
+  prev CC̄=3.7 → now CC̄=2.6
+  Completed refactoring in v0.2.5-0.2.6:
+  - Removed duplication in git_reader.py (_run_git_command helper)
+  - Removed duplication in project_analyzer.py (_get_tree_symbol helper)
+  - Refactored _parse_pyproject (CC=6 → CC=4)
+  - Refactored _detect_stack (CC=6 → CC=4)
+  - Refactored _resolve_name_and_description (CC=5 → CC=3)
+  - Refactored _collect_file_contents (CC=5 → CC=4)
+  - Refactored _get_file_frequency (CC=4 → CC=1)
 ```
 
 ## Intent
