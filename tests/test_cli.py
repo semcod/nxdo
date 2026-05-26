@@ -1,7 +1,5 @@
 from io import StringIO
 from pathlib import Path
-import subprocess
-import sys
 import tempfile
 import unittest
 from unittest.mock import patch, MagicMock
@@ -51,7 +49,7 @@ class CLITests(unittest.TestCase):
             root = Path(tmp_dir)
             (root / "README.md").write_text("# test\n", encoding="utf-8")
             with patch("sys.stdout", new_callable=StringIO) as stdout:
-                exit_code = main([str(root), "--print-prompt", "--max-commits", "1"])
+                main([str(root), "--print-prompt", "--max-commits", "1"])
                 output = stdout.getvalue()
                 self.assertIn("Project:", output)
 
@@ -73,7 +71,7 @@ class CLITests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             (root / "README.md").write_text("# test\n", encoding="utf-8")
-            with patch("sys.stdout", new_callable=StringIO) as stdout:
+            with patch("sys.stdout", new_callable=StringIO):
                 exit_code = main([str(root), "--print-prompt", "--max-commits", "5"])
                 self.assertEqual(exit_code, 0)
 
@@ -291,7 +289,6 @@ class CLITests(unittest.TestCase):
     @patch("lane.cli.generate_next_tasks")
     def test_cmd_plan_handles_value_error(self, mock_generate: MagicMock) -> None:
         """Test that cmd_plan handles ValueError from generate_next_tasks."""
-        from lane.models import TaskPlan
         mock_generate.side_effect = ValueError("Test error")
 
         with tempfile.TemporaryDirectory() as tmp_dir:

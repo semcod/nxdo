@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.2.13] - 2026-05-26
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_output.py
+- Update tests/test_project_analyzer.py
+- Update tests/test_providers.py
+
 ## [0.2.12] - 2026-05-26
 
 ### Docs

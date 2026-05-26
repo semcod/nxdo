@@ -12,6 +12,7 @@ from .config import get_settings
 from .git_reader import read_git_context
 from .llm_client import build_user_prompt
 from .output import render_context, render_plan, render_plan_json
+from .models import TaskPlan
 from .planner import generate_next_tasks
 from .project_analyzer import analyze_project
 from .providers import OpenAICompatProvider
@@ -110,6 +111,47 @@ def cmd_validate(
     console.print(f"[bold green]✓[/bold green] Plan '{plan.project_name}' is valid ({len(plan.tasks)} tasks).")
 
 
+def _sync_todos_if_requested(plan: TaskPlan, repo: Path, sync_todo: bool) -> None:
+    """Sync tasks to TODO.md if requested."""
+    if not sync_todo:
+        return
+    report = sync_to_todo_md(plan, repo)
+    todo_path = report.get("todo_path", "TODO.md")
+    console.print(f"[green]✓[/green] Appended {report.get('updated', 0)} tasks to {todo_path}")
+
+
+def _sync_planfile_if_requested(plan: TaskPlan, repo: Path, sync_planfile: bool) -> None:
+    """Sync tickets to .planfile/ if requested."""
+    if not sync_planfile:
+        return
+    report = sync_to_planfile(plan, repo)
+    if not report.get("enabled"):
+        console.print("[yellow]⚠[/yellow] planfile not available")
+
+
+def _export_yaml_if_requested(plan: TaskPlan, repo: Path, export_yaml: bool, output_path: Optional[Path]) -> None:
+    """Export to planfile YAML if requested."""
+    if not export_yaml:
+        return
+    output = output_path or repo / "strategy.yaml"
+    export_to_planfile_yaml(plan, output)
+
+
+def _get_priority_emoji(priority: str) -> str:
+    """Get emoji for priority level."""
+    return {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}.get(priority, "⚪")
+
+
+def _display_tickets(tickets: list[dict[str, str]]) -> None:
+    """Display tickets with priority emojis."""
+    for ticket in tickets:
+        priority = ticket.get("priority", "medium")
+        priority_emoji = _get_priority_emoji(priority)
+        console.print(f"{priority_emoji} [{ticket['id']}] {ticket['title']}")
+        if ticket.get("description"):
+            console.print(f"    {ticket['description'][:100]}...")
+
+
 @app.command("tickets")
 def cmd_tickets(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
@@ -140,34 +182,13 @@ def cmd_tickets(
         err_console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(code=1)
 
-    # Generate tickets from plan
     tickets = task_plan_to_tickets(plan)
     console.print(f"[green]✓[/green] Generated {len(tickets)} tickets from plan")
 
-    # Sync to TODO.md if requested
-    if sync_todo:
-        report = sync_to_todo_md(plan, repo.resolve())
-        todo_path = report.get("todo_path", "TODO.md")
-        console.print(f"[green]✓[/green] Appended {report.get('updated', 0)} tasks to {todo_path}")
-
-    # Sync to .planfile/ store and markdown if requested
-    if sync_planfile:
-        report = sync_to_planfile(plan, repo.resolve())
-        if not report.get("enabled"):
-            console.print("[yellow]⚠[/yellow] planfile not available")
-
-    # Export to planfile YAML if requested
-    if export_yaml:
-        output = output_path or repo.resolve() / "strategy.yaml"
-        export_to_planfile_yaml(plan, output)
-
-    # Display tickets
-    for ticket in tickets:
-        priority = ticket.get("priority", "medium")
-        priority_emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}.get(priority, "⚪")
-        console.print(f"{priority_emoji} [{ticket['id']}] {ticket['title']}")
-        if ticket.get("description"):
-            console.print(f"    {ticket['description'][:100]}...")
+    _sync_todos_if_requested(plan, repo.resolve(), sync_todo)
+    _sync_planfile_if_requested(plan, repo.resolve(), sync_planfile)
+    _export_yaml_if_requested(plan, repo.resolve(), export_yaml, output_path)
+    _display_tickets(tickets)
 
 
 def app_entry() -> None:

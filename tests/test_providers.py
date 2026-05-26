@@ -88,7 +88,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
         mock_client_class.return_value.__enter__.return_value = mock_client
 
         provider = OpenAICompatProvider(api_key="sk-test", model="test-model")
-        result = provider._call_api("user prompt")
+        provider._call_api("user prompt")
 
         mock_client.post.assert_called_once()
         call_args = mock_client.post.call_args

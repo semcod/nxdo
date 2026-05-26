@@ -7,7 +7,7 @@ from typing import Any
 
 from rich.console import Console
 
-from lane.models import Task, TaskPlan
+from lane.models import TaskPlan
 
 console = Console()
 
@@ -107,7 +107,7 @@ def _append_to_todo(todo_path: Path, lines: list[str]) -> None:
 def _ensure_planfile_installed() -> bool:
     """Ensure planfile package is installed, auto-install if missing."""
     try:
-        import planfile
+        import planfile  # noqa: F401
         return True
     except ImportError:
         console.print("[yellow]⚠️  planfile not installed, attempting auto-install...[/yellow]")

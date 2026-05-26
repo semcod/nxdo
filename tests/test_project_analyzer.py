@@ -149,7 +149,7 @@ class ProjectAnalyzerTests(unittest.TestCase):
                 # Restore permissions for cleanup
                 try:
                     unreadable.chmod(0o644)
-                except:
+                except OSError:
                     pass
 
     def test_analyze_project_truncates_large_files(self) -> None:

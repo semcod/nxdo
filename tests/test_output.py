@@ -35,8 +35,6 @@ class OutputTests(unittest.TestCase):
         self.assertIn("First task", output)
 
     def test_render_plan_json_outputs_valid_json(self) -> None:
-        import json
-
         plan = TaskPlan(
             project_name="test-project",
             summary="Test summary",
