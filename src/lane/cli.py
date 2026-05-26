@@ -191,6 +191,66 @@ def cmd_tickets(
     _display_tickets(tickets)
 
 
+@app.command("metrics")
+def cmd_metrics(
+    repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
+    top: int = typer.Option(10, "--top", "-n", help="Show top N items per category."),
+    min_coupling: float = typer.Option(0.3, "--min-coupling", help="Minimum coupling score to display."),
+) -> None:
+    """Display code metrics: complexity, coupling, hotspots."""
+    from lane.metrics import (
+        collect_coupling_matrix,
+        get_coupling_clusters,
+        identify_bug_hotspots,
+        calculate_bus_factor,
+        collect_file_metrics,
+    )
+
+    repo_path = repo.resolve()
+    console.print(f"[bold]Code Metrics for {repo_path.name}[/bold]\n")
+
+    # 1. Complexity Metrics
+    console.print("[bold cyan]Top Files by Cyclomatic Complexity[/bold cyan]")
+    file_metrics = collect_file_metrics(repo_path, file_filter={".py"})
+    for m in file_metrics[:top]:
+        if m.cyclomatic_complexity > 5:
+            console.print(f"  CC={m.cyclomatic_complexity:3d} | {m.file_path}")
+    console.print()
+
+    # 2. Coupling Analysis
+    console.print(f"[bold cyan]Top Coupled File Pairs (>{min_coupling})[/bold cyan]")
+    coupling = collect_coupling_matrix(repo_path, min_coupling=min_coupling, file_filter={".py"})
+    for c in coupling[:top]:
+        console.print(f"  {c.coupling_score:.2f} | {c.file_a} <-> {c.file_b}")
+    console.print()
+
+    # 3. Coupling Clusters (sprint groupings)
+    clusters = get_coupling_clusters(coupling, min_coupling=0.5)
+    if clusters:
+        console.print("[bold cyan]Coupling Clusters (refactor together)[/bold cyan]")
+        for i, cluster in enumerate(clusters[:5], 1):
+            console.print(f"  Cluster {i} ({len(cluster)} files):")
+            for f in sorted(cluster)[:5]:
+                console.print(f"    - {f}")
+        console.print()
+
+    # 4. Bug Hotspots
+    console.print("[bold cyan]Bug Hotspots (high churn + fixes)[/bold cyan]")
+    hotspots = identify_bug_hotspots(repo_path, top_n=top)
+    for h in hotspots:
+        risk = "🔥" if h.bug_density > 0.3 else "⚠️"
+        console.print(f"  {risk} {h.file_path}")
+        console.print(f"     Bugs: {h.bug_fix_commits}/{h.total_commits} commits, Churn: {h.code_churn_lines} lines")
+    console.print()
+
+    # 5. Bus Factor
+    console.print("[bold cyan]Low Bus Factor (knowledge silos)[/bold cyan]")
+    bus_factors = calculate_bus_factor(repo_path, critical_threshold=2)
+    for file_path, count in sorted(bus_factors.items(), key=lambda x: x[1])[:top]:
+        icon = "🚨" if count == 1 else "⚠️"
+        console.print(f"  {icon} {count} author(s): {file_path}")
+
+
 def app_entry() -> None:
     """Entry point used by the installed `lane` script."""
     app()

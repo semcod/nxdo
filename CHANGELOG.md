@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.2.14] - 2026-05-26
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_metrics.py
+
 ## [0.2.13] - 2026-05-26
 
 ### Docs
