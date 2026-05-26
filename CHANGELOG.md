@@ -2,7 +2,41 @@
 
 ## [Unreleased]
 
+## [0.2.8] - 2026-05-26
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .code2llm_cache/__init___1779813747840622603_823.pkl
+- Update .code2llm_cache/cli_1779813728398420144_8551.pkl
+- Update .code2llm_cache/pyproject_1779813746964613479_2251.pkl
+- Update .code2llm_cache/ticket_generator_1779813709436222750_5067.pkl
+- Update .code2llm_cache/tree_1779813839904582136_1756.pkl
+- Update app.doql.less
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- ... and 14 more files
+
 ## [0.2.7] - 2026-05-26
+
+### New
+- Add planfile integration for ticket generation
+- Add `lane tickets` CLI command with planfile support
+- Add ticket_generator module with TaskPlan to planfile conversion
+- Add `--sync-todo` flag to sync tasks to TODO.md checkboxes
+- Add `--export-yaml` flag to export to planfile YAML format
+
+### Changed
+- Add pyyaml as runtime dependency
+- Add planfile as local path dependency for ticket generation features
 
 ### Docs
 - Update CHANGELOG.md
@@ -11,7 +45,7 @@
 - Update SUMR.md
 
 ### Test
-- Update tests/test_ticket_generator.py
+- Add tests/test_ticket_generator.py with ticket generation tests
 
 ### Other
 - Update app.doql.less

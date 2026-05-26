@@ -1,10 +1,11 @@
-# lane | 64 func | 10f | 1915L | python | 2026-05-26
+# lane | 70 func | 11f | 2141L | python | 2026-05-26
 # generated in 0.00s
 
 HEALTH:
-  CC̄=2.6  critical=0 (limit:10)  dup=0  cycles=1
+  CC̄=2.7  critical=0 (limit:10)  dup=0  cycles=1
 
-ALERTS[6]:
+ALERTS[7]:
+  !!  high_fan_out     cmd_tickets = 18 (limit:10)
   !!  high_fan_out     main = 16 (limit:10)
   !   high_fan_out     _build_tree = 13 (limit:10)
   !   high_fan_out     cmd_plan = 12 (limit:10)
@@ -12,13 +13,14 @@ ALERTS[6]:
   !   high_fan_out     cmd_print_prompt = 11 (limit:10)
   !   high_fan_out     OpenAICompatProvider._call_api = 10 (limit:10)
 
-MODULES[19] (top by size):
+MODULES[20] (top by size):
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/lane/project_analyzer.py] 258L C:1 F:19 CC↑8 D:2 (python)
+  M[src/lane/cli.py] 216L C:0 F:7 CC↑9 D:0 (python)
   M[src/lane/git_reader.py] 207L C:2 F:17 CC↑7 D:2 (python)
   M[src/lane/providers/openai_compat.py] 172L C:1 F:8 CC↑5 D:1 (python)
-  M[src/lane/cli.py] 160L C:0 F:6 CC↑4 D:0 (python)
-  M[pyproject.toml] 93L C:0 F:0 CC↑0 D:0 (toml)
+  M[src/lane/ticket_generator.py] 165L C:0 F:5 CC↑3 D:1 (python)
+  M[pyproject.toml] 98L C:0 F:0 CC↑0 D:0 (toml)
   M[src/lane/models.py] 90L C:4 F:4 CC↑7 D:0 (python)
   M[src/lane/llm_client.py] 77L C:1 F:4 CC↑3 D:2 (python)
   M[src/lane/output.py] 67L C:0 F:3 CC↑4 D:1 (python)
@@ -27,20 +29,20 @@ MODULES[19] (top by size):
   M[src/lane/planner.py] 42L C:0 F:1 CC↑3 D:1 (python)
   M[src/lane/config.py] 42L C:1 F:1 CC↑2 D:3 (python)
   M[src/lane/__init__.py] 31L C:0 F:0 CC↑0 D:0 (python)
-  M[testql-scenarios/generated-cli-tests.testql.toon.yaml] 20L C:0 F:0 CC↑0 D:0 (yaml)
-  LANGS: python:13/yaml:3/shell:1/toml:1/txt:1
+  LANGS: python:14/yaml:3/shell:1/toml:1/txt:1
 
-HOTSPOTS[6]:
+HOTSPOTS[7]:
+  ★ cmd_tickets fan=18  // Generate tickets from a plan using planfile integration.
   ★ main fan=16  // Compatibility shim — maps legacy argparse argv to Typer sub-commands.
   ★ _build_tree fan=13  // Orchestrates 13 calls
   ★ cmd_plan fan=12  // Generate a 10-task plan for the repository.
   ★ cmd_print_context fan=11  // Print the assembled project and git context (no LLM call).
-  ★ cmd_print_prompt fan=11  // Print the full prompt that would be sent to the LLM.
 
-REFACTOR[3]:
+REFACTOR[4]:
   [1] H/H Split god module goal.yaml (512L, 0 classes)
   [2] M/L Break circular dependency: src.lane.project_analyzer._build_tree
-  [3] M/M Reduce main fan-out (currently 16)
+  [3] M/M Reduce cmd_tickets fan-out (currently 18)
+  [4] M/M Reduce main fan-out (currently 16)
 
 EVOLUTION:
-  2026-05-26 CC̄=2.6 crit=0 1915L // Automated analysis
+  2026-05-26 CC̄=2.7 crit=0 2141L // Automated analysis

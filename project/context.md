@@ -5,12 +5,12 @@
 
 - **Project**: /home/tom/github/semcod/lane
 - **Primary Language**: python
-- **Languages**: python: 13, yaml: 3, toml: 1, txt: 1, shell: 1
+- **Languages**: python: 14, yaml: 3, toml: 1, txt: 1, shell: 1
 - **Analysis Mode**: static
-- **Total Functions**: 64
+- **Total Functions**: 70
 - **Total Classes**: 11
-- **Modules**: 19
-- **Entry Points**: 20
+- **Modules**: 20
+- **Entry Points**: 21
 
 ## Architecture by Module
 
@@ -30,8 +30,12 @@
 - **File**: `openai_compat.py`
 
 ### src.lane.cli
-- **Functions**: 6
+- **Functions**: 7
 - **File**: `cli.py`
+
+### src.lane.ticket_generator
+- **Functions**: 5
+- **File**: `ticket_generator.py`
 
 ### src.lane.llm_client
 - **Functions**: 4
@@ -64,6 +68,10 @@
 ## Key Entry Points
 
 Main execution flows into the system:
+
+### src.lane.cli.cmd_tickets
+> Generate tickets from a plan using planfile integration.
+- **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
 
 ### src.lane.cli.main
 > Compatibility shim — maps legacy argparse argv to Typer sub-commands.
@@ -136,17 +144,22 @@ Main execution flows into the system:
 
 Key execution flows identified:
 
-### Flow 1: main
+### Flow 1: cmd_tickets
+```
+cmd_tickets [src.lane.cli]
+```
+
+### Flow 2: main
 ```
 main [src.lane.cli]
 ```
 
-### Flow 2: cmd_plan
+### Flow 3: cmd_plan
 ```
 cmd_plan [src.lane.cli]
 ```
 
-### Flow 3: cmd_print_context
+### Flow 4: cmd_print_context
 ```
 cmd_print_context [src.lane.cli]
   └─ →> analyze_project
@@ -155,7 +168,7 @@ cmd_print_context [src.lane.cli]
           └─> _truncate_file_content
 ```
 
-### Flow 4: cmd_print_prompt
+### Flow 5: cmd_print_prompt
 ```
 cmd_print_prompt [src.lane.cli]
   └─ →> analyze_project
@@ -164,35 +177,29 @@ cmd_print_prompt [src.lane.cli]
           └─> _truncate_file_content
 ```
 
-### Flow 5: __str__
+### Flow 6: __str__
 ```
 __str__ [src.lane.models.TaskPlan]
 ```
 
-### Flow 6: _call_api
+### Flow 7: _call_api
 ```
 _call_api [src.lane.providers.openai_compat.OpenAICompatProvider]
 ```
 
-### Flow 7: cmd_validate
+### Flow 8: cmd_validate
 ```
 cmd_validate [src.lane.cli]
 ```
 
-### Flow 8: to_text
+### Flow 9: to_text
 ```
 to_text [src.lane.git_reader.GitContext]
 ```
 
-### Flow 9: __init__
+### Flow 10: __init__
 ```
 __init__ [src.lane.llm_client.OpenAICompatibleLLMClient]
-```
-
-### Flow 10: generate_task_plan
-```
-generate_task_plan [src.lane.llm_client.OpenAICompatibleLLMClient]
-  └─ →> build_user_prompt
 ```
 
 ## Key Classes
@@ -315,6 +322,7 @@ Key functions that process and transform data:
 
 Functions exposed as public API (no underscore prefix):
 
+- `src.lane.cli.cmd_tickets` - 32 calls
 - `src.lane.cli.main` - 25 calls
 - `src.lane.cli.cmd_plan` - 16 calls
 - `src.lane.cli.cmd_print_context` - 14 calls
@@ -324,11 +332,14 @@ Functions exposed as public API (no underscore prefix):
 - `src.lane.git_reader.read_git_context` - 8 calls
 - `src.lane.planner.generate_next_tasks` - 8 calls
 - `src.lane.git_reader.GitContext.to_text` - 7 calls
+- `src.lane.ticket_generator.sync_to_todo_md` - 6 calls
 - `src.lane.output.render_context` - 5 calls
 - `src.lane.project_analyzer.analyze_project` - 5 calls
 - `src.lane.output.render_plan_json` - 4 calls
+- `src.lane.ticket_generator.export_to_planfile_yaml` - 4 calls
 - `src.lane.project_analyzer.ProjectSnapshot.to_text` - 3 calls
 - `src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan` - 2 calls
+- `src.lane.ticket_generator.task_plan_to_tickets` - 2 calls
 - `src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan` - 2 calls
 - `src.lane.config.get_settings` - 1 calls
 - `src.lane.cli.app_entry` - 1 calls
@@ -344,6 +355,9 @@ How components interact:
 
 ```mermaid
 graph TD
+    cmd_tickets --> command
+    cmd_tickets --> Argument
+    cmd_tickets --> Option
     main --> ArgumentParser
     main --> add_argument
     cmd_plan --> command
@@ -371,9 +385,6 @@ graph TD
     cmd_validate --> model_validate
     to_text --> join
     to_text --> append
-    __str__ --> len
-    __init__ --> OpenAICompatProvider
-    __init__ --> get
 ```
 
 ## Reverse Engineering Guidelines

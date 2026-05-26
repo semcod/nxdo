@@ -1,13 +1,15 @@
 # code2llm call graph | /home/tom/github/semcod/lane
-# generated in 0.03s
-# nodes: 48 | edges: 53 | modules: 7
-# CC̄=2.6
+# generated in 0.04s
+# nodes: 54 | edges: 58 | modules: 8
+# CC̄=2.7
 
 HUBS[20]:
-  src.lane.cli.cmd_plan
-    CC=4  in:0  out:16  total:16
+  src.lane.cli.cmd_tickets
+    CC=9  in:0  out:32  total:32
   src.lane.project_analyzer._build_tree
     CC=8  in:2  out:14  total:16
+  src.lane.cli.cmd_plan
+    CC=4  in:0  out:16  total:16
   src.lane.providers.openai_compat._create_task_from_dict
     CC=2  in:1  out:15  total:16
   src.lane.cli.cmd_print_context
@@ -17,7 +19,7 @@ HUBS[20]:
   src.lane.git_reader.read_git_context
     CC=2  in:4  out:8  total:12
   src.lane.planner.generate_next_tasks
-    CC=3  in:2  out:8  total:10
+    CC=3  in:3  out:8  total:11
   src.lane.providers.openai_compat._parse_response
     CC=1  in:2  out:8  total:10
   src.lane.git_reader._parse_commits
@@ -26,30 +28,29 @@ HUBS[20]:
     CC=1  in:4  out:5  total:9
   src.lane.git_reader._run
     CC=3  in:5  out:2  total:7
+  src.lane.ticket_generator.sync_to_todo_md
+    CC=3  in:1  out:6  total:7
   src.lane.project_analyzer._parse_pyproject_tomllib
     CC=4  in:1  out:5  total:6
+  src.lane.config.get_settings
+    CC=2  in:5  out:1  total:6
   src.lane.project_analyzer._resolve_name_and_description
     CC=3  in:1  out:5  total:6
   src.lane.providers.openai_compat._parse_json_response
     CC=3  in:1  out:5  total:6
+  src.lane.llm_client.build_user_prompt
+    CC=2  in:4  out:1  total:5
+  src.lane.ticket_generator.export_to_planfile_yaml
+    CC=3  in:1  out:4  total:5
   src.lane.project_analyzer._detect_stack
     CC=4  in:1  out:4  total:5
-  src.lane.config.get_settings
-    CC=2  in:4  out:1  total:5
-  src.lane.project_analyzer._parse_cargo
-    CC=3  in:1  out:4  total:5
-  src.lane.project_analyzer._parse_pyproject_regex
-    CC=3  in:1  out:4  total:5
-  src.lane.project_analyzer._parse_package_json
-    CC=2  in:1  out:4  total:5
-  src.lane.providers.openai_compat._parse_tasks_from_data
-    CC=2  in:1  out:4  total:5
 
 MODULES:
-  src.lane.cli  [3 funcs]
+  src.lane.cli  [4 funcs]
     cmd_plan  CC=4  out:16
     cmd_print_context  CC=2  out:14
     cmd_print_prompt  CC=1  out:13
+    cmd_tickets  CC=9  out:32
   src.lane.config  [1 funcs]
     get_settings  CC=2  out:1
   src.lane.git_reader  [15 funcs]
@@ -88,6 +89,12 @@ MODULES:
     _parse_response  CC=1  out:8
     _parse_tasks_from_data  CC=2  out:4
     _strip_markdown_fences  CC=3  out:4
+  src.lane.ticket_generator  [5 funcs]
+    _create_temp_strategy  CC=2  out:3
+    _map_priority  CC=1  out:2
+    export_to_planfile_yaml  CC=3  out:4
+    sync_to_todo_md  CC=3  out:6
+    task_plan_to_tickets  CC=3  out:2
 
 EDGES:
   src.lane.cli.cmd_plan → src.lane.config.get_settings
@@ -96,6 +103,7 @@ EDGES:
   src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
   src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
   src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
+  src.lane.cli.cmd_tickets → src.lane.config.get_settings
   src.lane.git_reader._is_git_repo → src.lane.git_reader._run
   src.lane.git_reader._run_git_command → src.lane.git_reader._run
   src.lane.git_reader._get_git_branch → src.lane.git_reader._run_git_command
@@ -121,6 +129,10 @@ EDGES:
   src.lane.planner.generate_next_tasks → src.lane.config.get_settings
   src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
   src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
+  src.lane.ticket_generator.task_plan_to_tickets → src.lane.ticket_generator._map_priority
+  src.lane.ticket_generator.sync_to_todo_md → src.lane.ticket_generator._create_temp_strategy
+  src.lane.ticket_generator._create_temp_strategy → src.lane.ticket_generator._map_priority
+  src.lane.ticket_generator.export_to_planfile_yaml → src.lane.ticket_generator._map_priority
   src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._read_file_safely
   src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._truncate_file_content
   src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_pyproject
@@ -135,8 +147,3 @@ EDGES:
   src.lane.project_analyzer._parse_pyproject → src.lane.project_analyzer._parse_pyproject_tomllib
   src.lane.project_analyzer._parse_pyproject → src.lane.project_analyzer._parse_pyproject_regex
   src.lane.project_analyzer._get_connector → src.lane.project_analyzer._get_tree_symbol
-  src.lane.project_analyzer._get_extension → src.lane.project_analyzer._get_tree_symbol
-  src.lane.project_analyzer._build_tree → src.lane.project_analyzer._should_ignore_entry
-  src.lane.providers.openai_compat.OpenAICompatProvider.__init__ → src.lane.config.get_settings
-  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan → src.lane.providers.openai_compat._parse_response
-  src.lane.providers.openai_compat._parse_tasks_from_data → src.lane.providers.openai_compat._create_task_from_dict

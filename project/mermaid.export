@@ -6,6 +6,7 @@ flowchart TD
         src__lane__cli__cmd_print_context["cmd_print_context"]
         src__lane__cli__cmd_print_prompt["cmd_print_prompt"]
         src__lane__cli__cmd_validate["cmd_validate"]
+        src__lane__cli__cmd_tickets("cmd_tickets CC=9")
         src__lane__cli__app_entry["app_entry"]
         src__lane__cli__main["main"]
         src__lane__git_reader__CommitInfo____str__["__str__"]
@@ -33,6 +34,11 @@ flowchart TD
         src__lane__llm_client__parse_task_plan_response["parse_task_plan_response"]
         src__lane__llm_client__OpenAICompatibleLLMClient____init__["__init__"]
         src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan["generate_task_plan"]
+        src__lane__ticket_generator__task_plan_to_tickets["task_plan_to_tickets"]
+        src__lane__ticket_generator___map_priority["_map_priority"]
+        src__lane__ticket_generator__sync_to_todo_md["sync_to_todo_md"]
+        src__lane__ticket_generator___create_temp_strategy["_create_temp_strategy"]
+        src__lane__ticket_generator__export_to_planfile_yaml["export_to_planfile_yaml"]
         src__lane__project_analyzer__ProjectSnapshot__to_text["to_text"]
         src__lane__project_analyzer___read_file_safely["_read_file_safely"]
         src__lane__project_analyzer___truncate_file_content["_truncate_file_content"]
@@ -55,12 +61,6 @@ flowchart TD
         src__lane__models__Task____str__["__str__"]
         src__lane__models__Task__to_dict["to_dict"]
         src__lane__models__TaskPlan____str__["__str__"]
-        src__lane__models__TaskPlan__to_dict["to_dict"]
-        src__lane__providers__base__LLMProvider__generate_plan["generate_plan"]
-        src__lane__providers__openai_compat__OpenAICompatProvider____init__["__init__"]
-        src__lane__providers__openai_compat__OpenAICompatProvider__generate_plan["generate_plan"]
-        src__lane__providers__openai_compat__OpenAICompatProvider___call_api["_call_api"]
-        src__lane__providers__openai_compat___strip_markdown_fences["_strip_markdown_fences"]
     end
     src__lane__cli__cmd_plan --> src__lane__config__get_settings
     src__lane__cli__cmd_plan --> src__lane__planner__generate_next_tasks
@@ -72,6 +72,9 @@ flowchart TD
     src__lane__cli__cmd_print_prompt --> src__lane__project_analyzer__analyze_project
     src__lane__cli__cmd_print_prompt --> src__lane__git_reader__read_git_context
     src__lane__cli__cmd_print_prompt --> src__lane__llm_client__build_user_prompt
+    src__lane__cli__cmd_tickets --> src__lane__config__get_settings
+    src__lane__cli__cmd_tickets --> src__lane__ticket_generator__task_plan_to_tickets
+    src__lane__cli__cmd_tickets --> src__lane__planner__generate_next_tasks
     src__lane__cli__main --> src__lane__config__get_settings
     src__lane__cli__main --> src__lane__project_analyzer__analyze_project
     src__lane__cli__main --> src__lane__git_reader__read_git_context
@@ -101,6 +104,10 @@ flowchart TD
     src__lane__planner__generate_next_tasks --> src__lane__config__get_settings
     src__lane__llm_client__parse_task_plan_response --> src__lane__providers__openai_compat___parse_response
     src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan --> src__lane__llm_client__build_user_prompt
+    src__lane__ticket_generator__task_plan_to_tickets --> src__lane__ticket_generator___map_priority
+    src__lane__ticket_generator__sync_to_todo_md --> src__lane__ticket_generator___create_temp_strategy
+    src__lane__ticket_generator___create_temp_strategy --> src__lane__ticket_generator___map_priority
+    src__lane__ticket_generator__export_to_planfile_yaml --> src__lane__ticket_generator___map_priority
     src__lane__project_analyzer___collect_file_contents --> src__lane__project_analyzer___read_file_safely
     src__lane__project_analyzer___collect_file_contents --> src__lane__project_analyzer___truncate_file_content
     src__lane__project_analyzer___resolve_name_and_description --> src__lane__project_analyzer___parse_pyproject
@@ -128,4 +135,4 @@ flowchart TD
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class src__lane__project_analyzer___build_tree medCC
+    class src__lane__cli__cmd_tickets,src__lane__project_analyzer___build_tree medCC

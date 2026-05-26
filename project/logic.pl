@@ -1,12 +1,12 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('lane', '0.2.6', 'python').
+project_metadata('lane', '0.2.7', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
 project_file('project.sh', 48, 'shell').
 project_file('src/lane/__init__.py', 32, 'python').
 project_file('src/lane/__main__.py', 7, 'python').
-project_file('src/lane/cli.py', 161, 'python').
+project_file('src/lane/cli.py', 217, 'python').
 project_file('src/lane/config.py', 43, 'python').
 project_file('src/lane/git_reader.py', 208, 'python').
 project_file('src/lane/llm_client.py', 78, 'python').
@@ -17,6 +17,7 @@ project_file('src/lane/project_analyzer.py', 259, 'python').
 project_file('src/lane/providers/__init__.py', 7, 'python').
 project_file('src/lane/providers/base.py', 20, 'python').
 project_file('src/lane/providers/openai_compat.py', 173, 'python').
+project_file('src/lane/ticket_generator.py', 166, 'python').
 project_file('tests/test_cli.py', 201, 'python').
 project_file('tests/test_config.py', 52, 'python').
 project_file('tests/test_git_reader.py', 162, 'python').
@@ -26,6 +27,7 @@ project_file('tests/test_output.py', 70, 'python').
 project_file('tests/test_planner.py', 93, 'python').
 project_file('tests/test_project_analyzer.py', 182, 'python').
 project_file('tests/test_providers.py', 134, 'python').
+project_file('tests/test_ticket_generator.py', 128, 'python').
 project_file('tree.sh', 2, 'shell').
 
 % ── Python Functions ─────────────────────────────────────
@@ -33,6 +35,7 @@ python_function('src/lane/cli.py', 'cmd_plan', 6, 4, 12).
 python_function('src/lane/cli.py', 'cmd_print_context', 3, 2, 10).
 python_function('src/lane/cli.py', 'cmd_print_prompt', 3, 1, 10).
 python_function('src/lane/cli.py', 'cmd_validate', 1, 2, 8).
+python_function('src/lane/cli.py', 'cmd_tickets', 8, 9, 15).
 python_function('src/lane/cli.py', 'app_entry', 0, 1, 1).
 python_function('src/lane/cli.py', 'main', 1, 4, 15).
 python_function('src/lane/config.py', 'get_settings', 0, 2, 1).
@@ -80,6 +83,11 @@ python_function('src/lane/providers/openai_compat.py', '_parse_json_response', 1
 python_function('src/lane/providers/openai_compat.py', '_create_task_from_dict', 2, 2, 7).
 python_function('src/lane/providers/openai_compat.py', '_parse_tasks_from_data', 1, 2, 4).
 python_function('src/lane/providers/openai_compat.py', '_parse_response', 3, 1, 7).
+python_function('src/lane/ticket_generator.py', 'task_plan_to_tickets', 1, 3, 2).
+python_function('src/lane/ticket_generator.py', '_map_priority', 1, 1, 2).
+python_function('src/lane/ticket_generator.py', 'sync_to_todo_md', 2, 3, 6).
+python_function('src/lane/ticket_generator.py', '_create_temp_strategy', 2, 2, 3).
+python_function('src/lane/ticket_generator.py', 'export_to_planfile_yaml', 2, 3, 4).
 
 % ── Python Classes ───────────────────────────────────────
 python_class('src/lane/config.py', 'LaneSettings').
@@ -201,6 +209,11 @@ python_method('OpenAICompatProviderTests', 'test_generate_plan_uses_parse_respon
 python_method('OpenAICompatProviderTests', 'test_call_api_constructs_correct_payload', 1, 1, 8).
 python_method('OpenAICompatProviderTests', 'test_call_api_sets_correct_headers', 1, 1, 5).
 python_method('OpenAICompatProviderTests', 'test_call_api_handles_unexpected_response', 1, 1, 7).
+python_class('tests/test_ticket_generator.py', 'TicketGeneratorTests').
+python_method('TicketGeneratorTests', 'test_task_plan_to_tickets', 0, 1, 5).
+python_method('TicketGeneratorTests', 'test_map_priority', 0, 1, 2).
+python_method('TicketGeneratorTests', 'test_export_to_planfile_yaml', 0, 1, 11).
+python_method('TicketGeneratorTests', 'test_sync_to_todo_md_without_planfile', 0, 1, 7).
 
 % ── Dependencies ─────────────────────────────────────────
 

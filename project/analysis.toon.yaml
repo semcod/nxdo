@@ -1,13 +1,13 @@
-# code2llm | 19f 1915L | python:13,yaml:3,toml:1,txt:1,shell:1 | 2026-05-26
+# code2llm | 20f 2143L | python:14,yaml:3,toml:1,txt:1,shell:1 | 2026-05-26
 # generated in 0.00s
-# CC̅=2.6 | critical:0/64 | dups:0 | cycles:1
+# CC̅=2.7 | critical:0/70 | dups:0 | cycles:1
 
 HEALTH[0]: ok
 
 REFACTOR[1]:
   1. break 1 circular dependencies
 
-PIPELINES[19]:
+PIPELINES[20]:
   [1] Src [cmd_plan]: cmd_plan → get_settings
       PURITY: 100% pure
   [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
@@ -16,43 +16,46 @@ PIPELINES[19]:
       PURITY: 100% pure
   [4] Src [cmd_validate]: cmd_validate
       PURITY: 100% pure
-  [5] Src [app_entry]: app_entry
+  [5] Src [cmd_tickets]: cmd_tickets → get_settings
       PURITY: 100% pure
-  [6] Src [main]: main → get_settings
+  [6] Src [app_entry]: app_entry
       PURITY: 100% pure
-  [7] Src [__str__]: __str__
+  [7] Src [main]: main → get_settings
       PURITY: 100% pure
-  [8] Src [to_text]: to_text
+  [8] Src [__str__]: __str__
       PURITY: 100% pure
-  [9] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
+  [9] Src [to_text]: to_text
       PURITY: 100% pure
-  [10] Src [__init__]: __init__
+  [10] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [11] Src [generate_task_plan]: generate_task_plan → build_user_prompt
+  [11] Src [__init__]: __init__
       PURITY: 100% pure
-  [12] Src [to_text]: to_text
+  [12] Src [generate_task_plan]: generate_task_plan → build_user_prompt
       PURITY: 100% pure
-  [13] Src [__str__]: __str__
+  [13] Src [to_text]: to_text
       PURITY: 100% pure
-  [14] Src [to_dict]: to_dict
+  [14] Src [__str__]: __str__
       PURITY: 100% pure
-  [15] Src [__str__]: __str__
+  [15] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [16] Src [to_dict]: to_dict
+  [16] Src [__str__]: __str__
       PURITY: 100% pure
-  [17] Src [__init__]: __init__ → get_settings
+  [17] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [18] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
+  [18] Src [__init__]: __init__ → get_settings
       PURITY: 100% pure
-  [19] Src [_call_api]: _call_api
+  [19] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
+      PURITY: 100% pure
+  [20] Src [_call_api]: _call_api
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=2.6    ←in:0  →out:0
+  src/                            CC̄=2.7    ←in:0  →out:0
   │ project_analyzer           258L  1C   19m  CC=8      ←2
+  │ cli                        216L  0C    7m  CC=9      ←0
   │ git_reader                 207L  2C   17m  CC=7      ←2
   │ openai_compat              172L  1C    8m  CC=5      ←1
-  │ cli                        160L  0C    6m  CC=4      ←0
+  │ ticket_generator           165L  0C    5m  CC=3      ←1
   │ models                      90L  4C    4m  CC=7      ←0
   │ llm_client                  77L  1C    4m  CC=3      ←2
   │ output                      67L  0C    3m  CC=4      ←1
@@ -65,8 +68,8 @@ LAYERS:
   │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              93L  0C    0m  CC=0.0    ←0
-  │ tree.txt                    55L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              98L  0C    0m  CC=0.0    ←0
+  │ tree.txt                    57L  0C    0m  CC=0.0    ←0
   │ project.sh                  48L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0

@@ -1,16 +1,16 @@
-# redup/duplication | 2 groups | 13f 1177L | 2026-05-26
+# redup/duplication | 2 groups | 14f 1398L | 2026-05-26
 
 SUMMARY:
-  files_scanned: 13
-  total_lines:   1177
+  files_scanned: 14
+  total_lines:   1398
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   6
-  scan_ms:       3610
+  scan_ms:       3715
 
 HOTSPOTS[2] (files with most duplication):
-  src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.5%)
-  src/lane/project_analyzer.py  dup=6L  groups=1  frags=2  (0.5%)
+  src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.4%)
+  src/lane/project_analyzer.py  dup=6L  groups=1  frags=2  (0.4%)
 
 DUPLICATES[2] (ranked by impact):
   [398e7fc98c20a6ea]   STRU  _get_git_branch  L=3 N=2 saved=3 sim=1.00

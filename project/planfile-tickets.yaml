@@ -4,12 +4,12 @@ schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/semcod/lane
 tickets:
 - signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: data'
-  description: 'code2llm reports `Shotgun Surgery: data` in `src/lane/cli.py:96`.
+  title: 'Address code smell: Shotgun Surgery: cfg'
+  description: 'code2llm reports `Shotgun Surgery: cfg` in `src/lane/cli.py:32`.
 
 
-    Mutation of variable ''data'' spans 6 functions. Changing this logic requires
-    work in many places.
+    Mutation of variable ''cfg'' spans 5 functions. Changing this logic requires work
+    in many places.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -21,14 +21,14 @@ tickets:
   - shotgun-surgery
   files:
   - src/lane/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/lane/cli.py:96:Shotgun Surgery:
-    data'
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/lane/cli.py:32:Shotgun Surgery:
+    cfg'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: model, raw, project_name'
-  description: 'code2llm reports `Data Clump: model, raw, project_name` in `src/lane/llm_client.py:41`.
+  title: 'Address code smell: Data Clump: raw, model, project_name'
+  description: 'code2llm reports `Data Clump: raw, model, project_name` in `src/lane/llm_client.py:41`.
 
 
-    Arguments (model, raw, project_name) are used together in multiple functions:
+    Arguments (raw, model, project_name) are used together in multiple functions:
     src.lane.llm_client.parse_task_plan_response, src.lane.providers.openai_compat._parse_response.
 
 
@@ -41,14 +41,14 @@ tickets:
   - data-clump
   files:
   - src/lane/llm_client.py
-  dedupe_key: 'code2llm:smell:data_clump:src/lane/llm_client.py:41:Data Clump: model,
-    raw, project_name'
+  dedupe_key: 'code2llm:smell:data_clump:src/lane/llm_client.py:41:Data Clump: raw,
+    model, project_name'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: model, raw, project_name'
-  description: 'code2llm reports `Data Clump: model, raw, project_name` in `src/lane/providers/openai_compat.py:160`.
+  title: 'Address code smell: Data Clump: raw, model, project_name'
+  description: 'code2llm reports `Data Clump: raw, model, project_name` in `src/lane/providers/openai_compat.py:160`.
 
 
-    Arguments (model, raw, project_name) are used together in multiple functions:
+    Arguments (raw, model, project_name) are used together in multiple functions:
     src.lane.llm_client.parse_task_plan_response, src.lane.providers.openai_compat._parse_response.
 
 
@@ -62,14 +62,14 @@ tickets:
   files:
   - src/lane/providers/openai_compat.py
   dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/openai_compat.py:160:Data
-    Clump: model, raw, project_name'
+    Clump: raw, model, project_name'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project_name, user_prompt, self'
-  description: 'code2llm reports `Data Clump: project_name, user_prompt, self` in
+  title: 'Address code smell: Data Clump: self, user_prompt, project_name'
+  description: 'code2llm reports `Data Clump: self, user_prompt, project_name` in
     `src/lane/providers/base.py:14`.
 
 
-    Arguments (project_name, user_prompt, self) are used together in multiple functions:
+    Arguments (self, user_prompt, project_name) are used together in multiple functions:
     src.lane.providers.base.LLMProvider.generate_plan, src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan.
 
 
@@ -83,14 +83,14 @@ tickets:
   files:
   - src/lane/providers/base.py
   dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/base.py:14:Data Clump:
-    project_name, user_prompt, self'
+    self, user_prompt, project_name'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project_name, user_prompt, self'
-  description: 'code2llm reports `Data Clump: project_name, user_prompt, self` in
+  title: 'Address code smell: Data Clump: self, user_prompt, project_name'
+  description: 'code2llm reports `Data Clump: self, user_prompt, project_name` in
     `src/lane/providers/openai_compat.py:67`.
 
 
-    Arguments (project_name, user_prompt, self) are used together in multiple functions:
+    Arguments (self, user_prompt, project_name) are used together in multiple functions:
     src.lane.providers.base.LLMProvider.generate_plan, src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan.
 
 
@@ -104,7 +104,7 @@ tickets:
   files:
   - src/lane/providers/openai_compat.py
   dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/openai_compat.py:67:Data
-    Clump: project_name, user_prompt, self'
+    Clump: self, user_prompt, project_name'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _build_tree'
   description: 'code2llm reports `God Function: _build_tree` in `src/lane/project_analyzer.py:239`.
@@ -184,7 +184,7 @@ tickets:
     analyze_project'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_plan'
-  description: 'code2llm reports `God Function: cmd_plan` in `src/lane/cli.py:31`.
+  description: 'code2llm reports `God Function: cmd_plan` in `src/lane/cli.py:32`.
 
 
     Function ''cmd_plan'' is oversized: CC=4, fan-out=12, mutations=4.
@@ -199,10 +199,10 @@ tickets:
   - god-function
   files:
   - src/lane/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:31:God Function: cmd_plan'
+  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:32:God Function: cmd_plan'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_print_context'
-  description: 'code2llm reports `God Function: cmd_print_context` in `src/lane/cli.py:64`.
+  description: 'code2llm reports `God Function: cmd_print_context` in `src/lane/cli.py:65`.
 
 
     Function ''cmd_print_context'' is oversized: CC=2, fan-out=11, mutations=4.
@@ -217,10 +217,10 @@ tickets:
   - god-function
   files:
   - src/lane/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:64:God Function: cmd_print_context'
+  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:65:God Function: cmd_print_context'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_print_prompt'
-  description: 'code2llm reports `God Function: cmd_print_prompt` in `src/lane/cli.py:83`.
+  description: 'code2llm reports `God Function: cmd_print_prompt` in `src/lane/cli.py:84`.
 
 
     Function ''cmd_print_prompt'' is oversized: CC=1, fan-out=11, mutations=3.
@@ -235,10 +235,28 @@ tickets:
   - god-function
   files:
   - src/lane/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:83:God Function: cmd_print_prompt'
+  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:84:God Function: cmd_print_prompt'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: cmd_tickets'
+  description: 'code2llm reports `God Function: cmd_tickets` in `src/lane/cli.py:114`.
+
+
+    Function ''cmd_tickets'' is oversized: CC=9, fan-out=18, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/lane/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:114:God Function: cmd_tickets'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: main'
-  description: 'code2llm reports `God Function: main` in `src/lane/cli.py:121`.
+  description: 'code2llm reports `God Function: main` in `src/lane/cli.py:177`.
 
 
     Function ''main'' is oversized: CC=4, fan-out=16, mutations=19.
@@ -253,7 +271,7 @@ tickets:
   - god-function
   files:
   - src/lane/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:121:God Function: main'
+  dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:177:God Function: main'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: render_plan'
   description: 'code2llm reports `God Function: render_plan` in `src/lane/output.py:21`.

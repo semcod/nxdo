@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+.code2llm_cache/__init___1779813747840622603_823.pkl
+.code2llm_cache/cli_1779813728398420144_8551.pkl
+.code2llm_cache/pyproject_1779813746964613479_2251.pkl
+.code2llm_cache/ticket_generator_1779813709436222750_5067.pkl
+.code2llm_cache/tree_1779813839904582136_1756.pkl
 .code2llm_cache/__init___1779813089818599765_823.pkl
 .code2llm_cache/pyproject_1779813089323595748_2093.pkl
 .code2llm_cache/__init___1779812250483313022_823.pkl
