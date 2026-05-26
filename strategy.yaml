@@ -1,24 +1,28 @@
-description: The lane project is a Python package designed for generating engineering
-  task plans based on project state and git history. Recent development has focused
-  on enhancing documentation, fixing bugs, and adding new features, particularly around
-  task synchronization and CLI improvements.
+description: The lane project is a Python package designed for generating task plans
+  based on project state and git history. Recent commits indicate a focus on documentation
+  updates and feature enhancements, particularly around the CLI and error handling.
+  There are several TODO items that need to be addressed, including implementing new
+  features and improving test coverage.
 domain: development
-goal: The lane project is a Python package designed for generating engineering task
-  plans based on project state and git history. Recent development has focused on
-  enhancing documentation, fixing bugs, and adding new features, particularly around
-  task synchronization and CLI improvements.
+goal: The lane project is a Python package designed for generating task plans based
+  on project state and git history. Recent commits indicate a focus on documentation
+  updates and feature enhancements, particularly around the CLI and error handling.
+  There are several TODO items that need to be addressed, including implementing new
+  features and improving test coverage.
 name: lane
 project_type: software
 sprints:
-- goal: The lane project is a Python package designed for generating engineering task
-    plans based on project state and git history. Recent development has focused on
-    enhancing documentation, fixing bugs, and adding new features, particularly around
-    task synchronization and CLI improvements.
+- goal: The lane project is a Python package designed for generating task plans based
+    on project state and git history. Recent commits indicate a focus on documentation
+    updates and feature enhancements, particularly around the CLI and error handling.
+    There are several TODO items that need to be addressed, including implementing
+    new features and improving test coverage.
   id: 1
   name: Sprint 1
   task_patterns:
   - acceptance_criteria:
-    - Tasks are successfully synced to TODO.md as checkboxes.
+    - '`--sync-todo` flag successfully syncs tasks to TODO.md'
+    - All existing tasks are accurately reflected in TODO.md
     dependencies: []
     description: Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes
       as outlined in the TODO markers.
@@ -29,7 +33,8 @@ sprints:
     task_type: feature
     title: Implement `--sync-todo` functionality
   - acceptance_criteria:
-    - Git context extraction includes recent commits and changed files.
+    - Git context extraction provides detailed insights
+    - Recent commits and changed files are accurately captured
     dependencies: []
     description: Improve the functionality for extracting git context, including recent
       commits and changed files, to provide better insights for task generation.
@@ -40,7 +45,8 @@ sprints:
     task_type: feature
     title: Enhance Git context extraction
   - acceptance_criteria:
-    - Unit tests cover all edge cases for the `sync-todo` feature.
+    - Unit tests cover all edge cases
+    - '`sync-todo` functionality passes all tests'
     dependencies: []
     description: Create unit tests to ensure the new `sync-todo` functionality works
       as expected and handles edge cases.
@@ -51,7 +57,8 @@ sprints:
     task_type: test
     title: Add unit tests for `sync-todo` feature
   - acceptance_criteria:
-    - CLI command handling is more modular and easier to maintain.
+    - CLI command handling is more modular
+    - Code is easier to read and maintain
     dependencies: []
     description: Refactor the command handling in the CLI to improve readability and
       maintainability, especially around the new features added.
@@ -62,7 +69,8 @@ sprints:
     task_type: refactor
     title: Refactor CLI command handling
   - acceptance_criteria:
-    - README.md includes updated documentation for `sync-todo` and other recent features.
+    - README.md includes `sync-todo` documentation
+    - All recent changes are reflected in the README
     dependencies: []
     description: Revise the README.md to include documentation for the new `sync-todo`
       feature and any other recent changes.
@@ -73,7 +81,8 @@ sprints:
     task_type: docs
     title: Update README with new features
   - acceptance_criteria:
-    - API error handling provides detailed error messages for failures.
+    - API error handling provides detailed messages
+    - No unhandled exceptions occur during API calls
     dependencies: []
     description: Review and enhance the API error handling to ensure detailed error
       messages are provided for API failures.
@@ -84,7 +93,8 @@ sprints:
     task_type: bug
     title: Fix API error handling
   - acceptance_criteria:
-    - Integration tests cover all CLI commands and validate their functionality.
+    - All CLI commands pass integration tests
+    - Integration tests cover various scenarios
     dependencies: []
     description: Implement integration tests for the CLI commands to ensure they work
       correctly with the overall system.
@@ -95,29 +105,32 @@ sprints:
     task_type: test
     title: Add integration tests for CLI commands
   - acceptance_criteria:
-    - CLI error messages are clear and provide guidance to users.
+    - Error messages are clear and informative
+    - Users can easily understand issues from error messages
     dependencies: []
     description: Enhance the error messages provided by the CLI to be more user-friendly
       and informative.
     estimated_hours: 2.0
     id: task-8
-    priority: high
+    priority: medium
     status: pending
-    task_type: chore
+    task_type: refactor
     title: Improve error messages in CLI
   - acceptance_criteria:
-    - Documentation includes clear instructions on using planfile integration.
+    - Documentation is clear and comprehensive
+    - Users can easily understand how to use planfile integration
     dependencies: []
     description: Create documentation for the planfile integration feature, explaining
       how to use it and its benefits.
     estimated_hours: 3.0
     id: task-9
-    priority: medium
+    priority: high
     status: pending
     task_type: docs
     title: Document planfile integration
   - acceptance_criteria:
-    - TODO.md is updated and reflects current project priorities.
+    - TODO.md is up-to-date
+    - Outdated tasks are removed or updated
     dependencies: []
     description: Go through the TODO.md file to clean up any outdated tasks and ensure
       it reflects the current project priorities.

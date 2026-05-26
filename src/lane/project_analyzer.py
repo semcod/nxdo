@@ -236,23 +236,32 @@ def _get_extension(is_last: bool) -> str:
     return _get_tree_symbol(is_last, connector=False)
 
 
+def _get_subtree_lines(entry: Path, max_depth: int, depth: int, is_last: bool, prefix: str) -> list[str]:
+    """Get subtree lines for a directory entry if within depth limits."""
+    if not entry.is_dir() or depth >= max_depth - 1:
+        return []
+    subtree = _build_tree(entry, max_depth, depth + 1, prefix + _get_extension(is_last))
+    return [subtree] if subtree else []
+
+
 def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
+    """Build ASCII tree representation of directory structure."""
     try:
         entries = sorted(root.iterdir(), key=lambda entry: (entry.is_file(), entry.name.lower()))
     except OSError:
         return ""
 
     visible_entries = [entry for entry in entries if not _should_ignore_entry(entry.name)]
+    if not visible_entries:
+        return ""
+
     lines: list[str] = []
+    last_index = len(visible_entries) - 1
 
     for index, entry in enumerate(visible_entries):
-        is_last = index == len(visible_entries) - 1
+        is_last = index == last_index
         lines.append(prefix + _get_connector(is_last) + entry.name)
-
-        if entry.is_dir() and depth < max_depth - 1:
-            subtree = _build_tree(entry, max_depth, depth + 1, prefix + _get_extension(is_last))
-            if subtree:
-                lines.append(subtree)
+        lines.extend(_get_subtree_lines(entry, max_depth, depth, is_last, prefix))
 
     return "\n".join(lines)
 

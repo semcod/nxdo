@@ -185,7 +185,18 @@ def _create_commit_info(meta: tuple[str, str, str, str], files: list[str]) -> Co
     return CommitInfo(commit_hash, author, date, message, files)
 
 
+def _finalize_commit(
+    commits: list[CommitInfo],
+    meta: tuple[str, str, str, str] | None,
+    files: list[str]
+) -> None:
+    """Append finalized commit to commits list if meta exists."""
+    if meta:
+        commits.append(_create_commit_info(meta, files))
+
+
 def _parse_commits(log_raw: str) -> list[CommitInfo]:
+    """Parse git log output into list of CommitInfo objects."""
     commits: list[CommitInfo] = []
     current_meta: tuple[str, str, str, str] | None = None
     current_files: list[str] = []
@@ -193,15 +204,13 @@ def _parse_commits(log_raw: str) -> list[CommitInfo]:
     for line in log_raw.splitlines():
         meta = _parse_commit_metadata(line)
         if meta:
-            if current_meta:
-                commits.append(_create_commit_info(current_meta, current_files))
+            _finalize_commit(commits, current_meta, current_files)
             current_meta = meta
             current_files = []
-        elif line.strip() and current_meta:
+            continue
+        if line.strip() and current_meta:
             current_files.append(line.strip())
 
-    if current_meta:
-        commits.append(_create_commit_info(current_meta, current_files))
-
+    _finalize_commit(commits, current_meta, current_files)
     return commits
 

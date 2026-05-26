@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.2.12] - 2026-05-26
+
+### Docs
+- Update README.md
+- Update TODO.md
+
+### Other
+- Update .koru/events/observability.jsonl
+- Update .planfile/sprints/current.yaml
+- Update strategy.yaml
+
 ## [0.2.11] - 2026-05-26
 
 ### Docs
