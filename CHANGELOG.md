@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [0.2.11] - 2026-05-26
+
+### Docs
+- Update README.md
+- Update TODO.md
+
+### Test
+- Update tests/test_cli.py
+
+### Other
+- Update .koru/events/observability.jsonl
+- Update .planfile/sprints/current.yaml
+- Update project/planfile-tickets.yaml
+
 ## [0.2.10] - 2026-05-26
 
 ### Docs

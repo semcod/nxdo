@@ -7,7 +7,7 @@ sprint:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.292160Z'
+      created_at: '2026-05-26T18:13:48.100509Z'
       description: ''
       files: []
       history: []
@@ -18,12 +18,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.292166Z'
+      updated_at: '2026-05-26T18:13:48.100514Z'
     LANE-10:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.439186Z'
+      created_at: '2026-05-26T18:13:48.208852Z'
       description: ''
       files: []
       history: []
@@ -34,12 +34,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.439191Z'
+      updated_at: '2026-05-26T18:13:48.208857Z'
     LANE-2:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.307230Z'
+      created_at: '2026-05-26T18:13:48.113466Z'
       description: ''
       files: []
       history: []
@@ -50,12 +50,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.307236Z'
+      updated_at: '2026-05-26T18:13:48.113471Z'
     LANE-3:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.325183Z'
+      created_at: '2026-05-26T18:13:48.124790Z'
       description: ''
       files: []
       history: []
@@ -66,12 +66,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.325189Z'
+      updated_at: '2026-05-26T18:13:48.124795Z'
     LANE-4:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.341179Z'
+      created_at: '2026-05-26T18:13:48.136820Z'
       description: ''
       files: []
       history: []
@@ -82,12 +82,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.341184Z'
+      updated_at: '2026-05-26T18:13:48.136825Z'
     LANE-5:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.357504Z'
+      created_at: '2026-05-26T18:13:48.148740Z'
       description: ''
       files: []
       history: []
@@ -98,12 +98,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.357510Z'
+      updated_at: '2026-05-26T18:13:48.148749Z'
     LANE-6:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.373264Z'
+      created_at: '2026-05-26T18:13:48.160806Z'
       description: ''
       files: []
       history: []
@@ -114,12 +114,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.373268Z'
+      updated_at: '2026-05-26T18:13:48.160810Z'
     LANE-7:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.389337Z'
+      created_at: '2026-05-26T18:13:48.172756Z'
       description: ''
       files: []
       history: []
@@ -130,12 +130,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.389344Z'
+      updated_at: '2026-05-26T18:13:48.172760Z'
     LANE-8:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.405266Z'
+      created_at: '2026-05-26T18:13:48.184864Z'
       description: ''
       files: []
       history: []
@@ -146,12 +146,12 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.405273Z'
+      updated_at: '2026-05-26T18:13:48.184868Z'
     LANE-9:
       acceptance_criteria: []
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T17:52:50.422677Z'
+      created_at: '2026-05-26T18:13:48.196864Z'
       description: ''
       files: []
       history: []
@@ -162,4 +162,4 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T17:52:50.422684Z'
+      updated_at: '2026-05-26T18:13:48.196867Z'
