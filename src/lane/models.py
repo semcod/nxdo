@@ -1,8 +1,9 @@
 """Data models used by lane."""
 
-from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class Priority(str, Enum):
@@ -20,32 +21,34 @@ class TaskType(str, Enum):
     CHORE = "chore"
 
 
-@dataclass
-class Task:
+class Task(BaseModel):
     number: int
     title: str
     description: str
     priority: Priority = Priority.MEDIUM
     task_type: TaskType = TaskType.FEATURE
     estimated_hours: Optional[float] = None
-    acceptance_criteria: list[str] = field(default_factory=list)
-    dependencies: list[int] = field(default_factory=list)
+    acceptance_criteria: list[str] = Field(default_factory=list)
+    dependencies: list[int] = Field(default_factory=list)
 
     def __str__(self) -> str:
         tag = f"[{self.task_type.value.upper()}]"
         pri = f"({self.priority.value})"
-        est = f" ~{self.estimated_hours}h" if self.estimated_hours is not None else ""
+        est_val = self.estimated_hours
+        if est_val is not None:
+            est = f" ~{int(est_val) if est_val == int(est_val) else est_val}h"
+        else:
+            est = ""
         return f"{self.number:02d}. {tag} {pri}{est} {self.title}"
 
     def to_dict(self) -> dict[str, object]:
-        data = asdict(self)
+        data = self.model_dump()
         data["priority"] = self.priority.value
         data["task_type"] = self.task_type.value
         return data
 
 
-@dataclass
-class TaskPlan:
+class TaskPlan(BaseModel):
     project_name: str
     summary: str
     tasks: list[Task]

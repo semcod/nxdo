@@ -35,11 +35,17 @@ class GitContext:
             "",
             f"Recent {len(self.recent_commits)} commits:",
         ]
-        for commit in self.recent_commits:
-            lines.append(f"  {commit}")
+        if self.recent_commits:
+            for commit in self.recent_commits:
+                lines.append(f"  {commit}")
+        else:
+            lines.append("  (no commits found)")
         lines += ["", "Most active files recently:"]
-        for changed_file in self.changed_files_summary[:15]:
-            lines.append(f"  {changed_file}")
+        if self.changed_files_summary:
+            for changed_file in self.changed_files_summary[:15]:
+                lines.append(f"  {changed_file}")
+        else:
+            lines.append("  (no file activity found)")
         if self.open_todos:
             lines += ["", "TODO/FIXME markers found in code:"]
             for todo in self.open_todos[:20]:
@@ -48,6 +54,7 @@ class GitContext:
 
 
 def _run(cmd: list[str], cwd: Path) -> str:
+    """Run *cmd* in *cwd* and return stdout; return empty string on any failure."""
     try:
         result = subprocess.run(
             cmd,
@@ -57,12 +64,27 @@ def _run(cmd: list[str], cwd: Path) -> str:
             timeout=15,
             check=False,
         )
-    except Exception:
+    except (OSError, subprocess.TimeoutExpired):
         return ""
     return result.stdout.strip() if result.returncode == 0 else ""
 
 
+def _is_git_repo(path: Path) -> bool:
+    """Return True if *path* is inside a git repository."""
+    return bool(_run(["git", "rev-parse", "--git-dir"], path))
+
+
 def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
+    if not _is_git_repo(repo_path):
+        return GitContext(
+            repo_path=repo_path,
+            branch="unknown",
+            remote_url="no remote",
+            recent_commits=[],
+            changed_files_summary=[],
+            open_todos=[],
+        )
+
     branch = _run(["git", "rev-parse", "--abbrev-ref", "HEAD"], repo_path) or "unknown"
     remote_url = _run(["git", "remote", "get-url", "origin"], repo_path) or "no remote"
 
