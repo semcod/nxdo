@@ -102,7 +102,11 @@ class OpenAICompatProvider(LLMProvider):
                 json=payload,
                 headers=headers,
             )
-            response.raise_for_status()
+            if not response.is_success:
+                error_detail = response.text
+                raise ValueError(
+                    f"API request failed with status {response.status_code}: {error_detail}"
+                )
             data = response.json()
 
         try:
@@ -135,6 +139,16 @@ def _parse_json_response(raw: str) -> dict:
 def _create_task_from_dict(item: dict, task_index: int) -> Task:
     """Create a Task object from a dictionary item."""
     try:
+        # Handle dependencies - convert to list of ints, filtering out non-int values
+        raw_deps = item.get("dependencies", [])
+        dependencies = []
+        for dep in raw_deps:
+            if isinstance(dep, int):
+                dependencies.append(dep)
+            elif isinstance(dep, str) and dep.isdigit():
+                dependencies.append(int(dep))
+            # Skip non-integer dependencies (e.g., task titles)
+
         return Task(
             number=int(item.get("number", task_index + 1)),
             title=item.get("title", "Untitled task"),
@@ -143,7 +157,7 @@ def _create_task_from_dict(item: dict, task_index: int) -> Task:
             task_type=TaskType(item.get("task_type", TaskType.FEATURE.value)),
             estimated_hours=item.get("estimated_hours"),
             acceptance_criteria=list(item.get("acceptance_criteria", [])),
-            dependencies=list(item.get("dependencies", [])),
+            dependencies=dependencies,
         )
     except (ValueError, TypeError) as exc:
         raise ValueError(f"Invalid task data in LLM response: {item}") from exc

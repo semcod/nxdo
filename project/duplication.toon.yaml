@@ -6,7 +6,7 @@ SUMMARY:
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   6
-  scan_ms:       3715
+  scan_ms:       2722
 
 HOTSPOTS[2] (files with most duplication):
   src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.4%)

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -13,7 +14,7 @@ class LaneSettings(BaseSettings):
 
     openrouter_api_key: Optional[str] = None
     openai_api_key: Optional[str] = None
-    llm_model: str = "openrouter/qwen/qwen3-coder-next"
+    llm_model: str = "openai/gpt-4o-mini"
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_timeout: int = 60
     llm_max_retries: int = 3
@@ -23,6 +24,9 @@ class LaneSettings(BaseSettings):
         env_prefix="",
         case_sensitive=False,
         extra="ignore",
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_ignore_empty=True,
     )
 
     @property

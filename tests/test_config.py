@@ -27,7 +27,7 @@ class ConfigTests(unittest.TestCase):
         env = {k: v for k, v in os.environ.items() if k != "OPENROUTER_API_KEY"}
         env["OPENAI_API_KEY"] = "sk-oa-only"
         with patch.dict(os.environ, env, clear=True):
-            cfg = LaneSettings()
+            cfg = LaneSettings(_env_file=None)
         self.assertEqual(cfg.api_key, "sk-oa-only")
 
     def test_settings_api_key_none_when_no_key_set(self) -> None:
@@ -35,7 +35,7 @@ class ConfigTests(unittest.TestCase):
 
         env = {k: v for k, v in os.environ.items() if k not in ("OPENROUTER_API_KEY", "OPENAI_API_KEY")}
         with patch.dict(os.environ, env, clear=True):
-            cfg = LaneSettings()
+            cfg = LaneSettings(_env_file=None)
         self.assertIsNone(cfg.api_key)
 
     def test_settings_defaults(self) -> None:

@@ -20,7 +20,7 @@ Generate the next 10 project tasks from project state, git history and an LLM pr
 ## Metadata
 
 - **name**: `lane`
-- **version**: `0.2.7`
+- **version**: `0.2.8`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: lane;
-  version: 0.2.7;
+  version: 0.2.8;
 }
 
 dependencies {
@@ -138,7 +138,7 @@ CONFIG[2]{key, value}:
 ```yaml
 project:
   name: lane
-  version: 0.2.7
+  version: 0.2.8
   env: local
 ```
 
@@ -372,7 +372,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('lane', '0.2.7', 'python').
+project_metadata('lane', '0.2.8', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -632,8 +632,8 @@ sumd_interface('cli', '').
 |----------|----|----|-----|-------|
 | `cmd_tickets` *(in src.lane.cli)* | 9 | 0 | 32 | **32** |
 | `_build_tree` *(in src.lane.project_analyzer)* | 8 | 2 | 14 | **16** |
-| `_create_task_from_dict` *(in src.lane.providers.openai_compat)* | 2 | 1 | 15 | **16** |
 | `cmd_plan` *(in src.lane.cli)* | 4 | 0 | 16 | **16** |
+| `_create_task_from_dict` *(in src.lane.providers.openai_compat)* | 2 | 1 | 15 | **16** |
 | `cmd_print_context` *(in src.lane.cli)* | 2 | 0 | 14 | **14** |
 | `cmd_print_prompt` *(in src.lane.cli)* | 1 | 0 | 13 | **13** |
 | `read_git_context` *(in src.lane.git_reader)* | 2 | 4 | 8 | **12** |
@@ -641,7 +641,7 @@ sumd_interface('cli', '').
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/lane
-# generated in 0.02s
+# generated in 0.04s
 # nodes: 54 | edges: 58 | modules: 8
 # CC̄=2.7
 
@@ -650,10 +650,10 @@ HUBS[20]:
     CC=9  in:0  out:32  total:32
   src.lane.project_analyzer._build_tree
     CC=8  in:2  out:14  total:16
-  src.lane.providers.openai_compat._create_task_from_dict
-    CC=2  in:1  out:15  total:16
   src.lane.cli.cmd_plan
     CC=4  in:0  out:16  total:16
+  src.lane.providers.openai_compat._create_task_from_dict
+    CC=2  in:1  out:15  total:16
   src.lane.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
   src.lane.cli.cmd_print_prompt
@@ -668,24 +668,24 @@ HUBS[20]:
     CC=7  in:1  out:9  total:10
   src.lane.project_analyzer.analyze_project
     CC=1  in:4  out:5  total:9
-  src.lane.ticket_generator.sync_to_todo_md
-    CC=3  in:1  out:6  total:7
   src.lane.git_reader._run
     CC=3  in:5  out:2  total:7
-  src.lane.config.get_settings
-    CC=2  in:5  out:1  total:6
+  src.lane.ticket_generator.sync_to_todo_md
+    CC=3  in:1  out:6  total:7
   src.lane.project_analyzer._parse_pyproject_tomllib
     CC=4  in:1  out:5  total:6
-  src.lane.providers.openai_compat._parse_json_response
-    CC=3  in:1  out:5  total:6
+  src.lane.config.get_settings
+    CC=2  in:5  out:1  total:6
   src.lane.project_analyzer._resolve_name_and_description
     CC=3  in:1  out:5  total:6
-  src.lane.project_analyzer._parse_cargo
+  src.lane.providers.openai_compat._parse_json_response
+    CC=3  in:1  out:5  total:6
+  src.lane.llm_client.build_user_prompt
+    CC=2  in:4  out:1  total:5
+  src.lane.ticket_generator.export_to_planfile_yaml
     CC=3  in:1  out:4  total:5
-  src.lane.ticket_generator._map_priority
-    CC=1  in:3  out:2  total:5
-  src.lane.project_analyzer._parse_pyproject_regex
-    CC=3  in:1  out:4  total:5
+  src.lane.project_analyzer._detect_stack
+    CC=4  in:1  out:4  total:5
 
 MODULES:
   src.lane.cli  [4 funcs]
@@ -739,6 +739,13 @@ MODULES:
     task_plan_to_tickets  CC=3  out:2
 
 EDGES:
+  src.lane.cli.cmd_plan → src.lane.config.get_settings
+  src.lane.cli.cmd_print_context → src.lane.project_analyzer.analyze_project
+  src.lane.cli.cmd_print_context → src.lane.git_reader.read_git_context
+  src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
+  src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
+  src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
+  src.lane.cli.cmd_tickets → src.lane.config.get_settings
   src.lane.git_reader._is_git_repo → src.lane.git_reader._run
   src.lane.git_reader._run_git_command → src.lane.git_reader._run
   src.lane.git_reader._get_git_branch → src.lane.git_reader._run_git_command
@@ -764,6 +771,10 @@ EDGES:
   src.lane.planner.generate_next_tasks → src.lane.config.get_settings
   src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
   src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
+  src.lane.ticket_generator.task_plan_to_tickets → src.lane.ticket_generator._map_priority
+  src.lane.ticket_generator.sync_to_todo_md → src.lane.ticket_generator._create_temp_strategy
+  src.lane.ticket_generator._create_temp_strategy → src.lane.ticket_generator._map_priority
+  src.lane.ticket_generator.export_to_planfile_yaml → src.lane.ticket_generator._map_priority
   src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._read_file_safely
   src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._truncate_file_content
   src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_pyproject
@@ -778,17 +789,6 @@ EDGES:
   src.lane.project_analyzer._parse_pyproject → src.lane.project_analyzer._parse_pyproject_tomllib
   src.lane.project_analyzer._parse_pyproject → src.lane.project_analyzer._parse_pyproject_regex
   src.lane.project_analyzer._get_connector → src.lane.project_analyzer._get_tree_symbol
-  src.lane.project_analyzer._get_extension → src.lane.project_analyzer._get_tree_symbol
-  src.lane.project_analyzer._build_tree → src.lane.project_analyzer._should_ignore_entry
-  src.lane.providers.openai_compat.OpenAICompatProvider.__init__ → src.lane.config.get_settings
-  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan → src.lane.providers.openai_compat._parse_response
-  src.lane.providers.openai_compat._parse_tasks_from_data → src.lane.providers.openai_compat._create_task_from_dict
-  src.lane.providers.openai_compat._parse_response → src.lane.providers.openai_compat._strip_markdown_fences
-  src.lane.providers.openai_compat._parse_response → src.lane.providers.openai_compat._parse_json_response
-  src.lane.providers.openai_compat._parse_response → src.lane.providers.openai_compat._parse_tasks_from_data
-  src.lane.cli.cmd_plan → src.lane.config.get_settings
-  src.lane.cli.cmd_print_context → src.lane.project_analyzer.analyze_project
-  src.lane.cli.cmd_print_context → src.lane.git_reader.read_git_context
 ```
 
 ## Test Contracts

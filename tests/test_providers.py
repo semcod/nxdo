@@ -60,7 +60,10 @@ class ParseResponseTests(unittest.TestCase):
 
 class OpenAICompatProviderTests(unittest.TestCase):
     def test_no_api_key_raises_value_error(self) -> None:
-        provider = OpenAICompatProvider(api_key=None)
+        from lane.config import LaneSettings
+
+        settings = LaneSettings(_env_file=None)
+        provider = OpenAICompatProvider(api_key=None, settings=settings)
         with patch.dict("os.environ", {}, clear=True):
             with self.assertRaises(ValueError) as ctx:
                 provider._call_api("prompt")

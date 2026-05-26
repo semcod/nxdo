@@ -33,13 +33,16 @@ class CLITests(unittest.TestCase):
         self.assertIn("special question", stdout.getvalue())
 
     def test_missing_api_key_returns_exit_1(self) -> None:
+        from lane.config import LaneSettings
+
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             import os
 
             env = {k: v for k, v in os.environ.items() if k not in ("OPENROUTER_API_KEY", "OPENAI_API_KEY")}
             with patch.dict(os.environ, env, clear=True):
-                exit_code = main([str(root)])
+                with patch("lane.cli.get_settings", return_value=LaneSettings(_env_file=None)):
+                    exit_code = main([str(root)])
 
         self.assertEqual(exit_code, 1)
 
@@ -53,6 +56,8 @@ class CLITests(unittest.TestCase):
                 self.assertIn("Project:", output)
 
     def test_json_mode_outputs_json(self) -> None:
+        from lane.config import LaneSettings
+
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             (root / "README.md").write_text("# test\n", encoding="utf-8")
@@ -60,8 +65,9 @@ class CLITests(unittest.TestCase):
 
             env = {k: v for k, v in os.environ.items() if k not in ("OPENROUTER_API_KEY", "OPENAI_API_KEY")}
             with patch.dict(os.environ, env, clear=True):
-                exit_code = main([str(root), "--json"])
-                self.assertEqual(exit_code, 1)  # No API key, so fails
+                with patch("lane.cli.get_settings", return_value=LaneSettings(_env_file=None)):
+                    exit_code = main([str(root), "--json"])
+                    self.assertEqual(exit_code, 1)  # No API key, so fails
 
     def test_max_commits_override(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

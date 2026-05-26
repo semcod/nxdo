@@ -2,6 +2,42 @@
 
 ## [Unreleased]
 
+## [0.2.9] - 2026-05-26
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_config.py
+- Update tests/test_providers.py
+
+### Other
+- Update app.doql.less
+- Update project/calls.png
+- Update project/duplication.toon.yaml
+- Update project/flow.png
+- Update project/index.html
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update project/project.toon.yaml
+
+## [0.2.9] - 2026-05-26
+
+### Fixed
+- Fix .env file loading - add automatic .env loading via pydantic-settings
+- Fix 400 Bad Request error from OpenRouter - change model to openai/gpt-4o-mini
+- Fix API error handling - add detailed error messages for API failures
+- Fix dependencies parsing - handle string dependencies by filtering/converting to integers
+- Update tests to disable .env loading in test scenarios
+
+### Changed
+- Change default model from openrouter/qwen/qwen3-coder-next to openai/gpt-4o-mini
+- Update config.py to load .env file automatically
+
 ## [0.2.8] - 2026-05-26
 
 ### Docs

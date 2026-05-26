@@ -1,4 +1,4 @@
-# lane | 70 func | 11f | 2141L | python | 2026-05-26
+# lane | 70 func | 11f | 2143L | python | 2026-05-26
 # generated in 0.00s
 
 HEALTH:
@@ -24,7 +24,7 @@ MODULES[20] (top by size):
   M[src/lane/models.py] 90L C:4 F:4 CC↑7 D:0 (python)
   M[src/lane/llm_client.py] 77L C:1 F:4 CC↑3 D:2 (python)
   M[src/lane/output.py] 67L C:0 F:3 CC↑4 D:1 (python)
-  M[tree.txt] 55L C:0 F:0 CC↑0 D:0 (txt)
+  M[tree.txt] 57L C:0 F:0 CC↑0 D:0 (txt)
   M[project.sh] 48L C:0 F:0 CC↑0 D:0 (shell)
   M[src/lane/planner.py] 42L C:0 F:1 CC↑3 D:1 (python)
   M[src/lane/config.py] 42L C:1 F:1 CC↑2 D:3 (python)
@@ -45,4 +45,4 @@ REFACTOR[4]:
   [4] M/M Reduce main fan-out (currently 16)
 
 EVOLUTION:
-  2026-05-26 CC̄=2.7 crit=0 2141L // Automated analysis
+  2026-05-26 CC̄=2.7 crit=0 2143L // Automated analysis
