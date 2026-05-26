@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [0.2.10] - 2026-05-26
+
+### Docs
+- Update README.md
+- Update TODO.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_project_analyzer.py
+- Update tests/test_providers.py
+- Update tests/test_ticket_generator.py
+
+### Other
+- Update .planfile/.store.lock
+- Update .planfile/sprints/current.yaml
+- Update strategy.yaml
+- Update uv.lock
+
 ## [0.2.9] - 2026-05-26
 
 ### Docs

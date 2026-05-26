@@ -1,0 +1,165 @@
+sprint:
+  id: current
+  name: Current
+  status: active
+  tickets:
+    LANE-1:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.292160Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-1
+      labels: []
+      name: Implement `--sync-todo` functionality
+      priority: critical
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.292166Z'
+    LANE-10:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.439186Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-10
+      labels: []
+      name: Review and clean up TODO.md
+      priority: medium
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.439191Z'
+    LANE-2:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.307230Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-2
+      labels: []
+      name: Enhance Git context extraction
+      priority: critical
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.307236Z'
+    LANE-3:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.325183Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-3
+      labels: []
+      name: Add unit tests for `sync-todo` feature
+      priority: high
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.325189Z'
+    LANE-4:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.341179Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-4
+      labels: []
+      name: Refactor CLI command handling
+      priority: high
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.341184Z'
+    LANE-5:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.357504Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-5
+      labels: []
+      name: Update README with new features
+      priority: high
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.357510Z'
+    LANE-6:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.373264Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-6
+      labels: []
+      name: Fix API error handling
+      priority: critical
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.373268Z'
+    LANE-7:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.389337Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-7
+      labels: []
+      name: Add integration tests for CLI commands
+      priority: high
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.389344Z'
+    LANE-8:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.405266Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-8
+      labels: []
+      name: Improve error messages in CLI
+      priority: medium
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.405273Z'
+    LANE-9:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      created_at: '2026-05-26T17:52:50.422677Z'
+      description: ''
+      files: []
+      history: []
+      id: LANE-9
+      labels: []
+      name: Document planfile integration
+      priority: high
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-05-26T17:52:50.422684Z'

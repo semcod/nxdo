@@ -88,6 +88,124 @@ class CLITests(unittest.TestCase):
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Project:", result.stdout)
 
+    def test_typer_print_context_rich_render(self) -> None:
+        """Test print-context without --raw to cover render_context branch (line 80)."""
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "README.md").write_text("# test\n", encoding="utf-8")
+            result = runner.invoke(app, ["print-context", str(root)])
+            self.assertEqual(result.exit_code, 0)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_plan_command_max_commits_branch(self, mock_generate: MagicMock) -> None:
+        """Test that --max-commits overrides cfg.max_commits (line 43)."""
+        from lane.models import TaskPlan
+        mock_plan = TaskPlan(project_name="p", summary="s", tasks=[])
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["plan", str(root), "--max-commits", "5"])
+            self.assertEqual(result.exit_code, 0)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_tickets_generates_and_displays(self, mock_generate: MagicMock) -> None:
+        """Test cmd_tickets happy path (lines 125-163)."""
+        from lane.models import TaskPlan, Task, Priority, TaskType
+        mock_plan = TaskPlan(
+            project_name="test",
+            summary="test summary",
+            generated_at="2026-01-01 00:00 UTC",
+            tasks=[
+                Task(
+                    number=1,
+                    title="Do something",
+                    description="Details",
+                    priority=Priority.HIGH,
+                    task_type=TaskType.FEATURE,
+                )
+            ],
+        )
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["tickets", str(root)])
+            self.assertEqual(result.exit_code, 0)
+            self.assertIn("Generated 1 tickets", result.stdout)
+            self.assertIn("Do something", result.stdout)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_tickets_sync_todo(self, mock_generate: MagicMock) -> None:
+        """Test cmd_tickets with --sync-todo flag."""
+        from lane.models import TaskPlan, Task, Priority, TaskType
+        mock_plan = TaskPlan(
+            project_name="test", summary="s", generated_at="2026-01-01 00:00 UTC",
+            tasks=[Task(number=1, title="T", description="", priority=Priority.LOW, task_type=TaskType.CHORE)],
+        )
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["tickets", str(root), "--sync-todo"])
+            self.assertEqual(result.exit_code, 0)
+            self.assertIn("Appended 1 tasks", result.stdout)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_tickets_export_yaml(self, mock_generate: MagicMock) -> None:
+        """Test cmd_tickets with --export-yaml flag."""
+        from lane.models import TaskPlan, Task, Priority, TaskType
+        mock_plan = TaskPlan(
+            project_name="test", summary="s", generated_at="2026-01-01 00:00 UTC",
+            tasks=[Task(number=1, title="T", description="", priority=Priority.LOW, task_type=TaskType.CHORE)],
+        )
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["tickets", str(root), "--export-yaml"])
+            self.assertEqual(result.exit_code, 0)
+            self.assertIn("Exported strategy", result.stdout)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_tickets_max_commits_branch(self, mock_generate: MagicMock) -> None:
+        """Test cmd_tickets --max-commits override (line 127)."""
+        from lane.models import TaskPlan
+        mock_plan = TaskPlan(project_name="p", summary="s", generated_at="2026-01-01 00:00 UTC", tasks=[])
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["tickets", str(root), "--max-commits", "5"])
+            self.assertEqual(result.exit_code, 0)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_tickets_sync_planfile(self, mock_generate: MagicMock) -> None:
+        """Test cmd_tickets with --sync-planfile flag."""
+        from lane.models import TaskPlan, Task, Priority, TaskType
+        mock_plan = TaskPlan(
+            project_name="test", summary="s", generated_at="2026-01-01 00:00 UTC",
+            tasks=[Task(number=1, title="T", description="", priority=Priority.HIGH, task_type=TaskType.FEATURE)],
+        )
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["tickets", str(root), "--sync-planfile"])
+            self.assertEqual(result.exit_code, 0)
+            self.assertIn("Generated 1 tickets", result.stdout)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_tickets_value_error(self, mock_generate: MagicMock) -> None:
+        """Test cmd_tickets handles ValueError."""
+        mock_generate.side_effect = ValueError("Missing API key")
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            result = runner.invoke(app, ["tickets", str(root)])
+            self.assertNotEqual(result.exit_code, 0)
+            self.assertIn("Error", result.stderr or result.output)
+
     def test_typer_print_prompt_command(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
@@ -164,6 +282,15 @@ class CLITests(unittest.TestCase):
         from lane import __main__
         self.assertIsNotNone(__main__)
 
+    def test_main_module_raises_system_exit(self) -> None:
+        """Test that running __main__ as script raises SystemExit (line 5)."""
+        with patch("lane.cli.main", return_value=0):
+            result = subprocess.run(
+                [sys.executable, "-m", "lane", "--help"],
+                capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0)
+
     @patch("lane.cli.generate_next_tasks")
     def test_cmd_plan_handles_value_error(self, mock_generate: MagicMock) -> None:
         """Test that cmd_plan handles ValueError from generate_next_tasks."""
@@ -200,6 +327,20 @@ class CLITests(unittest.TestCase):
             (root / "README.md").write_text("# test\n", encoding="utf-8")
             exit_code = main([str(root), "--json"])
             self.assertEqual(exit_code, 0)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_main_plain_output(self, mock_generate: MagicMock) -> None:
+        """Test that main function prints plan without --json (line 213)."""
+        from lane.models import TaskPlan
+        mock_plan = TaskPlan(project_name="proj", summary="sum", tasks=[])
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            with patch("sys.stdout", new_callable=StringIO) as stdout:
+                exit_code = main([str(root)])
+            self.assertEqual(exit_code, 0)
+            self.assertIn("proj", stdout.getvalue())
 
 
 if __name__ == "__main__":

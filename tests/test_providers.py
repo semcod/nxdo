@@ -131,6 +131,36 @@ class OpenAICompatProviderTests(unittest.TestCase):
             provider._call_api("prompt")
         self.assertIn("Unexpected LLM response", str(ctx.exception))
 
+    @patch("lane.providers.openai_compat.httpx.Client")
+    def test_call_api_raises_on_http_error(self, mock_client_class: MagicMock) -> None:
+        """Test that _call_api raises ValueError on non-2xx response (lines 106-107)."""
+        mock_response = MagicMock()
+        mock_response.is_success = False
+        mock_response.status_code = 401
+        mock_response.text = '{"error": "Unauthorized"}'
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test")
+        with self.assertRaises(ValueError) as ctx:
+            provider._call_api("prompt")
+        self.assertIn("401", str(ctx.exception))
+
+    def test_create_task_from_dict_handles_string_dep(self) -> None:
+        """Test _create_task_from_dict skips non-numeric string dependencies (lines 146-149)."""
+        from lane.providers.openai_compat import _create_task_from_dict
+        item = {
+            "number": 1,
+            "title": "T",
+            "description": "",
+            "priority": "medium",
+            "task_type": "feature",
+            "dependencies": ["1", "task-title-dep", 2],
+        }
+        task = _create_task_from_dict(item, 0)
+        self.assertEqual(task.dependencies, [1, 2])
+
 
 if __name__ == "__main__":
     unittest.main()

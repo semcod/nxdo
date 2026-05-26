@@ -5,10 +5,12 @@ import unittest
 from lane.project_analyzer import (
     analyze_project,
     _parse_pyproject,
+    _parse_pyproject_tomllib,
     _readme_summary,
     _parse_package_json,
     _parse_cargo,
     _detect_stack,
+    _build_tree,
 )
 
 
@@ -174,6 +176,29 @@ class ProjectAnalyzerTests(unittest.TestCase):
             snapshot = analyze_project(root)
             self.assertEqual(snapshot.name, "rustcrate")
             self.assertEqual(snapshot.description, "Rust crate")
+
+
+    def test_parse_pyproject_tomllib_returns_none_when_tomllib_unavailable(self) -> None:
+        """Test _parse_pyproject_tomllib returns None when tomllib is None (line 152)."""
+        import lane.project_analyzer as pa
+        original = pa.tomllib
+        pa.tomllib = None
+        try:
+            result = _parse_pyproject_tomllib('[project]\nname = "x"', "fallback")
+            self.assertIsNone(result)
+        finally:
+            pa.tomllib = original
+
+    def test_parse_pyproject_tomllib_returns_none_when_project_not_dict(self) -> None:
+        """Test _parse_pyproject_tomllib returns None when project is not a dict (line 160)."""
+        result = _parse_pyproject_tomllib("project = 42\n", "fallback")
+        self.assertIsNone(result)
+
+    def test_build_tree_returns_empty_on_oserror(self) -> None:
+        """Test _build_tree returns empty string on OSError (lines 242-243)."""
+        from pathlib import Path
+        result = _build_tree(Path("/nonexistent/path/xyz"), max_depth=3)
+        self.assertEqual(result, "")
 
 
 if __name__ == "__main__":

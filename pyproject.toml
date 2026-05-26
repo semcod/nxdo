@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lane"
-version = "0.2.9"
+version = "0.2.10"
 description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -27,7 +27,7 @@ dependencies = [
   "httpx>=0.27",
   "tenacity>=8",
   "pyyaml>=6.0",
-  "planfile @ file:///home/tom/github/semcod/planfile",
+  "planfile @ git+https://github.com/semcod/planfile.git",
 ]
 
 [project.optional-dependencies]

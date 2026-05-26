@@ -15,7 +15,7 @@ from .output import render_context, render_plan, render_plan_json
 from .planner import generate_next_tasks
 from .project_analyzer import analyze_project
 from .providers import OpenAICompatProvider
-from .ticket_generator import export_to_planfile_yaml, sync_to_todo_md, task_plan_to_tickets
+from .ticket_generator import export_to_planfile_yaml, sync_to_planfile, sync_to_todo_md, task_plan_to_tickets
 
 app = typer.Typer(
     name="lane",
@@ -117,7 +117,8 @@ def cmd_tickets(
     model: Optional[str] = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
     base_url: Optional[str] = typer.Option(None, "--base-url", help="Override the API base URL."),
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
-    sync_todo: bool = typer.Option(False, "--sync-todo", help="Sync tasks to TODO.md checkboxes."),
+    sync_todo: bool = typer.Option(False, "--sync-todo", help="Append tasks to TODO.md as checkboxes."),
+    sync_planfile: bool = typer.Option(False, "--sync-planfile", help="Store tickets in .planfile/ and sync with markdown."),
     export_yaml: bool = typer.Option(False, "--export-yaml", help="Export to planfile YAML format."),
     output_path: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
 ) -> None:
@@ -146,10 +147,14 @@ def cmd_tickets(
     # Sync to TODO.md if requested
     if sync_todo:
         report = sync_to_todo_md(plan, repo.resolve())
-        if report.get("enabled"):
-            console.print(f"[green]✓[/green] Synced {report.get('updated', 0)} tasks to TODO.md")
-        else:
-            console.print("[yellow]⚠[/yellow] TODO.md sync not enabled or planfile not available")
+        todo_path = report.get("todo_path", "TODO.md")
+        console.print(f"[green]✓[/green] Appended {report.get('updated', 0)} tasks to {todo_path}")
+
+    # Sync to .planfile/ store and markdown if requested
+    if sync_planfile:
+        report = sync_to_planfile(plan, repo.resolve())
+        if not report.get("enabled"):
+            console.print("[yellow]⚠[/yellow] planfile not available")
 
     # Export to planfile YAML if requested
     if export_yaml:
