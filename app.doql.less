@@ -1,0 +1,47 @@
+// LESS format — define @variables here as needed
+
+app {
+  name: lane;
+  version: 0.2.2;
+}
+
+dependencies {
+  runtime: "pydantic>=2, pydantic-settings>=2, typer>=0.12, rich>=13, httpx>=0.27, tenacity>=8";
+  dev: "pytest, pytest-mock, ruff, mypy, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
+}
+
+entity[name="Task"] {
+  number: int!;
+  title: string!;
+  description: string!;
+  priority: Priority!;
+  task_type: TaskType!;
+  estimated_hours: float;
+  acceptance_criteria: list[str]!;
+  dependencies: list[int]!;
+}
+
+entity[name="TaskPlan"] {
+  project_name: string!;
+  summary: string!;
+  tasks: list[Task]!;
+  generated_at: string!;
+  model_used: string!;
+}
+
+interface[type="cli"] {
+  framework: argparse;
+}
+interface[type="cli"] page[name="lane"] {
+
+}
+
+deploy {
+  target: pip;
+}
+
+environment[name="local"] {
+  runtime: python;
+  env_file: .env;
+  python_version: >=3.10;
+}

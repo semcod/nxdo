@@ -1,0 +1,50 @@
+# lane | 38 func | 10f | 1689L | python | 2026-05-26
+# generated in 0.00s
+
+HEALTH:
+  CC̄=3.7  critical=1 (limit:10)  dup=0  cycles=1
+
+ALERTS[9]:
+  !!! high_fan_out     _parse_response = 20 (limit:10)
+  !!  high_fan_out     main = 16 (limit:10)
+  !   high_fan_out     cmd_plan = 12 (limit:10)
+  !   high_fan_out     cmd_print_context = 11 (limit:10)
+  !   high_fan_out     cmd_print_prompt = 11 (limit:10)
+  !   high_fan_out     _build_tree = 11 (limit:10)
+  !   high_fan_out     read_git_context = 10 (limit:10)
+  !   high_fan_out     analyze_project = 10 (limit:10)
+  !   high_fan_out     OpenAICompatProvider._call_api = 10 (limit:10)
+
+MODULES[17] (top by size):
+  M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
+  M[src/lane/project_analyzer.py] 191L C:1 F:8 CC↑11 D:2 (python)
+  M[src/lane/cli.py] 160L C:0 F:6 CC↑4 D:0 (python)
+  M[src/lane/git_reader.py] 152L C:2 F:6 CC↑9 D:2 (python)
+  M[src/lane/providers/openai_compat.py] 152L C:1 F:4 CC↑7 D:1 (python)
+  M[pyproject.toml] 93L C:0 F:0 CC↑0 D:0 (toml)
+  M[src/lane/models.py] 90L C:4 F:4 CC↑7 D:0 (python)
+  M[src/lane/llm_client.py] 77L C:1 F:4 CC↑3 D:2 (python)
+  M[src/lane/output.py] 67L C:0 F:3 CC↑4 D:1 (python)
+  M[project.sh] 48L C:0 F:0 CC↑0 D:0 (shell)
+  M[src/lane/planner.py] 42L C:0 F:1 CC↑3 D:1 (python)
+  M[src/lane/config.py] 42L C:1 F:1 CC↑2 D:3 (python)
+  M[src/lane/__init__.py] 31L C:0 F:0 CC↑0 D:0 (python)
+  M[src/lane/providers/base.py] 19L C:1 F:1 CC↑1 D:0 (python)
+  M[src/lane/__main__.py] 6L C:0 F:0 CC↑0 D:0 (python)
+  LANGS: python:13/shell:2/yaml:1/toml:1
+
+HOTSPOTS[9]:
+  ★ _parse_response fan=20  // Parse and validate the raw JSON response from the LLM.
+  ★ main fan=16  // Compatibility shim — maps legacy argparse argv to Typer sub-commands.
+  ★ cmd_plan fan=12  // Generate a 10-task plan for the repository.
+  ★ cmd_print_context fan=11  // Print the assembled project and git context (no LLM call).
+  ★ cmd_print_prompt fan=11  // Print the full prompt that would be sent to the LLM.
+
+REFACTOR[4]:
+  [1] H/H Split god module goal.yaml (512L, 0 classes)
+  [2] M/L Break circular dependency: src.lane.project_analyzer._build_tree
+  [3] M/M Reduce _parse_response fan-out (currently 20)
+  [4] M/M Reduce main fan-out (currently 16)
+
+EVOLUTION:
+  2026-05-26 CC̄=3.7 crit=1 1689L // Automated analysis

@@ -1,0 +1,77 @@
+# code2llm | 17f 1689L | python:13,shell:2,yaml:1,toml:1 | 2026-05-26
+# generated in 0.01s
+# CC̅=3.7 | critical:0/38 | dups:0 | cycles:1
+
+HEALTH[0]: ok
+
+REFACTOR[1]:
+  1. break 1 circular dependencies
+
+PIPELINES[19]:
+  [1] Src [cmd_plan]: cmd_plan → get_settings
+      PURITY: 100% pure
+  [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _detect_stack
+      PURITY: 100% pure
+  [3] Src [cmd_print_prompt]: cmd_print_prompt → analyze_project → _detect_stack
+      PURITY: 100% pure
+  [4] Src [cmd_validate]: cmd_validate
+      PURITY: 100% pure
+  [5] Src [app_entry]: app_entry
+      PURITY: 100% pure
+  [6] Src [main]: main → get_settings
+      PURITY: 100% pure
+  [7] Src [__str__]: __str__
+      PURITY: 100% pure
+  [8] Src [to_text]: to_text
+      PURITY: 100% pure
+  [9] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response
+      PURITY: 100% pure
+  [10] Src [__init__]: __init__
+      PURITY: 100% pure
+  [11] Src [generate_task_plan]: generate_task_plan → build_user_prompt
+      PURITY: 100% pure
+  [12] Src [to_text]: to_text
+      PURITY: 100% pure
+  [13] Src [__str__]: __str__
+      PURITY: 100% pure
+  [14] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [15] Src [__str__]: __str__
+      PURITY: 100% pure
+  [16] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [17] Src [__init__]: __init__ → get_settings
+      PURITY: 100% pure
+  [18] Src [generate_plan]: generate_plan → _parse_response
+      PURITY: 100% pure
+  [19] Src [_call_api]: _call_api
+      PURITY: 100% pure
+
+LAYERS:
+  src/                            CC̄=3.7    ←in:0  →out:0
+  │ project_analyzer           191L  1C    8m  CC=11     ←2
+  │ cli                        160L  0C    6m  CC=4      ←0
+  │ git_reader                 152L  2C    6m  CC=9      ←2
+  │ openai_compat              152L  1C    4m  CC=7      ←1
+  │ models                      90L  4C    4m  CC=7      ←0
+  │ llm_client                  77L  1C    4m  CC=3      ←2
+  │ output                      67L  0C    3m  CC=4      ←1
+  │ config                      42L  1C    1m  CC=2      ←3
+  │ planner                     42L  0C    1m  CC=3      ←1
+  │ __init__                    31L  0C    0m  CC=0.0    ←0
+  │ base                        19L  1C    1m  CC=1      ←0
+  │ __main__                     6L  0C    0m  CC=0.0    ←0
+  │ __init__                     6L  0C    0m  CC=0.0    ←0
+  │
+  ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              93L  0C    0m  CC=0.0    ←0
+  │ project.sh                  48L  0C    0m  CC=0.0    ←0
+  │ tree.sh                      1L  0C    0m  CC=0.0    ←0
+  │
+
+COUPLING: no cross-package imports detected
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

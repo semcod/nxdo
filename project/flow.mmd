@@ -1,0 +1,26 @@
+flowchart TD
+%% generated in 0.00s
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph Core
+        src__lane__cli__cmd_plan["cmd_plan"]
+        src__lane__cli__cmd_print_context["cmd_print_context"]
+        src__lane__cli__cmd_print_prompt["cmd_print_prompt"]
+        src__lane__cli__cmd_validate["cmd_validate"]
+        src__lane__cli__app_entry["app_entry"]
+        src__lane__cli__main["main"]
+        src__lane__git_reader__CommitInfo____str__["__str__"]
+        src__lane__git_reader__GitContext__to_text["to_text"]
+        src__lane__git_reader___run["_run"]
+        src__lane__git_reader___is_git_repo["_is_git_repo"]
+        src__lane__git_reader__read_git_context("read_git_context CC=9")
+        src__lane__planner__generate_next_tasks["generate_next_tasks"]
+        src__lane__llm_client__build_user_prompt["build_user_prompt"]
+        src__lane__llm_client__parse_task_plan_response["parse_task_plan_response"]
+        src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan["generate_task_plan"]
+        ...["+8 more"]
+    end
+
+    class src__lane__cli__cmd_plan,src__lane__cli__cmd_print_context,src__lane__cli__cmd_print_prompt,src__lane__cli__cmd_validate,src__lane__cli__app_entry,src__lane__cli__main,src__lane__git_reader__CommitInfo____str__,src__lane__git_reader__GitContext__to_text,src__lane__llm_client__build_user_prompt,src__lane__llm_client__parse_task_plan_response entry

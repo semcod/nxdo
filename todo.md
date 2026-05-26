@@ -1,27 +1,26 @@
 # TODO
 
-- [x] Przejrzeć README i doprecyzować dokumentację użycia CLI
-- [x] Dodać brakujące zależności deweloperskie do środowiska lokalnego
-- [x] Uruchomić testy jednostkowe i naprawić bieżące błędy
-- [x] Dodać walidację lint/type-check do procesu CI
-- [x] Przygotować pierwszy stabilny release narzędzia `lane`
+## Priorytet wysoki
+- [ ] Refaktoryzacja funkcji o wysokim CC (Cyclomatic Complexity):
+  - [ ] _build_tree (CC=11) - critical
+  - [ ] read_git_context (CC=9)
+  - [ ] analyze_project (CC=9)
+  - [ ] _parse_commits (CC=8)
+  - [ ] _parse_response (CC=7)
+- [ ] Poprawić pokrycie testów dla __main__.py (obecnie 0%)
+- [ ] Implementować TestQL scenarios zdefiniowane w testql-scenarios/
 
-## Zakończone zadania
+## Priorytet średni
+- [ ] Skonfigurować goal.yaml dla automatycznego release management
+- [ ] Dodać GitHub Actions CI workflow (został usunięty)
+- [ ] Zaimplementować testy integracyjne dla CLI komend
+- [ ] Poprawić pokrycie CLI z 89% do 95%+
 
-**v0.2.1 (2026-05-26)**
-- Dodano autora: Tom Sapletta (tom@sapletta.com)
-- Dodano zależności deweloperskie: goal, costs, pfix
-- Dodano konfigurację narzędzi AI (pfix, costs)
-- Dodano śledzenie kosztów AI w README
-- Zaktualizowano wersję do 0.2.1
-- Zaktualizowano CHANGELOG.md
-
-**v0.2.0 (2026-05-26)**
-- Dodano sekcję CLI Reference w README ze szczegółową dokumentacją komend
-- 80 testów jednostkowych z 96% pokryciem kodu
-- Wszystkie testy przechodzą pomyślnie
-- Utworzono CHANGELOG.md
-- Dodano URLs projektu do pyproject.toml
-- Utworzono MANIFEST.in dla dystrybucji pakietu
-- Naprawiono ostrzeżenia o licencji (format SPDX)
-- Pakiet zbudowany pomyślnie
+## Priorytet niski
+- [ ] Refaktoryzacja hotspots:
+  - [ ] _parse_response (fan=19)
+  - [ ] cmd_plan (fan=12)
+  - [ ] _build_tree (fan=11)
+  - [ ] cmd_print_context (fan=10)
+- [ ] Dodać wsparcie dla więcej typów projektów (Go, Java, etc.)
+- [ ] Poprawić dokumentację API dla provider abstraction

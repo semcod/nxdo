@@ -1,0 +1,101 @@
+# code2llm call graph | /home/tom/github/semcod/lane
+# generated in 0.02s
+# nodes: 21 | edges: 23 | modules: 7
+# CC̄=3.7
+
+HUBS[20]:
+  src.lane.providers.openai_compat._parse_response
+    CC=7  in:2  out:32  total:34
+  src.lane.git_reader.read_git_context
+    CC=9  in:4  out:16  total:20
+  src.lane.cli.cmd_plan
+    CC=4  in:0  out:16  total:16
+  src.lane.project_analyzer._build_tree
+    CC=11  in:2  out:13  total:15
+  src.lane.project_analyzer.analyze_project
+    CC=9  in:4  out:11  total:15
+  src.lane.cli.cmd_print_context
+    CC=2  in:0  out:14  total:14
+  src.lane.cli.cmd_print_prompt
+    CC=1  in:0  out:13  total:13
+  src.lane.git_reader._parse_commits
+    CC=8  in:1  out:10  total:11
+  src.lane.planner.generate_next_tasks
+    CC=3  in:2  out:8  total:10
+  src.lane.project_analyzer._parse_pyproject
+    CC=6  in:1  out:9  total:10
+  src.lane.git_reader._run
+    CC=3  in:6  out:2  total:8
+  src.lane.project_analyzer._detect_stack
+    CC=6  in:1  out:6  total:7
+  src.lane.project_analyzer._parse_cargo
+    CC=3  in:1  out:4  total:5
+  src.lane.config.get_settings
+    CC=2  in:4  out:1  total:5
+  src.lane.llm_client.build_user_prompt
+    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._parse_package_json
+    CC=2  in:1  out:4  total:5
+  src.lane.git_reader._is_git_repo
+    CC=1  in:1  out:2  total:3
+  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan
+    CC=1  in:0  out:2  total:2
+  src.lane.providers.openai_compat.OpenAICompatProvider.__init__
+    CC=5  in:0  out:2  total:2
+  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
+    CC=1  in:0  out:2  total:2
+
+MODULES:
+  src.lane.cli  [3 funcs]
+    cmd_plan  CC=4  out:16
+    cmd_print_context  CC=2  out:14
+    cmd_print_prompt  CC=1  out:13
+  src.lane.config  [1 funcs]
+    get_settings  CC=2  out:1
+  src.lane.git_reader  [4 funcs]
+    _is_git_repo  CC=1  out:2
+    _parse_commits  CC=8  out:10
+    _run  CC=3  out:2
+    read_git_context  CC=9  out:16
+  src.lane.llm_client  [3 funcs]
+    generate_task_plan  CC=1  out:2
+    build_user_prompt  CC=2  out:1
+    parse_task_plan_response  CC=1  out:1
+  src.lane.planner  [1 funcs]
+    generate_next_tasks  CC=3  out:8
+  src.lane.project_analyzer  [6 funcs]
+    _build_tree  CC=11  out:13
+    _detect_stack  CC=6  out:6
+    _parse_cargo  CC=3  out:4
+    _parse_package_json  CC=2  out:4
+    _parse_pyproject  CC=6  out:9
+    analyze_project  CC=9  out:11
+  src.lane.providers.openai_compat  [3 funcs]
+    __init__  CC=5  out:2
+    generate_plan  CC=1  out:2
+    _parse_response  CC=7  out:32
+
+EDGES:
+  src.lane.cli.cmd_plan → src.lane.config.get_settings
+  src.lane.cli.cmd_print_context → src.lane.project_analyzer.analyze_project
+  src.lane.cli.cmd_print_context → src.lane.git_reader.read_git_context
+  src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
+  src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
+  src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
+  src.lane.git_reader._is_git_repo → src.lane.git_reader._run
+  src.lane.git_reader.read_git_context → src.lane.git_reader._run
+  src.lane.git_reader.read_git_context → src.lane.git_reader._parse_commits
+  src.lane.git_reader.read_git_context → src.lane.git_reader._is_git_repo
+  src.lane.planner.generate_next_tasks → src.lane.project_analyzer.analyze_project
+  src.lane.planner.generate_next_tasks → src.lane.git_reader.read_git_context
+  src.lane.planner.generate_next_tasks → src.lane.llm_client.build_user_prompt
+  src.lane.planner.generate_next_tasks → src.lane.config.get_settings
+  src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
+  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._detect_stack
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._parse_pyproject
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._parse_package_json
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._build_tree
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._parse_cargo
+  src.lane.providers.openai_compat.OpenAICompatProvider.__init__ → src.lane.config.get_settings
+  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan → src.lane.providers.openai_compat._parse_response

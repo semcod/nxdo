@@ -1,0 +1,48 @@
+flowchart LR
+%% generated in 0.00s
+    subgraph src__lane
+        src__lane__git_reader___parse_commits["_parse_commits"]
+        src__lane__git_reader__read_git_context["read_git_context"]
+        src__lane__providers__openai_compat___parse_response["_parse_response"]
+        src__lane__project_analyzer___detect_stack["_detect_stack"]
+        src__lane__providers__openai_compat__OpenAICompatProvider__generate_plan["generate_plan"]
+        src__lane__project_analyzer___parse_cargo["_parse_cargo"]
+        src__lane__config__get_settings["get_settings"]
+        src__lane__cli__cmd_print_prompt["cmd_print_prompt"]
+        src__lane__providers__openai_compat__OpenAICompatProvider____init__["__init__"]
+        src__lane__git_reader___run["_run"]
+        src__lane__cli__cmd_print_context["cmd_print_context"]
+        src__lane__project_analyzer___build_tree["_build_tree"]
+        src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan["generate_task_plan"]
+        src__lane__llm_client__parse_task_plan_response["parse_task_plan_response"]
+        src__lane__cli__cmd_plan["cmd_plan"]
+        src__lane__llm_client__build_user_prompt["build_user_prompt"]
+        src__lane__planner__generate_next_tasks["generate_next_tasks"]
+        src__lane__project_analyzer__analyze_project["analyze_project"]
+        src__lane__project_analyzer___parse_pyproject["_parse_pyproject"]
+        src__lane__project_analyzer___parse_package_json["_parse_package_json"]
+        src__lane__git_reader___is_git_repo["_is_git_repo"]
+    end
+    src__lane__cli__cmd_plan --> src__lane__config__get_settings
+    src__lane__cli__cmd_print_context --> src__lane__project_analyzer__analyze_project
+    src__lane__cli__cmd_print_context --> src__lane__git_reader__read_git_context
+    src__lane__cli__cmd_print_prompt --> src__lane__project_analyzer__analyze_project
+    src__lane__cli__cmd_print_prompt --> src__lane__git_reader__read_git_context
+    src__lane__cli__cmd_print_prompt --> src__lane__llm_client__build_user_prompt
+    src__lane__git_reader___is_git_repo --> src__lane__git_reader___run
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___run
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___parse_commits
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___is_git_repo
+    src__lane__planner__generate_next_tasks --> src__lane__project_analyzer__analyze_project
+    src__lane__planner__generate_next_tasks --> src__lane__git_reader__read_git_context
+    src__lane__planner__generate_next_tasks --> src__lane__llm_client__build_user_prompt
+    src__lane__planner__generate_next_tasks --> src__lane__config__get_settings
+    src__lane__llm_client__parse_task_plan_response --> src__lane__providers__openai_compat___parse_response
+    src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan --> src__lane__llm_client__build_user_prompt
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___detect_stack
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___parse_pyproject
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___parse_package_json
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___build_tree
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___parse_cargo
+    src__lane__providers__openai_compat__OpenAICompatProvider____init__ --> src__lane__config__get_settings
+    src__lane__providers__openai_compat__OpenAICompatProvider__generate_plan --> src__lane__providers__openai_compat___parse_response

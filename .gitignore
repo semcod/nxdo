@@ -1,4 +1,21 @@
 # Byte-compiled / optimized / DLL files
+.code2llm_cache/__init___1779809524215187208_172.pkl
+.code2llm_cache/__init___1779812002217425058_823.pkl
+.code2llm_cache/__main___1779808740120530743_81.pkl
+.code2llm_cache/base_1779809524215844720_438.pkl
+.code2llm_cache/cli_1779809524215187208_5928.pkl
+.code2llm_cache/config_1779809524215187208_1120.pkl
+.code2llm_cache/git_reader_1779809524215187208_4761.pkl
+.code2llm_cache/goal_1779811976473106769_12258.pkl
+.code2llm_cache/llm_client_1779809524215187208_2431.pkl
+.code2llm_cache/models_1779809524215187208_2579.pkl
+.code2llm_cache/openai_compat_1779809524215844720_5473.pkl
+.code2llm_cache/output_1779809524215187208_2181.pkl
+.code2llm_cache/planner_1779809524215187208_1488.pkl
+.code2llm_cache/project_1779809832049560509_1409.pkl
+.code2llm_cache/project_analyzer_1779808740120530743_5996.pkl
+.code2llm_cache/pyproject_1779812001889728047_2093.pkl
+.code2llm_cache/tree_1779809832062560646_186.pkl
 .env.example
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
