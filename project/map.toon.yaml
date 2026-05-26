@@ -1,38 +1,85 @@
-# lane | 25f 2189L | python:22,shell:2,less:1 | 2026-05-26
-# stats: 25 func | 21 cls | 25 mod | CC̄=4.0 | critical:1 | cycles:0
-# alerts[5]: CC _build_tree=11; CC read_git_context=9; CC analyze_project=9; CC _parse_commits=8; CC _parse_response=7
-# hotspots[5]: _parse_response fan=19; main fan=15; cmd_plan fan=12; _build_tree fan=11; cmd_print_context fan=10
-# evolution: baseline
+# lane | 19f 1915L | yaml:3,toml:1,txt:1,shell:1,python:13 | 2026-05-26
+# generated in 0.00s
+# stats: 64 func | 0 cls | 19 mod | CC̄=2.6 | critical:0 | cycles:0
+# alerts[5]: fan-out main=16; fan-out _build_tree=13; fan-out cmd_plan=12; fan-out cmd_print_context=11; fan-out cmd_print_prompt=11
+# hotspots[5]: main fan=16; _build_tree fan=13; cmd_plan fan=12; cmd_print_context fan=11; cmd_print_prompt fan=11
+# evolution: CC̄ 2.9→2.6 (improved -0.3)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[25]:
-  app.doql.less,48
+M[19]:
+  goal.yaml,512
   project.sh,48
-  src/lane/__init__.py,32
-  src/lane/__main__.py,7
-  src/lane/cli.py,161
-  src/lane/config.py,43
-  src/lane/git_reader.py,153
-  src/lane/llm_client.py,78
-  src/lane/models.py,91
-  src/lane/output.py,68
-  src/lane/planner.py,43
-  src/lane/project_analyzer.py,192
-  src/lane/providers/__init__.py,7
-  src/lane/providers/base.py,20
-  src/lane/providers/openai_compat.py,153
-  tests/test_cli.py,157
-  tests/test_config.py,52
-  tests/test_git_reader.py,162
-  tests/test_llm_client.py,105
-  tests/test_models.py,88
-  tests/test_output.py,70
-  tests/test_planner.py,93
-  tests/test_project_analyzer.py,182
-  tests/test_providers.py,134
-  tree.sh,2
+  pyproject.toml,93
+  src/lane/__init__.py,31
+  src/lane/__main__.py,6
+  src/lane/cli.py,160
+  src/lane/config.py,42
+  src/lane/git_reader.py,207
+  src/lane/llm_client.py,77
+  src/lane/models.py,90
+  src/lane/output.py,67
+  src/lane/planner.py,42
+  src/lane/project_analyzer.py,258
+  src/lane/providers/__init__.py,6
+  src/lane/providers/base.py,19
+  src/lane/providers/openai_compat.py,172
+  testql-scenarios/generated-cli-tests.testql.toon.yaml,20
+  testql-scenarios/generated-from-pytests.testql.toon.yaml,10
+  tree.txt,55
 D:
-  src/lane/__init__.py:
-  src/lane/__main__.py:
+  src/lane/project_analyzer.py:
+    e: ProjectSnapshot,_read_file_safely,_truncate_file_content,_collect_file_contents,_resolve_name_and_description,analyze_project,_check_pattern_match,_detect_stack,_parse_pyproject_tomllib,_parse_pyproject_regex,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_should_ignore_entry,_get_tree_symbol,_get_connector,_get_extension,_build_tree
+    ProjectSnapshot: to_text(0)
+    _read_file_safely(path)
+    _truncate_file_content(text)
+    _collect_file_contents(root)
+    _resolve_name_and_description(root;file_contents;default_name)
+    analyze_project(root)
+    _check_pattern_match(root;pattern)
+    _detect_stack(root)
+    _parse_pyproject_tomllib(text;fallback)
+    _parse_pyproject_regex(text;fallback)
+    _parse_pyproject(text;fallback)
+    _parse_package_json(path;fallback)
+    _parse_cargo(text;fallback)
+    _readme_summary(text)
+    _should_ignore_entry(name)
+    _get_tree_symbol(is_last;connector)
+    _get_connector(is_last)
+    _get_extension(is_last)
+    _build_tree(root;max_depth;depth;prefix)
+  src/lane/models.py:
+    e: Priority,TaskType,Task,TaskPlan
+    Priority(str,Enum):
+    TaskType(str,Enum):
+    Task(BaseModel): __str__(0),to_dict(0)
+    TaskPlan(BaseModel): __str__(0),to_dict(0)
+  src/lane/git_reader.py:
+    e: CommitInfo,GitContext,_run,_is_git_repo,_run_git_command,_get_git_branch,_get_git_remote,_get_git_commits,_count_file_frequencies,_format_file_summary,_get_file_frequency,_get_git_todos,_create_empty_context,read_git_context,_parse_commit_metadata,_create_commit_info,_parse_commits
+    CommitInfo: __str__(0)
+    GitContext: to_text(0)
+    _run(cmd;cwd)
+    _is_git_repo(path)
+    _run_git_command(repo_path;command;default)
+    _get_git_branch(repo_path)
+    _get_git_remote(repo_path)
+    _get_git_commits(repo_path;max_commits)
+    _count_file_frequencies(raw_output)
+    _format_file_summary(file_freq)
+    _get_file_frequency(repo_path;max_commits)
+    _get_git_todos(repo_path)
+    _create_empty_context(repo_path)
+    read_git_context(repo_path;max_commits)
+    _parse_commit_metadata(line)
+    _create_commit_info(meta;files)
+    _parse_commits(log_raw)
+  src/lane/providers/openai_compat.py:
+    e: OpenAICompatProvider,_strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response
+    OpenAICompatProvider(LLMProvider): __init__(5),generate_plan(2),_call_api(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint...
+    _strip_markdown_fences(raw)
+    _parse_json_response(raw)
+    _create_task_from_dict(item;task_index)
+    _parse_tasks_from_data(data)
+    _parse_response(raw;project_name;model)
   src/lane/cli.py:
     e: cmd_plan,cmd_print_context,cmd_print_prompt,cmd_validate,app_entry,main
     cmd_plan(repo;extra_context;model;base_url;as_json;max_commits)
@@ -41,29 +88,6 @@ D:
     cmd_validate(plan_file)
     app_entry()
     main(argv)
-  src/lane/config.py:
-    e: get_settings,LaneSettings
-    LaneSettings: api_key(0)  # Runtime configuration loaded from environment variables.
-    get_settings()
-  src/lane/git_reader.py:
-    e: _run,_is_git_repo,read_git_context,_parse_commits,CommitInfo,GitContext
-    CommitInfo: __str__(0)
-    GitContext: to_text(0)
-    _run(cmd;cwd)
-    _is_git_repo(path)
-    read_git_context(repo_path;max_commits)
-    _parse_commits(log_raw)
-  src/lane/llm_client.py:
-    e: build_user_prompt,parse_task_plan_response,OpenAICompatibleLLMClient
-    OpenAICompatibleLLMClient: __init__(4),generate_task_plan(4)  # Minimal client for OpenRouter or another OpenAI-compatible e
-    build_user_prompt(project_snapshot_text;git_context_text;extra_context)
-    parse_task_plan_response(raw;project_name;model)
-  src/lane/models.py:
-    e: Priority,TaskType,Task,TaskPlan
-    Priority:
-    TaskType:
-    Task: __str__(0),to_dict(0)
-    TaskPlan: __str__(0),to_dict(0)
   src/lane/output.py:
     e: render_plan,render_plan_json,render_context
     render_plan(plan;console)
@@ -72,49 +96,24 @@ D:
   src/lane/planner.py:
     e: generate_next_tasks
     generate_next_tasks(repo_path;extra_context;provider;settings)
-  src/lane/project_analyzer.py:
-    e: analyze_project,_detect_stack,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_build_tree,ProjectSnapshot
-    ProjectSnapshot: to_text(0)
-    analyze_project(root)
-    _detect_stack(root)
-    _parse_pyproject(text;fallback)
-    _parse_package_json(path;fallback)
-    _parse_cargo(text;fallback)
-    _readme_summary(text)
-    _build_tree(root;max_depth;depth;prefix)
-  src/lane/providers/__init__.py:
+  src/lane/llm_client.py:
+    e: OpenAICompatibleLLMClient,build_user_prompt,parse_task_plan_response
+    OpenAICompatibleLLMClient: __init__(4),generate_task_plan(4)  # Minimal client for OpenRouter or another OpenAI-compatible e...
+    build_user_prompt(project_snapshot_text;git_context_text;extra_context)
+    parse_task_plan_response(raw;project_name;model)
+  src/lane/config.py:
+    e: LaneSettings,get_settings
+    LaneSettings(BaseSettings):  # Runtime configuration loaded from environment variables...
+    get_settings()
   src/lane/providers/base.py:
     e: LLMProvider
-    LLMProvider: generate_plan(2)  # Interface every LLM backend must implement.
-  src/lane/providers/openai_compat.py:
-    e: _parse_response,OpenAICompatProvider
-    OpenAICompatProvider: __init__(5),generate_plan(2),_call_api(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint.
-    _parse_response(raw;project_name;model)
-  tests/test_cli.py:
-    e: CLITests
-    CLITests: test_print_prompt_mode_outputs_prompt(0),test_print_prompt_includes_extra_context(0),test_missing_api_key_returns_exit_1(0),test_print_context_raw_mode(0),test_json_mode_outputs_json(0),test_max_commits_override(0),test_app_entry_exists(0),test_typer_print_context_command(0),test_typer_print_prompt_command(0),test_typer_validate_command(0),test_typer_plan_command_with_mocked_provider(1),test_typer_plan_command_json_output(1),test_typer_validate_invalid_json(0)
-  tests/test_config.py:
-    e: ConfigTests
-    ConfigTests: test_settings_reads_openrouter_key(0),test_settings_prefers_openrouter_over_openai(0),test_settings_falls_back_to_openai_key(0),test_settings_api_key_none_when_no_key_set(0),test_settings_defaults(0)
-  tests/test_git_reader.py:
-    e: GitReaderTests
-    GitReaderTests: test_parse_commits_keeps_files_with_each_commit(0),test_parse_commits_empty_log(0),test_parse_commits_single_commit_no_files(0),test_read_git_context_non_git_dir(0),test_git_context_to_text_no_commits(0),test_git_context_to_text_with_commits_and_files(0),test_git_context_to_text_with_todos(0),test_commit_info_str_with_many_files(0),test_run_returns_empty_on_failure(1),test_run_returns_empty_on_timeout(1),test_read_git_context_with_real_git_repo(2),test_read_git_context_with_empty_git_log(2)
-  tests/test_llm_client.py:
-    e: LLMClientTests
-    LLMClientTests: test_build_user_prompt_includes_sections(0),test_build_user_prompt_default_extra_context(0),test_parse_task_plan_response_strips_fences(0),test_parse_task_plan_response_invalid_json_raises(0),test_parse_task_plan_response_non_object_raises(0),test_parse_task_plan_response_falls_back_to_project_name(0),test_parse_task_plan_response_invalid_priority_raises(0),test_openai_llm_client_initialization(1),test_openai_llm_client_generate_task_plan(1)
-  tests/test_models.py:
-    e: TaskModelTests
-    TaskModelTests: test_task_string_contains_metadata(0),test_task_string_fractional_hours(0),test_task_string_no_hours(0),test_task_plan_to_dict_serializes_enums(0),test_task_plan_str_contains_header(0),test_task_plan_str_shows_dependencies(0),test_task_plan_str_includes_generated_at_when_set(0),test_task_pydantic_validation_rejects_bad_priority(0)
-  tests/test_output.py:
-    e: OutputTests
-    OutputTests: test_render_plan_displays_summary_and_tasks(0),test_render_plan_json_outputs_valid_json(0),test_render_context_displays_both_panels(0)
-  tests/test_planner.py:
-    e: PlannerTests
-    PlannerTests: test_generate_next_tasks_calls_provider(3),test_generate_next_tasks_uses_default_provider_when_none(3)
-  tests/test_project_analyzer.py:
-    e: ProjectAnalyzerTests
-    ProjectAnalyzerTests: test_analyze_project_reads_pyproject_and_readme(0),test_analyze_project_no_manifest(0),test_parse_pyproject_invalid_toml_falls_back_to_regex(0),test_parse_pyproject_valid_toml(0),test_readme_summary_skips_headers(0),test_readme_summary_empty(0),test_analyze_project_readme_only(0),test_parse_package_json(0),test_parse_package_json_invalid(0),test_parse_cargo_toml(0),test_detect_stack_python(0),test_detect_stack_javascript(0),test_detect_stack_rust(0),test_detect_stack_by_extension(0),test_analyze_project_handles_oserror_on_file_read(0),test_analyze_project_truncates_large_files(0),test_analyze_project_uses_package_json_parser(0),test_analyze_project_uses_cargo_parser(0)
-  tests/test_providers.py:
-    e: ParseResponseTests,OpenAICompatProviderTests
-    ParseResponseTests: test_valid_response_parsed(0),test_invalid_json_raises(0),test_non_object_raises(0),test_bad_task_priority_raises(0),test_fenced_code_block_stripped(0)
-    OpenAICompatProviderTests: test_no_api_key_raises_value_error(0),test_generate_plan_uses_parse_response(0),test_call_api_constructs_correct_payload(1),test_call_api_sets_correct_headers(1),test_call_api_handles_unexpected_response(1)
+    LLMProvider(ABC): generate_plan(2)  # Interface every LLM backend must implement...
+  goal.yaml:
+  pyproject.toml:
+  tree.txt:
+  project.sh:
+  src/lane/__main__.py:
+  src/lane/providers/__init__.py:
+  testql-scenarios/generated-from-pytests.testql.toon.yaml:
+  testql-scenarios/generated-cli-tests.testql.toon.yaml:
+  src/lane/__init__.py:

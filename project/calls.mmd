@@ -1,27 +1,54 @@
 flowchart LR
 %% generated in 0.00s
     subgraph src__lane
-        src__lane__git_reader___parse_commits["_parse_commits"]
-        src__lane__git_reader__read_git_context["read_git_context"]
-        src__lane__providers__openai_compat___parse_response["_parse_response"]
+        src__lane__project_analyzer___parse_package_json["_parse_package_json"]
+        src__lane__project_analyzer___truncate_file_content["_truncate_file_content"]
+        src__lane__providers__openai_compat___parse_tasks_from_data["_parse_tasks_from_data"]
+        src__lane__git_reader___run_git_command["_run_git_command"]
+        src__lane__cli__cmd_plan["cmd_plan"]
         src__lane__project_analyzer___detect_stack["_detect_stack"]
-        src__lane__providers__openai_compat__OpenAICompatProvider__generate_plan["generate_plan"]
-        src__lane__project_analyzer___parse_cargo["_parse_cargo"]
+        src__lane__git_reader___is_git_repo["_is_git_repo"]
+        src__lane__project_analyzer___should_ignore_entry["_should_ignore_entry"]
+        src__lane__cli__cmd_print_context["cmd_print_context"]
+        src__lane__git_reader___get_file_frequency["_get_file_frequency"]
+        src__lane__git_reader___count_file_frequencies["_count_file_frequencies"]
+        src__lane__git_reader___run["_run"]
+        src__lane__project_analyzer___build_tree["_build_tree"]
+        src__lane__git_reader___get_git_branch["_get_git_branch"]
+        src__lane__project_analyzer___parse_pyproject["_parse_pyproject"]
+        src__lane__project_analyzer___parse_pyproject_regex["_parse_pyproject_regex"]
+        src__lane__project_analyzer___resolve_name_and_description["_resolve_name_and_description"]
+        src__lane__project_analyzer___read_file_safely["_read_file_safely"]
+        src__lane__project_analyzer___get_connector["_get_connector"]
+        src__lane__providers__openai_compat___parse_response["_parse_response"]
+        src__lane__git_reader___parse_commit_metadata["_parse_commit_metadata"]
+        src__lane__git_reader___parse_commits["_parse_commits"]
+        src__lane__git_reader___get_git_remote["_get_git_remote"]
         src__lane__config__get_settings["get_settings"]
         src__lane__cli__cmd_print_prompt["cmd_print_prompt"]
-        src__lane__providers__openai_compat__OpenAICompatProvider____init__["__init__"]
-        src__lane__git_reader___run["_run"]
-        src__lane__cli__cmd_print_context["cmd_print_context"]
-        src__lane__project_analyzer___build_tree["_build_tree"]
-        src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan["generate_task_plan"]
-        src__lane__llm_client__parse_task_plan_response["parse_task_plan_response"]
-        src__lane__cli__cmd_plan["cmd_plan"]
         src__lane__llm_client__build_user_prompt["build_user_prompt"]
         src__lane__planner__generate_next_tasks["generate_next_tasks"]
+        src__lane__llm_client__parse_task_plan_response["parse_task_plan_response"]
         src__lane__project_analyzer__analyze_project["analyze_project"]
-        src__lane__project_analyzer___parse_pyproject["_parse_pyproject"]
-        src__lane__project_analyzer___parse_package_json["_parse_package_json"]
-        src__lane__git_reader___is_git_repo["_is_git_repo"]
+        src__lane__git_reader__read_git_context["read_git_context"]
+        src__lane__project_analyzer___check_pattern_match["_check_pattern_match"]
+        src__lane__git_reader___get_git_commits["_get_git_commits"]
+        src__lane__project_analyzer___get_extension["_get_extension"]
+        src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan["generate_task_plan"]
+        src__lane__providers__openai_compat__OpenAICompatProvider____init__["__init__"]
+        src__lane__git_reader___format_file_summary["_format_file_summary"]
+        src__lane__project_analyzer___readme_summary["_readme_summary"]
+        src__lane__git_reader___create_empty_context["_create_empty_context"]
+        src__lane__providers__openai_compat__OpenAICompatProvider__generate_plan["generate_plan"]
+        src__lane__git_reader___create_commit_info["_create_commit_info"]
+        src__lane__project_analyzer___parse_pyproject_tomllib["_parse_pyproject_tomllib"]
+        src__lane__providers__openai_compat___create_task_from_dict["_create_task_from_dict"]
+        src__lane__providers__openai_compat___parse_json_response["_parse_json_response"]
+        src__lane__providers__openai_compat___strip_markdown_fences["_strip_markdown_fences"]
+        src__lane__project_analyzer___parse_cargo["_parse_cargo"]
+        src__lane__project_analyzer___get_tree_symbol["_get_tree_symbol"]
+        src__lane__project_analyzer___collect_file_contents["_collect_file_contents"]
+        src__lane__git_reader___get_git_todos["_get_git_todos"]
     end
     src__lane__cli__cmd_plan --> src__lane__config__get_settings
     src__lane__cli__cmd_print_context --> src__lane__project_analyzer__analyze_project
@@ -29,20 +56,50 @@ flowchart LR
     src__lane__cli__cmd_print_prompt --> src__lane__project_analyzer__analyze_project
     src__lane__cli__cmd_print_prompt --> src__lane__git_reader__read_git_context
     src__lane__cli__cmd_print_prompt --> src__lane__llm_client__build_user_prompt
-    src__lane__git_reader___is_git_repo --> src__lane__git_reader___run
-    src__lane__git_reader__read_git_context --> src__lane__git_reader___run
-    src__lane__git_reader__read_git_context --> src__lane__git_reader___parse_commits
-    src__lane__git_reader__read_git_context --> src__lane__git_reader___is_git_repo
     src__lane__planner__generate_next_tasks --> src__lane__project_analyzer__analyze_project
     src__lane__planner__generate_next_tasks --> src__lane__git_reader__read_git_context
     src__lane__planner__generate_next_tasks --> src__lane__llm_client__build_user_prompt
     src__lane__planner__generate_next_tasks --> src__lane__config__get_settings
     src__lane__llm_client__parse_task_plan_response --> src__lane__providers__openai_compat___parse_response
     src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan --> src__lane__llm_client__build_user_prompt
-    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___detect_stack
-    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___parse_pyproject
-    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___parse_package_json
-    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___build_tree
-    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___parse_cargo
     src__lane__providers__openai_compat__OpenAICompatProvider____init__ --> src__lane__config__get_settings
     src__lane__providers__openai_compat__OpenAICompatProvider__generate_plan --> src__lane__providers__openai_compat___parse_response
+    src__lane__providers__openai_compat___parse_tasks_from_data --> src__lane__providers__openai_compat___create_task_from_dict
+    src__lane__providers__openai_compat___parse_response --> src__lane__providers__openai_compat___strip_markdown_fences
+    src__lane__providers__openai_compat___parse_response --> src__lane__providers__openai_compat___parse_json_response
+    src__lane__providers__openai_compat___parse_response --> src__lane__providers__openai_compat___parse_tasks_from_data
+    src__lane__git_reader___is_git_repo --> src__lane__git_reader___run
+    src__lane__git_reader___run_git_command --> src__lane__git_reader___run
+    src__lane__git_reader___get_git_branch --> src__lane__git_reader___run_git_command
+    src__lane__git_reader___get_git_remote --> src__lane__git_reader___run_git_command
+    src__lane__git_reader___get_git_commits --> src__lane__git_reader___run
+    src__lane__git_reader___get_git_commits --> src__lane__git_reader___parse_commits
+    src__lane__git_reader___get_file_frequency --> src__lane__git_reader___run
+    src__lane__git_reader___get_file_frequency --> src__lane__git_reader___count_file_frequencies
+    src__lane__git_reader___get_file_frequency --> src__lane__git_reader___format_file_summary
+    src__lane__git_reader___get_git_todos --> src__lane__git_reader___run
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___get_git_branch
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___get_git_remote
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___get_git_commits
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___get_file_frequency
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___get_git_todos
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___is_git_repo
+    src__lane__git_reader__read_git_context --> src__lane__git_reader___create_empty_context
+    src__lane__git_reader___parse_commits --> src__lane__git_reader___parse_commit_metadata
+    src__lane__git_reader___parse_commits --> src__lane__git_reader___create_commit_info
+    src__lane__project_analyzer___collect_file_contents --> src__lane__project_analyzer___read_file_safely
+    src__lane__project_analyzer___collect_file_contents --> src__lane__project_analyzer___truncate_file_content
+    src__lane__project_analyzer___resolve_name_and_description --> src__lane__project_analyzer___parse_pyproject
+    src__lane__project_analyzer___resolve_name_and_description --> src__lane__project_analyzer___parse_package_json
+    src__lane__project_analyzer___resolve_name_and_description --> src__lane__project_analyzer___parse_cargo
+    src__lane__project_analyzer___resolve_name_and_description --> src__lane__project_analyzer___readme_summary
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___collect_file_contents
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___detect_stack
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___resolve_name_and_description
+    src__lane__project_analyzer__analyze_project --> src__lane__project_analyzer___build_tree
+    src__lane__project_analyzer___detect_stack --> src__lane__project_analyzer___check_pattern_match
+    src__lane__project_analyzer___parse_pyproject --> src__lane__project_analyzer___parse_pyproject_tomllib
+    src__lane__project_analyzer___parse_pyproject --> src__lane__project_analyzer___parse_pyproject_regex
+    src__lane__project_analyzer___get_connector --> src__lane__project_analyzer___get_tree_symbol
+    src__lane__project_analyzer___get_extension --> src__lane__project_analyzer___get_tree_symbol
+    src__lane__project_analyzer___build_tree --> src__lane__project_analyzer___should_ignore_entry

@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('lane', '0.2.2', 'python').
+project_metadata('lane', '0.2.4', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -8,16 +8,16 @@ project_file('src/lane/__init__.py', 32, 'python').
 project_file('src/lane/__main__.py', 7, 'python').
 project_file('src/lane/cli.py', 161, 'python').
 project_file('src/lane/config.py', 43, 'python').
-project_file('src/lane/git_reader.py', 153, 'python').
+project_file('src/lane/git_reader.py', 192, 'python').
 project_file('src/lane/llm_client.py', 78, 'python').
 project_file('src/lane/models.py', 91, 'python').
 project_file('src/lane/output.py', 68, 'python').
 project_file('src/lane/planner.py', 43, 'python').
-project_file('src/lane/project_analyzer.py', 192, 'python').
+project_file('src/lane/project_analyzer.py', 228, 'python').
 project_file('src/lane/providers/__init__.py', 7, 'python').
 project_file('src/lane/providers/base.py', 20, 'python').
-project_file('src/lane/providers/openai_compat.py', 153, 'python').
-project_file('tests/test_cli.py', 157, 'python').
+project_file('src/lane/providers/openai_compat.py', 173, 'python').
+project_file('tests/test_cli.py', 201, 'python').
 project_file('tests/test_config.py', 52, 'python').
 project_file('tests/test_git_reader.py', 162, 'python').
 project_file('tests/test_llm_client.py', 105, 'python').
@@ -38,22 +38,40 @@ python_function('src/lane/cli.py', 'main', 1, 4, 15).
 python_function('src/lane/config.py', 'get_settings', 0, 2, 1).
 python_function('src/lane/git_reader.py', '_run', 2, 3, 2).
 python_function('src/lane/git_reader.py', '_is_git_repo', 1, 1, 2).
-python_function('src/lane/git_reader.py', 'read_git_context', 2, 9, 9).
-python_function('src/lane/git_reader.py', '_parse_commits', 1, 8, 6).
+python_function('src/lane/git_reader.py', '_get_git_branch', 1, 2, 1).
+python_function('src/lane/git_reader.py', '_get_git_remote', 1, 2, 1).
+python_function('src/lane/git_reader.py', '_get_git_commits', 2, 1, 2).
+python_function('src/lane/git_reader.py', '_get_file_frequency', 2, 4, 6).
+python_function('src/lane/git_reader.py', '_get_git_todos', 1, 3, 3).
+python_function('src/lane/git_reader.py', '_create_empty_context', 1, 1, 1).
+python_function('src/lane/git_reader.py', 'read_git_context', 2, 2, 8).
+python_function('src/lane/git_reader.py', '_parse_commit_metadata', 1, 3, 2).
+python_function('src/lane/git_reader.py', '_create_commit_info', 2, 1, 1).
+python_function('src/lane/git_reader.py', '_parse_commits', 1, 7, 5).
 python_function('src/lane/llm_client.py', 'build_user_prompt', 3, 2, 1).
 python_function('src/lane/llm_client.py', 'parse_task_plan_response', 3, 1, 1).
 python_function('src/lane/output.py', 'render_plan', 2, 4, 8).
 python_function('src/lane/output.py', 'render_plan_json', 2, 2, 4).
 python_function('src/lane/output.py', 'render_context', 3, 2, 3).
 python_function('src/lane/planner.py', 'generate_next_tasks', 4, 3, 7).
-python_function('src/lane/project_analyzer.py', 'analyze_project', 1, 9, 10).
+python_function('src/lane/project_analyzer.py', '_read_file_safely', 1, 2, 1).
+python_function('src/lane/project_analyzer.py', '_collect_file_contents', 1, 5, 3).
+python_function('src/lane/project_analyzer.py', '_resolve_name_and_description', 3, 5, 4).
+python_function('src/lane/project_analyzer.py', 'analyze_project', 1, 1, 5).
 python_function('src/lane/project_analyzer.py', '_detect_stack', 1, 6, 5).
 python_function('src/lane/project_analyzer.py', '_parse_pyproject', 2, 6, 5).
 python_function('src/lane/project_analyzer.py', '_parse_package_json', 2, 2, 3).
 python_function('src/lane/project_analyzer.py', '_parse_cargo', 2, 3, 2).
 python_function('src/lane/project_analyzer.py', '_readme_summary', 1, 4, 3).
-python_function('src/lane/project_analyzer.py', '_build_tree', 4, 11, 11).
-python_function('src/lane/providers/openai_compat.py', '_parse_response', 3, 7, 19).
+python_function('src/lane/project_analyzer.py', '_should_ignore_entry', 1, 2, 1).
+python_function('src/lane/project_analyzer.py', '_get_connector', 1, 2, 0).
+python_function('src/lane/project_analyzer.py', '_get_extension', 1, 2, 0).
+python_function('src/lane/project_analyzer.py', '_build_tree', 4, 8, 13).
+python_function('src/lane/providers/openai_compat.py', '_strip_markdown_fences', 1, 3, 4).
+python_function('src/lane/providers/openai_compat.py', '_parse_json_response', 1, 3, 4).
+python_function('src/lane/providers/openai_compat.py', '_create_task_from_dict', 2, 2, 7).
+python_function('src/lane/providers/openai_compat.py', '_parse_tasks_from_data', 1, 2, 4).
+python_function('src/lane/providers/openai_compat.py', '_parse_response', 3, 1, 7).
 
 % ── Python Classes ───────────────────────────────────────
 python_class('src/lane/config.py', 'LaneSettings').
@@ -95,6 +113,10 @@ python_method('CLITests', 'test_typer_validate_command', 0, 1, 7).
 python_method('CLITests', 'test_typer_plan_command_with_mocked_provider', 1, 1, 10).
 python_method('CLITests', 'test_typer_plan_command_json_output', 1, 1, 9).
 python_method('CLITests', 'test_typer_validate_invalid_json', 0, 2, 8).
+python_method('CLITests', 'test_main_module_can_be_imported', 0, 1, 1).
+python_method('CLITests', 'test_cmd_plan_handles_value_error', 1, 1, 9).
+python_method('CLITests', 'test_app_entry_calls_app', 1, 1, 3).
+python_method('CLITests', 'test_main_json_output', 1, 1, 8).
 python_class('tests/test_config.py', 'ConfigTests').
 python_method('ConfigTests', 'test_settings_reads_openrouter_key', 0, 1, 3).
 python_method('ConfigTests', 'test_settings_prefers_openrouter_over_openai', 0, 1, 3).

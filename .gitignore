@@ -1,4 +1,16 @@
 # Byte-compiled / optimized / DLL files
+.code2llm_cache/__init___1779812250483313022_823.pkl
+.code2llm_cache/__init___1779812598110645593_823.pkl
+.code2llm_cache/generated-cli-tests.testql.toon_1779812133581462729_428.pkl
+.code2llm_cache/generated-from-pytests.testql.toon_1779812133581379073_328.pkl
+.code2llm_cache/git_reader_1779812433507912682_5973.pkl
+.code2llm_cache/git_reader_1779813058356493831_6556.pkl
+.code2llm_cache/goal_1779812236774842677_12261.pkl
+.code2llm_cache/openai_compat_1779812443457017403_6021.pkl
+.code2llm_cache/project_analyzer_1779812419570765990_7032.pkl
+.code2llm_cache/project_analyzer_1779813050876415013_7979.pkl
+.code2llm_cache/pyproject_1779812250038637892_2093.pkl
+.code2llm_cache/tree_1779812194574398864_1655.pkl
 .code2llm_cache/__init___1779809524215187208_172.pkl
 .code2llm_cache/__init___1779812002217425058_823.pkl
 .code2llm_cache/__main___1779808740120530743_81.pkl

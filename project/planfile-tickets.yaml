@@ -1,5 +1,5 @@
 source: code2llm
-# generated in 0.01s
+# generated in 0.02s
 schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/semcod/lane
 tickets:
@@ -25,7 +25,7 @@ tickets:
     model, project_name'
 - signal: code2llm_smell_data_clump
   title: 'Address code smell: Data Clump: raw, model, project_name'
-  description: 'code2llm reports `Data Clump: raw, model, project_name` in `src/lane/providers/openai_compat.py:114`.
+  description: 'code2llm reports `Data Clump: raw, model, project_name` in `src/lane/providers/openai_compat.py:160`.
 
 
     Arguments (raw, model, project_name) are used together in multiple functions:
@@ -41,15 +41,15 @@ tickets:
   - data-clump
   files:
   - src/lane/providers/openai_compat.py
-  dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/openai_compat.py:114:Data
+  dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/openai_compat.py:160:Data
     Clump: raw, model, project_name'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, user_prompt, project_name'
-  description: 'code2llm reports `Data Clump: self, user_prompt, project_name` in
+  title: 'Address code smell: Data Clump: user_prompt, self, project_name'
+  description: 'code2llm reports `Data Clump: user_prompt, self, project_name` in
     `src/lane/providers/base.py:14`.
 
 
-    Arguments (self, user_prompt, project_name) are used together in multiple functions:
+    Arguments (user_prompt, self, project_name) are used together in multiple functions:
     src.lane.providers.base.LLMProvider.generate_plan, src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan.
 
 
@@ -63,14 +63,14 @@ tickets:
   files:
   - src/lane/providers/base.py
   dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/base.py:14:Data Clump:
-    self, user_prompt, project_name'
+    user_prompt, self, project_name'
 - signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: self, user_prompt, project_name'
-  description: 'code2llm reports `Data Clump: self, user_prompt, project_name` in
+  title: 'Address code smell: Data Clump: user_prompt, self, project_name'
+  description: 'code2llm reports `Data Clump: user_prompt, self, project_name` in
     `src/lane/providers/openai_compat.py:67`.
 
 
-    Arguments (self, user_prompt, project_name) are used together in multiple functions:
+    Arguments (user_prompt, self, project_name) are used together in multiple functions:
     src.lane.providers.base.LLMProvider.generate_plan, src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan.
 
 
@@ -84,13 +84,13 @@ tickets:
   files:
   - src/lane/providers/openai_compat.py
   dedupe_key: 'code2llm:smell:data_clump:src/lane/providers/openai_compat.py:67:Data
-    Clump: self, user_prompt, project_name'
+    Clump: user_prompt, self, project_name'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _build_tree'
-  description: 'code2llm reports `God Function: _build_tree` in `src/lane/project_analyzer.py:163`.
+  description: 'code2llm reports `God Function: _build_tree` in `src/lane/project_analyzer.py:239`.
 
 
-    Function ''_build_tree'' is oversized: CC=11, fan-out=11, mutations=8.
+    Function ''_build_tree'' is oversized: CC=8, fan-out=13, mutations=6.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -102,14 +102,14 @@ tickets:
   - god-function
   files:
   - src/lane/project_analyzer.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/project_analyzer.py:163:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/lane/project_analyzer.py:239:God Function:
     _build_tree'
 - signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _parse_commits'
-  description: 'code2llm reports `God Function: _parse_commits` in `src/lane/git_reader.py:130`.
+  title: 'Address code smell: God Function: _create_commit_info'
+  description: 'code2llm reports `God Function: _create_commit_info` in `src/lane/git_reader.py:182`.
 
 
-    Function ''_parse_commits'' is oversized: CC=8, fan-out=7, mutations=23.
+    Function ''_create_commit_info'' is oversized: CC=1, fan-out=1, mutations=8.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -121,33 +121,15 @@ tickets:
   - god-function
   files:
   - src/lane/git_reader.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/git_reader.py:130:God Function:
-    _parse_commits'
+  dedupe_key: 'code2llm:smell:god_function:src/lane/git_reader.py:182:God Function:
+    _create_commit_info'
 - signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _parse_response'
-  description: 'code2llm reports `God Function: _parse_response` in `src/lane/providers/openai_compat.py:114`.
+  title: 'Address code smell: God Function: _resolve_name_and_description'
+  description: 'code2llm reports `God Function: _resolve_name_and_description` in
+    `src/lane/project_analyzer.py:88`.
 
 
-    Function ''_parse_response'' is oversized: CC=7, fan-out=20, mutations=4.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/lane/providers/openai_compat.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/providers/openai_compat.py:114:God
-    Function: _parse_response'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: analyze_project'
-  description: 'code2llm reports `God Function: analyze_project` in `src/lane/project_analyzer.py:59`.
-
-
-    Function ''analyze_project'' is oversized: CC=9, fan-out=10, mutations=21.
+    Function ''_resolve_name_and_description'' is oversized: CC=3, fan-out=5, mutations=7.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -159,7 +141,26 @@ tickets:
   - god-function
   files:
   - src/lane/project_analyzer.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/project_analyzer.py:59:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/lane/project_analyzer.py:88:God Function:
+    _resolve_name_and_description'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: analyze_project'
+  description: 'code2llm reports `God Function: analyze_project` in `src/lane/project_analyzer.py:108`.
+
+
+    Function ''analyze_project'' is oversized: CC=1, fan-out=5, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/lane/project_analyzer.py
+  dedupe_key: 'code2llm:smell:god_function:src/lane/project_analyzer.py:108:God Function:
     analyze_project'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_plan'
@@ -233,25 +234,6 @@ tickets:
   files:
   - src/lane/cli.py
   dedupe_key: 'code2llm:smell:god_function:src/lane/cli.py:121:God Function: main'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: read_git_context'
-  description: 'code2llm reports `God Function: read_git_context` in `src/lane/git_reader.py:77`.
-
-
-    Function ''read_git_context'' is oversized: CC=9, fan-out=10, mutations=11.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/lane/git_reader.py
-  dedupe_key: 'code2llm:smell:god_function:src/lane/git_reader.py:77:God Function:
-    read_git_context'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: render_plan'
   description: 'code2llm reports `God Function: render_plan` in `src/lane/output.py:21`.

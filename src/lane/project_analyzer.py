@@ -64,6 +64,13 @@ def _read_file_safely(path: Path) -> str | None:
         return None
 
 
+def _truncate_file_content(text: str) -> str:
+    """Truncate file content with truncation message if needed."""
+    if len(text) > MAX_FILE_CHARS:
+        return text[:MAX_FILE_CHARS] + f"\n... [truncated, {len(text)} chars total]"
+    return text
+
+
 def _collect_file_contents(root: Path) -> dict[str, str]:
     """Collect contents of snapshot files with truncation."""
     file_contents: dict[str, str] = {}
@@ -74,9 +81,7 @@ def _collect_file_contents(root: Path) -> dict[str, str]:
         text = _read_file_safely(path)
         if text is None:
             continue
-        file_contents[rel_path] = text[:MAX_FILE_CHARS]
-        if len(text) > MAX_FILE_CHARS:
-            file_contents[rel_path] += f"\n... [truncated, {len(text)} chars total]"
+        file_contents[rel_path] = _truncate_file_content(text)
     return file_contents
 
 
@@ -85,14 +90,17 @@ def _resolve_name_and_description(root: Path, file_contents: dict[str, str], def
     name = default_name
     description = ""
 
-    if "pyproject.toml" in file_contents:
-        name, description = _parse_pyproject(file_contents["pyproject.toml"], name)
-    elif "package.json" in file_contents:
-        name, description = _parse_package_json(root / "package.json", name)
-    elif "Cargo.toml" in file_contents:
-        name, description = _parse_cargo(file_contents["Cargo.toml"], name)
-    elif "README.md" in file_contents:
-        description = _readme_summary(file_contents["README.md"])
+    manifest_parsers = [
+        ("pyproject.toml", lambda: _parse_pyproject(file_contents["pyproject.toml"], name)),
+        ("package.json", lambda: _parse_package_json(root / "package.json", name)),
+        ("Cargo.toml", lambda: _parse_cargo(file_contents["Cargo.toml"], name)),
+        ("README.md", lambda: (name, _readme_summary(file_contents["README.md"]))),
+    ]
+
+    for filename, parser in manifest_parsers:
+        if filename in file_contents:
+            name, description = parser()
+            break
 
     return name, description
 
@@ -113,6 +121,14 @@ def analyze_project(root: Path) -> ProjectSnapshot:
     )
 
 
+def _check_pattern_match(root: Path, pattern: str) -> bool:
+    """Check if a pattern matches in the root directory."""
+    if "*" in pattern:
+        return next(root.rglob(pattern), None) is not None
+    else:
+        return (root / pattern).exists()
+
+
 def _detect_stack(root: Path) -> list[str]:
     markers = {
         "Python": ["pyproject.toml", "setup.py", "requirements.txt", "*.py"],
@@ -125,33 +141,40 @@ def _detect_stack(root: Path) -> list[str]:
     }
     found: list[str] = []
     for stack_name, patterns in markers.items():
-        for pattern in patterns:
-            if "*" in pattern:
-                if next(root.rglob(pattern), None):
-                    found.append(stack_name)
-                    break
-            elif (root / pattern).exists():
-                found.append(stack_name)
-                break
+        if any(_check_pattern_match(root, pattern) for pattern in patterns):
+            found.append(stack_name)
     return found
 
 
-def _parse_pyproject(text: str, fallback: str) -> tuple[str, str]:
-    if tomllib is not None:
-        try:
-            parsed = tomllib.loads(text)
-        except Exception:
-            parsed = {}
-        project = parsed.get("project", {})
-        if isinstance(project, dict):
-            return project.get("name", fallback), project.get("description", "")
+def _parse_pyproject_tomllib(text: str, fallback: str) -> tuple[str, str] | None:
+    """Parse pyproject.toml using tomllib if available."""
+    if tomllib is None:
+        return None
+    try:
+        parsed = tomllib.loads(text)
+    except Exception:
+        return None
+    project = parsed.get("project", {})
+    if isinstance(project, dict):
+        return project.get("name", fallback), project.get("description", "")
+    return None
 
+
+def _parse_pyproject_regex(text: str, fallback: str) -> tuple[str, str]:
+    """Parse pyproject.toml using regex fallback."""
     name_match = re.search(r'^name\s*=\s*"([^"]+)"', text, re.MULTILINE)
     description_match = re.search(r'^description\s*=\s*"([^"]+)"', text, re.MULTILINE)
     return (
         name_match.group(1) if name_match else fallback,
         description_match.group(1) if description_match else "",
     )
+
+
+def _parse_pyproject(text: str, fallback: str) -> tuple[str, str]:
+    result = _parse_pyproject_tomllib(text, fallback)
+    if result is not None:
+        return result
+    return _parse_pyproject_regex(text, fallback)
 
 
 def _parse_package_json(path: Path, fallback: str) -> tuple[str, str]:
@@ -195,14 +218,22 @@ def _should_ignore_entry(name: str) -> bool:
     return name in ignore_set or name.startswith(".")
 
 
+def _get_tree_symbol(is_last: bool, connector: bool) -> str:
+    """Get tree symbol for connector or extension."""
+    if connector:
+        return "└── " if is_last else "├── "
+    else:
+        return "    " if is_last else "│   "
+
+
 def _get_connector(is_last: bool) -> str:
     """Get the tree connector symbol."""
-    return "└── " if is_last else "├── "
+    return _get_tree_symbol(is_last, connector=True)
 
 
 def _get_extension(is_last: bool) -> str:
     """Get the tree extension for nested levels."""
-    return "    " if is_last else "│   "
+    return _get_tree_symbol(is_last, connector=False)
 
 
 def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:

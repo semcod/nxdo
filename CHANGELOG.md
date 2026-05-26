@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-05-26
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .code2llm_cache/__init___1779812250483313022_823.pkl
+- Update .code2llm_cache/__init___1779812598110645593_823.pkl
+- Update .code2llm_cache/generated-cli-tests.testql.toon_1779812133581462729_428.pkl
+- Update .code2llm_cache/generated-from-pytests.testql.toon_1779812133581379073_328.pkl
+- Update .code2llm_cache/git_reader_1779812433507912682_5973.pkl
+- Update .code2llm_cache/git_reader_1779813058356493831_6556.pkl
+- Update .code2llm_cache/goal_1779812236774842677_12261.pkl
+- Update .code2llm_cache/openai_compat_1779812443457017403_6021.pkl
+- Update .code2llm_cache/project_analyzer_1779812419570765990_7032.pkl
+- Update .code2llm_cache/project_analyzer_1779813050876415013_7979.pkl
+- ... and 21 more files
+
 ## [0.2.4] - 2026-05-26
 
 ### Docs

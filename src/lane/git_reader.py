@@ -74,14 +74,19 @@ def _is_git_repo(path: Path) -> bool:
     return bool(_run(["git", "rev-parse", "--git-dir"], path))
 
 
+def _run_git_command(repo_path: Path, command: list[str], default: str) -> str:
+    """Run a git command and return the result or default value."""
+    return _run(command, repo_path) or default
+
+
 def _get_git_branch(repo_path: Path) -> str:
     """Get the current git branch name."""
-    return _run(["git", "rev-parse", "--abbrev-ref", "HEAD"], repo_path) or "unknown"
+    return _run_git_command(repo_path, ["git", "rev-parse", "--abbrev-ref", "HEAD"], "unknown")
 
 
 def _get_git_remote(repo_path: Path) -> str:
     """Get the git remote URL."""
-    return _run(["git", "remote", "get-url", "origin"], repo_path) or "no remote"
+    return _run_git_command(repo_path, ["git", "remote", "get-url", "origin"], "no remote")
 
 
 def _get_git_commits(repo_path: Path, max_commits: int) -> list[CommitInfo]:
@@ -99,21 +104,32 @@ def _get_git_commits(repo_path: Path, max_commits: int) -> list[CommitInfo]:
     return _parse_commits(log_raw)
 
 
+def _count_file_frequencies(raw_output: str) -> dict[str, int]:
+    """Count file frequencies from git log output."""
+    file_freq: dict[str, int] = {}
+    for line in raw_output.splitlines():
+        line = line.strip()
+        if line:
+            file_freq[line] = file_freq.get(line, 0) + 1
+    return file_freq
+
+
+def _format_file_summary(file_freq: dict[str, int]) -> list[str]:
+    """Format file frequency summary as a list of strings."""
+    return [
+        f"{count:3d}x  {path}"
+        for path, count in sorted(file_freq.items(), key=lambda item: (-item[1], item[0]))
+    ]
+
+
 def _get_file_frequency(repo_path: Path, max_commits: int) -> list[str]:
     """Get file change frequency summary."""
     freq_raw = _run(
         ["git", "log", f"-{max_commits}", "--name-only", "--pretty=format:"],
         repo_path,
     )
-    file_freq: dict[str, int] = {}
-    for line in freq_raw.splitlines():
-        line = line.strip()
-        if line:
-            file_freq[line] = file_freq.get(line, 0) + 1
-    return [
-        f"{count:3d}x  {path}"
-        for path, count in sorted(file_freq.items(), key=lambda item: (-item[1], item[0]))
-    ]
+    file_freq = _count_file_frequencies(freq_raw)
+    return _format_file_summary(file_freq)
 
 
 def _get_git_todos(repo_path: Path) -> list[str]:

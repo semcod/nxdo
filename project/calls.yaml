@@ -1,51 +1,170 @@
 project: /home/tom/github/semcod/lane
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 21
-  total_edges: 23
+  total_nodes: 48
+  total_edges: 53
   modules_count: 7
 nodes:
-  src.lane.git_reader._parse_commits:
-    name: _parse_commits
-    module: src.lane.git_reader
-    line: 130
-    cyclomatic_complexity: 8
-    calls_out: 10
+  src.lane.project_analyzer._parse_package_json:
+    name: _parse_package_json
+    module: src.lane.project_analyzer
+    line: 180
+    cyclomatic_complexity: 2
+    calls_out: 4
     calls_in: 1
-  src.lane.git_reader.read_git_context:
-    name: read_git_context
+  src.lane.project_analyzer._truncate_file_content:
+    name: _truncate_file_content
+    module: src.lane.project_analyzer
+    line: 67
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.lane.providers.openai_compat._parse_tasks_from_data:
+    name: _parse_tasks_from_data
+    module: src.lane.providers.openai_compat
+    line: 152
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.lane.git_reader._run_git_command:
+    name: _run_git_command
     module: src.lane.git_reader
     line: 77
-    cyclomatic_complexity: 9
-    calls_out: 16
-    calls_in: 4
-  src.lane.providers.openai_compat._parse_response:
-    name: _parse_response
-    module: src.lane.providers.openai_compat
-    line: 114
-    cyclomatic_complexity: 7
-    calls_out: 32
+    cyclomatic_complexity: 2
+    calls_out: 1
     calls_in: 2
+  src.lane.cli.cmd_plan:
+    name: cmd_plan
+    module: src.lane.cli
+    line: 31
+    cyclomatic_complexity: 4
+    calls_out: 16
+    calls_in: 0
   src.lane.project_analyzer._detect_stack:
     name: _detect_stack
     module: src.lane.project_analyzer
-    line: 97
-    cyclomatic_complexity: 6
-    calls_out: 6
+    line: 132
+    cyclomatic_complexity: 4
+    calls_out: 4
     calls_in: 1
-  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan:
-    name: generate_plan
-    module: src.lane.providers.openai_compat
-    line: 67
+  src.lane.git_reader._is_git_repo:
+    name: _is_git_repo
+    module: src.lane.git_reader
+    line: 72
     cyclomatic_complexity: 1
     calls_out: 2
-    calls_in: 0
-  src.lane.project_analyzer._parse_cargo:
-    name: _parse_cargo
+    calls_in: 1
+  src.lane.project_analyzer._should_ignore_entry:
+    name: _should_ignore_entry
     module: src.lane.project_analyzer
-    line: 146
+    line: 205
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.lane.cli.cmd_print_context:
+    name: cmd_print_context
+    module: src.lane.cli
+    line: 64
+    cyclomatic_complexity: 2
+    calls_out: 14
+    calls_in: 0
+  src.lane.git_reader._get_file_frequency:
+    name: _get_file_frequency
+    module: src.lane.git_reader
+    line: 125
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._count_file_frequencies:
+    name: _count_file_frequencies
+    module: src.lane.git_reader
+    line: 107
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._run:
+    name: _run
+    module: src.lane.git_reader
+    line: 56
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 5
+  src.lane.project_analyzer._build_tree:
+    name: _build_tree
+    module: src.lane.project_analyzer
+    line: 239
+    cyclomatic_complexity: 8
+    calls_out: 14
+    calls_in: 2
+  src.lane.git_reader._get_git_branch:
+    name: _get_git_branch
+    module: src.lane.git_reader
+    line: 82
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.project_analyzer._parse_pyproject:
+    name: _parse_pyproject
+    module: src.lane.project_analyzer
+    line: 173
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.lane.project_analyzer._parse_pyproject_regex:
+    name: _parse_pyproject_regex
+    module: src.lane.project_analyzer
+    line: 163
     cyclomatic_complexity: 3
     calls_out: 4
+    calls_in: 1
+  src.lane.project_analyzer._resolve_name_and_description:
+    name: _resolve_name_and_description
+    module: src.lane.project_analyzer
+    line: 88
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  src.lane.project_analyzer._read_file_safely:
+    name: _read_file_safely
+    module: src.lane.project_analyzer
+    line: 59
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.lane.project_analyzer._get_connector:
+    name: _get_connector
+    module: src.lane.project_analyzer
+    line: 229
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.providers.openai_compat._parse_response:
+    name: _parse_response
+    module: src.lane.providers.openai_compat
+    line: 160
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 2
+  src.lane.git_reader._parse_commit_metadata:
+    name: _parse_commit_metadata
+    module: src.lane.git_reader
+    line: 173
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  src.lane.git_reader._parse_commits:
+    name: _parse_commits
+    module: src.lane.git_reader
+    line: 188
+    cyclomatic_complexity: 7
+    calls_out: 9
+    calls_in: 1
+  src.lane.git_reader._get_git_remote:
+    name: _get_git_remote
+    module: src.lane.git_reader
+    line: 87
+    cyclomatic_complexity: 1
+    calls_out: 1
     calls_in: 1
   src.lane.config.get_settings:
     name: get_settings
@@ -61,55 +180,6 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 13
     calls_in: 0
-  src.lane.providers.openai_compat.OpenAICompatProvider.__init__:
-    name: __init__
-    module: src.lane.providers.openai_compat
-    line: 51
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 0
-  src.lane.git_reader._run:
-    name: _run
-    module: src.lane.git_reader
-    line: 56
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 6
-  src.lane.cli.cmd_print_context:
-    name: cmd_print_context
-    module: src.lane.cli
-    line: 64
-    cyclomatic_complexity: 2
-    calls_out: 14
-    calls_in: 0
-  src.lane.project_analyzer._build_tree:
-    name: _build_tree
-    module: src.lane.project_analyzer
-    line: 163
-    cyclomatic_complexity: 11
-    calls_out: 13
-    calls_in: 2
-  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan:
-    name: generate_task_plan
-    module: src.lane.llm_client
-    line: 69
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  src.lane.llm_client.parse_task_plan_response:
-    name: parse_task_plan_response
-    module: src.lane.llm_client
-    line: 41
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  src.lane.cli.cmd_plan:
-    name: cmd_plan
-    module: src.lane.cli
-    line: 31
-    cyclomatic_complexity: 4
-    calls_out: 16
-    calls_in: 0
   src.lane.llm_client.build_user_prompt:
     name: build_user_prompt
     module: src.lane.llm_client
@@ -124,33 +194,152 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 8
     calls_in: 2
+  src.lane.llm_client.parse_task_plan_response:
+    name: parse_task_plan_response
+    module: src.lane.llm_client
+    line: 41
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
   src.lane.project_analyzer.analyze_project:
     name: analyze_project
     module: src.lane.project_analyzer
-    line: 59
-    cyclomatic_complexity: 9
-    calls_out: 11
+    line: 108
+    cyclomatic_complexity: 1
+    calls_out: 5
     calls_in: 4
-  src.lane.project_analyzer._parse_pyproject:
-    name: _parse_pyproject
-    module: src.lane.project_analyzer
-    line: 120
-    cyclomatic_complexity: 6
-    calls_out: 9
-    calls_in: 1
-  src.lane.project_analyzer._parse_package_json:
-    name: _parse_package_json
-    module: src.lane.project_analyzer
-    line: 138
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  src.lane.git_reader._is_git_repo:
-    name: _is_git_repo
+  src.lane.git_reader.read_git_context:
+    name: read_git_context
     module: src.lane.git_reader
-    line: 72
+    line: 153
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 4
+  src.lane.project_analyzer._check_pattern_match:
+    name: _check_pattern_match
+    module: src.lane.project_analyzer
+    line: 124
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._get_git_commits:
+    name: _get_git_commits
+    module: src.lane.git_reader
+    line: 92
     cyclomatic_complexity: 1
     calls_out: 2
+    calls_in: 1
+  src.lane.project_analyzer._get_extension:
+    name: _get_extension
+    module: src.lane.project_analyzer
+    line: 234
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan:
+    name: generate_task_plan
+    module: src.lane.llm_client
+    line: 69
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.lane.providers.openai_compat.OpenAICompatProvider.__init__:
+    name: __init__
+    module: src.lane.providers.openai_compat
+    line: 51
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 0
+  src.lane.git_reader._format_file_summary:
+    name: _format_file_summary
+    module: src.lane.git_reader
+    line: 117
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.lane.project_analyzer._readme_summary:
+    name: _readme_summary
+    module: src.lane.project_analyzer
+    line: 197
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._create_empty_context:
+    name: _create_empty_context
+    module: src.lane.git_reader
+    line: 141
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan:
+    name: generate_plan
+    module: src.lane.providers.openai_compat
+    line: 67
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.lane.git_reader._create_commit_info:
+    name: _create_commit_info
+    module: src.lane.git_reader
+    line: 182
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  src.lane.project_analyzer._parse_pyproject_tomllib:
+    name: _parse_pyproject_tomllib
+    module: src.lane.project_analyzer
+    line: 149
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  src.lane.providers.openai_compat._create_task_from_dict:
+    name: _create_task_from_dict
+    module: src.lane.providers.openai_compat
+    line: 135
+    cyclomatic_complexity: 2
+    calls_out: 15
+    calls_in: 1
+  src.lane.providers.openai_compat._parse_json_response:
+    name: _parse_json_response
+    module: src.lane.providers.openai_compat
+    line: 122
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  src.lane.providers.openai_compat._strip_markdown_fences:
+    name: _strip_markdown_fences
+    module: src.lane.providers.openai_compat
+    line: 114
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.lane.project_analyzer._parse_cargo:
+    name: _parse_cargo
+    module: src.lane.project_analyzer
+    line: 188
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.lane.project_analyzer._get_tree_symbol:
+    name: _get_tree_symbol
+    module: src.lane.project_analyzer
+    line: 221
+    cyclomatic_complexity: 4
+    calls_out: 0
+    calls_in: 2
+  src.lane.project_analyzer._collect_file_contents:
+    name: _collect_file_contents
+    module: src.lane.project_analyzer
+    line: 74
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._get_git_todos:
+    name: _get_git_todos
+    module: src.lane.git_reader
+    line: 135
+    cyclomatic_complexity: 3
+    calls_out: 3
     calls_in: 1
 edges:
 - caller: src.lane.cli.cmd_plan
@@ -171,18 +360,6 @@ edges:
 - caller: src.lane.cli.cmd_print_prompt
   callee: src.lane.llm_client.build_user_prompt
   call_type: resolved
-- caller: src.lane.git_reader._is_git_repo
-  callee: src.lane.git_reader._run
-  call_type: resolved
-- caller: src.lane.git_reader.read_git_context
-  callee: src.lane.git_reader._run
-  call_type: resolved
-- caller: src.lane.git_reader.read_git_context
-  callee: src.lane.git_reader._parse_commits
-  call_type: resolved
-- caller: src.lane.git_reader.read_git_context
-  callee: src.lane.git_reader._is_git_repo
-  call_type: resolved
 - caller: src.lane.planner.generate_next_tasks
   callee: src.lane.project_analyzer.analyze_project
   call_type: resolved
@@ -201,26 +378,128 @@ edges:
 - caller: src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
   callee: src.lane.llm_client.build_user_prompt
   call_type: resolved
-- caller: src.lane.project_analyzer.analyze_project
-  callee: src.lane.project_analyzer._detect_stack
-  call_type: resolved
-- caller: src.lane.project_analyzer.analyze_project
-  callee: src.lane.project_analyzer._parse_pyproject
-  call_type: resolved
-- caller: src.lane.project_analyzer.analyze_project
-  callee: src.lane.project_analyzer._parse_package_json
-  call_type: resolved
-- caller: src.lane.project_analyzer.analyze_project
-  callee: src.lane.project_analyzer._build_tree
-  call_type: resolved
-- caller: src.lane.project_analyzer.analyze_project
-  callee: src.lane.project_analyzer._parse_cargo
-  call_type: resolved
 - caller: src.lane.providers.openai_compat.OpenAICompatProvider.__init__
   callee: src.lane.config.get_settings
   call_type: resolved
 - caller: src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan
   callee: src.lane.providers.openai_compat._parse_response
+  call_type: resolved
+- caller: src.lane.providers.openai_compat._parse_tasks_from_data
+  callee: src.lane.providers.openai_compat._create_task_from_dict
+  call_type: resolved
+- caller: src.lane.providers.openai_compat._parse_response
+  callee: src.lane.providers.openai_compat._strip_markdown_fences
+  call_type: resolved
+- caller: src.lane.providers.openai_compat._parse_response
+  callee: src.lane.providers.openai_compat._parse_json_response
+  call_type: resolved
+- caller: src.lane.providers.openai_compat._parse_response
+  callee: src.lane.providers.openai_compat._parse_tasks_from_data
+  call_type: resolved
+- caller: src.lane.git_reader._is_git_repo
+  callee: src.lane.git_reader._run
+  call_type: resolved
+- caller: src.lane.git_reader._run_git_command
+  callee: src.lane.git_reader._run
+  call_type: resolved
+- caller: src.lane.git_reader._get_git_branch
+  callee: src.lane.git_reader._run_git_command
+  call_type: resolved
+- caller: src.lane.git_reader._get_git_remote
+  callee: src.lane.git_reader._run_git_command
+  call_type: resolved
+- caller: src.lane.git_reader._get_git_commits
+  callee: src.lane.git_reader._run
+  call_type: resolved
+- caller: src.lane.git_reader._get_git_commits
+  callee: src.lane.git_reader._parse_commits
+  call_type: resolved
+- caller: src.lane.git_reader._get_file_frequency
+  callee: src.lane.git_reader._run
+  call_type: resolved
+- caller: src.lane.git_reader._get_file_frequency
+  callee: src.lane.git_reader._count_file_frequencies
+  call_type: resolved
+- caller: src.lane.git_reader._get_file_frequency
+  callee: src.lane.git_reader._format_file_summary
+  call_type: resolved
+- caller: src.lane.git_reader._get_git_todos
+  callee: src.lane.git_reader._run
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._get_git_branch
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._get_git_remote
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._get_git_commits
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._get_file_frequency
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._get_git_todos
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._is_git_repo
+  call_type: resolved
+- caller: src.lane.git_reader.read_git_context
+  callee: src.lane.git_reader._create_empty_context
+  call_type: resolved
+- caller: src.lane.git_reader._parse_commits
+  callee: src.lane.git_reader._parse_commit_metadata
+  call_type: resolved
+- caller: src.lane.git_reader._parse_commits
+  callee: src.lane.git_reader._create_commit_info
+  call_type: resolved
+- caller: src.lane.project_analyzer._collect_file_contents
+  callee: src.lane.project_analyzer._read_file_safely
+  call_type: resolved
+- caller: src.lane.project_analyzer._collect_file_contents
+  callee: src.lane.project_analyzer._truncate_file_content
+  call_type: resolved
+- caller: src.lane.project_analyzer._resolve_name_and_description
+  callee: src.lane.project_analyzer._parse_pyproject
+  call_type: resolved
+- caller: src.lane.project_analyzer._resolve_name_and_description
+  callee: src.lane.project_analyzer._parse_package_json
+  call_type: resolved
+- caller: src.lane.project_analyzer._resolve_name_and_description
+  callee: src.lane.project_analyzer._parse_cargo
+  call_type: resolved
+- caller: src.lane.project_analyzer._resolve_name_and_description
+  callee: src.lane.project_analyzer._readme_summary
+  call_type: resolved
+- caller: src.lane.project_analyzer.analyze_project
+  callee: src.lane.project_analyzer._collect_file_contents
+  call_type: resolved
+- caller: src.lane.project_analyzer.analyze_project
+  callee: src.lane.project_analyzer._detect_stack
+  call_type: resolved
+- caller: src.lane.project_analyzer.analyze_project
+  callee: src.lane.project_analyzer._resolve_name_and_description
+  call_type: resolved
+- caller: src.lane.project_analyzer.analyze_project
+  callee: src.lane.project_analyzer._build_tree
+  call_type: resolved
+- caller: src.lane.project_analyzer._detect_stack
+  callee: src.lane.project_analyzer._check_pattern_match
+  call_type: resolved
+- caller: src.lane.project_analyzer._parse_pyproject
+  callee: src.lane.project_analyzer._parse_pyproject_tomllib
+  call_type: resolved
+- caller: src.lane.project_analyzer._parse_pyproject
+  callee: src.lane.project_analyzer._parse_pyproject_regex
+  call_type: resolved
+- caller: src.lane.project_analyzer._get_connector
+  callee: src.lane.project_analyzer._get_tree_symbol
+  call_type: resolved
+- caller: src.lane.project_analyzer._get_extension
+  callee: src.lane.project_analyzer._get_tree_symbol
+  call_type: resolved
+- caller: src.lane.project_analyzer._build_tree
+  callee: src.lane.project_analyzer._should_ignore_entry
   call_type: resolved
 modules:
   src.lane.cli:
@@ -230,9 +509,20 @@ modules:
   src.lane.config:
   - src.lane.config.get_settings
   src.lane.git_reader:
+  - src.lane.git_reader._count_file_frequencies
+  - src.lane.git_reader._create_commit_info
+  - src.lane.git_reader._create_empty_context
+  - src.lane.git_reader._format_file_summary
+  - src.lane.git_reader._get_file_frequency
+  - src.lane.git_reader._get_git_branch
+  - src.lane.git_reader._get_git_commits
+  - src.lane.git_reader._get_git_remote
+  - src.lane.git_reader._get_git_todos
   - src.lane.git_reader._is_git_repo
+  - src.lane.git_reader._parse_commit_metadata
   - src.lane.git_reader._parse_commits
   - src.lane.git_reader._run
+  - src.lane.git_reader._run_git_command
   - src.lane.git_reader.read_git_context
   src.lane.llm_client:
   - src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
@@ -242,15 +532,31 @@ modules:
   - src.lane.planner.generate_next_tasks
   src.lane.project_analyzer:
   - src.lane.project_analyzer._build_tree
+  - src.lane.project_analyzer._check_pattern_match
+  - src.lane.project_analyzer._collect_file_contents
   - src.lane.project_analyzer._detect_stack
+  - src.lane.project_analyzer._get_connector
+  - src.lane.project_analyzer._get_extension
+  - src.lane.project_analyzer._get_tree_symbol
   - src.lane.project_analyzer._parse_cargo
   - src.lane.project_analyzer._parse_package_json
   - src.lane.project_analyzer._parse_pyproject
+  - src.lane.project_analyzer._parse_pyproject_regex
+  - src.lane.project_analyzer._parse_pyproject_tomllib
+  - src.lane.project_analyzer._read_file_safely
+  - src.lane.project_analyzer._readme_summary
+  - src.lane.project_analyzer._resolve_name_and_description
+  - src.lane.project_analyzer._should_ignore_entry
+  - src.lane.project_analyzer._truncate_file_content
   - src.lane.project_analyzer.analyze_project
   src.lane.providers.openai_compat:
   - src.lane.providers.openai_compat.OpenAICompatProvider.__init__
   - src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan
+  - src.lane.providers.openai_compat._create_task_from_dict
+  - src.lane.providers.openai_compat._parse_json_response
   - src.lane.providers.openai_compat._parse_response
+  - src.lane.providers.openai_compat._parse_tasks_from_data
+  - src.lane.providers.openai_compat._strip_markdown_fences
 entry_points:
 - src.lane.cli.app_entry
 - src.lane.cli.cmd_plan

@@ -1,4 +1,4 @@
-# code2llm/evolution | 38 func | 10f | 2026-05-26
+# code2llm/evolution | 64 func | 10f | 2026-05-26
 # generated in 0.00s
 
 NEXT[1] (ranked by impact):
@@ -11,8 +11,8 @@ RISKS[1]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.7 → ≤2.6
-  max-CC:      11 → ≤5
+  CC̄:          2.6 → ≤1.8
+  max-CC:      8 → ≤4
   god-modules: 1 → 0
   high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
@@ -42,4 +42,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  (first run — no previous data)
+  prev CC̄=2.9 → now CC̄=2.6

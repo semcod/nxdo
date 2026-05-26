@@ -20,7 +20,7 @@ Generate the next 10 project tasks from project state, git history and an LLM pr
 ## Metadata
 
 - **name**: `lane`
-- **version**: `0.2.2`
+- **version**: `0.2.4`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: lane;
-  version: 0.2.2;
+  version: 0.2.4;
 }
 
 dependencies {
@@ -138,7 +138,7 @@ CONFIG[2]{key, value}:
 ```yaml
 project:
   name: lane
-  version: 0.2.2
+  version: 0.2.4
   env: local
 ```
 
@@ -198,17 +198,17 @@ pip install -e .[dev]
 - **commits**: `conventional` scope=`lane`
 - **changelog**: `keep-a-changelog`
 - **build strategies**: `python`, `nodejs`, `rust`
-- **version files**: `VERSION`, `pyproject.toml:version`, `.venv/lib/python3.13/site-packages/httpcore/__init__.py:__version__`
+- **version files**: `VERSION`, `pyproject.toml:version`, `venv/lib/python3.13/site-packages/cryptography/__init__.py:__version__`
 
 ## Code Analysis
 
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# lane | 25f 2189L | python:22,shell:2,less:1 | 2026-05-26
-# stats: 25 func | 21 cls | 25 mod | CC̄=4.0 | critical:1 | cycles:0
-# alerts[5]: CC _build_tree=11; CC read_git_context=9; CC analyze_project=9; CC _parse_commits=8; CC _parse_response=7
-# hotspots[5]: _parse_response fan=19; main fan=15; cmd_plan fan=12; _build_tree fan=11; cmd_print_context fan=10
+# lane | 25f 2328L | python:22,shell:2,less:1 | 2026-05-26
+# stats: 43 func | 21 cls | 25 mod | CC̄=2.8 | critical:0 | cycles:0
+# alerts[5]: CC _build_tree=8; CC _parse_commits=7; CC _detect_stack=6; CC _parse_pyproject=6; CC _collect_file_contents=5
+# hotspots[5]: main fan=15; _build_tree fan=13; cmd_plan fan=12; cmd_print_context fan=10; cmd_print_prompt fan=10
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[25]:
@@ -218,16 +218,16 @@ M[25]:
   src/lane/__main__.py,7
   src/lane/cli.py,161
   src/lane/config.py,43
-  src/lane/git_reader.py,153
+  src/lane/git_reader.py,192
   src/lane/llm_client.py,78
   src/lane/models.py,91
   src/lane/output.py,68
   src/lane/planner.py,43
-  src/lane/project_analyzer.py,192
+  src/lane/project_analyzer.py,228
   src/lane/providers/__init__.py,7
   src/lane/providers/base.py,20
-  src/lane/providers/openai_compat.py,153
-  tests/test_cli.py,157
+  src/lane/providers/openai_compat.py,173
+  tests/test_cli.py,201
   tests/test_config.py,52
   tests/test_git_reader.py,162
   tests/test_llm_client.py,105
@@ -253,12 +253,20 @@ D:
     LaneSettings: api_key(0)  # Runtime configuration loaded from environment variables.
     get_settings()
   src/lane/git_reader.py:
-    e: _run,_is_git_repo,read_git_context,_parse_commits,CommitInfo,GitContext
+    e: _run,_is_git_repo,_get_git_branch,_get_git_remote,_get_git_commits,_get_file_frequency,_get_git_todos,_create_empty_context,read_git_context,_parse_commit_metadata,_create_commit_info,_parse_commits,CommitInfo,GitContext
     CommitInfo: __str__(0)
     GitContext: to_text(0)
     _run(cmd;cwd)
     _is_git_repo(path)
+    _get_git_branch(repo_path)
+    _get_git_remote(repo_path)
+    _get_git_commits(repo_path;max_commits)
+    _get_file_frequency(repo_path;max_commits)
+    _get_git_todos(repo_path)
+    _create_empty_context(repo_path)
     read_git_context(repo_path;max_commits)
+    _parse_commit_metadata(line)
+    _create_commit_info(meta;files)
     _parse_commits(log_raw)
   src/lane/llm_client.py:
     e: build_user_prompt,parse_task_plan_response,OpenAICompatibleLLMClient
@@ -280,26 +288,36 @@ D:
     e: generate_next_tasks
     generate_next_tasks(repo_path;extra_context;provider;settings)
   src/lane/project_analyzer.py:
-    e: analyze_project,_detect_stack,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_build_tree,ProjectSnapshot
+    e: _read_file_safely,_collect_file_contents,_resolve_name_and_description,analyze_project,_detect_stack,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_should_ignore_entry,_get_connector,_get_extension,_build_tree,ProjectSnapshot
     ProjectSnapshot: to_text(0)
+    _read_file_safely(path)
+    _collect_file_contents(root)
+    _resolve_name_and_description(root;file_contents;default_name)
     analyze_project(root)
     _detect_stack(root)
     _parse_pyproject(text;fallback)
     _parse_package_json(path;fallback)
     _parse_cargo(text;fallback)
     _readme_summary(text)
+    _should_ignore_entry(name)
+    _get_connector(is_last)
+    _get_extension(is_last)
     _build_tree(root;max_depth;depth;prefix)
   src/lane/providers/__init__.py:
   src/lane/providers/base.py:
     e: LLMProvider
     LLMProvider: generate_plan(2)  # Interface every LLM backend must implement.
   src/lane/providers/openai_compat.py:
-    e: _parse_response,OpenAICompatProvider
+    e: _strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response,OpenAICompatProvider
     OpenAICompatProvider: __init__(5),generate_plan(2),_call_api(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint.
+    _strip_markdown_fences(raw)
+    _parse_json_response(raw)
+    _create_task_from_dict(item;task_index)
+    _parse_tasks_from_data(data)
     _parse_response(raw;project_name;model)
   tests/test_cli.py:
     e: CLITests
-    CLITests: test_print_prompt_mode_outputs_prompt(0),test_print_prompt_includes_extra_context(0),test_missing_api_key_returns_exit_1(0),test_print_context_raw_mode(0),test_json_mode_outputs_json(0),test_max_commits_override(0),test_app_entry_exists(0),test_typer_print_context_command(0),test_typer_print_prompt_command(0),test_typer_validate_command(0),test_typer_plan_command_with_mocked_provider(1),test_typer_plan_command_json_output(1),test_typer_validate_invalid_json(0)
+    CLITests: test_print_prompt_mode_outputs_prompt(0),test_print_prompt_includes_extra_context(0),test_missing_api_key_returns_exit_1(0),test_print_context_raw_mode(0),test_json_mode_outputs_json(0),test_max_commits_override(0),test_app_entry_exists(0),test_typer_print_context_command(0),test_typer_print_prompt_command(0),test_typer_validate_command(0),test_typer_plan_command_with_mocked_provider(1),test_typer_plan_command_json_output(1),test_typer_validate_invalid_json(0),test_main_module_can_be_imported(0),test_cmd_plan_handles_value_error(1),test_app_entry_calls_app(1),test_main_json_output(1)
   tests/test_config.py:
     e: ConfigTests
     ConfigTests: test_settings_reads_openrouter_key(0),test_settings_prefers_openrouter_over_openai(0),test_settings_falls_back_to_openai_key(0),test_settings_api_key_none_when_no_key_set(0),test_settings_defaults(0)
@@ -331,7 +349,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('lane', '0.2.2', 'python').
+project_metadata('lane', '0.2.4', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -340,16 +358,16 @@ project_file('src/lane/__init__.py', 32, 'python').
 project_file('src/lane/__main__.py', 7, 'python').
 project_file('src/lane/cli.py', 161, 'python').
 project_file('src/lane/config.py', 43, 'python').
-project_file('src/lane/git_reader.py', 153, 'python').
+project_file('src/lane/git_reader.py', 192, 'python').
 project_file('src/lane/llm_client.py', 78, 'python').
 project_file('src/lane/models.py', 91, 'python').
 project_file('src/lane/output.py', 68, 'python').
 project_file('src/lane/planner.py', 43, 'python').
-project_file('src/lane/project_analyzer.py', 192, 'python').
+project_file('src/lane/project_analyzer.py', 228, 'python').
 project_file('src/lane/providers/__init__.py', 7, 'python').
 project_file('src/lane/providers/base.py', 20, 'python').
-project_file('src/lane/providers/openai_compat.py', 153, 'python').
-project_file('tests/test_cli.py', 157, 'python').
+project_file('src/lane/providers/openai_compat.py', 173, 'python').
+project_file('tests/test_cli.py', 201, 'python').
 project_file('tests/test_config.py', 52, 'python').
 project_file('tests/test_git_reader.py', 162, 'python').
 project_file('tests/test_llm_client.py', 105, 'python').
@@ -370,22 +388,40 @@ python_function('src/lane/cli.py', 'main', 1, 4, 15).
 python_function('src/lane/config.py', 'get_settings', 0, 2, 1).
 python_function('src/lane/git_reader.py', '_run', 2, 3, 2).
 python_function('src/lane/git_reader.py', '_is_git_repo', 1, 1, 2).
-python_function('src/lane/git_reader.py', 'read_git_context', 2, 9, 9).
-python_function('src/lane/git_reader.py', '_parse_commits', 1, 8, 6).
+python_function('src/lane/git_reader.py', '_get_git_branch', 1, 2, 1).
+python_function('src/lane/git_reader.py', '_get_git_remote', 1, 2, 1).
+python_function('src/lane/git_reader.py', '_get_git_commits', 2, 1, 2).
+python_function('src/lane/git_reader.py', '_get_file_frequency', 2, 4, 6).
+python_function('src/lane/git_reader.py', '_get_git_todos', 1, 3, 3).
+python_function('src/lane/git_reader.py', '_create_empty_context', 1, 1, 1).
+python_function('src/lane/git_reader.py', 'read_git_context', 2, 2, 8).
+python_function('src/lane/git_reader.py', '_parse_commit_metadata', 1, 3, 2).
+python_function('src/lane/git_reader.py', '_create_commit_info', 2, 1, 1).
+python_function('src/lane/git_reader.py', '_parse_commits', 1, 7, 5).
 python_function('src/lane/llm_client.py', 'build_user_prompt', 3, 2, 1).
 python_function('src/lane/llm_client.py', 'parse_task_plan_response', 3, 1, 1).
 python_function('src/lane/output.py', 'render_plan', 2, 4, 8).
 python_function('src/lane/output.py', 'render_plan_json', 2, 2, 4).
 python_function('src/lane/output.py', 'render_context', 3, 2, 3).
 python_function('src/lane/planner.py', 'generate_next_tasks', 4, 3, 7).
-python_function('src/lane/project_analyzer.py', 'analyze_project', 1, 9, 10).
+python_function('src/lane/project_analyzer.py', '_read_file_safely', 1, 2, 1).
+python_function('src/lane/project_analyzer.py', '_collect_file_contents', 1, 5, 3).
+python_function('src/lane/project_analyzer.py', '_resolve_name_and_description', 3, 5, 4).
+python_function('src/lane/project_analyzer.py', 'analyze_project', 1, 1, 5).
 python_function('src/lane/project_analyzer.py', '_detect_stack', 1, 6, 5).
 python_function('src/lane/project_analyzer.py', '_parse_pyproject', 2, 6, 5).
 python_function('src/lane/project_analyzer.py', '_parse_package_json', 2, 2, 3).
 python_function('src/lane/project_analyzer.py', '_parse_cargo', 2, 3, 2).
 python_function('src/lane/project_analyzer.py', '_readme_summary', 1, 4, 3).
-python_function('src/lane/project_analyzer.py', '_build_tree', 4, 11, 11).
-python_function('src/lane/providers/openai_compat.py', '_parse_response', 3, 7, 19).
+python_function('src/lane/project_analyzer.py', '_should_ignore_entry', 1, 2, 1).
+python_function('src/lane/project_analyzer.py', '_get_connector', 1, 2, 0).
+python_function('src/lane/project_analyzer.py', '_get_extension', 1, 2, 0).
+python_function('src/lane/project_analyzer.py', '_build_tree', 4, 8, 13).
+python_function('src/lane/providers/openai_compat.py', '_strip_markdown_fences', 1, 3, 4).
+python_function('src/lane/providers/openai_compat.py', '_parse_json_response', 1, 3, 4).
+python_function('src/lane/providers/openai_compat.py', '_create_task_from_dict', 2, 2, 7).
+python_function('src/lane/providers/openai_compat.py', '_parse_tasks_from_data', 1, 2, 4).
+python_function('src/lane/providers/openai_compat.py', '_parse_response', 3, 1, 7).
 
 % ── Python Classes ───────────────────────────────────────
 python_class('src/lane/config.py', 'LaneSettings').
@@ -427,6 +463,10 @@ python_method('CLITests', 'test_typer_validate_command', 0, 1, 7).
 python_method('CLITests', 'test_typer_plan_command_with_mocked_provider', 1, 1, 10).
 python_method('CLITests', 'test_typer_plan_command_json_output', 1, 1, 9).
 python_method('CLITests', 'test_typer_validate_invalid_json', 0, 2, 8).
+python_method('CLITests', 'test_main_module_can_be_imported', 0, 1, 1).
+python_method('CLITests', 'test_cmd_plan_handles_value_error', 1, 1, 9).
+python_method('CLITests', 'test_app_entry_calls_app', 1, 1, 3).
+python_method('CLITests', 'test_main_json_output', 1, 1, 8).
 python_class('tests/test_config.py', 'ConfigTests').
 python_method('ConfigTests', 'test_settings_reads_openrouter_key', 0, 1, 3).
 python_method('ConfigTests', 'test_settings_prefers_openrouter_over_openai', 0, 1, 3).
@@ -528,72 +568,80 @@ testql_scenario('generated-cli-tests.testql.toon.yaml', 'cli').
 testql_scenario('generated-from-pytests.testql.toon.yaml', 'integration').
 
 % ── Semantic Facts from SUMD.md ──────────────────────────
+sumd_declared_file('app.doql.less', 'doql').
+sumd_declared_file('testql-scenarios/generated-cli-tests.testql.toon.yaml', 'testql').
+sumd_declared_file('testql-scenarios/generated-from-pytests.testql.toon.yaml', 'testql').
+sumd_declared_file('project/map.toon.yaml', 'analysis').
+sumd_declared_file('project/logic.pl', 'analysis').
+sumd_declared_file('project/calls.toon.yaml', 'analysis').
+sumd_interface('cli', 'argparse').
+sumd_interface('cli', '').
 ```
 
 ## Call Graph
 
-*21 nodes · 23 edges · 7 modules · CC̄=3.7*
+*38 nodes · 44 edges · 7 modules · CC̄=2.9*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `_parse_response` *(in src.lane.providers.openai_compat)* | 7 | 2 | 32 | **34** |
-| `read_git_context` *(in src.lane.git_reader)* | 9 | 4 | 16 | **20** |
+| `_create_task_from_dict` *(in src.lane.providers.openai_compat)* | 2 | 1 | 15 | **16** |
 | `cmd_plan` *(in src.lane.cli)* | 4 | 0 | 16 | **16** |
-| `_build_tree` *(in src.lane.project_analyzer)* | 11 ⚠ | 2 | 13 | **15** |
-| `analyze_project` *(in src.lane.project_analyzer)* | 9 | 4 | 11 | **15** |
+| `_build_tree` *(in src.lane.project_analyzer)* | 8 | 2 | 14 | **16** |
 | `cmd_print_context` *(in src.lane.cli)* | 2 | 0 | 14 | **14** |
 | `cmd_print_prompt` *(in src.lane.cli)* | 1 | 0 | 13 | **13** |
-| `_parse_commits` *(in src.lane.git_reader)* | 8 | 1 | 10 | **11** |
+| `read_git_context` *(in src.lane.git_reader)* | 2 | 4 | 8 | **12** |
+| `_parse_response` *(in src.lane.providers.openai_compat)* | 1 | 2 | 8 | **10** |
+| `_parse_pyproject` *(in src.lane.project_analyzer)* | 6 | 1 | 9 | **10** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/lane
 # generated in 0.02s
-# nodes: 21 | edges: 23 | modules: 7
-# CC̄=3.7
+# nodes: 38 | edges: 44 | modules: 7
+# CC̄=2.9
 
 HUBS[20]:
-  src.lane.providers.openai_compat._parse_response
-    CC=7  in:2  out:32  total:34
-  src.lane.git_reader.read_git_context
-    CC=9  in:4  out:16  total:20
+  src.lane.providers.openai_compat._create_task_from_dict
+    CC=2  in:1  out:15  total:16
   src.lane.cli.cmd_plan
     CC=4  in:0  out:16  total:16
   src.lane.project_analyzer._build_tree
-    CC=11  in:2  out:13  total:15
-  src.lane.project_analyzer.analyze_project
-    CC=9  in:4  out:11  total:15
+    CC=8  in:2  out:14  total:16
   src.lane.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
   src.lane.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
-  src.lane.git_reader._parse_commits
-    CC=8  in:1  out:10  total:11
-  src.lane.planner.generate_next_tasks
-    CC=3  in:2  out:8  total:10
+  src.lane.git_reader.read_git_context
+    CC=2  in:4  out:8  total:12
+  src.lane.providers.openai_compat._parse_response
+    CC=1  in:2  out:8  total:10
   src.lane.project_analyzer._parse_pyproject
     CC=6  in:1  out:9  total:10
+  src.lane.planner.generate_next_tasks
+    CC=3  in:2  out:8  total:10
+  src.lane.git_reader._parse_commits
+    CC=7  in:1  out:9  total:10
+  src.lane.project_analyzer.analyze_project
+    CC=1  in:4  out:5  total:9
   src.lane.git_reader._run
     CC=3  in:6  out:2  total:8
+  src.lane.git_reader._get_file_frequency
+    CC=4  in:1  out:6  total:7
   src.lane.project_analyzer._detect_stack
     CC=6  in:1  out:6  total:7
-  src.lane.project_analyzer._parse_cargo
-    CC=3  in:1  out:4  total:5
-  src.lane.config.get_settings
-    CC=2  in:4  out:1  total:5
+  src.lane.providers.openai_compat._parse_json_response
+    CC=3  in:1  out:5  total:6
+  src.lane.providers.openai_compat._parse_tasks_from_data
+    CC=2  in:1  out:4  total:5
   src.lane.llm_client.build_user_prompt
     CC=2  in:4  out:1  total:5
   src.lane.project_analyzer._parse_package_json
     CC=2  in:1  out:4  total:5
-  src.lane.git_reader._is_git_repo
-    CC=1  in:1  out:2  total:3
-  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan
-    CC=1  in:0  out:2  total:2
-  src.lane.providers.openai_compat.OpenAICompatProvider.__init__
-    CC=5  in:0  out:2  total:2
-  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
-    CC=1  in:0  out:2  total:2
+  src.lane.config.get_settings
+    CC=2  in:4  out:1  total:5
+  src.lane.project_analyzer._collect_file_contents
+    CC=5  in:1  out:4  total:5
 
 MODULES:
   src.lane.cli  [3 funcs]
@@ -602,28 +650,42 @@ MODULES:
     cmd_print_prompt  CC=1  out:13
   src.lane.config  [1 funcs]
     get_settings  CC=2  out:1
-  src.lane.git_reader  [4 funcs]
+  src.lane.git_reader  [12 funcs]
+    _create_commit_info  CC=1  out:1
+    _create_empty_context  CC=1  out:1
+    _get_file_frequency  CC=4  out:6
+    _get_git_branch  CC=2  out:1
+    _get_git_commits  CC=1  out:2
+    _get_git_remote  CC=2  out:1
+    _get_git_todos  CC=3  out:3
     _is_git_repo  CC=1  out:2
-    _parse_commits  CC=8  out:10
-    _run  CC=3  out:2
-    read_git_context  CC=9  out:16
+    _parse_commit_metadata  CC=3  out:2
+    _parse_commits  CC=7  out:9
   src.lane.llm_client  [3 funcs]
     generate_task_plan  CC=1  out:2
     build_user_prompt  CC=2  out:1
     parse_task_plan_response  CC=1  out:1
   src.lane.planner  [1 funcs]
     generate_next_tasks  CC=3  out:8
-  src.lane.project_analyzer  [6 funcs]
-    _build_tree  CC=11  out:13
+  src.lane.project_analyzer  [11 funcs]
+    _build_tree  CC=8  out:14
+    _collect_file_contents  CC=5  out:4
     _detect_stack  CC=6  out:6
     _parse_cargo  CC=3  out:4
     _parse_package_json  CC=2  out:4
     _parse_pyproject  CC=6  out:9
-    analyze_project  CC=9  out:11
-  src.lane.providers.openai_compat  [3 funcs]
+    _read_file_safely  CC=2  out:1
+    _readme_summary  CC=4  out:3
+    _resolve_name_and_description  CC=5  out:4
+    _should_ignore_entry  CC=2  out:1
+  src.lane.providers.openai_compat  [7 funcs]
     __init__  CC=5  out:2
     generate_plan  CC=1  out:2
-    _parse_response  CC=7  out:32
+    _create_task_from_dict  CC=2  out:15
+    _parse_json_response  CC=3  out:5
+    _parse_response  CC=1  out:8
+    _parse_tasks_from_data  CC=2  out:4
+    _strip_markdown_fences  CC=3  out:4
 
 EDGES:
   src.lane.cli.cmd_plan → src.lane.config.get_settings
@@ -632,23 +694,44 @@ EDGES:
   src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
   src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
   src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
-  src.lane.git_reader._is_git_repo → src.lane.git_reader._run
-  src.lane.git_reader.read_git_context → src.lane.git_reader._run
-  src.lane.git_reader.read_git_context → src.lane.git_reader._parse_commits
-  src.lane.git_reader.read_git_context → src.lane.git_reader._is_git_repo
   src.lane.planner.generate_next_tasks → src.lane.project_analyzer.analyze_project
   src.lane.planner.generate_next_tasks → src.lane.git_reader.read_git_context
   src.lane.planner.generate_next_tasks → src.lane.llm_client.build_user_prompt
   src.lane.planner.generate_next_tasks → src.lane.config.get_settings
   src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
   src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
+  src.lane.git_reader._is_git_repo → src.lane.git_reader._run
+  src.lane.git_reader._get_git_branch → src.lane.git_reader._run
+  src.lane.git_reader._get_git_remote → src.lane.git_reader._run
+  src.lane.git_reader._get_git_commits → src.lane.git_reader._run
+  src.lane.git_reader._get_git_commits → src.lane.git_reader._parse_commits
+  src.lane.git_reader._get_file_frequency → src.lane.git_reader._run
+  src.lane.git_reader._get_git_todos → src.lane.git_reader._run
+  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_branch
+  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_remote
+  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_commits
+  src.lane.git_reader.read_git_context → src.lane.git_reader._get_file_frequency
+  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_todos
+  src.lane.git_reader.read_git_context → src.lane.git_reader._is_git_repo
+  src.lane.git_reader.read_git_context → src.lane.git_reader._create_empty_context
+  src.lane.git_reader._parse_commits → src.lane.git_reader._parse_commit_metadata
+  src.lane.git_reader._parse_commits → src.lane.git_reader._create_commit_info
+  src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._read_file_safely
+  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_pyproject
+  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_package_json
+  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_cargo
+  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._readme_summary
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._collect_file_contents
   src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._detect_stack
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._parse_pyproject
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._parse_package_json
+  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._resolve_name_and_description
   src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._build_tree
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._parse_cargo
+  src.lane.project_analyzer._build_tree → src.lane.project_analyzer._should_ignore_entry
   src.lane.providers.openai_compat.OpenAICompatProvider.__init__ → src.lane.config.get_settings
   src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan → src.lane.providers.openai_compat._parse_response
+  src.lane.providers.openai_compat._parse_tasks_from_data → src.lane.providers.openai_compat._create_task_from_dict
+  src.lane.providers.openai_compat._parse_response → src.lane.providers.openai_compat._strip_markdown_fences
+  src.lane.providers.openai_compat._parse_response → src.lane.providers.openai_compat._parse_json_response
+  src.lane.providers.openai_compat._parse_response → src.lane.providers.openai_compat._parse_tasks_from_data
 ```
 
 ## Test Contracts
