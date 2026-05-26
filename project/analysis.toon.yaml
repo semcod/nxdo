@@ -1,5 +1,5 @@
 # code2llm | 19f 1915L | python:13,yaml:3,toml:1,txt:1,shell:1 | 2026-05-26
-# generated in 0.01s
+# generated in 0.00s
 # CC̅=2.6 | critical:0/64 | dups:0 | cycles:1
 
 HEALTH[0]: ok
@@ -20,31 +20,31 @@ PIPELINES[19]:
       PURITY: 100% pure
   [6] Src [main]: main → get_settings
       PURITY: 100% pure
-  [7] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
+  [7] Src [__str__]: __str__
       PURITY: 100% pure
-  [8] Src [__init__]: __init__
+  [8] Src [to_text]: to_text
       PURITY: 100% pure
-  [9] Src [generate_task_plan]: generate_task_plan → build_user_prompt
+  [9] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [10] Src [__str__]: __str__
+  [10] Src [__init__]: __init__
       PURITY: 100% pure
-  [11] Src [to_dict]: to_dict
+  [11] Src [generate_task_plan]: generate_task_plan → build_user_prompt
       PURITY: 100% pure
-  [12] Src [__str__]: __str__
+  [12] Src [to_text]: to_text
       PURITY: 100% pure
-  [13] Src [to_dict]: to_dict
+  [13] Src [__str__]: __str__
       PURITY: 100% pure
-  [14] Src [__init__]: __init__ → get_settings
+  [14] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [15] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
+  [15] Src [__str__]: __str__
       PURITY: 100% pure
-  [16] Src [_call_api]: _call_api
+  [16] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [17] Src [__str__]: __str__
+  [17] Src [__init__]: __init__ → get_settings
       PURITY: 100% pure
-  [18] Src [to_text]: to_text
+  [18] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [19] Src [to_text]: to_text
+  [19] Src [_call_api]: _call_api
       PURITY: 100% pure
 
 LAYERS:

@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [0.2.6] - 2026-05-26
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .code2llm_cache/__init___1779813089818599765_823.pkl
+- Update .code2llm_cache/pyproject_1779813089323595748_2093.pkl
+- Update app.doql.less
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 10 more files
+
 ## [0.2.5] - 2026-05-26
 
 ### Docs

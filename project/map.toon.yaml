@@ -3,7 +3,7 @@
 # stats: 64 func | 0 cls | 19 mod | CC̄=2.6 | critical:0 | cycles:0
 # alerts[5]: fan-out main=16; fan-out _build_tree=13; fan-out cmd_plan=12; fan-out cmd_print_context=11; fan-out cmd_print_prompt=11
 # hotspots[5]: main fan=16; _build_tree fan=13; cmd_plan fan=12; cmd_print_context fan=11; cmd_print_prompt fan=11
-# evolution: CC̄ 2.9→2.6 (improved -0.3)
+# evolution: CC̄ 2.6→2.6 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[19]:
   goal.yaml,512
@@ -47,12 +47,6 @@ D:
     _get_connector(is_last)
     _get_extension(is_last)
     _build_tree(root;max_depth;depth;prefix)
-  src/lane/models.py:
-    e: Priority,TaskType,Task,TaskPlan
-    Priority(str,Enum):
-    TaskType(str,Enum):
-    Task(BaseModel): __str__(0),to_dict(0)
-    TaskPlan(BaseModel): __str__(0),to_dict(0)
   src/lane/git_reader.py:
     e: CommitInfo,GitContext,_run,_is_git_repo,_run_git_command,_get_git_branch,_get_git_remote,_get_git_commits,_count_file_frequencies,_format_file_summary,_get_file_frequency,_get_git_todos,_create_empty_context,read_git_context,_parse_commit_metadata,_create_commit_info,_parse_commits
     CommitInfo: __str__(0)
@@ -72,6 +66,12 @@ D:
     _parse_commit_metadata(line)
     _create_commit_info(meta;files)
     _parse_commits(log_raw)
+  src/lane/models.py:
+    e: Priority,TaskType,Task,TaskPlan
+    Priority(str,Enum):
+    TaskType(str,Enum):
+    Task(BaseModel): __str__(0),to_dict(0)
+    TaskPlan(BaseModel): __str__(0),to_dict(0)
   src/lane/providers/openai_compat.py:
     e: OpenAICompatProvider,_strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response
     OpenAICompatProvider(LLMProvider): __init__(5),generate_plan(2),_call_api(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint...
@@ -112,8 +112,8 @@ D:
   pyproject.toml:
   tree.txt:
   project.sh:
+  src/lane/__init__.py:
   src/lane/__main__.py:
   src/lane/providers/__init__.py:
   testql-scenarios/generated-from-pytests.testql.toon.yaml:
   testql-scenarios/generated-cli-tests.testql.toon.yaml:
-  src/lane/__init__.py:

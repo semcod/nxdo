@@ -94,17 +94,17 @@ Main execution flows into the system:
 ### src.lane.git_reader.GitContext.to_text
 - **Calls**: None.join, lines.append, lines.append, lines.append, lines.append, lines.append, len
 
-### src.lane.llm_client.OpenAICompatibleLLMClient.__init__
-- **Calls**: OpenAICompatProvider, os.environ.get, os.environ.get
-
-### src.lane.models.Task.__str__
-- **Calls**: self.task_type.value.upper, int, int
-
 ### src.lane.git_reader.CommitInfo.__str__
 - **Calls**: None.join, len, len
 
+### src.lane.llm_client.OpenAICompatibleLLMClient.__init__
+- **Calls**: OpenAICompatProvider, os.environ.get, os.environ.get
+
 ### src.lane.project_analyzer.ProjectSnapshot.to_text
 - **Calls**: self.file_contents.items, None.join, None.join
+
+### src.lane.models.Task.__str__
+- **Calls**: self.task_type.value.upper, int, int
 
 ### src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
 - **Calls**: src.lane.llm_client.build_user_prompt, self._provider.generate_plan
@@ -226,12 +226,6 @@ Kept for backwards compatibili
 - **Key Methods**: src.lane.config.LaneSettings.api_key
 - **Inherits**: BaseSettings
 
-### src.lane.providers.base.LLMProvider
-> Interface every LLM backend must implement.
-- **Methods**: 1
-- **Key Methods**: src.lane.providers.base.LLMProvider.generate_plan
-- **Inherits**: ABC
-
 ### src.lane.git_reader.CommitInfo
 - **Methods**: 1
 - **Key Methods**: src.lane.git_reader.CommitInfo.__str__
@@ -243,6 +237,12 @@ Kept for backwards compatibili
 ### src.lane.project_analyzer.ProjectSnapshot
 - **Methods**: 1
 - **Key Methods**: src.lane.project_analyzer.ProjectSnapshot.to_text
+
+### src.lane.providers.base.LLMProvider
+> Interface every LLM backend must implement.
+- **Methods**: 1
+- **Key Methods**: src.lane.providers.base.LLMProvider.generate_plan
+- **Inherits**: ABC
 
 ### src.lane.models.Priority
 - **Methods**: 0
@@ -260,22 +260,6 @@ Key functions that process and transform data:
 > Validate a saved JSON plan file against the TaskPlan schema.
 - **Output to**: app.command, typer.Argument, console.print, json.loads, TaskPlan.model_validate
 
-### src.lane.llm_client.parse_task_plan_response
-> Parse a raw JSON string from the LLM into a TaskPlan. (Compatibility wrapper.)
-- **Output to**: src.lane.providers.openai_compat._parse_response
-
-### src.lane.providers.openai_compat._parse_json_response
-> Parse JSON from raw response with error handling.
-- **Output to**: json.loads, isinstance, ValueError, ValueError, type
-
-### src.lane.providers.openai_compat._parse_tasks_from_data
-> Parse tasks from the response data.
-- **Output to**: enumerate, data.get, tasks.append, src.lane.providers.openai_compat._create_task_from_dict
-
-### src.lane.providers.openai_compat._parse_response
-> Parse and validate the raw JSON response from the LLM.
-- **Output to**: src.lane.providers.openai_compat._strip_markdown_fences, src.lane.providers.openai_compat._parse_json_response, src.lane.providers.openai_compat._parse_tasks_from_data, TaskPlan, data.get
-
 ### src.lane.git_reader._format_file_summary
 > Format file frequency summary as a list of strings.
 - **Output to**: sorted, file_freq.items
@@ -286,6 +270,10 @@ Key functions that process and transform data:
 
 ### src.lane.git_reader._parse_commits
 - **Output to**: log_raw.splitlines, src.lane.git_reader._parse_commit_metadata, commits.append, src.lane.git_reader._create_commit_info, commits.append
+
+### src.lane.llm_client.parse_task_plan_response
+> Parse a raw JSON string from the LLM into a TaskPlan. (Compatibility wrapper.)
+- **Output to**: src.lane.providers.openai_compat._parse_response
 
 ### src.lane.project_analyzer._parse_pyproject_tomllib
 > Parse pyproject.toml using tomllib if available.
@@ -304,6 +292,18 @@ Key functions that process and transform data:
 ### src.lane.project_analyzer._parse_cargo
 - **Output to**: re.search, re.search, name_match.group, description_match.group
 
+### src.lane.providers.openai_compat._parse_json_response
+> Parse JSON from raw response with error handling.
+- **Output to**: json.loads, isinstance, ValueError, ValueError, type
+
+### src.lane.providers.openai_compat._parse_tasks_from_data
+> Parse tasks from the response data.
+- **Output to**: enumerate, data.get, tasks.append, src.lane.providers.openai_compat._create_task_from_dict
+
+### src.lane.providers.openai_compat._parse_response
+> Parse and validate the raw JSON response from the LLM.
+- **Output to**: src.lane.providers.openai_compat._strip_markdown_fences, src.lane.providers.openai_compat._parse_json_response, src.lane.providers.openai_compat._parse_tasks_from_data, TaskPlan, data.get
+
 ## Behavioral Patterns
 
 ### recursion__build_tree
@@ -321,8 +321,8 @@ Functions exposed as public API (no underscore prefix):
 - `src.lane.output.render_plan` - 14 calls
 - `src.lane.cli.cmd_print_prompt` - 13 calls
 - `src.lane.cli.cmd_validate` - 9 calls
-- `src.lane.planner.generate_next_tasks` - 8 calls
 - `src.lane.git_reader.read_git_context` - 8 calls
+- `src.lane.planner.generate_next_tasks` - 8 calls
 - `src.lane.git_reader.GitContext.to_text` - 7 calls
 - `src.lane.output.render_context` - 5 calls
 - `src.lane.project_analyzer.analyze_project` - 5 calls
@@ -371,9 +371,9 @@ graph TD
     cmd_validate --> model_validate
     to_text --> join
     to_text --> append
+    __str__ --> len
     __init__ --> OpenAICompatProvider
     __init__ --> get
-    __str__ --> upper
 ```
 
 ## Reverse Engineering Guidelines

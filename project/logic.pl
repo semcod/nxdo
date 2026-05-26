@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('lane', '0.2.4', 'python').
+project_metadata('lane', '0.2.5', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 48, 'less').
@@ -8,12 +8,12 @@ project_file('src/lane/__init__.py', 32, 'python').
 project_file('src/lane/__main__.py', 7, 'python').
 project_file('src/lane/cli.py', 161, 'python').
 project_file('src/lane/config.py', 43, 'python').
-project_file('src/lane/git_reader.py', 192, 'python').
+project_file('src/lane/git_reader.py', 208, 'python').
 project_file('src/lane/llm_client.py', 78, 'python').
 project_file('src/lane/models.py', 91, 'python').
 project_file('src/lane/output.py', 68, 'python').
 project_file('src/lane/planner.py', 43, 'python').
-project_file('src/lane/project_analyzer.py', 228, 'python').
+project_file('src/lane/project_analyzer.py', 259, 'python').
 project_file('src/lane/providers/__init__.py', 7, 'python').
 project_file('src/lane/providers/base.py', 20, 'python').
 project_file('src/lane/providers/openai_compat.py', 173, 'python').
@@ -38,10 +38,13 @@ python_function('src/lane/cli.py', 'main', 1, 4, 15).
 python_function('src/lane/config.py', 'get_settings', 0, 2, 1).
 python_function('src/lane/git_reader.py', '_run', 2, 3, 2).
 python_function('src/lane/git_reader.py', '_is_git_repo', 1, 1, 2).
-python_function('src/lane/git_reader.py', '_get_git_branch', 1, 2, 1).
-python_function('src/lane/git_reader.py', '_get_git_remote', 1, 2, 1).
+python_function('src/lane/git_reader.py', '_run_git_command', 3, 2, 1).
+python_function('src/lane/git_reader.py', '_get_git_branch', 1, 1, 1).
+python_function('src/lane/git_reader.py', '_get_git_remote', 1, 1, 1).
 python_function('src/lane/git_reader.py', '_get_git_commits', 2, 1, 2).
-python_function('src/lane/git_reader.py', '_get_file_frequency', 2, 4, 6).
+python_function('src/lane/git_reader.py', '_count_file_frequencies', 1, 3, 3).
+python_function('src/lane/git_reader.py', '_format_file_summary', 1, 2, 2).
+python_function('src/lane/git_reader.py', '_get_file_frequency', 2, 1, 3).
 python_function('src/lane/git_reader.py', '_get_git_todos', 1, 3, 3).
 python_function('src/lane/git_reader.py', '_create_empty_context', 1, 1, 1).
 python_function('src/lane/git_reader.py', 'read_git_context', 2, 2, 8).
@@ -55,17 +58,22 @@ python_function('src/lane/output.py', 'render_plan_json', 2, 2, 4).
 python_function('src/lane/output.py', 'render_context', 3, 2, 3).
 python_function('src/lane/planner.py', 'generate_next_tasks', 4, 3, 7).
 python_function('src/lane/project_analyzer.py', '_read_file_safely', 1, 2, 1).
-python_function('src/lane/project_analyzer.py', '_collect_file_contents', 1, 5, 3).
-python_function('src/lane/project_analyzer.py', '_resolve_name_and_description', 3, 5, 4).
+python_function('src/lane/project_analyzer.py', '_truncate_file_content', 1, 2, 1).
+python_function('src/lane/project_analyzer.py', '_collect_file_contents', 1, 4, 3).
+python_function('src/lane/project_analyzer.py', '_resolve_name_and_description', 3, 3, 5).
 python_function('src/lane/project_analyzer.py', 'analyze_project', 1, 1, 5).
-python_function('src/lane/project_analyzer.py', '_detect_stack', 1, 6, 5).
-python_function('src/lane/project_analyzer.py', '_parse_pyproject', 2, 6, 5).
+python_function('src/lane/project_analyzer.py', '_check_pattern_match', 2, 2, 3).
+python_function('src/lane/project_analyzer.py', '_detect_stack', 1, 4, 4).
+python_function('src/lane/project_analyzer.py', '_parse_pyproject_tomllib', 2, 4, 3).
+python_function('src/lane/project_analyzer.py', '_parse_pyproject_regex', 2, 3, 2).
+python_function('src/lane/project_analyzer.py', '_parse_pyproject', 2, 2, 2).
 python_function('src/lane/project_analyzer.py', '_parse_package_json', 2, 2, 3).
 python_function('src/lane/project_analyzer.py', '_parse_cargo', 2, 3, 2).
 python_function('src/lane/project_analyzer.py', '_readme_summary', 1, 4, 3).
 python_function('src/lane/project_analyzer.py', '_should_ignore_entry', 1, 2, 1).
-python_function('src/lane/project_analyzer.py', '_get_connector', 1, 2, 0).
-python_function('src/lane/project_analyzer.py', '_get_extension', 1, 2, 0).
+python_function('src/lane/project_analyzer.py', '_get_tree_symbol', 2, 4, 0).
+python_function('src/lane/project_analyzer.py', '_get_connector', 1, 1, 1).
+python_function('src/lane/project_analyzer.py', '_get_extension', 1, 1, 1).
 python_function('src/lane/project_analyzer.py', '_build_tree', 4, 8, 13).
 python_function('src/lane/providers/openai_compat.py', '_strip_markdown_fences', 1, 3, 4).
 python_function('src/lane/providers/openai_compat.py', '_parse_json_response', 1, 3, 4).
