@@ -26,15 +26,23 @@ Analyze the following project and generate the next 10 tasks.
 === ADDITIONAL CONTEXT ===
 {extra_context}
 
+{koru_schema}
+
 Generate the task plan now.
 """
 
 
-def build_user_prompt(project_snapshot_text: str, git_context_text: str, extra_context: str = "") -> str:
+def build_user_prompt(
+    project_snapshot_text: str,
+    git_context_text: str,
+    extra_context: str = "",
+    koru_schema: str = "",
+) -> str:
     return USER_PROMPT_TEMPLATE.format(
         project_snapshot=project_snapshot_text,
         git_context=git_context_text,
         extra_context=extra_context or "None provided.",
+        koru_schema=koru_schema or "",
     )
 
 

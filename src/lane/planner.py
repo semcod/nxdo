@@ -18,6 +18,7 @@ def generate_next_tasks(
     extra_context: str = "",
     provider: Optional[LLMProvider] = None,
     settings: Optional[LaneSettings] = None,
+    koru_aware: bool = False,
 ) -> TaskPlan:
     """Analyze *repo_path* and return a TaskPlan with the next 10 tasks.
 
@@ -26,6 +27,7 @@ def generate_next_tasks(
         extra_context: Optional additional guidance to include in the prompt.
         provider: An LLMProvider instance. Defaults to OpenAICompatProvider.
         settings: Configuration override; uses environment defaults if omitted.
+        koru_aware: If True, load koru integration schema and include in prompt.
 
     Returns:
         A validated TaskPlan containing up to 10 prioritized tasks.
@@ -34,9 +36,23 @@ def generate_next_tasks(
 
     snapshot = analyze_project(repo_path)
     git_context = read_git_context(repo_path, max_commits=cfg.max_commits)
-    user_prompt = build_user_prompt(snapshot.to_text(), git_context.to_text(), extra_context)
+
+    # Build koru context if requested
+    koru_schema = ""
+    if koru_aware:
+        from .koru_context import build_koru_context
+        koru_ctx = build_koru_context(repo_path, include_project_state=True)
+        if koru_ctx.available:
+            koru_schema = koru_ctx.schema_text
+
+    user_prompt = build_user_prompt(
+        snapshot.to_text(),
+        git_context.to_text(),
+        extra_context,
+        koru_schema=koru_schema,
+    )
 
     if provider is None:
-        provider = OpenAICompatProvider(settings=cfg)
+        provider = OpenAICompatProvider(settings=cfg, koru_aware=koru_aware)
 
     return provider.generate_plan(user_prompt, project_name=snapshot.name)

@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.15-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.33-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.2h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.16-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.33-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.3299 (18 commits)
-- 👤 **Human dev:** ~$625 (6.2h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $1.3308 (19 commits)
+- 👤 **Human dev:** ~$634 (6.3h @ $100/h, 30min dedup)
 
 Generated on 2026-05-26 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -19,10 +19,12 @@ Generated on 2026-05-26 using [openrouter/qwen/qwen3-coder-next](https://openrou
 
 - **Project snapshot analysis** — README, manifests (pyproject.toml, package.json, Cargo.toml, …), directory tree, stack detection
 - **Git context** — recent commits, most-changed files, TODO/FIXME markers
+- **Advanced code metrics** — cyclomatic complexity, coupling analysis, bug hotspots, bus factor detection
+- **Koru-aware planning** — Deep integration with koru framework for intelligent task generation
 - **Pydantic models** — validated data models for tasks and plans (`Task`, `TaskPlan`)
 - **Provider abstraction** — pluggable LLM backends; ships with an OpenAI-compatible provider (works with OpenRouter and any OpenAI-style API)
 - **Planner orchestrator** — `generate_next_tasks()` composes analysis + prompt + LLM call into a validated TaskPlan
-- **Rich CLI** — `lane plan`, `lane print-context`, `lane print-prompt`, `lane validate`
+- **Rich CLI** — `lane plan`, `lane metrics`, `lane print-context`, `lane print-prompt`, `lane validate`, `lane tickets`
 - **Reliability** — `httpx` for HTTP, `tenacity` for automatic retry/backoff, `pydantic-settings` for environment config
 
 ## Quick start
@@ -56,6 +58,12 @@ Validate a saved plan file:
 
 ```bash
 lane validate plan.json
+```
+
+Analyze code metrics and coupling:
+
+```bash
+lane metrics .
 ```
 
 ## CLI Reference
@@ -107,10 +115,38 @@ Validate a saved JSON plan file against the TaskPlan schema.
 lane validate PLAN_FILE
 ```
 
+### `lane metrics`
+Display comprehensive code metrics for the project including cyclomatic complexity, change coupling, bug hotspots, and bus factor analysis.
+
+**Usage:**
+```bash
+lane metrics [REPO_PATH] [OPTIONS]
+```
+
+**Options:**
+- `--top, -n INTEGER`: Show top N items per category (default: 10)
+- `--min-coupling FLOAT`: Minimum coupling score to display (default: 0.3)
+
+**Metrics displayed:**
+- **Cyclomatic Complexity** per file (identify complex functions to refactor)
+- **Coupling Analysis** — which files change together frequently (plan refactors together)
+- **Coupling Clusters** — groups of tightly coupled files (sprint planning)
+- **Bug Hotspots** — files with high bug fix rate and code churn
+- **Bus Factor** — files with few authors (knowledge silos)
+
+**Example:**
+```bash
+# Show metrics for current project
+lane metrics .
+
+# Show top 5 with higher coupling threshold
+lane metrics . --top 5 --min-coupling 0.5
+```
+
 ### `lane tickets`
 Generate tickets from a plan using planfile integration.
 
-This command generates tickets from a TaskPlan and optionally syncs them to TODO.md or exports to planfile YAML format.
+This command generates tickets from a TaskPlan and optionally syncs them to TODO.md, .planfile/, or exports to planfile YAML format.
 
 **Usage:**
 ```bash
@@ -123,8 +159,10 @@ lane tickets [REPO_PATH] [OPTIONS]
 - `--base-url TEXT`: Override the API base URL
 - `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
 - `--sync-todo`: Sync tasks to TODO.md checkboxes using planfile
+- `--sync-planfile`: Store tickets in .planfile/ and sync with markdown
 - `--export-yaml`: Export to planfile YAML format
 - `--output, -o PATH`: Output file for YAML export
+- `--koru-aware`: Enable koru integration schema for smart task planning
 
 **Examples:**
 ```bash
@@ -136,9 +174,12 @@ lane tickets . --sync-todo
 
 # Export to planfile YAML
 lane tickets . --export-yaml --output strategy.yaml
+
+# Koru-aware planning (generates tasks referencing koru operations)
+lane tickets . --koru-aware --sync-planfile
 ```
 
-**Note:** This feature requires the planfile package to be installed as a local dependency.
+**Note:** This feature requires the planfile package. It will be auto-installed if missing.
 
 ## Configuration
 

@@ -55,6 +55,7 @@ class OpenAICompatProvider(LLMProvider):
         base_url: Optional[str] = None,
         settings: Optional[LaneSettings] = None,
         app_name: str = "lane",
+        koru_aware: bool = False,
     ) -> None:
         cfg = settings or get_settings()
         self.api_key = api_key or cfg.api_key
@@ -63,6 +64,7 @@ class OpenAICompatProvider(LLMProvider):
         self.timeout = cfg.llm_timeout
         self.max_retries = cfg.llm_max_retries
         self.app_name = app_name
+        self.koru_aware = koru_aware
 
     def generate_plan(self, user_prompt: str, project_name: str) -> TaskPlan:
         raw = self._call_api(user_prompt)
@@ -80,10 +82,16 @@ class OpenAICompatProvider(LLMProvider):
                 "Missing API key. Set OPENROUTER_API_KEY or OPENAI_API_KEY before generating a task plan."
             )
 
+        # Build system prompt with koru extension if enabled
+        system_prompt = SYSTEM_PROMPT
+        if self.koru_aware:
+            from ..koru_context import get_koru_system_prompt_extension
+            system_prompt += get_koru_system_prompt_extension()
+
         payload = {
             "model": self.model,
             "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
             ],
             "temperature": 0.2,

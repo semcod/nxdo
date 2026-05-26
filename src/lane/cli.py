@@ -163,13 +163,16 @@ def cmd_tickets(
     sync_planfile: bool = typer.Option(False, "--sync-planfile", help="Store tickets in .planfile/ and sync with markdown."),
     export_yaml: bool = typer.Option(False, "--export-yaml", help="Export to planfile YAML format."),
     output_path: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
+    koru_aware: bool = typer.Option(False, "--koru-aware", help="Enable koru integration schema for smart task planning."),
 ) -> None:
     """Generate tickets from a plan using planfile integration."""
     cfg = get_settings()
     if max_commits != 30:
         cfg.max_commits = max_commits  # type: ignore[misc]
 
-    provider = OpenAICompatProvider(model=model, base_url=base_url, settings=cfg)
+    provider = OpenAICompatProvider(
+        model=model, base_url=base_url, settings=cfg, koru_aware=koru_aware
+    )
 
     try:
         plan = generate_next_tasks(
@@ -177,6 +180,7 @@ def cmd_tickets(
             extra_context=extra_context,
             provider=provider,
             settings=cfg,
+            koru_aware=koru_aware,
         )
     except ValueError as exc:
         err_console.print(f"[bold red]Error:[/bold red] {exc}")
