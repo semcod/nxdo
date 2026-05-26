@@ -8,14 +8,20 @@
 
 ## Zakończone zadania
 
+**v0.2.1 (2026-05-26)**
+- Dodano autora: Tom Sapletta (tom@sapletta.com)
+- Dodano zależności deweloperskie: goal, costs, pfix
+- Dodano konfigurację narzędzi AI (pfix, costs)
+- Dodano śledzenie kosztów AI w README
+- Zaktualizowano wersję do 0.2.1
+- Zaktualizowano CHANGELOG.md
+
 **v0.2.0 (2026-05-26)**
 - Dodano sekcję CLI Reference w README ze szczegółową dokumentacją komend
 - 80 testów jednostkowych z 96% pokryciem kodu
 - Wszystkie testy przechodzą pomyślnie
-- Zaktualizowano wersję do 0.2.0
 - Utworzono CHANGELOG.md
 - Dodano URLs projektu do pyproject.toml
 - Utworzono MANIFEST.in dla dystrybucji pakietu
 - Naprawiono ostrzeżenia o licencji (format SPDX)
-- Pakiet zbudowany pomyślnie jako lane-0.2.0-py3-none-any.whl
-- Projekt gotowy do publikacji na PyPI
+- Pakiet zbudowany pomyślnie
