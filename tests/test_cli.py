@@ -1,5 +1,7 @@
 from io import StringIO
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch, MagicMock
@@ -150,6 +152,48 @@ class CLITests(unittest.TestCase):
             result = runner.invoke(app, ["validate", str(plan_file)])
             self.assertNotEqual(result.exit_code, 0)
             self.assertIn("failed", result.stderr.lower() or result.stdout.lower())
+
+    def test_main_module_can_be_imported(self) -> None:
+        """Test that __main__.py can be imported without errors."""
+        from lane import __main__
+        self.assertIsNotNone(__main__)
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_cmd_plan_handles_value_error(self, mock_generate: MagicMock) -> None:
+        """Test that cmd_plan handles ValueError from generate_next_tasks."""
+        from lane.models import TaskPlan
+        mock_generate.side_effect = ValueError("Test error")
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "README.md").write_text("# test\n", encoding="utf-8")
+            result = runner.invoke(app, ["plan", str(root)])
+            self.assertNotEqual(result.exit_code, 0)
+            self.assertIn("Error", result.stderr)
+
+    @patch("lane.cli.app")
+    def test_app_entry_calls_app(self, mock_app: MagicMock) -> None:
+        """Test that app_entry calls the Typer app."""
+        from lane.cli import app_entry
+        app_entry()
+        mock_app.assert_called_once()
+
+    @patch("lane.cli.generate_next_tasks")
+    def test_main_json_output(self, mock_generate: MagicMock) -> None:
+        """Test that main function outputs JSON when --json flag is used."""
+        from lane.models import TaskPlan
+        mock_plan = TaskPlan(
+            project_name="test",
+            summary="test",
+            tasks=[],
+        )
+        mock_generate.return_value = mock_plan
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "README.md").write_text("# test\n", encoding="utf-8")
+            exit_code = main([str(root), "--json"])
+            self.assertEqual(exit_code, 0)
 
 
 if __name__ == "__main__":

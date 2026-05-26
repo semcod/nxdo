@@ -111,12 +111,16 @@ class OpenAICompatProvider(LLMProvider):
             raise ValueError(f"Unexpected LLM response payload: {data}") from exc
 
 
-def _parse_response(raw: str, project_name: str, model: str) -> TaskPlan:
-    """Parse and validate the raw JSON response from the LLM."""
+def _strip_markdown_fences(raw: str) -> str:
+    """Remove markdown code fences from the response."""
     if raw.startswith("```"):
         raw = raw.split("\n", 1)[1] if "\n" in raw else raw
         raw = raw.rsplit("```", 1)[0].strip()
+    return raw
 
+
+def _parse_json_response(raw: str) -> dict:
+    """Parse JSON from raw response with error handling."""
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as exc:
@@ -125,23 +129,39 @@ def _parse_response(raw: str, project_name: str, model: str) -> TaskPlan:
     if not isinstance(data, dict):
         raise ValueError(f"Expected a JSON object, got: {type(data).__name__}")
 
+    return data
+
+
+def _create_task_from_dict(item: dict, task_index: int) -> Task:
+    """Create a Task object from a dictionary item."""
+    try:
+        return Task(
+            number=int(item.get("number", task_index + 1)),
+            title=item.get("title", "Untitled task"),
+            description=item.get("description", ""),
+            priority=Priority(item.get("priority", Priority.MEDIUM.value)),
+            task_type=TaskType(item.get("task_type", TaskType.FEATURE.value)),
+            estimated_hours=item.get("estimated_hours"),
+            acceptance_criteria=list(item.get("acceptance_criteria", [])),
+            dependencies=list(item.get("dependencies", [])),
+        )
+    except (ValueError, TypeError) as exc:
+        raise ValueError(f"Invalid task data in LLM response: {item}") from exc
+
+
+def _parse_tasks_from_data(data: dict) -> list[Task]:
+    """Parse tasks from the response data."""
     tasks: list[Task] = []
-    for item in data.get("tasks", []):
-        try:
-            tasks.append(
-                Task(
-                    number=int(item.get("number", len(tasks) + 1)),
-                    title=item.get("title", "Untitled task"),
-                    description=item.get("description", ""),
-                    priority=Priority(item.get("priority", Priority.MEDIUM.value)),
-                    task_type=TaskType(item.get("task_type", TaskType.FEATURE.value)),
-                    estimated_hours=item.get("estimated_hours"),
-                    acceptance_criteria=list(item.get("acceptance_criteria", [])),
-                    dependencies=list(item.get("dependencies", [])),
-                )
-            )
-        except (ValueError, TypeError) as exc:
-            raise ValueError(f"Invalid task data in LLM response: {item}") from exc
+    for index, item in enumerate(data.get("tasks", [])):
+        tasks.append(_create_task_from_dict(item, index))
+    return tasks
+
+
+def _parse_response(raw: str, project_name: str, model: str) -> TaskPlan:
+    """Parse and validate the raw JSON response from the LLM."""
+    raw = _strip_markdown_fences(raw)
+    data = _parse_json_response(raw)
+    tasks = _parse_tasks_from_data(data)
 
     return TaskPlan(
         project_name=data.get("project_name", project_name),

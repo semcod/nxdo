@@ -56,24 +56,34 @@ class ProjectSnapshot:
         return "\n".join(lines)
 
 
-def analyze_project(root: Path) -> ProjectSnapshot:
-    name = root.name
-    description = ""
-    file_contents: dict[str, str] = {}
+def _read_file_safely(path: Path) -> str | None:
+    """Read file content safely, return None on error."""
+    try:
+        return path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
 
+
+def _collect_file_contents(root: Path) -> dict[str, str]:
+    """Collect contents of snapshot files with truncation."""
+    file_contents: dict[str, str] = {}
     for rel_path in SNAPSHOT_FILES:
         path = root / rel_path
         if not path.exists():
             continue
-        try:
-            text = path.read_text(encoding="utf-8", errors="replace")
-        except OSError:
+        text = _read_file_safely(path)
+        if text is None:
             continue
         file_contents[rel_path] = text[:MAX_FILE_CHARS]
         if len(text) > MAX_FILE_CHARS:
             file_contents[rel_path] += f"\n... [truncated, {len(text)} chars total]"
+    return file_contents
 
-    stack = _detect_stack(root)
+
+def _resolve_name_and_description(root: Path, file_contents: dict[str, str], default_name: str) -> tuple[str, str]:
+    """Resolve project name and description from manifest files."""
+    name = default_name
+    description = ""
 
     if "pyproject.toml" in file_contents:
         name, description = _parse_pyproject(file_contents["pyproject.toml"], name)
@@ -83,6 +93,15 @@ def analyze_project(root: Path) -> ProjectSnapshot:
         name, description = _parse_cargo(file_contents["Cargo.toml"], name)
     elif "README.md" in file_contents:
         description = _readme_summary(file_contents["README.md"])
+
+    return name, description
+
+
+def analyze_project(root: Path) -> ProjectSnapshot:
+    name = root.name
+    file_contents = _collect_file_contents(root)
+    stack = _detect_stack(root)
+    name, description = _resolve_name_and_description(root, file_contents, name)
 
     return ProjectSnapshot(
         root=root,
@@ -160,8 +179,9 @@ def _readme_summary(text: str) -> str:
     return ""
 
 
-def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
-    ignore = {
+def _should_ignore_entry(name: str) -> bool:
+    """Check if a directory/file should be ignored in tree view."""
+    ignore_set = {
         ".git",
         "__pycache__",
         ".venv",
@@ -172,20 +192,36 @@ def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") ->
         ".mypy_cache",
         ".pytest_cache",
     }
+    return name in ignore_set or name.startswith(".")
+
+
+def _get_connector(is_last: bool) -> str:
+    """Get the tree connector symbol."""
+    return "└── " if is_last else "├── "
+
+
+def _get_extension(is_last: bool) -> str:
+    """Get the tree extension for nested levels."""
+    return "    " if is_last else "│   "
+
+
+def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
     try:
         entries = sorted(root.iterdir(), key=lambda entry: (entry.is_file(), entry.name.lower()))
     except OSError:
         return ""
 
-    visible_entries = [entry for entry in entries if entry.name not in ignore and not entry.name.startswith(".")]
+    visible_entries = [entry for entry in entries if not _should_ignore_entry(entry.name)]
     lines: list[str] = []
+
     for index, entry in enumerate(visible_entries):
-        connector = "└── " if index == len(visible_entries) - 1 else "├── "
-        lines.append(prefix + connector + entry.name)
+        is_last = index == len(visible_entries) - 1
+        lines.append(prefix + _get_connector(is_last) + entry.name)
+
         if entry.is_dir() and depth < max_depth - 1:
-            extension = "    " if index == len(visible_entries) - 1 else "│   "
-            subtree = _build_tree(entry, max_depth, depth + 1, prefix + extension)
+            subtree = _build_tree(entry, max_depth, depth + 1, prefix + _get_extension(is_last))
             if subtree:
                 lines.append(subtree)
+
     return "\n".join(lines)
 

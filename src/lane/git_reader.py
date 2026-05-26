@@ -74,20 +74,18 @@ def _is_git_repo(path: Path) -> bool:
     return bool(_run(["git", "rev-parse", "--git-dir"], path))
 
 
-def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
-    if not _is_git_repo(repo_path):
-        return GitContext(
-            repo_path=repo_path,
-            branch="unknown",
-            remote_url="no remote",
-            recent_commits=[],
-            changed_files_summary=[],
-            open_todos=[],
-        )
+def _get_git_branch(repo_path: Path) -> str:
+    """Get the current git branch name."""
+    return _run(["git", "rev-parse", "--abbrev-ref", "HEAD"], repo_path) or "unknown"
 
-    branch = _run(["git", "rev-parse", "--abbrev-ref", "HEAD"], repo_path) or "unknown"
-    remote_url = _run(["git", "remote", "get-url", "origin"], repo_path) or "no remote"
 
+def _get_git_remote(repo_path: Path) -> str:
+    """Get the git remote URL."""
+    return _run(["git", "remote", "get-url", "origin"], repo_path) or "no remote"
+
+
+def _get_git_commits(repo_path: Path, max_commits: int) -> list[CommitInfo]:
+    """Get recent git commits."""
     log_raw = _run(
         [
             "git",
@@ -98,8 +96,11 @@ def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
         ],
         repo_path,
     )
-    recent_commits = _parse_commits(log_raw)
+    return _parse_commits(log_raw)
 
+
+def _get_file_frequency(repo_path: Path, max_commits: int) -> list[str]:
+    """Get file change frequency summary."""
     freq_raw = _run(
         ["git", "log", f"-{max_commits}", "--name-only", "--pretty=format:"],
         repo_path,
@@ -109,13 +110,39 @@ def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
         line = line.strip()
         if line:
             file_freq[line] = file_freq.get(line, 0) + 1
-    changed_files_summary = [
+    return [
         f"{count:3d}x  {path}"
         for path, count in sorted(file_freq.items(), key=lambda item: (-item[1], item[0]))
     ]
 
+
+def _get_git_todos(repo_path: Path) -> list[str]:
+    """Get TODO/FIXME markers from git grep."""
     grep_raw = _run(["git", "grep", "-n", "-E", "TODO|FIXME|HACK|XXX"], repo_path)
-    open_todos = [line for line in grep_raw.splitlines() if line.strip()]
+    return [line for line in grep_raw.splitlines() if line.strip()]
+
+
+def _create_empty_context(repo_path: Path) -> GitContext:
+    """Create an empty GitContext for non-git repositories."""
+    return GitContext(
+        repo_path=repo_path,
+        branch="unknown",
+        remote_url="no remote",
+        recent_commits=[],
+        changed_files_summary=[],
+        open_todos=[],
+    )
+
+
+def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
+    if not _is_git_repo(repo_path):
+        return _create_empty_context(repo_path)
+
+    branch = _get_git_branch(repo_path)
+    remote_url = _get_git_remote(repo_path)
+    recent_commits = _get_git_commits(repo_path, max_commits)
+    changed_files_summary = _get_file_frequency(repo_path, max_commits)
+    open_todos = _get_git_todos(repo_path)
 
     return GitContext(
         repo_path=repo_path,
@@ -127,26 +154,38 @@ def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
     )
 
 
+def _parse_commit_metadata(line: str) -> tuple[str, str, str, str] | None:
+    """Parse a commit metadata line and return hash, author, date, message."""
+    if "|||" not in line:
+        return None
+    parts = line.split("|||", 3)
+    message = parts[3] if len(parts) > 3 else ""
+    return (parts[0], parts[1], parts[2], message)
+
+
+def _create_commit_info(meta: tuple[str, str, str, str], files: list[str]) -> CommitInfo:
+    """Create a CommitInfo object from metadata and files."""
+    commit_hash, author, date, message = meta
+    return CommitInfo(commit_hash, author, date, message, files)
+
+
 def _parse_commits(log_raw: str) -> list[CommitInfo]:
     commits: list[CommitInfo] = []
     current_meta: tuple[str, str, str, str] | None = None
     current_files: list[str] = []
 
     for line in log_raw.splitlines():
-        if "|||" in line:
+        meta = _parse_commit_metadata(line)
+        if meta:
             if current_meta:
-                commit_hash, author, date, message = current_meta
-                commits.append(CommitInfo(commit_hash, author, date, message, current_files))
-            parts = line.split("|||", 3)
-            message = parts[3] if len(parts) > 3 else ""
-            current_meta = (parts[0], parts[1], parts[2], message)
+                commits.append(_create_commit_info(current_meta, current_files))
+            current_meta = meta
             current_files = []
         elif line.strip() and current_meta:
             current_files.append(line.strip())
 
     if current_meta:
-        commit_hash, author, date, message = current_meta
-        commits.append(CommitInfo(commit_hash, author, date, message, current_files))
+        commits.append(_create_commit_info(current_meta, current_files))
 
     return commits
 
