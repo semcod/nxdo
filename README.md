@@ -3,13 +3,13 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.16-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.33-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.17-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.34-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.8h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.3308 (19 commits)
-- 👤 **Human dev:** ~$634 (6.3h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $1.3367 (20 commits)
+- 👤 **Human dev:** ~$678 (6.8h @ $100/h, 30min dedup)
 
-Generated on 2026-05-26 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+Generated on 2026-05-27 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
@@ -24,7 +24,7 @@ Generated on 2026-05-26 using [openrouter/qwen/qwen3-coder-next](https://openrou
 - **Pydantic models** — validated data models for tasks and plans (`Task`, `TaskPlan`)
 - **Provider abstraction** — pluggable LLM backends; ships with an OpenAI-compatible provider (works with OpenRouter and any OpenAI-style API)
 - **Planner orchestrator** — `generate_next_tasks()` composes analysis + prompt + LLM call into a validated TaskPlan
-- **Rich CLI** — `lane plan`, `lane metrics`, `lane print-context`, `lane print-prompt`, `lane validate`, `lane tickets`
+- **Rich CLI** — `lane plan`, `lane auto`, `lane metrics`, `lane print-context`, `lane print-prompt`, `lane validate`, `lane tickets`
 - **Reliability** — `httpx` for HTTP, `tenacity` for automatic retry/backoff, `pydantic-settings` for environment config
 
 ## Quick start
@@ -113,6 +113,40 @@ Validate a saved JSON plan file against the TaskPlan schema.
 **Usage:**
 ```bash
 lane validate PLAN_FILE
+```
+
+### `lane auto`
+Auto-generate and sync tickets for the most important work. This is the quickest way to get actionable tickets into your planfile.
+
+**Usage:**
+```bash
+lane auto [REPO_PATH] [OPTIONS]
+```
+
+**What it does:**
+1. Analyzes project for high-priority issues (hotspots, complexity, coupling)
+2. Generates tickets using koru-aware planning
+3. Auto-syncs to `.planfile/` for execution via koru queue
+
+**Options:**
+- `--extra-context, -e TEXT`: Additional prompt context for the LLM
+- `--dry-run`: Show what would be done without executing
+
+**Example:**
+```bash
+# Quick auto mode - analyze, generate, sync
+lane auto
+
+# With extra context
+lane auto . -e "Focus on security improvements"
+
+# Dry run to preview
+lane auto --dry-run
+```
+
+**Equivalent to:**
+```bash
+lane tickets . --koru-aware --sync-planfile
 ```
 
 ### `lane metrics`
@@ -233,6 +267,44 @@ lane validate plan.json
 lane plan . --max-commits 10
 ```
 
+### Quick auto mode (analyze + generate + sync)
+
+```bash
+# One command to analyze project and create tickets in planfile
+lane auto
+
+# With custom focus
+lane auto . -e "Refactor authentication system"
+```
+
+### Code metrics analysis
+
+```bash
+# Full metrics report
+lane metrics .
+
+# High coupling files
+lane metrics . --top 10 --min-coupling 0.6
+```
+
+### Koru-aware planning
+
+```bash
+lane tickets . --koru-aware --sync-planfile
+```
+
+## Architecture
+
+### Modules
+
+- **lane.project_analyzer** — Project analysis (manifests, structure, stack)
+- **lane.git_reader** — Git history analysis
+- **lane.metrics** — Code metrics (complexity, coupling, hotspots)
+- **lane.koru_context** — Koru framework integration
+- **lane.planner** — Orchestrates analysis → LLM → TaskPlan
+- **lane.providers** — Pluggable LLM backends
+- **lane.ticket_generator** — Planfile integration
+
 ## Development
 
 ```bash
@@ -240,6 +312,17 @@ pip install -e ".[dev]"
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
+
+## Changelog
+
+### 0.2.x
+- **Added** `lane auto` command — one-command workflow (analyze + generate + sync)
+- **Added** `lane metrics` command (complexity, coupling, hotspots, bus factor)
+- **Added** `--koru-aware` flag for koru-integrated planning
+- **Added** `lane.metrics` module
+- **Added** `lane.koru_context` module
+- **Improved** Test coverage to 97%
+- **Improved** Refactored CC hotspots
 
 ## License
 

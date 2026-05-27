@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [0.2.17] - 2026-05-27
+
+### Docs
+- Update .planfile/.koru/README.md
+- Update README.md
+
+### Other
+- Update .koru/event-store.jsonl
+- Update .koru/events/observability.jsonl
+- Update .planfile/.koru/queue-runner.lock
+- Update .planfile/.koru/runs/queue-20260526T194440Z-947266.jsonl
+- Update .planfile/.koru/runs/queue-20260526T195237Z-990505.jsonl
+- Update .planfile/config.yaml
+- Update .planfile/sprints/backlog.yaml
+- Update .planfile/sprints/current.yaml
+
 ## [0.2.16] - 2026-05-26
 
 ### Docs

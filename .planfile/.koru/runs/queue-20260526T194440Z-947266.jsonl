@@ -1,0 +1,3 @@
+{"actor": "koru-shell", "interactive": false, "mode": "loop", "pid": 947266, "project": ".", "queue_name": null, "run_id": "queue-20260526T194440Z-947266", "started_at": "2026-05-26T19:44:40Z", "type": "run.start"}
+{"at": "2026-05-26T19:44:40Z", "executor_kind": "human", "exit_code": null, "iteration": 1, "message": "Resolve existing open tickets via koru queue", "run_id": "queue-20260526T194440Z-947266", "status": "waiting_input", "stderr_tail": "", "ticket_id": "LANE-1", "type": "iteration"}
+{"completed": [], "duration_seconds": 0.713, "failed": [], "finished_at": "2026-05-26T19:44:40Z", "iterations": 1, "last_status": "waiting_input", "run_id": "queue-20260526T194440Z-947266", "type": "run.end", "waiting": ["LANE-1"]}

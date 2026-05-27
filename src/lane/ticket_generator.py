@@ -164,9 +164,11 @@ def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dic
         ticket = Ticket(
             id=ticket_id,
             name=task.title,
+            description=task.description or "",
             status=TicketStatus.open,
             priority=priority,
             sprint="current",
+            acceptance_criteria=task.acceptance_criteria or [],
         )
         try:
             store.create_ticket(ticket)

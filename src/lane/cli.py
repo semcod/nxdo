@@ -255,6 +255,80 @@ def cmd_metrics(
         console.print(f"  {icon} {count} author(s): {file_path}")
 
 
+@app.command("auto")
+def cmd_auto(
+    repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
+    extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Show what would be done without executing."),
+) -> None:
+    """Auto-generate and sync tickets for the most important work.
+
+    This command automatically:
+    1. Analyzes the project for high-priority issues (hotspots, complexity, coupling)
+    2. Generates tickets using koru-aware planning
+    3. Syncs to .planfile/ for execution via koru queue
+
+    Equivalent to: lane tickets . --koru-aware --sync-planfile
+    """
+    from lane.metrics import collect_file_metrics, identify_bug_hotspots
+
+    repo_path = repo.resolve()
+    console.print(f"[bold]🚀 Lane Auto Mode for {repo_path.name}[/bold]\n")
+
+    # Quick analysis to inform user
+    console.print("[dim]Analyzing project...[/dim]")
+
+    # Check for critical issues
+    hotspots = identify_bug_hotspots(repo_path, top_n=3)
+    complexity = collect_file_metrics(repo_path, file_filter={".py"})
+    high_cc = [m for m in complexity[:5] if m.cyclomatic_complexity > 10]
+
+    issues_found = []
+    if hotspots:
+        issues_found.append(f"{len(hotspots)} bug hotspots")
+    if high_cc:
+        issues_found.append(f"{len(high_cc)} high-complexity files")
+
+    if issues_found:
+        console.print(f"[yellow]⚠ Found: {', '.join(issues_found)}[/yellow]")
+    else:
+        console.print("[green]✓ Project looks healthy[/green]")
+
+    if dry_run:
+        console.print("\n[dim]Dry run mode - would execute:[/dim]")
+        console.print(f"  lane tickets {repo_path} --koru-aware --sync-planfile")
+        return
+
+    # Execute auto workflow
+    console.print("\n[bold]Generating koru-aware tickets...[/bold]")
+
+    cfg = get_settings()
+    provider = OpenAICompatProvider(settings=cfg, koru_aware=True)
+
+    try:
+        plan = generate_next_tasks(
+            repo_path=repo_path,
+            extra_context=extra_context or "Focus on critical hotspots and technical debt",
+            provider=provider,
+            settings=cfg,
+            koru_aware=True,
+        )
+    except ValueError as exc:
+        err_console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(code=1)
+
+    tickets = task_plan_to_tickets(plan)
+    console.print(f"[green]✓[/green] Generated {len(tickets)} tickets")
+
+    # Auto-sync to planfile
+    console.print("[dim]Syncing to .planfile/...[/dim]")
+    _sync_planfile_if_requested(plan, repo_path, sync_planfile=True)
+
+    # Summary
+    console.print(f"\n[bold green]🎉 Done![/bold green] {len(tickets)} tickets queued in .planfile/")
+    console.print("[dim]Run 'koru --queue --loop' or 'planfile apply' to execute[/dim]")
+
+
 def app_entry() -> None:
     """Entry point used by the installed `lane` script."""
     app()

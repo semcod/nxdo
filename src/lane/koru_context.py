@@ -245,6 +245,17 @@ def get_koru_system_prompt_extension() -> str:
 KORU-AWARE PLANNING MODE:
 You have access to the koru integration catalog. When generating tasks:
 
+DESCRIPTION RULES (CRITICAL):
+- Each task MUST have a detailed 2-4 sentence description explaining WHAT to do and WHY
+- Include specific file paths, function names, or components to modify
+- Mention the expected outcome or benefit of completing the task
+- NEVER leave description empty or use only generic text
+
+ACCEPTANCE CRITERIA RULES:
+- Provide 2-4 concrete, verifiable acceptance criteria per task
+- Criteria should be testable (e.g., "Tests pass", "Function X has CC < 10")
+- Include criteria about koru integration if applicable
+
 1. REFERENCE KORU OPERATIONS: In each task's description, specify which koru
    operation(s) implement it. Use the format:
    "Implementation: invoke koru [integration_id] with method [method]"
@@ -256,8 +267,8 @@ You have access to the koru integration catalog. When generating tasks:
    - Verification tasks: mcp.quality_gates, gate.regix
    - Sync tasks: planfile.tickets (list), lane.plan (sync_planfile)
 
-3. PLANFILE INTEGRATION: If open tickets exist, the first task should be
-   "Resolve existing open tickets via koru queue" using queue.loop.
+3. PLANFILE INTEGRATION: If open tickets exist, the first task should
+   RESOLVE them by processing through koru queue, not just list them.
 
 4. AVOID DUPLICATION: Do not generate tasks for work already tracked in
    open planfile tickets.

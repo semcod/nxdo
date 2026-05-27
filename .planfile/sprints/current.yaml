@@ -4,11 +4,17 @@ sprint:
   status: active
   tickets:
     LANE-1:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - The `--sync-todo` command successfully updates TODO.md with current tasks.
+      - All related unit tests pass with 100% coverage.
+      - Documentation for the `--sync-todo` feature is updated in README.md.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.562441Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.322158Z'
+      description: 'Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes
+        as outlined in the TODO markers. This functionality is crucial for maintaining
+        an up-to-date task list and improving project management efficiency. Implementation:
+        invoke koru.autopilot.drive with method sync-todo.'
       files: []
       history: []
       id: LANE-1
@@ -18,13 +24,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.562447Z'
+      updated_at: '2026-05-26T19:59:23.322165Z'
     LANE-10:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - TODO.md is updated to reflect current project priorities.
+      - Outdated tasks are removed or marked as completed.
+      - The TODO.md file is reviewed for clarity and relevance.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.763948Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.647739Z'
+      description: 'Go through the TODO.md file to clean up any outdated tasks and
+        ensure it reflects the current project priorities. This will help maintain
+        focus on relevant tasks and improve project organization. Implementation:
+        invoke koru.autopilot.drive with method clean-up-todo.'
       files: []
       history: []
       id: LANE-10
@@ -34,13 +46,20 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.763959Z'
+      updated_at: '2026-05-26T19:59:23.647744Z'
     LANE-2:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - Git context extraction returns accurate recent commits and changed files.
+      - Unit tests for the new extraction logic are created and pass.
+      - Documentation is updated to reflect changes in git context extraction.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.581886Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.360472Z'
+      description: 'Improve the functionality for extracting git context, including
+        recent commits and changed files, to provide better insights for task generation.
+        This enhancement will help in understanding project evolution and prioritizing
+        tasks effectively. Implementation: invoke koru.autopilot.drive with method
+        enhance-git-context.'
       files: []
       history: []
       id: LANE-2
@@ -50,13 +69,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.581893Z'
+      updated_at: '2026-05-26T19:59:23.360479Z'
     LANE-3:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - Unit tests cover all edge cases for the `sync-todo` feature.
+      - Code coverage for the `sync-todo` feature is above 80%.
+      - All tests pass successfully.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.603363Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.399815Z'
+      description: 'Create unit tests to ensure the new `sync-todo` functionality
+        works as expected and handles edge cases. This is essential for maintaining
+        code quality and preventing regressions in future updates. Implementation:
+        invoke koru.autopilot.drive with method add-tests-sync-todo.'
       files: []
       history: []
       id: LANE-3
@@ -66,13 +91,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.603369Z'
+      updated_at: '2026-05-26T19:59:23.399820Z'
     LANE-4:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - CLI command handling code is refactored and follows best practices.
+      - All existing CLI tests pass without modifications.
+      - Documentation for CLI commands is updated accordingly.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.621106Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.440222Z'
+      description: 'Refactor the command handling in the CLI to improve readability
+        and maintainability, especially around the new features added. This will make
+        future enhancements easier and reduce technical debt. Implementation: invoke
+        koru.autopilot.drive with method refactor-cli-handling.'
       files: []
       history: []
       id: LANE-4
@@ -82,13 +113,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.621111Z'
+      updated_at: '2026-05-26T19:59:23.440229Z'
     LANE-5:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - README.md includes detailed information about the `sync-todo` feature.
+      - All recent changes are documented clearly.
+      - The README passes a markdown linting check.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.640838Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.496160Z'
+      description: 'Revise the README.md to include documentation for the new `sync-todo`
+        feature and any other recent changes. Keeping documentation up-to-date is
+        crucial for user adoption and understanding of the project. Implementation:
+        invoke koru.autopilot.drive with method update-readme.'
       files: []
       history: []
       id: LANE-5
@@ -98,13 +135,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.640843Z'
+      updated_at: '2026-05-26T19:59:23.496167Z'
     LANE-6:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - API error handling provides clear and actionable error messages.
+      - All related tests are updated and pass successfully.
+      - Documentation for API error handling is updated.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.657388Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.518308Z'
+      description: 'Review and enhance the API error handling to ensure detailed error
+        messages are provided for API failures. This improvement will enhance user
+        experience and debugging capabilities. Implementation: invoke koru.autopilot.drive
+        with method fix-api-error-handling.'
       files: []
       history: []
       id: LANE-6
@@ -114,13 +157,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.657395Z'
+      updated_at: '2026-05-26T19:59:23.518315Z'
     LANE-7:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - Integration tests cover all major CLI commands.
+      - All integration tests pass successfully.
+      - Documentation for running integration tests is added.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.677654Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.552289Z'
+      description: 'Implement integration tests for the CLI commands to ensure they
+        work correctly with the overall system. This will help catch issues that unit
+        tests might miss and ensure the CLI behaves as expected. Implementation: invoke
+        koru.autopilot.drive with method add-integration-tests-cli.'
       files: []
       history: []
       id: LANE-7
@@ -130,13 +179,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.677664Z'
+      updated_at: '2026-05-26T19:59:23.552297Z'
     LANE-8:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - Error messages are clear and provide guidance on resolving issues.
+      - User feedback on error messages is collected and reviewed.
+      - All existing tests pass without modifications.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.703612Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.585763Z'
+      description: 'Enhance the error messages provided by the CLI to be more user-friendly
+        and informative. This will improve the overall user experience and make it
+        easier for users to troubleshoot issues. Implementation: invoke koru.autopilot.drive
+        with method improve-cli-error-messages.'
       files: []
       history: []
       id: LANE-8
@@ -146,13 +201,19 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.703619Z'
+      updated_at: '2026-05-26T19:59:23.585769Z'
     LANE-9:
-      acceptance_criteria: []
+      acceptance_criteria:
+      - Documentation clearly explains how to use planfile integration.
+      - Examples of usage are included in the documentation.
+      - Documentation is reviewed and approved by at least one team member.
       blocked_by: []
       blocks: []
-      created_at: '2026-05-26T18:32:56.739874Z'
-      description: ''
+      created_at: '2026-05-26T19:59:23.617954Z'
+      description: 'Create documentation for the planfile integration feature, explaining
+        how to use it and its benefits. This will help users understand how to leverage
+        this feature effectively. Implementation: invoke koru.autopilot.drive with
+        method document-planfile-integration.'
       files: []
       history: []
       id: LANE-9
@@ -162,4 +223,4 @@ sprint:
       sprint: current
       status: open
       sync: {}
-      updated_at: '2026-05-26T18:32:56.739880Z'
+      updated_at: '2026-05-26T19:59:23.617961Z'
