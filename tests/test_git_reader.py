@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-from lane.git_reader import _parse_commits, read_git_context, _run, CommitInfo, GitContext
+from lane.git_reader import _count_file_frequencies, _parse_commits, read_git_context, _run, CommitInfo, GitContext
 from pathlib import Path
 import tempfile
 
@@ -23,6 +23,39 @@ class GitReaderTests(unittest.TestCase):
         self.assertEqual(len(commits), 2)
         self.assertEqual(commits[0].files_changed, ["src/lane/cli.py", "README.md"])
         self.assertEqual(commits[1].message, "Fix tests")
+
+    def test_parse_commits_filters_generated_files(self) -> None:
+        log_raw = "\n".join(
+            [
+                "abc123|||Alice|||2026-05-26T10:00:00+00:00|||Generated artifacts",
+                ".planfile/.koru/runs/queue.jsonl",
+                "project/calls.png",
+                "src/lane.egg-info/PKG-INFO",
+                "uv.lock",
+                "src/lane/cli.py",
+            ]
+        )
+
+        commits = _parse_commits(log_raw)
+
+        self.assertEqual(len(commits), 1)
+        self.assertEqual(commits[0].files_changed, ["src/lane/cli.py"])
+
+    def test_count_file_frequencies_filters_generated_files(self) -> None:
+        raw_output = "\n".join(
+            [
+                "README.md",
+                "README.md",
+                ".code2llm_cache/blob.pkl",
+                "project/flow.png",
+                "uv.lock",
+                "src/lane/git_reader.py",
+            ]
+        )
+
+        file_freq = _count_file_frequencies(raw_output)
+
+        self.assertEqual(file_freq, {"README.md": 2, "src/lane/git_reader.py": 1})
 
     def test_parse_commits_empty_log(self) -> None:
         commits = _parse_commits("")
@@ -139,6 +172,28 @@ class GitReaderTests(unittest.TestCase):
 
     @patch("lane.git_reader._run")
     @patch("lane.git_reader._is_git_repo")
+    def test_read_git_context_filters_generated_todos(self, mock_is_git: MagicMock, mock_run: MagicMock) -> None:
+        mock_is_git.return_value = True
+        mock_run.side_effect = [
+            "main",
+            "no remote",
+            "",
+            "",
+            "\n".join(
+                [
+                    ".planfile/sprints/current.yaml:1: TODO generated",
+                    "project/calls.png:1: TODO generated image",
+                    "src/lane/git_reader.py:1: TODO code",
+                ]
+            ),
+        ]
+
+        ctx = read_git_context(Path("/fake/repo"), max_commits=10)
+
+        self.assertEqual(ctx.open_todos, ["src/lane/git_reader.py:1: TODO code"])
+
+    @patch("lane.git_reader._run")
+    @patch("lane.git_reader._is_git_repo")
     def test_read_git_context_with_empty_git_log(self, mock_is_git: MagicMock, mock_run: MagicMock) -> None:
         mock_is_git.return_value = True
         mock_run.side_effect = [
@@ -158,4 +213,3 @@ class GitReaderTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

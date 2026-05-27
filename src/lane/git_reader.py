@@ -2,7 +2,34 @@
 
 from dataclasses import dataclass
 from pathlib import Path
+from pathlib import PurePosixPath
 import subprocess
+
+
+IGNORED_PATH_PARTS = {
+    ".code2llm_cache",
+    ".git",
+    ".koru",
+    ".mypy_cache",
+    ".planfile",
+    ".pytest_cache",
+    "__pycache__",
+    "build",
+    "dist",
+    "node_modules",
+}
+IGNORED_FILE_NAMES = {
+    "uv.lock",
+}
+IGNORED_FILE_SUFFIXES = {
+    ".gif",
+    ".jpg",
+    ".jpeg",
+    ".lock",
+    ".png",
+    ".pyc",
+    ".webp",
+}
 
 
 @dataclass
@@ -109,7 +136,7 @@ def _count_file_frequencies(raw_output: str) -> dict[str, int]:
     file_freq: dict[str, int] = {}
     for line in raw_output.splitlines():
         line = line.strip()
-        if line:
+        if line and not _should_ignore_git_path(line):
             file_freq[line] = file_freq.get(line, 0) + 1
     return file_freq
 
@@ -135,7 +162,7 @@ def _get_file_frequency(repo_path: Path, max_commits: int) -> list[str]:
 def _get_git_todos(repo_path: Path) -> list[str]:
     """Get TODO/FIXME markers from git grep."""
     grep_raw = _run(["git", "grep", "-n", "-E", "TODO|FIXME|HACK|XXX"], repo_path)
-    return [line for line in grep_raw.splitlines() if line.strip()]
+    return [line for line in grep_raw.splitlines() if _should_include_todo_line(line)]
 
 
 def _create_empty_context(repo_path: Path) -> GitContext:
@@ -182,7 +209,7 @@ def _parse_commit_metadata(line: str) -> tuple[str, str, str, str] | None:
 def _create_commit_info(meta: tuple[str, str, str, str], files: list[str]) -> CommitInfo:
     """Create a CommitInfo object from metadata and files."""
     commit_hash, author, date, message = meta
-    return CommitInfo(commit_hash, author, date, message, files)
+    return CommitInfo(commit_hash, author, date, message, _filter_git_paths(files))
 
 
 def _finalize_commit(
@@ -214,3 +241,28 @@ def _parse_commits(log_raw: str) -> list[CommitInfo]:
     _finalize_commit(commits, current_meta, current_files)
     return commits
 
+
+def _filter_git_paths(paths: list[str]) -> list[str]:
+    """Return git paths that are useful prompt context."""
+    return [path for path in paths if not _should_ignore_git_path(path)]
+
+
+def _should_ignore_git_path(path: str) -> bool:
+    """Return True for generated/cache/binary paths that add prompt noise."""
+    rel_path = PurePosixPath(path)
+    parts = set(rel_path.parts)
+    if parts & IGNORED_PATH_PARTS:
+        return True
+    if rel_path.name in IGNORED_FILE_NAMES:
+        return True
+    if any(part.endswith(".egg-info") for part in rel_path.parts):
+        return True
+    return rel_path.suffix.lower() in IGNORED_FILE_SUFFIXES
+
+
+def _should_include_todo_line(line: str) -> bool:
+    """Return True if a git-grep TODO line should be included."""
+    if not line.strip():
+        return False
+    path = line.split(":", 1)[0]
+    return not _should_ignore_git_path(path)

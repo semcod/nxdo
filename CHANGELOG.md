@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [0.2.19] - 2026-05-27
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_git_reader.py
+- Update tests/test_project_analyzer.py
+
 ## [0.2.18] - 2026-05-27
 
 ### Docs

@@ -30,6 +30,27 @@ SNAPSHOT_FILES = [
 
 MAX_FILE_CHARS = 3_000
 MAX_TREE_DEPTH = 3
+IGNORED_TREE_NAMES = {
+    ".code2llm_cache",
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+}
+IGNORED_TREE_SUFFIXES = {
+    ".gif",
+    ".jpg",
+    ".jpeg",
+    ".lock",
+    ".png",
+    ".pyc",
+    ".webp",
+}
 
 
 @dataclass
@@ -204,18 +225,13 @@ def _readme_summary(text: str) -> str:
 
 def _should_ignore_entry(name: str) -> bool:
     """Check if a directory/file should be ignored in tree view."""
-    ignore_set = {
-        ".git",
-        "__pycache__",
-        ".venv",
-        "venv",
-        "dist",
-        "build",
-        "node_modules",
-        ".mypy_cache",
-        ".pytest_cache",
-    }
-    return name in ignore_set or name.startswith(".")
+    path = Path(name)
+    return (
+        name in IGNORED_TREE_NAMES
+        or name.startswith(".")
+        or name.endswith(".egg-info")
+        or path.suffix.lower() in IGNORED_TREE_SUFFIXES
+    )
 
 
 def _get_tree_symbol(is_last: bool, connector: bool) -> str:
@@ -264,4 +280,3 @@ def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") ->
         lines.extend(_get_subtree_lines(entry, max_depth, depth, is_last, prefix))
 
     return "\n".join(lines)
-

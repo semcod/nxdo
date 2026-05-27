@@ -11,6 +11,7 @@ from lane.project_analyzer import (
     _parse_cargo,
     _detect_stack,
     _build_tree,
+    _should_ignore_entry,
 )
 
 
@@ -200,7 +201,32 @@ class ProjectAnalyzerTests(unittest.TestCase):
         result = _build_tree(Path("/nonexistent/path/xyz"), max_depth=3)
         self.assertEqual(result, "")
 
+    def test_build_tree_ignores_generated_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "src").mkdir()
+            (root / "src" / "demo.py").write_text("", encoding="utf-8")
+            (root / "project").mkdir()
+            (root / "project" / "flow.png").write_text("", encoding="utf-8")
+            (root / "uv.lock").write_text("", encoding="utf-8")
+            (root / "lane.egg-info").mkdir()
+            (root / "lane.egg-info" / "PKG-INFO").write_text("", encoding="utf-8")
+
+            tree = _build_tree(root, max_depth=3)
+
+        self.assertIn("demo.py", tree)
+        self.assertIn("project", tree)
+        self.assertNotIn("flow.png", tree)
+        self.assertNotIn("uv.lock", tree)
+        self.assertNotIn("lane.egg-info", tree)
+
+    def test_should_ignore_entry_filters_generated_names(self) -> None:
+        self.assertTrue(_should_ignore_entry(".planfile"))
+        self.assertTrue(_should_ignore_entry("package.egg-info"))
+        self.assertTrue(_should_ignore_entry("diagram.png"))
+        self.assertTrue(_should_ignore_entry("uv.lock"))
+        self.assertFalse(_should_ignore_entry("pyproject.toml"))
+
 
 if __name__ == "__main__":
     unittest.main()
-
