@@ -147,7 +147,7 @@ class CLITests(unittest.TestCase):
             root = Path(tmp_dir)
             result = runner.invoke(app, ["tickets", str(root), "--sync-todo"])
             self.assertEqual(result.exit_code, 0)
-            self.assertIn("Appended 1 tasks", result.stdout)
+            self.assertIn("Synced 1 tasks", result.stdout)
 
     @patch("lane.cli.generate_next_tasks")
     def test_cmd_tickets_export_yaml(self, mock_generate: MagicMock) -> None:

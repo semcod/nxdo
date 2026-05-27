@@ -117,7 +117,7 @@ def _sync_todos_if_requested(plan: TaskPlan, repo: Path, sync_todo: bool) -> Non
         return
     report = sync_to_todo_md(plan, repo)
     todo_path = report.get("todo_path", "TODO.md")
-    console.print(f"[green]✓[/green] Appended {report.get('updated', 0)} tasks to {todo_path}")
+    console.print(f"[green]✓[/green] Synced {report.get('updated', 0)} tasks to {todo_path}")
 
 
 def _sync_planfile_if_requested(plan: TaskPlan, repo: Path, sync_planfile: bool) -> None:

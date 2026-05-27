@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [0.2.18] - 2026-05-27
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_ticket_generator.py
+
 ## [0.2.17] - 2026-05-27
 
 ### Docs
