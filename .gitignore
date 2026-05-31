@@ -1,4 +1,20 @@
 # Byte-compiled / optimized / DLL files
+.code2llm_cache/__init___1779821607395592181_519.pkl
+.code2llm_cache/__init___1779894083798767302_824.pkl
+.code2llm_cache/cli_1779893581396958879_15255.pkl
+.code2llm_cache/complexity_1779821572467241675_9445.pkl
+.code2llm_cache/config_1779821240832920270_1187.pkl
+.code2llm_cache/coupling_1779821509364609700_6186.pkl
+.code2llm_cache/git_reader_1779893743779838285_8178.pkl
+.code2llm_cache/hotspots_1779821541366929991_9235.pkl
+.code2llm_cache/koru_context_1779825224753000000_9708.pkl
+.code2llm_cache/llm_client_1779823632969000000_2527.pkl
+.code2llm_cache/openai_compat_1779825233933000000_7545.pkl
+.code2llm_cache/planner_1779823622726000000_1974.pkl
+.code2llm_cache/project_analyzer_1779893713850495044_8621.pkl
+.code2llm_cache/pyproject_1779894083074502249_2255.pkl
+.code2llm_cache/strategy_1779820376810984149_5514.pkl
+.code2llm_cache/ticket_generator_1779893575507889855_9787.pkl
 .code2llm_cache/__init___1779813747840622603_823.pkl
 .code2llm_cache/cli_1779813728398420144_8551.pkl
 .code2llm_cache/pyproject_1779813746964613479_2251.pkl

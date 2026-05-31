@@ -1,48 +1,56 @@
-# lane | 70 func | 11f | 2143L | python | 2026-05-26
+# lane | 111 func | 15f | 3770L | python | 2026-05-29
 # generated in 0.00s
 
 HEALTH:
-  CC̄=2.7  critical=0 (limit:10)  dup=0  cycles=1
+  CC̄=4.0  critical=9 (limit:10)  dup=0  cycles=1
 
-ALERTS[7]:
-  !!  high_fan_out     cmd_tickets = 18 (limit:10)
+ALERTS[20]:
+  !!  high_fan_out     cmd_auto = 18 (limit:10)
+  !!  high_fan_out     cmd_tickets = 17 (limit:10)
   !!  high_fan_out     main = 16 (limit:10)
-  !   high_fan_out     _build_tree = 13 (limit:10)
+  !!  high_fan_out     identify_bug_hotspots = 16 (limit:10)
+  !!  high_fan_out     cmd_metrics = 15 (limit:10)
+  !!  high_fan_out     collect_file_metrics = 15 (limit:10)
+  !   cc_exceeded      collect_coupling_matrix = 18 (limit:15)
+  !   cc_exceeded      identify_bug_hotspots = 16 (limit:15)
   !   high_fan_out     cmd_plan = 12 (limit:10)
-  !   high_fan_out     cmd_print_context = 11 (limit:10)
-  !   high_fan_out     cmd_print_prompt = 11 (limit:10)
-  !   high_fan_out     OpenAICompatProvider._call_api = 10 (limit:10)
+  !   high_fan_out     _build_tree = 12 (limit:10)
 
-MODULES[20] (top by size):
+MODULES[26] (top by size):
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[src/lane/project_analyzer.py] 258L C:1 F:19 CC↑8 D:2 (python)
-  M[src/lane/cli.py] 216L C:0 F:7 CC↑9 D:0 (python)
-  M[src/lane/git_reader.py] 207L C:2 F:17 CC↑7 D:2 (python)
-  M[src/lane/providers/openai_compat.py] 172L C:1 F:8 CC↑5 D:1 (python)
-  M[src/lane/ticket_generator.py] 165L C:0 F:5 CC↑3 D:1 (python)
+  M[src/lane/cli.py] 380L C:0 F:14 CC↑11 D:0 (python)
+  M[src/lane/metrics/complexity.py] 300L C:1 F:8 CC↑14 D:1 (python)
+  M[src/lane/koru_context.py] 283L C:3 F:6 CC↑7 D:2 (python)
+  M[src/lane/project_analyzer.py] 282L C:1 F:20 CC↑6 D:2 (python)
+  M[src/lane/ticket_generator.py] 280L C:0 F:12 CC↑8 D:1 (python)
+  M[src/lane/metrics/hotspots.py] 270L C:1 F:5 CC↑16 D:1 (python)
+  M[src/lane/git_reader.py] 268L C:2 F:21 CC↑7 D:2 (python)
+  M[src/lane/providers/openai_compat.py] 204L C:1 F:8 CC↑6 D:1 (python)
+  M[src/lane/metrics/coupling.py] 194L C:1 F:3 CC↑18 D:1 (python)
+  M[strategy.yaml] 142L C:0 F:0 CC↑0 D:0 (yaml)
   M[pyproject.toml] 98L C:0 F:0 CC↑0 D:0 (toml)
   M[src/lane/models.py] 90L C:4 F:4 CC↑7 D:0 (python)
-  M[src/lane/llm_client.py] 77L C:1 F:4 CC↑3 D:2 (python)
+  M[src/lane/llm_client.py] 85L C:1 F:4 CC↑3 D:2 (python)
   M[src/lane/output.py] 67L C:0 F:3 CC↑4 D:1 (python)
-  M[tree.txt] 57L C:0 F:0 CC↑0 D:0 (txt)
-  M[project.sh] 48L C:0 F:0 CC↑0 D:0 (shell)
-  M[src/lane/planner.py] 42L C:0 F:1 CC↑3 D:1 (python)
-  M[src/lane/config.py] 42L C:1 F:1 CC↑2 D:3 (python)
-  M[src/lane/__init__.py] 31L C:0 F:0 CC↑0 D:0 (python)
-  LANGS: python:14/yaml:3/shell:1/toml:1/txt:1
+  LANGS: python:19/yaml:4/shell:1/toml:1/txt:1
 
-HOTSPOTS[7]:
-  ★ cmd_tickets fan=18  // Generate tickets from a plan using planfile integration.
+HOTSPOTS[10]:
+  ★ cmd_auto fan=18  // Auto-generate and sync tickets for the most important work.
+
+This command automa
+  ★ cmd_tickets fan=17  // Generate tickets from a plan using planfile integration.
   ★ main fan=16  // Compatibility shim — maps legacy argparse argv to Typer sub-commands.
-  ★ _build_tree fan=13  // Orchestrates 13 calls
-  ★ cmd_plan fan=12  // Generate a 10-task plan for the repository.
-  ★ cmd_print_context fan=11  // Print the assembled project and git context (no LLM call).
+  ★ identify_bug_hotspots fan=16  // Identify files with high bug-fix density and code churn.
 
-REFACTOR[4]:
+These files are risky 
+  ★ cmd_metrics fan=15  // Display code metrics: complexity, coupling, hotspots.
+
+REFACTOR[7]:
   [1] H/H Split god module goal.yaml (512L, 0 classes)
-  [2] M/L Break circular dependency: src.lane.project_analyzer._build_tree
-  [3] M/M Reduce cmd_tickets fan-out (currently 18)
-  [4] M/M Reduce main fan-out (currently 16)
+  [2] M/L Split identify_bug_hotspots (CC=16)
+  [3] M/L Split collect_coupling_matrix (CC=18)
+  [4] M/L Break circular dependency: src.lane.project_analyzer._get_subtree_lines → src.lane.project_analyzer._build_tree
+  [5] M/M Reduce cmd_auto fan-out (currently 18)
 
 EVOLUTION:
-  2026-05-26 CC̄=2.7 crit=0 2143L // Automated analysis
+  2026-05-29 CC̄=4.0 crit=9 3770L // Automated analysis

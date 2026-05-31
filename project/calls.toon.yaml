@@ -1,100 +1,135 @@
 # code2llm call graph | /home/tom/github/semcod/lane
 # generated in 0.04s
-# nodes: 54 | edges: 58 | modules: 8
-# CC̄=2.7
+# nodes: 92 | edges: 96 | modules: 12
+# CC̄=4.0
 
 HUBS[20]:
-  src.lane.cli.cmd_tickets
-    CC=9  in:0  out:32  total:32
-  src.lane.project_analyzer._build_tree
-    CC=8  in:2  out:14  total:16
+  src.lane.cli.cmd_auto
+    CC=9  in:0  out:33  total:33
+  src.lane.cli.cmd_metrics
+    CC=11  in:0  out:33  total:33
+  src.lane.providers.openai_compat._create_task_from_dict
+    CC=6  in:1  out:20  total:21
+  src.lane.metrics.hotspots.identify_bug_hotspots
+    CC=16  in:2  out:18  total:20
+  src.lane.metrics.complexity._calculate_fan_in
+    CC=12  in:1  out:17  total:18
+  src.lane.metrics.complexity.collect_file_metrics
+    CC=8  in:2  out:16  total:18
+  src.lane.koru_context._format_project_state_for_llm
+    CC=7  in:1  out:16  total:17
+  src.lane.metrics.hotspots.calculate_bus_factor
+    CC=14  in:2  out:14  total:16
   src.lane.cli.cmd_plan
     CC=4  in:0  out:16  total:16
-  src.lane.providers.openai_compat._create_task_from_dict
-    CC=2  in:1  out:15  total:16
+  src.lane.koru_context._format_operations_for_llm
+    CC=7  in:1  out:14  total:15
+  src.lane.metrics.coupling.collect_coupling_matrix
+    CC=18  in:1  out:13  total:14
+  src.lane.metrics.hotspots._get_file_commits_with_info
+    CC=14  in:1  out:13  total:14
   src.lane.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
+  src.lane.project_analyzer._build_tree
+    CC=6  in:2  out:12  total:14
+  src.lane.metrics.coupling._get_commits_with_files
+    CC=13  in:1  out:13  total:14
+  src.lane.planner.generate_next_tasks
+    CC=5  in:4  out:9  total:13
+  src.lane.ticket_generator.sync_to_planfile
+    CC=8  in:1  out:12  total:13
   src.lane.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
   src.lane.git_reader.read_git_context
     CC=2  in:4  out:8  total:12
-  src.lane.planner.generate_next_tasks
-    CC=3  in:3  out:8  total:11
-  src.lane.providers.openai_compat._parse_response
-    CC=1  in:2  out:8  total:10
-  src.lane.git_reader._parse_commits
-    CC=7  in:1  out:9  total:10
-  src.lane.project_analyzer.analyze_project
-    CC=1  in:4  out:5  total:9
-  src.lane.git_reader._run
-    CC=3  in:5  out:2  total:7
-  src.lane.ticket_generator.sync_to_todo_md
-    CC=3  in:1  out:6  total:7
-  src.lane.project_analyzer._parse_pyproject_tomllib
-    CC=4  in:1  out:5  total:6
-  src.lane.config.get_settings
-    CC=2  in:5  out:1  total:6
-  src.lane.project_analyzer._resolve_name_and_description
-    CC=3  in:1  out:5  total:6
-  src.lane.providers.openai_compat._parse_json_response
-    CC=3  in:1  out:5  total:6
-  src.lane.llm_client.build_user_prompt
-    CC=2  in:4  out:1  total:5
-  src.lane.ticket_generator.export_to_planfile_yaml
-    CC=3  in:1  out:4  total:5
-  src.lane.project_analyzer._detect_stack
-    CC=4  in:1  out:4  total:5
+  src.lane.providers.openai_compat.OpenAICompatProvider._call_api
+    CC=5  in:0  out:12  total:12
 
 MODULES:
-  src.lane.cli  [4 funcs]
+  src.lane.cli  [10 funcs]
+    _display_tickets  CC=3  out:5
+    _export_yaml_if_requested  CC=3  out:1
+    _get_priority_emoji  CC=1  out:1
+    _sync_planfile_if_requested  CC=3  out:3
+    _sync_todos_if_requested  CC=2  out:4
+    cmd_auto  CC=9  out:33
+    cmd_metrics  CC=11  out:33
     cmd_plan  CC=4  out:16
     cmd_print_context  CC=2  out:14
     cmd_print_prompt  CC=1  out:13
-    cmd_tickets  CC=9  out:32
   src.lane.config  [1 funcs]
     get_settings  CC=2  out:1
-  src.lane.git_reader  [15 funcs]
-    _count_file_frequencies  CC=3  out:3
-    _create_commit_info  CC=1  out:1
+  src.lane.git_reader  [19 funcs]
+    _count_file_frequencies  CC=4  out:4
+    _create_commit_info  CC=1  out:2
     _create_empty_context  CC=1  out:1
+    _filter_git_paths  CC=3  out:1
+    _finalize_commit  CC=2  out:2
     _format_file_summary  CC=2  out:2
     _get_file_frequency  CC=1  out:3
     _get_git_branch  CC=1  out:1
     _get_git_commits  CC=1  out:2
     _get_git_remote  CC=1  out:1
-    _get_git_todos  CC=3  out:3
-    _is_git_repo  CC=1  out:2
+  src.lane.koru_context  [6 funcs]
+    _format_operations_for_llm  CC=7  out:14
+    _format_project_state_for_llm  CC=7  out:16
+    _load_operations  CC=3  out:2
+    _load_project_state  CC=6  out:10
+    build_koru_context  CC=3  out:9
+    get_koru_system_prompt_extension  CC=1  out:0
   src.lane.llm_client  [3 funcs]
     generate_task_plan  CC=1  out:2
-    build_user_prompt  CC=2  out:1
+    build_user_prompt  CC=3  out:1
     parse_task_plan_response  CC=1  out:1
+  src.lane.metrics.complexity  [6 funcs]
+    _analyze_imports  CC=7  out:10
+    _analyze_types  CC=14  out:6
+    _calculate_cyclomatic_complexity  CC=5  out:5
+    _calculate_fan_in  CC=12  out:17
+    _count_lines  CC=4  out:3
+    collect_file_metrics  CC=8  out:16
+  src.lane.metrics.coupling  [2 funcs]
+    _get_commits_with_files  CC=13  out:13
+    collect_coupling_matrix  CC=18  out:13
+  src.lane.metrics.hotspots  [5 funcs]
+    _get_bug_fix_commits  CC=6  out:7
+    _get_file_commits_with_info  CC=14  out:13
+    calculate_bus_factor  CC=14  out:14
+    get_critical_bus_factor_files  CC=7  out:11
+    identify_bug_hotspots  CC=16  out:18
   src.lane.planner  [1 funcs]
-    generate_next_tasks  CC=3  out:8
-  src.lane.project_analyzer  [18 funcs]
-    _build_tree  CC=8  out:14
+    generate_next_tasks  CC=5  out:9
+  src.lane.project_analyzer  [19 funcs]
+    _build_tree  CC=6  out:12
     _check_pattern_match  CC=2  out:3
     _collect_file_contents  CC=4  out:3
     _detect_stack  CC=4  out:4
     _get_connector  CC=1  out:1
     _get_extension  CC=1  out:1
+    _get_subtree_lines  CC=4  out:3
     _get_tree_symbol  CC=4  out:0
     _parse_cargo  CC=3  out:4
     _parse_package_json  CC=2  out:4
-    _parse_pyproject  CC=2  out:2
-  src.lane.providers.openai_compat  [7 funcs]
+  src.lane.providers.openai_compat  [8 funcs]
     __init__  CC=5  out:2
+    _call_api  CC=5  out:12
     generate_plan  CC=1  out:2
-    _create_task_from_dict  CC=2  out:15
+    _create_task_from_dict  CC=6  out:20
     _parse_json_response  CC=3  out:5
     _parse_response  CC=1  out:8
     _parse_tasks_from_data  CC=2  out:4
     _strip_markdown_fences  CC=3  out:4
-  src.lane.ticket_generator  [5 funcs]
-    _create_temp_strategy  CC=2  out:3
+  src.lane.ticket_generator  [12 funcs]
+    _build_todo_section  CC=4  out:5
+    _ensure_planfile_installed  CC=3  out:5
     _map_priority  CC=1  out:2
+    _remove_generated_todo_sections  CC=1  out:5
+    _remove_legacy_generated_todo_sections  CC=6  out:4
+    _remove_managed_todo_blocks  CC=5  out:3
+    _resolve_todo_path  CC=3  out:1
+    _sync_todo_section  CC=2  out:6
     export_to_planfile_yaml  CC=3  out:4
-    sync_to_todo_md  CC=3  out:6
-    task_plan_to_tickets  CC=3  out:2
+    sync_to_planfile  CC=8  out:12
 
 EDGES:
   src.lane.cli.cmd_plan → src.lane.config.get_settings
@@ -103,17 +138,25 @@ EDGES:
   src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
   src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
   src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
-  src.lane.cli.cmd_tickets → src.lane.config.get_settings
+  src.lane.cli._sync_todos_if_requested → src.lane.ticket_generator.sync_to_todo_md
+  src.lane.cli._sync_planfile_if_requested → src.lane.ticket_generator.sync_to_planfile
+  src.lane.cli._export_yaml_if_requested → src.lane.ticket_generator.export_to_planfile_yaml
+  src.lane.cli._display_tickets → src.lane.cli._get_priority_emoji
+  src.lane.cli.cmd_metrics → src.lane.metrics.complexity.collect_file_metrics
+  src.lane.cli.cmd_auto → src.lane.metrics.hotspots.identify_bug_hotspots
+  src.lane.cli.cmd_auto → src.lane.metrics.complexity.collect_file_metrics
   src.lane.git_reader._is_git_repo → src.lane.git_reader._run
   src.lane.git_reader._run_git_command → src.lane.git_reader._run
   src.lane.git_reader._get_git_branch → src.lane.git_reader._run_git_command
   src.lane.git_reader._get_git_remote → src.lane.git_reader._run_git_command
   src.lane.git_reader._get_git_commits → src.lane.git_reader._run
   src.lane.git_reader._get_git_commits → src.lane.git_reader._parse_commits
+  src.lane.git_reader._count_file_frequencies → src.lane.git_reader._should_ignore_git_path
   src.lane.git_reader._get_file_frequency → src.lane.git_reader._run
   src.lane.git_reader._get_file_frequency → src.lane.git_reader._count_file_frequencies
   src.lane.git_reader._get_file_frequency → src.lane.git_reader._format_file_summary
   src.lane.git_reader._get_git_todos → src.lane.git_reader._run
+  src.lane.git_reader._get_git_todos → src.lane.git_reader._should_include_todo_line
   src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_branch
   src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_remote
   src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_commits
@@ -121,29 +164,21 @@ EDGES:
   src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_todos
   src.lane.git_reader.read_git_context → src.lane.git_reader._is_git_repo
   src.lane.git_reader.read_git_context → src.lane.git_reader._create_empty_context
+  src.lane.git_reader._create_commit_info → src.lane.git_reader._filter_git_paths
+  src.lane.git_reader._finalize_commit → src.lane.git_reader._create_commit_info
+  src.lane.git_reader._parse_commits → src.lane.git_reader._finalize_commit
   src.lane.git_reader._parse_commits → src.lane.git_reader._parse_commit_metadata
-  src.lane.git_reader._parse_commits → src.lane.git_reader._create_commit_info
+  src.lane.git_reader._filter_git_paths → src.lane.git_reader._should_ignore_git_path
+  src.lane.git_reader._should_include_todo_line → src.lane.git_reader._should_ignore_git_path
   src.lane.planner.generate_next_tasks → src.lane.project_analyzer.analyze_project
   src.lane.planner.generate_next_tasks → src.lane.git_reader.read_git_context
   src.lane.planner.generate_next_tasks → src.lane.llm_client.build_user_prompt
   src.lane.planner.generate_next_tasks → src.lane.config.get_settings
+  src.lane.planner.generate_next_tasks → src.lane.koru_context.build_koru_context
   src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
   src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
+  src.lane.koru_context.build_koru_context → src.lane.koru_context._load_operations
+  src.lane.koru_context.build_koru_context → src.lane.koru_context._format_operations_for_llm
+  src.lane.koru_context.build_koru_context → src.lane.koru_context._format_project_state_for_llm
+  src.lane.koru_context.build_koru_context → src.lane.koru_context._load_project_state
   src.lane.ticket_generator.task_plan_to_tickets → src.lane.ticket_generator._map_priority
-  src.lane.ticket_generator.sync_to_todo_md → src.lane.ticket_generator._create_temp_strategy
-  src.lane.ticket_generator._create_temp_strategy → src.lane.ticket_generator._map_priority
-  src.lane.ticket_generator.export_to_planfile_yaml → src.lane.ticket_generator._map_priority
-  src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._read_file_safely
-  src.lane.project_analyzer._collect_file_contents → src.lane.project_analyzer._truncate_file_content
-  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_pyproject
-  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_package_json
-  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._parse_cargo
-  src.lane.project_analyzer._resolve_name_and_description → src.lane.project_analyzer._readme_summary
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._collect_file_contents
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._detect_stack
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._resolve_name_and_description
-  src.lane.project_analyzer.analyze_project → src.lane.project_analyzer._build_tree
-  src.lane.project_analyzer._detect_stack → src.lane.project_analyzer._check_pattern_match
-  src.lane.project_analyzer._parse_pyproject → src.lane.project_analyzer._parse_pyproject_tomllib
-  src.lane.project_analyzer._parse_pyproject → src.lane.project_analyzer._parse_pyproject_regex
-  src.lane.project_analyzer._get_connector → src.lane.project_analyzer._get_tree_symbol

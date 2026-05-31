@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [0.2.20] - 2026-05-31
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .code2llm_cache/__init___1779821607395592181_519.pkl
+- Update .code2llm_cache/__init___1779894083798767302_824.pkl
+- Update .code2llm_cache/cli_1779893581396958879_15255.pkl
+- Update .code2llm_cache/complexity_1779821572467241675_9445.pkl
+- Update .code2llm_cache/config_1779821240832920270_1187.pkl
+- Update .code2llm_cache/coupling_1779821509364609700_6186.pkl
+- Update .code2llm_cache/git_reader_1779893743779838285_8178.pkl
+- Update .code2llm_cache/hotspots_1779821541366929991_9235.pkl
+- Update .code2llm_cache/koru_context_1779825224753000000_9708.pkl
+- Update .code2llm_cache/llm_client_1779823632969000000_2527.pkl
+- ... and 26 more files
+
 ## [0.2.19] - 2026-05-27
 
 ### Docs

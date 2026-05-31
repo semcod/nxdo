@@ -1,388 +1,654 @@
 project: /home/tom/github/semcod/lane
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 54
-  total_edges: 58
-  modules_count: 8
+  total_nodes: 92
+  total_edges: 96
+  modules_count: 12
 nodes:
-  src.lane.llm_client.build_user_prompt:
-    name: build_user_prompt
+  src.lane.providers.openai_compat._parse_tasks_from_data:
+    name: _parse_tasks_from_data
+    module: src.lane.providers.openai_compat
+    line: 184
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.lane.git_reader._should_include_todo_line:
+    name: _should_include_todo_line
+    module: src.lane.git_reader
+    line: 263
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  src.lane.metrics.coupling.collect_coupling_matrix:
+    name: collect_coupling_matrix
+    module: src.lane.metrics.coupling
+    line: 63
+    cyclomatic_complexity: 18
+    calls_out: 13
+    calls_in: 1
+  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan:
+    name: generate_task_plan
     module: src.lane.llm_client
-    line: 33
-    cyclomatic_complexity: 2
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.lane.koru_context.build_koru_context:
+    name: build_koru_context
+    module: src.lane.koru_context
+    line: 190
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 1
+  src.lane.git_reader._create_empty_context:
+    name: _create_empty_context
+    module: src.lane.git_reader
+    line: 168
+    cyclomatic_complexity: 1
     calls_out: 1
-    calls_in: 4
-  src.lane.project_analyzer._parse_pyproject_tomllib:
-    name: _parse_pyproject_tomllib
-    module: src.lane.project_analyzer
-    line: 149
-    cyclomatic_complexity: 4
+    calls_in: 1
+  src.lane.ticket_generator._remove_generated_todo_sections:
+    name: _remove_generated_todo_sections
+    module: src.lane.ticket_generator
+    line: 112
+    cyclomatic_complexity: 1
     calls_out: 5
     calls_in: 1
-  src.lane.git_reader._is_git_repo:
-    name: _is_git_repo
-    module: src.lane.git_reader
-    line: 72
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.lane.project_analyzer._build_tree:
-    name: _build_tree
-    module: src.lane.project_analyzer
-    line: 239
-    cyclomatic_complexity: 8
-    calls_out: 14
-    calls_in: 2
-  src.lane.project_analyzer.analyze_project:
-    name: analyze_project
-    module: src.lane.project_analyzer
-    line: 108
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 4
-  src.lane.git_reader._run:
-    name: _run
-    module: src.lane.git_reader
-    line: 56
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 5
-  src.lane.git_reader._get_git_commits:
-    name: _get_git_commits
-    module: src.lane.git_reader
-    line: 92
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.lane.ticket_generator.export_to_planfile_yaml:
-    name: export_to_planfile_yaml
-    module: src.lane.ticket_generator
-    line: 124
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan:
-    name: generate_plan
-    module: src.lane.providers.openai_compat
-    line: 67
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  src.lane.project_analyzer._get_tree_symbol:
-    name: _get_tree_symbol
-    module: src.lane.project_analyzer
-    line: 221
-    cyclomatic_complexity: 4
-    calls_out: 0
-    calls_in: 2
-  src.lane.providers.openai_compat.OpenAICompatProvider.__init__:
-    name: __init__
-    module: src.lane.providers.openai_compat
-    line: 51
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 0
-  src.lane.project_analyzer._detect_stack:
-    name: _detect_stack
-    module: src.lane.project_analyzer
-    line: 132
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  src.lane.providers.openai_compat._strip_markdown_fences:
-    name: _strip_markdown_fences
-    module: src.lane.providers.openai_compat
-    line: 114
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.lane.ticket_generator.task_plan_to_tickets:
-    name: task_plan_to_tickets
-    module: src.lane.ticket_generator
-    line: 15
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  src.lane.cli.cmd_print_context:
-    name: cmd_print_context
-    module: src.lane.cli
-    line: 65
-    cyclomatic_complexity: 2
-    calls_out: 14
-    calls_in: 0
-  src.lane.cli.cmd_plan:
-    name: cmd_plan
-    module: src.lane.cli
-    line: 32
-    cyclomatic_complexity: 4
-    calls_out: 16
-    calls_in: 0
-  src.lane.planner.generate_next_tasks:
-    name: generate_next_tasks
-    module: src.lane.planner
-    line: 16
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 3
-  src.lane.git_reader._get_git_todos:
-    name: _get_git_todos
-    module: src.lane.git_reader
-    line: 135
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  src.lane.ticket_generator.sync_to_todo_md:
-    name: sync_to_todo_md
-    module: src.lane.ticket_generator
-    line: 54
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 1
-  src.lane.project_analyzer._readme_summary:
-    name: _readme_summary
-    module: src.lane.project_analyzer
-    line: 197
+  src.lane.metrics.complexity._count_lines:
+    name: _count_lines
+    module: src.lane.metrics.complexity
+    line: 36
     cyclomatic_complexity: 4
     calls_out: 3
-    calls_in: 1
-  src.lane.config.get_settings:
-    name: get_settings
-    module: src.lane.config
-    line: 37
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 5
-  src.lane.git_reader._get_file_frequency:
-    name: _get_file_frequency
-    module: src.lane.git_reader
-    line: 125
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.lane.project_analyzer._parse_pyproject:
-    name: _parse_pyproject
-    module: src.lane.project_analyzer
-    line: 173
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.lane.providers.openai_compat._create_task_from_dict:
-    name: _create_task_from_dict
-    module: src.lane.providers.openai_compat
-    line: 135
-    cyclomatic_complexity: 2
-    calls_out: 15
-    calls_in: 1
-  src.lane.providers.openai_compat._parse_response:
-    name: _parse_response
-    module: src.lane.providers.openai_compat
-    line: 160
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 2
-  src.lane.project_analyzer._read_file_safely:
-    name: _read_file_safely
-    module: src.lane.project_analyzer
-    line: 59
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  src.lane.project_analyzer._parse_cargo:
-    name: _parse_cargo
-    module: src.lane.project_analyzer
-    line: 188
-    cyclomatic_complexity: 3
-    calls_out: 4
     calls_in: 1
   src.lane.project_analyzer._check_pattern_match:
     name: _check_pattern_match
     module: src.lane.project_analyzer
-    line: 124
+    line: 145
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 1
-  src.lane.ticket_generator._map_priority:
-    name: _map_priority
-    module: src.lane.ticket_generator
-    line: 44
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
   src.lane.project_analyzer._truncate_file_content:
     name: _truncate_file_content
     module: src.lane.project_analyzer
-    line: 67
+    line: 88
     cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 1
-  src.lane.project_analyzer._resolve_name_and_description:
-    name: _resolve_name_and_description
+  src.lane.metrics.complexity._calculate_fan_in:
+    name: _calculate_fan_in
+    module: src.lane.metrics.complexity
+    line: 154
+    cyclomatic_complexity: 12
+    calls_out: 17
+    calls_in: 1
+  src.lane.project_analyzer._parse_cargo:
+    name: _parse_cargo
     module: src.lane.project_analyzer
-    line: 88
+    line: 209
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.lane.providers.openai_compat._create_task_from_dict:
+    name: _create_task_from_dict
+    module: src.lane.providers.openai_compat
+    line: 157
+    cyclomatic_complexity: 6
+    calls_out: 20
+    calls_in: 1
+  src.lane.llm_client.build_user_prompt:
+    name: build_user_prompt
+    module: src.lane.llm_client
+    line: 35
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 4
+  src.lane.ticket_generator.sync_to_todo_md:
+    name: sync_to_todo_md
+    module: src.lane.ticket_generator
+    line: 57
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  src.lane.cli._export_yaml_if_requested:
+    name: _export_yaml_if_requested
+    module: src.lane.cli
+    line: 132
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  src.lane.cli.cmd_auto:
+    name: cmd_auto
+    module: src.lane.cli
+    line: 259
+    cyclomatic_complexity: 9
+    calls_out: 33
+    calls_in: 0
+  src.lane.ticket_generator._ensure_planfile_installed:
+    name: _ensure_planfile_installed
+    module: src.lane.ticket_generator
+    line: 157
     cyclomatic_complexity: 3
     calls_out: 5
+    calls_in: 1
+  src.lane.project_analyzer._detect_stack:
+    name: _detect_stack
+    module: src.lane.project_analyzer
+    line: 153
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.lane.project_analyzer._parse_pyproject_tomllib:
+    name: _parse_pyproject_tomllib
+    module: src.lane.project_analyzer
+    line: 170
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  src.lane.providers.openai_compat._strip_markdown_fences:
+    name: _strip_markdown_fences
+    module: src.lane.providers.openai_compat
+    line: 136
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.lane.project_analyzer.analyze_project:
+    name: analyze_project
+    module: src.lane.project_analyzer
+    line: 129
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 4
+  src.lane.cli._sync_todos_if_requested:
+    name: _sync_todos_if_requested
+    module: src.lane.cli
+    line: 114
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.lane.git_reader._is_git_repo:
+    name: _is_git_repo
+    module: src.lane.git_reader
+    line: 99
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  src.lane.ticket_generator._resolve_todo_path:
+    name: _resolve_todo_path
+    module: src.lane.ticket_generator
+    line: 77
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  src.lane.koru_context._format_project_state_for_llm:
+    name: _format_project_state_for_llm
+    module: src.lane.koru_context
+    line: 160
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 1
+  src.lane.providers.openai_compat._parse_json_response:
+    name: _parse_json_response
+    module: src.lane.providers.openai_compat
+    line: 144
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  src.lane.git_reader._parse_commit_metadata:
+    name: _parse_commit_metadata
+    module: src.lane.git_reader
+    line: 200
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  src.lane.git_reader._count_file_frequencies:
+    name: _count_file_frequencies
+    module: src.lane.git_reader
+    line: 134
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.lane.planner.generate_next_tasks:
+    name: generate_next_tasks
+    module: src.lane.planner
+    line: 16
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 4
+  src.lane.koru_context._load_operations:
+    name: _load_operations
+    module: src.lane.koru_context
+    line: 51
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  src.lane.providers.openai_compat.OpenAICompatProvider.__init__:
+    name: __init__
+    module: src.lane.providers.openai_compat
+    line: 61
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 0
+  src.lane.ticket_generator._remove_legacy_generated_todo_sections:
+    name: _remove_legacy_generated_todo_sections
+    module: src.lane.ticket_generator
+    line: 135
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 1
+  src.lane.metrics.hotspots._get_bug_fix_commits:
+    name: _get_bug_fix_commits
+    module: src.lane.metrics.hotspots
+    line: 71
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  src.lane.providers.openai_compat._parse_response:
+    name: _parse_response
+    module: src.lane.providers.openai_compat
+    line: 192
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 2
+  src.lane.git_reader._format_file_summary:
+    name: _format_file_summary
+    module: src.lane.git_reader
+    line: 144
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.lane.cli._sync_planfile_if_requested:
+    name: _sync_planfile_if_requested
+    module: src.lane.cli
+    line: 123
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  src.lane.koru_context.get_koru_system_prompt_extension:
+    name: get_koru_system_prompt_extension
+    module: src.lane.koru_context
+    line: 235
+    cyclomatic_complexity: 1
+    calls_out: 0
     calls_in: 1
   src.lane.project_analyzer._collect_file_contents:
     name: _collect_file_contents
     module: src.lane.project_analyzer
-    line: 74
+    line: 95
     cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 1
-  src.lane.git_reader._format_file_summary:
-    name: _format_file_summary
-    module: src.lane.git_reader
-    line: 117
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.lane.git_reader._parse_commits:
-    name: _parse_commits
-    module: src.lane.git_reader
-    line: 188
-    cyclomatic_complexity: 7
-    calls_out: 9
-    calls_in: 1
-  src.lane.project_analyzer._should_ignore_entry:
-    name: _should_ignore_entry
+  src.lane.project_analyzer._parse_package_json:
+    name: _parse_package_json
     module: src.lane.project_analyzer
-    line: 205
+    line: 201
     cyclomatic_complexity: 2
-    calls_out: 1
+    calls_out: 4
+    calls_in: 1
+  src.lane.git_reader._create_commit_info:
+    name: _create_commit_info
+    module: src.lane.git_reader
+    line: 209
+    cyclomatic_complexity: 1
+    calls_out: 2
     calls_in: 1
   src.lane.git_reader._get_git_remote:
     name: _get_git_remote
     module: src.lane.git_reader
-    line: 87
+    line: 114
     cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.cli._get_priority_emoji:
+    name: _get_priority_emoji
+    module: src.lane.cli
+    line: 140
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.metrics.complexity._analyze_types:
+    name: _analyze_types
+    module: src.lane.metrics.complexity
+    line: 123
+    cyclomatic_complexity: 14
+    calls_out: 6
+    calls_in: 1
+  src.lane.cli.cmd_metrics:
+    name: cmd_metrics
+    module: src.lane.cli
+    line: 199
+    cyclomatic_complexity: 11
+    calls_out: 33
+    calls_in: 0
+  src.lane.ticket_generator.sync_to_planfile:
+    name: sync_to_planfile
+    module: src.lane.ticket_generator
+    line: 183
+    cyclomatic_complexity: 8
+    calls_out: 12
+    calls_in: 1
+  src.lane.metrics.complexity._calculate_cyclomatic_complexity:
+    name: _calculate_cyclomatic_complexity
+    module: src.lane.metrics.complexity
+    line: 55
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  src.lane.metrics.complexity.collect_file_metrics:
+    name: collect_file_metrics
+    module: src.lane.metrics.complexity
+    line: 204
+    cyclomatic_complexity: 8
+    calls_out: 16
+    calls_in: 2
+  src.lane.git_reader._parse_commits:
+    name: _parse_commits
+    module: src.lane.git_reader
+    line: 225
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  src.lane.git_reader._finalize_commit:
+    name: _finalize_commit
+    module: src.lane.git_reader
+    line: 215
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  src.lane.git_reader._get_git_todos:
+    name: _get_git_todos
+    module: src.lane.git_reader
+    line: 162
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  src.lane.metrics.hotspots.calculate_bus_factor:
+    name: calculate_bus_factor
+    module: src.lane.metrics.hotspots
+    line: 183
+    cyclomatic_complexity: 14
+    calls_out: 14
+    calls_in: 2
+  src.lane.ticket_generator.task_plan_to_tickets:
+    name: task_plan_to_tickets
+    module: src.lane.ticket_generator
+    line: 18
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 2
+  src.lane.project_analyzer._resolve_name_and_description:
+    name: _resolve_name_and_description
+    module: src.lane.project_analyzer
+    line: 109
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  src.lane.project_analyzer._get_tree_symbol:
+    name: _get_tree_symbol
+    module: src.lane.project_analyzer
+    line: 237
+    cyclomatic_complexity: 4
+    calls_out: 0
+    calls_in: 2
+  src.lane.project_analyzer._get_connector:
+    name: _get_connector
+    module: src.lane.project_analyzer
+    line: 245
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.lane.project_analyzer._read_file_safely:
+    name: _read_file_safely
+    module: src.lane.project_analyzer
+    line: 80
+    cyclomatic_complexity: 2
     calls_out: 1
     calls_in: 1
   src.lane.project_analyzer._get_extension:
     name: _get_extension
     module: src.lane.project_analyzer
-    line: 234
+    line: 250
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 1
-  src.lane.git_reader._create_commit_info:
-    name: _create_commit_info
-    module: src.lane.git_reader
-    line: 182
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 2
-  src.lane.cli.cmd_print_prompt:
-    name: cmd_print_prompt
-    module: src.lane.cli
-    line: 84
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 0
-  src.lane.project_analyzer._parse_package_json:
-    name: _parse_package_json
+  src.lane.project_analyzer._should_ignore_entry:
+    name: _should_ignore_entry
     module: src.lane.project_analyzer
-    line: 180
-    cyclomatic_complexity: 2
+    line: 226
+    cyclomatic_complexity: 4
     calls_out: 4
     calls_in: 1
-  src.lane.cli.cmd_tickets:
-    name: cmd_tickets
-    module: src.lane.cli
-    line: 114
-    cyclomatic_complexity: 9
-    calls_out: 32
+  src.lane.metrics.hotspots.get_critical_bus_factor_files:
+    name: get_critical_bus_factor_files
+    module: src.lane.metrics.hotspots
+    line: 239
+    cyclomatic_complexity: 7
+    calls_out: 11
     calls_in: 0
-  src.lane.git_reader._run_git_command:
-    name: _run_git_command
-    module: src.lane.git_reader
-    line: 77
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  src.lane.git_reader._count_file_frequencies:
-    name: _count_file_frequencies
-    module: src.lane.git_reader
-    line: 107
-    cyclomatic_complexity: 3
-    calls_out: 3
+  src.lane.metrics.hotspots._get_file_commits_with_info:
+    name: _get_file_commits_with_info
+    module: src.lane.metrics.hotspots
+    line: 23
+    cyclomatic_complexity: 14
+    calls_out: 13
     calls_in: 1
-  src.lane.providers.openai_compat._parse_json_response:
-    name: _parse_json_response
-    module: src.lane.providers.openai_compat
-    line: 122
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan:
-    name: generate_task_plan
-    module: src.lane.llm_client
-    line: 69
+  src.lane.git_reader._get_git_commits:
+    name: _get_git_commits
+    module: src.lane.git_reader
+    line: 119
     cyclomatic_complexity: 1
     calls_out: 2
+    calls_in: 1
+  src.lane.koru_context._load_project_state:
+    name: _load_project_state
+    module: src.lane.koru_context
+    line: 72
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 1
+  src.lane.cli.cmd_print_context:
+    name: cmd_print_context
+    module: src.lane.cli
+    line: 66
+    cyclomatic_complexity: 2
+    calls_out: 14
     calls_in: 0
   src.lane.llm_client.parse_task_plan_response:
     name: parse_task_plan_response
     module: src.lane.llm_client
-    line: 41
+    line: 49
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 0
-  src.lane.git_reader._create_empty_context:
-    name: _create_empty_context
-    module: src.lane.git_reader
-    line: 141
-    cyclomatic_complexity: 1
-    calls_out: 1
+  src.lane.metrics.complexity._analyze_imports:
+    name: _analyze_imports
+    module: src.lane.metrics.complexity
+    line: 81
+    cyclomatic_complexity: 7
+    calls_out: 10
     calls_in: 1
-  src.lane.project_analyzer._get_connector:
-    name: _get_connector
+  src.lane.git_reader._should_ignore_git_path:
+    name: _should_ignore_git_path
+    module: src.lane.git_reader
+    line: 250
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 3
+  src.lane.cli._display_tickets:
+    name: _display_tickets
+    module: src.lane.cli
+    line: 145
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  src.lane.config.get_settings:
+    name: get_settings
+    module: src.lane.config
+    line: 39
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 6
+  src.lane.cli.cmd_plan:
+    name: cmd_plan
+    module: src.lane.cli
+    line: 33
+    cyclomatic_complexity: 4
+    calls_out: 16
+    calls_in: 0
+  src.lane.ticket_generator._sync_todo_section:
+    name: _sync_todo_section
+    module: src.lane.ticket_generator
+    line: 105
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 1
+  src.lane.project_analyzer._parse_pyproject:
+    name: _parse_pyproject
     module: src.lane.project_analyzer
-    line: 229
-    cyclomatic_complexity: 1
+    line: 194
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.lane.ticket_generator._remove_managed_todo_blocks:
+    name: _remove_managed_todo_blocks
+    module: src.lane.ticket_generator
+    line: 119
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._run:
+    name: _run
+    module: src.lane.git_reader
+    line: 83
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 5
+  src.lane.koru_context._format_operations_for_llm:
+    name: _format_operations_for_llm
+    module: src.lane.koru_context
+    line: 134
+    cyclomatic_complexity: 7
+    calls_out: 14
+    calls_in: 1
+  src.lane.git_reader._filter_git_paths:
+    name: _filter_git_paths
+    module: src.lane.git_reader
+    line: 245
+    cyclomatic_complexity: 3
     calls_out: 1
     calls_in: 1
   src.lane.git_reader._get_git_branch:
     name: _get_git_branch
     module: src.lane.git_reader
-    line: 82
+    line: 109
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 1
-  src.lane.git_reader._parse_commit_metadata:
-    name: _parse_commit_metadata
-    module: src.lane.git_reader
-    line: 173
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  src.lane.project_analyzer._parse_pyproject_regex:
-    name: _parse_pyproject_regex
+  src.lane.project_analyzer._get_subtree_lines:
+    name: _get_subtree_lines
     module: src.lane.project_analyzer
-    line: 163
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.lane.ticket_generator._create_temp_strategy:
-    name: _create_temp_strategy
-    module: src.lane.ticket_generator
-    line: 90
-    cyclomatic_complexity: 2
+    line: 255
+    cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 1
   src.lane.git_reader.read_git_context:
     name: read_git_context
     module: src.lane.git_reader
-    line: 153
+    line: 180
     cyclomatic_complexity: 2
     calls_out: 8
     calls_in: 4
-  src.lane.providers.openai_compat._parse_tasks_from_data:
-    name: _parse_tasks_from_data
+  src.lane.ticket_generator._map_priority:
+    name: _map_priority
+    module: src.lane.ticket_generator
+    line: 47
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 4
+  src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan:
+    name: generate_plan
     module: src.lane.providers.openai_compat
-    line: 152
-    cyclomatic_complexity: 2
+    line: 79
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.lane.project_analyzer._parse_pyproject_regex:
+    name: _parse_pyproject_regex
+    module: src.lane.project_analyzer
+    line: 184
+    cyclomatic_complexity: 3
     calls_out: 4
     calls_in: 1
+  src.lane.providers.openai_compat.OpenAICompatProvider._call_api:
+    name: _call_api
+    module: src.lane.providers.openai_compat
+    line: 89
+    cyclomatic_complexity: 5
+    calls_out: 12
+    calls_in: 0
+  src.lane.project_analyzer._build_tree:
+    name: _build_tree
+    module: src.lane.project_analyzer
+    line: 263
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 2
+  src.lane.git_reader._run_git_command:
+    name: _run_git_command
+    module: src.lane.git_reader
+    line: 104
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  src.lane.project_analyzer._readme_summary:
+    name: _readme_summary
+    module: src.lane.project_analyzer
+    line: 218
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  src.lane.git_reader._get_file_frequency:
+    name: _get_file_frequency
+    module: src.lane.git_reader
+    line: 152
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  src.lane.ticket_generator._build_todo_section:
+    name: _build_todo_section
+    module: src.lane.ticket_generator
+    line: 86
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  src.lane.cli.cmd_print_prompt:
+    name: cmd_print_prompt
+    module: src.lane.cli
+    line: 85
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 0
+  src.lane.ticket_generator.export_to_planfile_yaml:
+    name: export_to_planfile_yaml
+    module: src.lane.ticket_generator
+    line: 239
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.lane.metrics.coupling._get_commits_with_files:
+    name: _get_commits_with_files
+    module: src.lane.metrics.coupling
+    line: 22
+    cyclomatic_complexity: 13
+    calls_out: 13
+    calls_in: 1
+  src.lane.metrics.hotspots.identify_bug_hotspots:
+    name: identify_bug_hotspots
+    module: src.lane.metrics.hotspots
+    line: 96
+    cyclomatic_complexity: 16
+    calls_out: 18
+    calls_in: 2
 edges:
 - caller: src.lane.cli.cmd_plan
   callee: src.lane.config.get_settings
@@ -402,8 +668,26 @@ edges:
 - caller: src.lane.cli.cmd_print_prompt
   callee: src.lane.llm_client.build_user_prompt
   call_type: resolved
-- caller: src.lane.cli.cmd_tickets
-  callee: src.lane.config.get_settings
+- caller: src.lane.cli._sync_todos_if_requested
+  callee: src.lane.ticket_generator.sync_to_todo_md
+  call_type: resolved
+- caller: src.lane.cli._sync_planfile_if_requested
+  callee: src.lane.ticket_generator.sync_to_planfile
+  call_type: resolved
+- caller: src.lane.cli._export_yaml_if_requested
+  callee: src.lane.ticket_generator.export_to_planfile_yaml
+  call_type: resolved
+- caller: src.lane.cli._display_tickets
+  callee: src.lane.cli._get_priority_emoji
+  call_type: resolved
+- caller: src.lane.cli.cmd_metrics
+  callee: src.lane.metrics.complexity.collect_file_metrics
+  call_type: resolved
+- caller: src.lane.cli.cmd_auto
+  callee: src.lane.metrics.hotspots.identify_bug_hotspots
+  call_type: resolved
+- caller: src.lane.cli.cmd_auto
+  callee: src.lane.metrics.complexity.collect_file_metrics
   call_type: resolved
 - caller: src.lane.git_reader._is_git_repo
   callee: src.lane.git_reader._run
@@ -423,6 +707,9 @@ edges:
 - caller: src.lane.git_reader._get_git_commits
   callee: src.lane.git_reader._parse_commits
   call_type: resolved
+- caller: src.lane.git_reader._count_file_frequencies
+  callee: src.lane.git_reader._should_ignore_git_path
+  call_type: resolved
 - caller: src.lane.git_reader._get_file_frequency
   callee: src.lane.git_reader._run
   call_type: resolved
@@ -434,6 +721,9 @@ edges:
   call_type: resolved
 - caller: src.lane.git_reader._get_git_todos
   callee: src.lane.git_reader._run
+  call_type: resolved
+- caller: src.lane.git_reader._get_git_todos
+  callee: src.lane.git_reader._should_include_todo_line
   call_type: resolved
 - caller: src.lane.git_reader.read_git_context
   callee: src.lane.git_reader._get_git_branch
@@ -456,11 +746,23 @@ edges:
 - caller: src.lane.git_reader.read_git_context
   callee: src.lane.git_reader._create_empty_context
   call_type: resolved
+- caller: src.lane.git_reader._create_commit_info
+  callee: src.lane.git_reader._filter_git_paths
+  call_type: resolved
+- caller: src.lane.git_reader._finalize_commit
+  callee: src.lane.git_reader._create_commit_info
+  call_type: resolved
+- caller: src.lane.git_reader._parse_commits
+  callee: src.lane.git_reader._finalize_commit
+  call_type: resolved
 - caller: src.lane.git_reader._parse_commits
   callee: src.lane.git_reader._parse_commit_metadata
   call_type: resolved
-- caller: src.lane.git_reader._parse_commits
-  callee: src.lane.git_reader._create_commit_info
+- caller: src.lane.git_reader._filter_git_paths
+  callee: src.lane.git_reader._should_ignore_git_path
+  call_type: resolved
+- caller: src.lane.git_reader._should_include_todo_line
+  callee: src.lane.git_reader._should_ignore_git_path
   call_type: resolved
 - caller: src.lane.planner.generate_next_tasks
   callee: src.lane.project_analyzer.analyze_project
@@ -474,19 +776,55 @@ edges:
 - caller: src.lane.planner.generate_next_tasks
   callee: src.lane.config.get_settings
   call_type: resolved
+- caller: src.lane.planner.generate_next_tasks
+  callee: src.lane.koru_context.build_koru_context
+  call_type: resolved
 - caller: src.lane.llm_client.parse_task_plan_response
   callee: src.lane.providers.openai_compat._parse_response
   call_type: resolved
 - caller: src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
   callee: src.lane.llm_client.build_user_prompt
   call_type: resolved
+- caller: src.lane.koru_context.build_koru_context
+  callee: src.lane.koru_context._load_operations
+  call_type: resolved
+- caller: src.lane.koru_context.build_koru_context
+  callee: src.lane.koru_context._format_operations_for_llm
+  call_type: resolved
+- caller: src.lane.koru_context.build_koru_context
+  callee: src.lane.koru_context._format_project_state_for_llm
+  call_type: resolved
+- caller: src.lane.koru_context.build_koru_context
+  callee: src.lane.koru_context._load_project_state
+  call_type: resolved
 - caller: src.lane.ticket_generator.task_plan_to_tickets
   callee: src.lane.ticket_generator._map_priority
   call_type: resolved
 - caller: src.lane.ticket_generator.sync_to_todo_md
-  callee: src.lane.ticket_generator._create_temp_strategy
+  callee: src.lane.ticket_generator._resolve_todo_path
   call_type: resolved
-- caller: src.lane.ticket_generator._create_temp_strategy
+- caller: src.lane.ticket_generator.sync_to_todo_md
+  callee: src.lane.ticket_generator._build_todo_section
+  call_type: resolved
+- caller: src.lane.ticket_generator.sync_to_todo_md
+  callee: src.lane.ticket_generator._sync_todo_section
+  call_type: resolved
+- caller: src.lane.ticket_generator._build_todo_section
+  callee: src.lane.ticket_generator._map_priority
+  call_type: resolved
+- caller: src.lane.ticket_generator._sync_todo_section
+  callee: src.lane.ticket_generator._remove_generated_todo_sections
+  call_type: resolved
+- caller: src.lane.ticket_generator._remove_generated_todo_sections
+  callee: src.lane.ticket_generator._remove_managed_todo_blocks
+  call_type: resolved
+- caller: src.lane.ticket_generator._remove_generated_todo_sections
+  callee: src.lane.ticket_generator._remove_legacy_generated_todo_sections
+  call_type: resolved
+- caller: src.lane.ticket_generator.sync_to_planfile
+  callee: src.lane.ticket_generator._ensure_planfile_installed
+  call_type: resolved
+- caller: src.lane.ticket_generator.sync_to_planfile
   callee: src.lane.ticket_generator._map_priority
   call_type: resolved
 - caller: src.lane.ticket_generator.export_to_planfile_yaml
@@ -537,14 +875,29 @@ edges:
 - caller: src.lane.project_analyzer._get_extension
   callee: src.lane.project_analyzer._get_tree_symbol
   call_type: resolved
+- caller: src.lane.project_analyzer._get_subtree_lines
+  callee: src.lane.project_analyzer._build_tree
+  call_type: resolved
+- caller: src.lane.project_analyzer._get_subtree_lines
+  callee: src.lane.project_analyzer._get_extension
+  call_type: resolved
+- caller: src.lane.project_analyzer._build_tree
+  callee: src.lane.project_analyzer._get_subtree_lines
+  call_type: resolved
 - caller: src.lane.project_analyzer._build_tree
   callee: src.lane.project_analyzer._should_ignore_entry
+  call_type: resolved
+- caller: src.lane.project_analyzer._build_tree
+  callee: src.lane.project_analyzer._get_connector
   call_type: resolved
 - caller: src.lane.providers.openai_compat.OpenAICompatProvider.__init__
   callee: src.lane.config.get_settings
   call_type: resolved
 - caller: src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan
   callee: src.lane.providers.openai_compat._parse_response
+  call_type: resolved
+- caller: src.lane.providers.openai_compat.OpenAICompatProvider._call_api
+  callee: src.lane.koru_context.get_koru_system_prompt_extension
   call_type: resolved
 - caller: src.lane.providers.openai_compat._parse_tasks_from_data
   callee: src.lane.providers.openai_compat._create_task_from_dict
@@ -558,18 +911,53 @@ edges:
 - caller: src.lane.providers.openai_compat._parse_response
   callee: src.lane.providers.openai_compat._parse_tasks_from_data
   call_type: resolved
+- caller: src.lane.metrics.complexity.collect_file_metrics
+  callee: src.lane.metrics.complexity._calculate_fan_in
+  call_type: resolved
+- caller: src.lane.metrics.complexity.collect_file_metrics
+  callee: src.lane.metrics.complexity._count_lines
+  call_type: resolved
+- caller: src.lane.metrics.complexity.collect_file_metrics
+  callee: src.lane.metrics.complexity._calculate_cyclomatic_complexity
+  call_type: resolved
+- caller: src.lane.metrics.complexity.collect_file_metrics
+  callee: src.lane.metrics.complexity._analyze_imports
+  call_type: resolved
+- caller: src.lane.metrics.complexity.collect_file_metrics
+  callee: src.lane.metrics.complexity._analyze_types
+  call_type: resolved
+- caller: src.lane.metrics.hotspots.identify_bug_hotspots
+  callee: src.lane.metrics.hotspots._get_file_commits_with_info
+  call_type: resolved
+- caller: src.lane.metrics.hotspots.identify_bug_hotspots
+  callee: src.lane.metrics.hotspots._get_bug_fix_commits
+  call_type: resolved
+- caller: src.lane.metrics.hotspots.get_critical_bus_factor_files
+  callee: src.lane.metrics.hotspots.calculate_bus_factor
+  call_type: resolved
+- caller: src.lane.metrics.coupling.collect_coupling_matrix
+  callee: src.lane.metrics.coupling._get_commits_with_files
+  call_type: resolved
 modules:
   src.lane.cli:
+  - src.lane.cli._display_tickets
+  - src.lane.cli._export_yaml_if_requested
+  - src.lane.cli._get_priority_emoji
+  - src.lane.cli._sync_planfile_if_requested
+  - src.lane.cli._sync_todos_if_requested
+  - src.lane.cli.cmd_auto
+  - src.lane.cli.cmd_metrics
   - src.lane.cli.cmd_plan
   - src.lane.cli.cmd_print_context
   - src.lane.cli.cmd_print_prompt
-  - src.lane.cli.cmd_tickets
   src.lane.config:
   - src.lane.config.get_settings
   src.lane.git_reader:
   - src.lane.git_reader._count_file_frequencies
   - src.lane.git_reader._create_commit_info
   - src.lane.git_reader._create_empty_context
+  - src.lane.git_reader._filter_git_paths
+  - src.lane.git_reader._finalize_commit
   - src.lane.git_reader._format_file_summary
   - src.lane.git_reader._get_file_frequency
   - src.lane.git_reader._get_git_branch
@@ -581,11 +969,36 @@ modules:
   - src.lane.git_reader._parse_commits
   - src.lane.git_reader._run
   - src.lane.git_reader._run_git_command
+  - src.lane.git_reader._should_ignore_git_path
+  - src.lane.git_reader._should_include_todo_line
   - src.lane.git_reader.read_git_context
+  src.lane.koru_context:
+  - src.lane.koru_context._format_operations_for_llm
+  - src.lane.koru_context._format_project_state_for_llm
+  - src.lane.koru_context._load_operations
+  - src.lane.koru_context._load_project_state
+  - src.lane.koru_context.build_koru_context
+  - src.lane.koru_context.get_koru_system_prompt_extension
   src.lane.llm_client:
   - src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
   - src.lane.llm_client.build_user_prompt
   - src.lane.llm_client.parse_task_plan_response
+  src.lane.metrics.complexity:
+  - src.lane.metrics.complexity._analyze_imports
+  - src.lane.metrics.complexity._analyze_types
+  - src.lane.metrics.complexity._calculate_cyclomatic_complexity
+  - src.lane.metrics.complexity._calculate_fan_in
+  - src.lane.metrics.complexity._count_lines
+  - src.lane.metrics.complexity.collect_file_metrics
+  src.lane.metrics.coupling:
+  - src.lane.metrics.coupling._get_commits_with_files
+  - src.lane.metrics.coupling.collect_coupling_matrix
+  src.lane.metrics.hotspots:
+  - src.lane.metrics.hotspots._get_bug_fix_commits
+  - src.lane.metrics.hotspots._get_file_commits_with_info
+  - src.lane.metrics.hotspots.calculate_bus_factor
+  - src.lane.metrics.hotspots.get_critical_bus_factor_files
+  - src.lane.metrics.hotspots.identify_bug_hotspots
   src.lane.planner:
   - src.lane.planner.generate_next_tasks
   src.lane.project_analyzer:
@@ -595,6 +1008,7 @@ modules:
   - src.lane.project_analyzer._detect_stack
   - src.lane.project_analyzer._get_connector
   - src.lane.project_analyzer._get_extension
+  - src.lane.project_analyzer._get_subtree_lines
   - src.lane.project_analyzer._get_tree_symbol
   - src.lane.project_analyzer._parse_cargo
   - src.lane.project_analyzer._parse_package_json
@@ -609,6 +1023,7 @@ modules:
   - src.lane.project_analyzer.analyze_project
   src.lane.providers.openai_compat:
   - src.lane.providers.openai_compat.OpenAICompatProvider.__init__
+  - src.lane.providers.openai_compat.OpenAICompatProvider._call_api
   - src.lane.providers.openai_compat.OpenAICompatProvider.generate_plan
   - src.lane.providers.openai_compat._create_task_from_dict
   - src.lane.providers.openai_compat._parse_json_response
@@ -616,13 +1031,22 @@ modules:
   - src.lane.providers.openai_compat._parse_tasks_from_data
   - src.lane.providers.openai_compat._strip_markdown_fences
   src.lane.ticket_generator:
-  - src.lane.ticket_generator._create_temp_strategy
+  - src.lane.ticket_generator._build_todo_section
+  - src.lane.ticket_generator._ensure_planfile_installed
   - src.lane.ticket_generator._map_priority
+  - src.lane.ticket_generator._remove_generated_todo_sections
+  - src.lane.ticket_generator._remove_legacy_generated_todo_sections
+  - src.lane.ticket_generator._remove_managed_todo_blocks
+  - src.lane.ticket_generator._resolve_todo_path
+  - src.lane.ticket_generator._sync_todo_section
   - src.lane.ticket_generator.export_to_planfile_yaml
+  - src.lane.ticket_generator.sync_to_planfile
   - src.lane.ticket_generator.sync_to_todo_md
   - src.lane.ticket_generator.task_plan_to_tickets
 entry_points:
 - src.lane.cli.app_entry
+- src.lane.cli.cmd_auto
+- src.lane.cli.cmd_metrics
 - src.lane.cli.cmd_plan
 - src.lane.cli.cmd_print_context
 - src.lane.cli.cmd_print_prompt
@@ -634,6 +1058,9 @@ entry_points:
 - src.lane.llm_client.OpenAICompatibleLLMClient.__init__
 - src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan
 - src.lane.llm_client.parse_task_plan_response
+- src.lane.metrics.complexity.get_high_complexity_files
+- src.lane.metrics.complexity.get_poorly_typed_files
+- src.lane.metrics.hotspots.get_critical_bus_factor_files
 - src.lane.models.Task.__str__
 - src.lane.models.Task.to_dict
 - src.lane.models.TaskPlan.__str__

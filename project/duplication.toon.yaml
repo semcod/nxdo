@@ -1,24 +1,24 @@
-# redup/duplication | 2 groups | 14f 1398L | 2026-05-26
+# redup/duplication | 2 groups | 19f 2883L | 2026-05-29
 
 SUMMARY:
-  files_scanned: 14
-  total_lines:   1398
+  files_scanned: 19
+  total_lines:   2883
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   6
-  scan_ms:       2722
+  scan_ms:       2346
 
 HOTSPOTS[2] (files with most duplication):
-  src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.4%)
-  src/lane/project_analyzer.py  dup=6L  groups=1  frags=2  (0.4%)
+  src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.2%)
+  src/lane/project_analyzer.py  dup=6L  groups=1  frags=2  (0.2%)
 
 DUPLICATES[2] (ranked by impact):
   [398e7fc98c20a6ea]   STRU  _get_git_branch  L=3 N=2 saved=3 sim=1.00
-      src/lane/git_reader.py:82-84  (_get_git_branch)
-      src/lane/git_reader.py:87-89  (_get_git_remote)
+      src/lane/git_reader.py:109-111  (_get_git_branch)
+      src/lane/git_reader.py:114-116  (_get_git_remote)
   [dba932c7fb158cc5]   STRU  _get_connector  L=3 N=2 saved=3 sim=1.00
-      src/lane/project_analyzer.py:229-231  (_get_connector)
-      src/lane/project_analyzer.py:234-236  (_get_extension)
+      src/lane/project_analyzer.py:245-247  (_get_connector)
+      src/lane/project_analyzer.py:250-252  (_get_extension)
 
 REFACTOR[2] (ranked by priority):
   [1] ○ extract_function   → src/lane/utils/_get_git_branch.py

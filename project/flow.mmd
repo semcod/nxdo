@@ -5,25 +5,26 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
+        src__lane__models__Task____str__["__str__"]
+        src__lane__models__Task__to_dict["to_dict"]
+        src__lane__models__TaskPlan____str__["__str__"]
+        src__lane__models__TaskPlan__to_dict["to_dict"]
+        src__lane__providers__base__LLMProvider__generate_plan["generate_plan"]
         src__lane__cli__cmd_plan["cmd_plan"]
         src__lane__cli__cmd_print_context["cmd_print_context"]
         src__lane__cli__cmd_print_prompt["cmd_print_prompt"]
         src__lane__cli__cmd_validate["cmd_validate"]
+        src__lane__cli___sync_todos_if_requested["_sync_todos_if_requested"]
+        src__lane__cli___sync_planfile_if_requested["_sync_planfile_if_requested"]
+        src__lane__cli___get_priority_emoji["_get_priority_emoji"]
+        src__lane__cli___display_tickets["_display_tickets"]
         src__lane__cli__cmd_tickets["cmd_tickets"]
-        src__lane__cli__app_entry["app_entry"]
-        src__lane__cli__main["main"]
-        src__lane__git_reader__CommitInfo____str__["__str__"]
-        src__lane__git_reader__GitContext__to_text["to_text"]
-        src__lane__planner__generate_next_tasks["generate_next_tasks"]
-        src__lane__llm_client__build_user_prompt["build_user_prompt"]
-        src__lane__llm_client__parse_task_plan_response["parse_task_plan_response"]
-        src__lane__llm_client__OpenAICompatibleLLMClient__generate_task_plan["generate_task_plan"]
-        src__lane__project_analyzer__ProjectSnapshot__to_text["to_text"]
-        src__lane__project_analyzer___resolve_name_and_description["_resolve_name_and_description"]
-        ...["+10 more"]
+        src__lane__cli__cmd_metrics["cmd_metrics"]
+        ...["+24 more"]
     end
 
     subgraph Exporters
+        src__lane__cli___export_yaml_if_requested["_export_yaml_if_requested"]
     end
 
-    class src__lane__cli__cmd_plan,src__lane__cli__cmd_print_context,src__lane__cli__cmd_print_prompt,src__lane__cli__cmd_validate,src__lane__cli__cmd_tickets,src__lane__cli__app_entry,src__lane__cli__main,src__lane__git_reader__CommitInfo____str__,src__lane__git_reader__GitContext__to_text,src__lane__llm_client__build_user_prompt entry
+    class src__lane__models__Task____str__,src__lane__models__Task__to_dict,src__lane__models__TaskPlan____str__,src__lane__models__TaskPlan__to_dict,src__lane__providers__base__LLMProvider__generate_plan,src__lane__cli__cmd_plan,src__lane__cli__cmd_print_context,src__lane__cli__cmd_print_prompt,src__lane__cli__cmd_validate,src__lane__cli___sync_todos_if_requested entry
