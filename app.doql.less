@@ -2,7 +2,13 @@
 
 app {
   name: lane;
-  version: 0.2.19;
+  version: 0.2.20;
+  description: "Generate the next 10 project tasks from project state, git history and an LLM prompt.";
+  license: Apache-2.0;
+  authors: "semcod, Tom Sapletta <tom@sapletta.com>";
+  keywords: "planning, llm, git, roadmap, tasks";
+  homepage: https://github.com/semcod/lane;
+  repository: https://github.com/semcod/lane;
 }
 
 dependencies {
@@ -33,7 +39,15 @@ interface[type="cli"] {
   framework: argparse;
 }
 interface[type="cli"] page[name="lane"] {
+  entry: lane.cli:app_entry;
+}
 
+tests {
+  import: testql-scenarios/**/*.testql.toon.yaml;
+}
+
+env_vars {
+  keys: OPENROUTER_API_KEY, LLM_MODEL, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS, LLM_BASE_URL, OPENAI_API_KEY;
 }
 
 deploy {
@@ -43,5 +57,9 @@ deploy {
 environment[name="local"] {
   runtime: python;
   env_file: .env;
+  template_file: .env.example;
   python_version: >=3.10;
+  vars: LLM_MODEL, OPENROUTER_API_KEY, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_CREATE_BACKUPS, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_MAX_RETRIES;
+  runtime_llm: OPENROUTER_API_KEY;
+  runtime_pfix: PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_CREATE_BACKUPS, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_MAX_RETRIES;
 }
