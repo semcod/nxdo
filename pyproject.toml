@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nxdo"
-version = "0.2.23"
+version = "0.2.24"
 description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -56,7 +56,7 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-"nxdo" = ["examples/**/*.yaml", "examples/**/*.yml"]
+"nxdo" = ["examples/**/*.yaml", "examples/**/*.yml", "examples/**/*.json", "examples/**/*.txt", "examples/**/*.md"]
 
 [tool.ruff]
 line-length = 120

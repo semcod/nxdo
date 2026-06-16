@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [0.2.24] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update docs/README.md
+- Update docs/how-it-works.md
+- Update examples/README.md
+
+### Test
+- Update tests/test_cli.py
+
+### Other
+- Update examples/nxdo-self-context.txt
+- Update examples/nxdo-self-metrics.txt
+- Update examples/nxdo-self-plan.json
+- Update uv.lock
+
 ## [0.2.23] - 2026-06-16
 
 ### Docs

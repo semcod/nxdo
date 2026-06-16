@@ -1,0 +1,148 @@
+{
+  "project_name": "nxdo",
+  "summary": "The nxdo project is in a stable state with recent updates focused on documentation and testing. Key priorities include implementing new features, enhancing error handling, and improving the CLI experience. The next tasks will address these areas while ensuring code quality and documentation are up to date.",
+  "generated_at": "2026-06-16 20:20 UTC",
+  "model_used": "openai/gpt-4o-mini",
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Implement sync-todo feature",
+      "description": "Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers. This functionality will enhance project management by ensuring that tasks are reflected in the TODO file, improving visibility and tracking of project progress.",
+      "priority": "high",
+      "task_type": "feature",
+      "estimated_hours": 4.0,
+      "acceptance_criteria": [
+        "The `--sync-todo` command successfully updates TODO.md with current tasks.",
+        "All existing TODO markers are accurately reflected in TODO.md.",
+        "No errors occur during the sync process."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 2,
+      "title": "Enhance Git context extraction",
+      "description": "Improve the functionality for extracting git context, including recent commits and changed files, to provide better insights for task generation. This enhancement will allow the project to better understand its development history and prioritize tasks based on recent changes.",
+      "priority": "high",
+      "task_type": "feature",
+      "estimated_hours": 3.0,
+      "acceptance_criteria": [
+        "The git context extraction captures at least the last 30 commits accurately.",
+        "Changed files are listed correctly in the output.",
+        "The implementation is documented in the README."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 3,
+      "title": "Add unit tests for sync-todo",
+      "description": "Create unit tests to ensure the new `sync-todo` functionality works as expected and handles edge cases. This will help maintain code quality and ensure that future changes do not break this critical feature.",
+      "priority": "medium",
+      "task_type": "test",
+      "estimated_hours": 2.0,
+      "acceptance_criteria": [
+        "All unit tests for the `sync-todo` feature pass.",
+        "Code coverage for the sync-todo feature is above 80%.",
+        "Edge cases are tested, including empty TODO.md."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 4,
+      "title": "Refactor CLI command handling",
+      "description": "Refactor the command handling in the CLI to improve readability and maintainability, especially around the new features added. This will make it easier for future developers to understand and extend the CLI functionality.",
+      "priority": "medium",
+      "task_type": "refactor",
+      "estimated_hours": 3.0,
+      "acceptance_criteria": [
+        "CLI command handling code is simplified and well-documented.",
+        "No existing CLI functionality is broken after refactoring.",
+        "Code review feedback is addressed."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 5,
+      "title": "Update README with new features",
+      "description": "Revise the README.md to include documentation for the new `sync-todo` feature and any other recent changes. Keeping the documentation up to date is crucial for user onboarding and understanding of the project.",
+      "priority": "medium",
+      "task_type": "docs",
+      "estimated_hours": 2.0,
+      "acceptance_criteria": [
+        "README.md includes a section on the `sync-todo` feature.",
+        "All recent changes are documented clearly.",
+        "The README passes a spell check."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 6,
+      "title": "Fix API error handling",
+      "description": "Review and enhance the API error handling to ensure detailed error messages are provided for API failures. This improvement will help users diagnose issues more effectively and improve the overall user experience.",
+      "priority": "high",
+      "task_type": "bug",
+      "estimated_hours": 3.0,
+      "acceptance_criteria": [
+        "Error messages are clear and informative for all API failures.",
+        "Error handling code is tested with unit tests.",
+        "No unhandled exceptions occur during API calls."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 7,
+      "title": "Add integration tests for CLI commands",
+      "description": "Implement integration tests for the CLI commands to ensure they work correctly with the overall system. This will help catch issues that may not be evident in unit tests and ensure the CLI behaves as expected in real-world scenarios.",
+      "priority": "medium",
+      "task_type": "test",
+      "estimated_hours": 4.0,
+      "acceptance_criteria": [
+        "All integration tests for CLI commands pass.",
+        "Integration tests cover at least 80% of CLI functionality.",
+        "Documentation for running integration tests is included."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 8,
+      "title": "Improve error messages in CLI",
+      "description": "Enhance the error messages provided by the CLI to be more user-friendly and informative. This will improve the user experience by making it easier to understand what went wrong and how to fix it.",
+      "priority": "medium",
+      "task_type": "refactor",
+      "estimated_hours": 2.0,
+      "acceptance_criteria": [
+        "All error messages in the CLI are rewritten for clarity.",
+        "User feedback on error messages is collected and reviewed.",
+        "No existing functionality is broken by the changes."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 9,
+      "title": "Document planfile integration",
+      "description": "Create documentation for the planfile integration feature, explaining how to use it and its benefits. This will help users understand how to leverage this feature effectively in their workflows.",
+      "priority": "low",
+      "task_type": "docs",
+      "estimated_hours": 2.0,
+      "acceptance_criteria": [
+        "Documentation for planfile integration is complete and clear.",
+        "Examples of usage are included in the documentation.",
+        "Documentation is reviewed and approved by a team member."
+      ],
+      "dependencies": []
+    },
+    {
+      "number": 10,
+      "title": "Review and clean up TODO.md",
+      "description": "Go through the TODO.md file to clean up any outdated tasks and ensure it reflects the current project priorities. This will help maintain an organized and actionable task list for the team.",
+      "priority": "low",
+      "task_type": "chore",
+      "estimated_hours": 2.0,
+      "acceptance_criteria": [
+        "All outdated tasks are removed from TODO.md.",
+        "Current tasks are prioritized and clearly defined.",
+        "TODO.md is reviewed by another team member for completeness."
+      ],
+      "dependencies": []
+    }
+  ]
+}

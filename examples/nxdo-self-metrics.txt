@@ -1,0 +1,38 @@
+Code Metrics for nxdo
+
+Top Files by Cyclomatic Complexity
+  CC= 47 | src/nxdo/metrics/complexity.py
+  CC= 45 | src/nxdo/metrics/hotspots.py
+  CC= 38 | tests/test_cli.py
+
+Top Coupled File Pairs (>0.3)
+  1.00 | src/nxdo/__init__.py <-> src/nxdo/__main__.py
+  1.00 | src/nxdo/__init__.py <-> src/nxdo/cli.py
+  1.00 | src/nxdo/__init__.py <-> src/nxdo/config.py
+
+Coupling Clusters (refactor together)
+  Cluster 1 (19 files):
+    - src/nxdo/__init__.py
+    - src/nxdo/__main__.py
+    - src/nxdo/cli.py
+    - src/nxdo/config.py
+    - src/nxdo/git_reader.py
+  Cluster 2 (19 files):
+    - src/nxdo/__init__.py
+    - src/nxdo/__main__.py
+    - src/nxdo/cli.py
+    - src/nxdo/config.py
+    - src/nxdo/git_reader.py
+
+Bug Hotspots (high churn + fixes)
+  🔥 src/nxdo/cli.py
+     Bugs: 1/1 commits, Churn: 380 lines
+  🔥 src/nxdo/metrics/complexity.py
+     Bugs: 1/1 commits, Churn: 300 lines
+  🔥 src/nxdo/koru_context.py
+     Bugs: 1/1 commits, Churn: 283 lines
+
+Low Bus Factor (knowledge silos)
+  🚨 1 author(s): .idea/.gitignore
+  🚨 1 author(s): .koru/event-store.jsonl
+  🚨 1 author(s): .koru/events/observability.jsonl

@@ -471,8 +471,8 @@ project_file('src/nxdo/planner.py', 59, 'python').
 project_file('src/nxdo/project_analyzer.py', 283, 'python').
 project_file('src/nxdo/providers/__init__.py', 7, 'python').
 project_file('src/nxdo/providers/base.py', 20, 'python').
-project_file('src/lane/providers/openai_compat.py', 205, 'python').
-project_file('src/lane/ticket_generator.py', 281, 'python').
+project_file('src/nxdo/providers/openai_compat.py', 205, 'python').
+project_file('src/nxdo/ticket_generator.py', 281, 'python').
 project_file('tests/test_cli.py', 342, 'python').
 project_file('tests/test_config.py', 52, 'python').
 project_file('tests/test_git_reader.py', 216, 'python').
@@ -487,134 +487,134 @@ project_file('tests/test_ticket_generator.py', 289, 'python').
 project_file('tree.sh', 2, 'shell').
 
 % ── Python Functions ─────────────────────────────────────
-python_function('src/lane/cli.py', 'cmd_plan', 6, 4, 12).
-python_function('src/lane/cli.py', 'cmd_print_context', 3, 2, 10).
-python_function('src/lane/cli.py', 'cmd_print_prompt', 3, 1, 10).
-python_function('src/lane/cli.py', 'cmd_validate', 1, 2, 8).
-python_function('src/lane/cli.py', '_sync_todos_if_requested', 3, 2, 3).
-python_function('src/lane/cli.py', '_sync_planfile_if_requested', 3, 3, 3).
-python_function('src/lane/cli.py', '_export_yaml_if_requested', 4, 3, 1).
-python_function('src/lane/cli.py', '_get_priority_emoji', 1, 1, 1).
-python_function('src/lane/cli.py', '_display_tickets', 1, 3, 3).
-python_function('src/lane/cli.py', 'cmd_tickets', 10, 3, 16).
-python_function('src/lane/cli.py', 'cmd_metrics', 3, 11, 15).
-python_function('src/lane/cli.py', 'cmd_auto', 3, 9, 17).
-python_function('src/lane/cli.py', 'app_entry', 0, 1, 1).
-python_function('src/lane/cli.py', 'main', 1, 4, 15).
-python_function('src/lane/config.py', 'get_settings', 0, 2, 1).
-python_function('src/lane/git_reader.py', '_run', 2, 3, 2).
-python_function('src/lane/git_reader.py', '_is_git_repo', 1, 1, 2).
-python_function('src/lane/git_reader.py', '_run_git_command', 3, 2, 1).
-python_function('src/lane/git_reader.py', '_get_git_branch', 1, 1, 1).
-python_function('src/lane/git_reader.py', '_get_git_remote', 1, 1, 1).
-python_function('src/lane/git_reader.py', '_get_git_commits', 2, 1, 2).
-python_function('src/lane/git_reader.py', '_count_file_frequencies', 1, 4, 4).
-python_function('src/lane/git_reader.py', '_format_file_summary', 1, 2, 2).
-python_function('src/lane/git_reader.py', '_get_file_frequency', 2, 1, 3).
-python_function('src/lane/git_reader.py', '_get_git_todos', 1, 3, 3).
-python_function('src/lane/git_reader.py', '_create_empty_context', 1, 1, 1).
-python_function('src/lane/git_reader.py', 'read_git_context', 2, 2, 8).
-python_function('src/lane/git_reader.py', '_parse_commit_metadata', 1, 3, 2).
-python_function('src/lane/git_reader.py', '_create_commit_info', 2, 1, 2).
-python_function('src/lane/git_reader.py', '_finalize_commit', 3, 2, 2).
-python_function('src/lane/git_reader.py', '_parse_commits', 1, 5, 5).
-python_function('src/lane/git_reader.py', '_filter_git_paths', 1, 3, 1).
-python_function('src/lane/git_reader.py', '_should_ignore_git_path', 1, 5, 5).
-python_function('src/lane/git_reader.py', '_should_include_todo_line', 1, 2, 3).
-python_function('src/lane/koru_context.py', '_load_operations', 0, 3, 2).
-python_function('src/lane/koru_context.py', '_load_project_state', 1, 6, 4).
-python_function('src/lane/koru_context.py', '_format_operations_for_llm', 1, 7, 6).
-python_function('src/lane/koru_context.py', '_format_project_state_for_llm', 1, 7, 4).
-python_function('src/lane/koru_context.py', 'build_koru_context', 2, 3, 7).
-python_function('src/lane/koru_context.py', 'get_koru_system_prompt_extension', 0, 1, 0).
-python_function('src/lane/llm_client.py', 'build_user_prompt', 4, 3, 1).
-python_function('src/lane/llm_client.py', 'parse_task_plan_response', 3, 1, 1).
-python_function('src/lane/metrics/complexity.py', '_count_lines', 1, 4, 3).
-python_function('src/lane/metrics/complexity.py', '_calculate_cyclomatic_complexity', 1, 5, 4).
-python_function('src/lane/metrics/complexity.py', '_analyze_imports', 2, 7, 6).
-python_function('src/lane/metrics/complexity.py', '_analyze_types', 1, 14, 5).
-python_function('src/lane/metrics/complexity.py', '_calculate_fan_in', 2, 12, 12).
-python_function('src/lane/metrics/complexity.py', 'collect_file_metrics', 2, 8, 15).
-python_function('src/lane/metrics/complexity.py', 'get_high_complexity_files', 3, 4, 0).
-python_function('src/lane/metrics/complexity.py', 'get_poorly_typed_files', 2, 4, 0).
-python_function('src/lane/metrics/coupling.py', '_get_commits_with_files', 2, 13, 8).
-python_function('src/lane/metrics/coupling.py', 'collect_coupling_matrix', 4, 18, 11).
-python_function('src/lane/metrics/coupling.py', 'get_coupling_clusters', 2, 10, 8).
-python_function('src/lane/metrics/hotspots.py', '_get_file_commits_with_info', 3, 14, 7).
-python_function('src/lane/metrics/hotspots.py', '_get_bug_fix_commits', 3, 6, 5).
-python_function('src/lane/metrics/hotspots.py', 'identify_bug_hotspots', 4, 16, 15).
-python_function('src/lane/metrics/hotspots.py', 'calculate_bus_factor', 3, 14, 7).
-python_function('src/lane/metrics/hotspots.py', 'get_critical_bus_factor_files', 2, 7, 9).
-python_function('src/lane/output.py', 'render_plan', 2, 4, 8).
-python_function('src/lane/output.py', 'render_plan_json', 2, 2, 4).
-python_function('src/lane/output.py', 'render_context', 3, 2, 3).
-python_function('src/lane/planner.py', 'generate_next_tasks', 5, 5, 8).
-python_function('src/lane/project_analyzer.py', '_read_file_safely', 1, 2, 1).
-python_function('src/lane/project_analyzer.py', '_truncate_file_content', 1, 2, 1).
-python_function('src/lane/project_analyzer.py', '_collect_file_contents', 1, 4, 3).
-python_function('src/lane/project_analyzer.py', '_resolve_name_and_description', 3, 3, 5).
-python_function('src/lane/project_analyzer.py', 'analyze_project', 1, 1, 5).
-python_function('src/lane/project_analyzer.py', '_check_pattern_match', 2, 2, 3).
-python_function('src/lane/project_analyzer.py', '_detect_stack', 1, 4, 4).
-python_function('src/lane/project_analyzer.py', '_parse_pyproject_tomllib', 2, 4, 3).
-python_function('src/lane/project_analyzer.py', '_parse_pyproject_regex', 2, 3, 2).
-python_function('src/lane/project_analyzer.py', '_parse_pyproject', 2, 2, 2).
-python_function('src/lane/project_analyzer.py', '_parse_package_json', 2, 2, 3).
-python_function('src/lane/project_analyzer.py', '_parse_cargo', 2, 3, 2).
-python_function('src/lane/project_analyzer.py', '_readme_summary', 1, 4, 3).
-python_function('src/lane/project_analyzer.py', '_should_ignore_entry', 1, 4, 4).
-python_function('src/lane/project_analyzer.py', '_get_tree_symbol', 2, 4, 0).
-python_function('src/lane/project_analyzer.py', '_get_connector', 1, 1, 1).
-python_function('src/lane/project_analyzer.py', '_get_extension', 1, 1, 1).
-python_function('src/lane/project_analyzer.py', '_get_subtree_lines', 5, 4, 3).
-python_function('src/lane/project_analyzer.py', '_build_tree', 4, 6, 12).
-python_function('src/lane/providers/openai_compat.py', '_strip_markdown_fences', 1, 3, 4).
-python_function('src/lane/providers/openai_compat.py', '_parse_json_response', 1, 3, 4).
-python_function('src/lane/providers/openai_compat.py', '_create_task_from_dict', 2, 6, 10).
-python_function('src/lane/providers/openai_compat.py', '_parse_tasks_from_data', 1, 2, 4).
-python_function('src/lane/providers/openai_compat.py', '_parse_response', 3, 1, 7).
-python_function('src/lane/ticket_generator.py', 'task_plan_to_tickets', 1, 3, 2).
-python_function('src/lane/ticket_generator.py', '_map_priority', 1, 1, 2).
-python_function('src/lane/ticket_generator.py', 'sync_to_todo_md', 2, 1, 6).
-python_function('src/lane/ticket_generator.py', '_resolve_todo_path', 1, 3, 1).
-python_function('src/lane/ticket_generator.py', '_build_todo_section', 1, 4, 4).
-python_function('src/lane/ticket_generator.py', '_sync_todo_section', 2, 2, 6).
-python_function('src/lane/ticket_generator.py', '_remove_generated_todo_sections', 1, 1, 5).
-python_function('src/lane/ticket_generator.py', '_remove_managed_todo_blocks', 1, 5, 2).
-python_function('src/lane/ticket_generator.py', '_remove_legacy_generated_todo_sections', 1, 6, 2).
-python_function('src/lane/ticket_generator.py', '_ensure_planfile_installed', 0, 3, 3).
-python_function('src/lane/ticket_generator.py', 'sync_to_planfile', 2, 8, 9).
-python_function('src/lane/ticket_generator.py', 'export_to_planfile_yaml', 2, 3, 4).
+python_function('src/nxdo/cli.py', 'cmd_plan', 6, 4, 12).
+python_function('src/nxdo/cli.py', 'cmd_print_context', 3, 2, 10).
+python_function('src/nxdo/cli.py', 'cmd_print_prompt', 3, 1, 10).
+python_function('src/nxdo/cli.py', 'cmd_validate', 1, 2, 8).
+python_function('src/nxdo/cli.py', '_sync_todos_if_requested', 3, 2, 3).
+python_function('src/nxdo/cli.py', '_sync_planfile_if_requested', 3, 3, 3).
+python_function('src/nxdo/cli.py', '_export_yaml_if_requested', 4, 3, 1).
+python_function('src/nxdo/cli.py', '_get_priority_emoji', 1, 1, 1).
+python_function('src/nxdo/cli.py', '_display_tickets', 1, 3, 3).
+python_function('src/nxdo/cli.py', 'cmd_tickets', 10, 3, 16).
+python_function('src/nxdo/cli.py', 'cmd_metrics', 3, 11, 15).
+python_function('src/nxdo/cli.py', 'cmd_auto', 3, 9, 17).
+python_function('src/nxdo/cli.py', 'app_entry', 0, 1, 1).
+python_function('src/nxdo/cli.py', 'main', 1, 4, 15).
+python_function('src/nxdo/config.py', 'get_settings', 0, 2, 1).
+python_function('src/nxdo/git_reader.py', '_run', 2, 3, 2).
+python_function('src/nxdo/git_reader.py', '_is_git_repo', 1, 1, 2).
+python_function('src/nxdo/git_reader.py', '_run_git_command', 3, 2, 1).
+python_function('src/nxdo/git_reader.py', '_get_git_branch', 1, 1, 1).
+python_function('src/nxdo/git_reader.py', '_get_git_remote', 1, 1, 1).
+python_function('src/nxdo/git_reader.py', '_get_git_commits', 2, 1, 2).
+python_function('src/nxdo/git_reader.py', '_count_file_frequencies', 1, 4, 4).
+python_function('src/nxdo/git_reader.py', '_format_file_summary', 1, 2, 2).
+python_function('src/nxdo/git_reader.py', '_get_file_frequency', 2, 1, 3).
+python_function('src/nxdo/git_reader.py', '_get_git_todos', 1, 3, 3).
+python_function('src/nxdo/git_reader.py', '_create_empty_context', 1, 1, 1).
+python_function('src/nxdo/git_reader.py', 'read_git_context', 2, 2, 8).
+python_function('src/nxdo/git_reader.py', '_parse_commit_metadata', 1, 3, 2).
+python_function('src/nxdo/git_reader.py', '_create_commit_info', 2, 1, 2).
+python_function('src/nxdo/git_reader.py', '_finalize_commit', 3, 2, 2).
+python_function('src/nxdo/git_reader.py', '_parse_commits', 1, 5, 5).
+python_function('src/nxdo/git_reader.py', '_filter_git_paths', 1, 3, 1).
+python_function('src/nxdo/git_reader.py', '_should_ignore_git_path', 1, 5, 5).
+python_function('src/nxdo/git_reader.py', '_should_include_todo_line', 1, 2, 3).
+python_function('src/nxdo/koru_context.py', '_load_operations', 0, 3, 2).
+python_function('src/nxdo/koru_context.py', '_load_project_state', 1, 6, 4).
+python_function('src/nxdo/koru_context.py', '_format_operations_for_llm', 1, 7, 6).
+python_function('src/nxdo/koru_context.py', '_format_project_state_for_llm', 1, 7, 4).
+python_function('src/nxdo/koru_context.py', 'build_koru_context', 2, 3, 7).
+python_function('src/nxdo/koru_context.py', 'get_koru_system_prompt_extension', 0, 1, 0).
+python_function('src/nxdo/llm_client.py', 'build_user_prompt', 4, 3, 1).
+python_function('src/nxdo/llm_client.py', 'parse_task_plan_response', 3, 1, 1).
+python_function('src/nxdo/metrics/complexity.py', '_count_lines', 1, 4, 3).
+python_function('src/nxdo/metrics/complexity.py', '_calculate_cyclomatic_complexity', 1, 5, 4).
+python_function('src/nxdo/metrics/complexity.py', '_analyze_imports', 2, 7, 6).
+python_function('src/nxdo/metrics/complexity.py', '_analyze_types', 1, 14, 5).
+python_function('src/nxdo/metrics/complexity.py', '_calculate_fan_in', 2, 12, 12).
+python_function('src/nxdo/metrics/complexity.py', 'collect_file_metrics', 2, 8, 15).
+python_function('src/nxdo/metrics/complexity.py', 'get_high_complexity_files', 3, 4, 0).
+python_function('src/nxdo/metrics/complexity.py', 'get_poorly_typed_files', 2, 4, 0).
+python_function('src/nxdo/metrics/coupling.py', '_get_commits_with_files', 2, 13, 8).
+python_function('src/nxdo/metrics/coupling.py', 'collect_coupling_matrix', 4, 18, 11).
+python_function('src/nxdo/metrics/coupling.py', 'get_coupling_clusters', 2, 10, 8).
+python_function('src/nxdo/metrics/hotspots.py', '_get_file_commits_with_info', 3, 14, 7).
+python_function('src/nxdo/metrics/hotspots.py', '_get_bug_fix_commits', 3, 6, 5).
+python_function('src/nxdo/metrics/hotspots.py', 'identify_bug_hotspots', 4, 16, 15).
+python_function('src/nxdo/metrics/hotspots.py', 'calculate_bus_factor', 3, 14, 7).
+python_function('src/nxdo/metrics/hotspots.py', 'get_critical_bus_factor_files', 2, 7, 9).
+python_function('src/nxdo/output.py', 'render_plan', 2, 4, 8).
+python_function('src/nxdo/output.py', 'render_plan_json', 2, 2, 4).
+python_function('src/nxdo/output.py', 'render_context', 3, 2, 3).
+python_function('src/nxdo/planner.py', 'generate_next_tasks', 5, 5, 8).
+python_function('src/nxdo/project_analyzer.py', '_read_file_safely', 1, 2, 1).
+python_function('src/nxdo/project_analyzer.py', '_truncate_file_content', 1, 2, 1).
+python_function('src/nxdo/project_analyzer.py', '_collect_file_contents', 1, 4, 3).
+python_function('src/nxdo/project_analyzer.py', '_resolve_name_and_description', 3, 3, 5).
+python_function('src/nxdo/project_analyzer.py', 'analyze_project', 1, 1, 5).
+python_function('src/nxdo/project_analyzer.py', '_check_pattern_match', 2, 2, 3).
+python_function('src/nxdo/project_analyzer.py', '_detect_stack', 1, 4, 4).
+python_function('src/nxdo/project_analyzer.py', '_parse_pyproject_tomllib', 2, 4, 3).
+python_function('src/nxdo/project_analyzer.py', '_parse_pyproject_regex', 2, 3, 2).
+python_function('src/nxdo/project_analyzer.py', '_parse_pyproject', 2, 2, 2).
+python_function('src/nxdo/project_analyzer.py', '_parse_package_json', 2, 2, 3).
+python_function('src/nxdo/project_analyzer.py', '_parse_cargo', 2, 3, 2).
+python_function('src/nxdo/project_analyzer.py', '_readme_summary', 1, 4, 3).
+python_function('src/nxdo/project_analyzer.py', '_should_ignore_entry', 1, 4, 4).
+python_function('src/nxdo/project_analyzer.py', '_get_tree_symbol', 2, 4, 0).
+python_function('src/nxdo/project_analyzer.py', '_get_connector', 1, 1, 1).
+python_function('src/nxdo/project_analyzer.py', '_get_extension', 1, 1, 1).
+python_function('src/nxdo/project_analyzer.py', '_get_subtree_lines', 5, 4, 3).
+python_function('src/nxdo/project_analyzer.py', '_build_tree', 4, 6, 12).
+python_function('src/nxdo/providers/openai_compat.py', '_strip_markdown_fences', 1, 3, 4).
+python_function('src/nxdo/providers/openai_compat.py', '_parse_json_response', 1, 3, 4).
+python_function('src/nxdo/providers/openai_compat.py', '_create_task_from_dict', 2, 6, 10).
+python_function('src/nxdo/providers/openai_compat.py', '_parse_tasks_from_data', 1, 2, 4).
+python_function('src/nxdo/providers/openai_compat.py', '_parse_response', 3, 1, 7).
+python_function('src/nxdo/ticket_generator.py', 'task_plan_to_tickets', 1, 3, 2).
+python_function('src/nxdo/ticket_generator.py', '_map_priority', 1, 1, 2).
+python_function('src/nxdo/ticket_generator.py', 'sync_to_todo_md', 2, 1, 6).
+python_function('src/nxdo/ticket_generator.py', '_resolve_todo_path', 1, 3, 1).
+python_function('src/nxdo/ticket_generator.py', '_build_todo_section', 1, 4, 4).
+python_function('src/nxdo/ticket_generator.py', '_sync_todo_section', 2, 2, 6).
+python_function('src/nxdo/ticket_generator.py', '_remove_generated_todo_sections', 1, 1, 5).
+python_function('src/nxdo/ticket_generator.py', '_remove_managed_todo_blocks', 1, 5, 2).
+python_function('src/nxdo/ticket_generator.py', '_remove_legacy_generated_todo_sections', 1, 6, 2).
+python_function('src/nxdo/ticket_generator.py', '_ensure_planfile_installed', 0, 3, 3).
+python_function('src/nxdo/ticket_generator.py', 'sync_to_planfile', 2, 8, 9).
+python_function('src/nxdo/ticket_generator.py', 'export_to_planfile_yaml', 2, 3, 4).
 
 % ── Python Classes ───────────────────────────────────────
-python_class('src/lane/config.py', 'LaneSettings').
-python_method('LaneSettings', 'api_key', 0, 2, 0).
-python_class('src/lane/git_reader.py', 'CommitInfo').
+python_class('src/nxdo/config.py', 'NxdoSettings').
+python_method('NxdoSettings', 'api_key', 0, 2, 0).
+python_class('src/nxdo/git_reader.py', 'CommitInfo').
 python_method('CommitInfo', '__str__', 0, 2, 2).
-python_class('src/lane/git_reader.py', 'GitContext').
+python_class('src/nxdo/git_reader.py', 'GitContext').
 python_method('GitContext', 'to_text', 0, 7, 3).
-python_class('src/lane/koru_context.py', 'KoruOperation').
-python_class('src/lane/koru_context.py', 'KoruProjectState').
-python_class('src/lane/koru_context.py', 'KoruContext').
-python_class('src/lane/llm_client.py', 'OpenAICompatibleLLMClient').
+python_class('src/nxdo/koru_context.py', 'KoruOperation').
+python_class('src/nxdo/koru_context.py', 'KoruProjectState').
+python_class('src/nxdo/koru_context.py', 'KoruContext').
+python_class('src/nxdo/llm_client.py', 'OpenAICompatibleLLMClient').
 python_method('OpenAICompatibleLLMClient', '__init__', 4, 3, 2).
 python_method('OpenAICompatibleLLMClient', 'generate_task_plan', 4, 1, 2).
-python_class('src/lane/metrics/complexity.py', 'FileMetrics').
-python_class('src/lane/metrics/coupling.py', 'CouplingMetrics').
-python_class('src/lane/metrics/hotspots.py', 'HotspotMetrics').
-python_class('src/lane/models.py', 'Priority').
-python_class('src/lane/models.py', 'TaskType').
-python_class('src/lane/models.py', 'Task').
+python_class('src/nxdo/metrics/complexity.py', 'FileMetrics').
+python_class('src/nxdo/metrics/coupling.py', 'CouplingMetrics').
+python_class('src/nxdo/metrics/hotspots.py', 'HotspotMetrics').
+python_class('src/nxdo/models.py', 'Priority').
+python_class('src/nxdo/models.py', 'TaskType').
+python_class('src/nxdo/models.py', 'Task').
 python_method('Task', '__str__', 0, 7, 2).
 python_method('Task', 'to_dict', 0, 2, 1).
-python_class('src/lane/models.py', 'TaskPlan').
+python_class('src/nxdo/models.py', 'TaskPlan').
 python_method('TaskPlan', '__str__', 0, 7, 3).
 python_method('TaskPlan', 'to_dict', 0, 2, 1).
-python_class('src/lane/project_analyzer.py', 'ProjectSnapshot').
+python_class('src/nxdo/project_analyzer.py', 'ProjectSnapshot').
 python_method('ProjectSnapshot', 'to_text', 0, 5, 2).
-python_class('src/lane/providers/base.py', 'LLMProvider').
+python_class('src/nxdo/providers/base.py', 'LLMProvider').
 python_method('LLMProvider', 'generate_plan', 2, 1, 0).
-python_class('src/lane/providers/openai_compat.py', 'OpenAICompatProvider').
+python_class('src/nxdo/providers/openai_compat.py', 'OpenAICompatProvider').
 python_method('OpenAICompatProvider', '__init__', 6, 5, 2).
 python_method('OpenAICompatProvider', 'generate_plan', 2, 1, 2).
 python_method('OpenAICompatProvider', '_call_api', 1, 5, 10).
@@ -793,65 +793,65 @@ sumd_interface('cli', '').
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `cmd_metrics` *(in src.lane.cli)* | 11 ⚠ | 0 | 33 | **33** |
-| `cmd_auto` *(in src.lane.cli)* | 9 | 0 | 33 | **33** |
-| `_create_task_from_dict` *(in src.lane.providers.openai_compat)* | 6 | 1 | 20 | **21** |
-| `identify_bug_hotspots` *(in src.lane.metrics.hotspots)* | 16 ⚠ | 2 | 18 | **20** |
-| `_calculate_fan_in` *(in src.lane.metrics.complexity)* | 12 ⚠ | 1 | 17 | **18** |
-| `collect_file_metrics` *(in src.lane.metrics.complexity)* | 8 | 2 | 16 | **18** |
-| `_format_project_state_for_llm` *(in src.lane.koru_context)* | 7 | 1 | 16 | **17** |
-| `calculate_bus_factor` *(in src.lane.metrics.hotspots)* | 14 ⚠ | 2 | 14 | **16** |
+| `cmd_metrics` *(in src.nxdo.cli)* | 11 ⚠ | 0 | 33 | **33** |
+| `cmd_auto` *(in src.nxdo.cli)* | 9 | 0 | 33 | **33** |
+| `_create_task_from_dict` *(in src.nxdo.providers.openai_compat)* | 6 | 1 | 20 | **21** |
+| `identify_bug_hotspots` *(in src.nxdo.metrics.hotspots)* | 16 ⚠ | 2 | 18 | **20** |
+| `_calculate_fan_in` *(in src.nxdo.metrics.complexity)* | 12 ⚠ | 1 | 17 | **18** |
+| `collect_file_metrics` *(in src.nxdo.metrics.complexity)* | 8 | 2 | 16 | **18** |
+| `_format_project_state_for_llm` *(in src.nxdo.koru_context)* | 7 | 1 | 16 | **17** |
+| `calculate_bus_factor` *(in src.nxdo.metrics.hotspots)* | 14 ⚠ | 2 | 14 | **16** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
-# code2llm call graph | /home/tom/github/semcod/lane
+# code2llm call graph | /home/tom/github/semcod/nxdo
 # generated in 0.04s
 # nodes: 92 | edges: 96 | modules: 12
 # CC̄=4.0
 
 HUBS[20]:
-  src.lane.cli.cmd_metrics
+  src.nxdo.cli.cmd_metrics
     CC=11  in:0  out:33  total:33
-  src.lane.cli.cmd_auto
+  src.nxdo.cli.cmd_auto
     CC=9  in:0  out:33  total:33
-  src.lane.providers.openai_compat._create_task_from_dict
+  src.nxdo.providers.openai_compat._create_task_from_dict
     CC=6  in:1  out:20  total:21
-  src.lane.metrics.hotspots.identify_bug_hotspots
+  src.nxdo.metrics.hotspots.identify_bug_hotspots
     CC=16  in:2  out:18  total:20
-  src.lane.metrics.complexity._calculate_fan_in
+  src.nxdo.metrics.complexity._calculate_fan_in
     CC=12  in:1  out:17  total:18
-  src.lane.metrics.complexity.collect_file_metrics
+  src.nxdo.metrics.complexity.collect_file_metrics
     CC=8  in:2  out:16  total:18
-  src.lane.koru_context._format_project_state_for_llm
+  src.nxdo.koru_context._format_project_state_for_llm
     CC=7  in:1  out:16  total:17
-  src.lane.metrics.hotspots.calculate_bus_factor
+  src.nxdo.metrics.hotspots.calculate_bus_factor
     CC=14  in:2  out:14  total:16
-  src.lane.cli.cmd_plan
+  src.nxdo.cli.cmd_plan
     CC=4  in:0  out:16  total:16
-  src.lane.koru_context._format_operations_for_llm
+  src.nxdo.koru_context._format_operations_for_llm
     CC=7  in:1  out:14  total:15
-  src.lane.cli.cmd_print_context
+  src.nxdo.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
-  src.lane.project_analyzer._build_tree
+  src.nxdo.project_analyzer._build_tree
     CC=6  in:2  out:12  total:14
-  src.lane.metrics.coupling._get_commits_with_files
+  src.nxdo.metrics.coupling._get_commits_with_files
     CC=13  in:1  out:13  total:14
-  src.lane.metrics.coupling.collect_coupling_matrix
+  src.nxdo.metrics.coupling.collect_coupling_matrix
     CC=18  in:1  out:13  total:14
-  src.lane.metrics.hotspots._get_file_commits_with_info
+  src.nxdo.metrics.hotspots._get_file_commits_with_info
     CC=14  in:1  out:13  total:14
-  src.lane.ticket_generator.sync_to_planfile
+  src.nxdo.ticket_generator.sync_to_planfile
     CC=8  in:1  out:12  total:13
-  src.lane.cli.cmd_print_prompt
+  src.nxdo.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
-  src.lane.planner.generate_next_tasks
+  src.nxdo.planner.generate_next_tasks
     CC=5  in:4  out:9  total:13
-  src.lane.providers.openai_compat.OpenAICompatProvider._call_api
+  src.nxdo.providers.openai_compat.OpenAICompatProvider._call_api
     CC=5  in:0  out:12  total:12
-  src.lane.git_reader.read_git_context
+  src.nxdo.git_reader.read_git_context
     CC=2  in:4  out:8  total:12
 
 MODULES:
-  src.lane.cli  [10 funcs]
+  src.nxdo.cli  [10 funcs]
     _display_tickets  CC=3  out:5
     _export_yaml_if_requested  CC=3  out:1
     _get_priority_emoji  CC=1  out:1
@@ -862,9 +862,9 @@ MODULES:
     cmd_plan  CC=4  out:16
     cmd_print_context  CC=2  out:14
     cmd_print_prompt  CC=1  out:13
-  src.lane.config  [1 funcs]
+  src.nxdo.config  [1 funcs]
     get_settings  CC=2  out:1
-  src.lane.git_reader  [19 funcs]
+  src.nxdo.git_reader  [19 funcs]
     _count_file_frequencies  CC=4  out:4
     _create_commit_info  CC=1  out:2
     _create_empty_context  CC=1  out:1
@@ -875,36 +875,36 @@ MODULES:
     _get_git_branch  CC=1  out:1
     _get_git_commits  CC=1  out:2
     _get_git_remote  CC=1  out:1
-  src.lane.koru_context  [6 funcs]
+  src.nxdo.koru_context  [6 funcs]
     _format_operations_for_llm  CC=7  out:14
     _format_project_state_for_llm  CC=7  out:16
     _load_operations  CC=3  out:2
     _load_project_state  CC=6  out:10
     build_koru_context  CC=3  out:9
     get_koru_system_prompt_extension  CC=1  out:0
-  src.lane.llm_client  [3 funcs]
+  src.nxdo.llm_client  [3 funcs]
     generate_task_plan  CC=1  out:2
     build_user_prompt  CC=3  out:1
     parse_task_plan_response  CC=1  out:1
-  src.lane.metrics.complexity  [6 funcs]
+  src.nxdo.metrics.complexity  [6 funcs]
     _analyze_imports  CC=7  out:10
     _analyze_types  CC=14  out:6
     _calculate_cyclomatic_complexity  CC=5  out:5
     _calculate_fan_in  CC=12  out:17
     _count_lines  CC=4  out:3
     collect_file_metrics  CC=8  out:16
-  src.lane.metrics.coupling  [2 funcs]
+  src.nxdo.metrics.coupling  [2 funcs]
     _get_commits_with_files  CC=13  out:13
     collect_coupling_matrix  CC=18  out:13
-  src.lane.metrics.hotspots  [5 funcs]
+  src.nxdo.metrics.hotspots  [5 funcs]
     _get_bug_fix_commits  CC=6  out:7
     _get_file_commits_with_info  CC=14  out:13
     calculate_bus_factor  CC=14  out:14
     get_critical_bus_factor_files  CC=7  out:11
     identify_bug_hotspots  CC=16  out:18
-  src.lane.planner  [1 funcs]
+  src.nxdo.planner  [1 funcs]
     generate_next_tasks  CC=5  out:9
-  src.lane.project_analyzer  [19 funcs]
+  src.nxdo.project_analyzer  [19 funcs]
     _build_tree  CC=6  out:12
     _check_pattern_match  CC=2  out:3
     _collect_file_contents  CC=4  out:3
@@ -915,7 +915,7 @@ MODULES:
     _get_tree_symbol  CC=4  out:0
     _parse_cargo  CC=3  out:4
     _parse_package_json  CC=2  out:4
-  src.lane.providers.openai_compat  [8 funcs]
+  src.nxdo.providers.openai_compat  [8 funcs]
     __init__  CC=5  out:2
     _call_api  CC=5  out:12
     generate_plan  CC=1  out:2
@@ -924,7 +924,7 @@ MODULES:
     _parse_response  CC=1  out:8
     _parse_tasks_from_data  CC=2  out:4
     _strip_markdown_fences  CC=3  out:4
-  src.lane.ticket_generator  [12 funcs]
+  src.nxdo.ticket_generator  [12 funcs]
     _build_todo_section  CC=4  out:5
     _ensure_planfile_installed  CC=3  out:5
     _map_priority  CC=1  out:2
@@ -937,56 +937,56 @@ MODULES:
     sync_to_planfile  CC=8  out:12
 
 EDGES:
-  src.lane.cli.cmd_plan → src.lane.config.get_settings
-  src.lane.cli.cmd_print_context → src.lane.project_analyzer.analyze_project
-  src.lane.cli.cmd_print_context → src.lane.git_reader.read_git_context
-  src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
-  src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
-  src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
-  src.lane.cli._sync_todos_if_requested → src.lane.ticket_generator.sync_to_todo_md
-  src.lane.cli._sync_planfile_if_requested → src.lane.ticket_generator.sync_to_planfile
-  src.lane.cli._export_yaml_if_requested → src.lane.ticket_generator.export_to_planfile_yaml
-  src.lane.cli._display_tickets → src.lane.cli._get_priority_emoji
-  src.lane.cli.cmd_metrics → src.lane.metrics.complexity.collect_file_metrics
-  src.lane.cli.cmd_auto → src.lane.metrics.hotspots.identify_bug_hotspots
-  src.lane.cli.cmd_auto → src.lane.metrics.complexity.collect_file_metrics
-  src.lane.git_reader._is_git_repo → src.lane.git_reader._run
-  src.lane.git_reader._run_git_command → src.lane.git_reader._run
-  src.lane.git_reader._get_git_branch → src.lane.git_reader._run_git_command
-  src.lane.git_reader._get_git_remote → src.lane.git_reader._run_git_command
-  src.lane.git_reader._get_git_commits → src.lane.git_reader._run
-  src.lane.git_reader._get_git_commits → src.lane.git_reader._parse_commits
-  src.lane.git_reader._count_file_frequencies → src.lane.git_reader._should_ignore_git_path
-  src.lane.git_reader._get_file_frequency → src.lane.git_reader._run
-  src.lane.git_reader._get_file_frequency → src.lane.git_reader._count_file_frequencies
-  src.lane.git_reader._get_file_frequency → src.lane.git_reader._format_file_summary
-  src.lane.git_reader._get_git_todos → src.lane.git_reader._run
-  src.lane.git_reader._get_git_todos → src.lane.git_reader._should_include_todo_line
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_branch
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_remote
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_commits
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_file_frequency
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_todos
-  src.lane.git_reader.read_git_context → src.lane.git_reader._is_git_repo
-  src.lane.git_reader.read_git_context → src.lane.git_reader._create_empty_context
-  src.lane.git_reader._create_commit_info → src.lane.git_reader._filter_git_paths
-  src.lane.git_reader._finalize_commit → src.lane.git_reader._create_commit_info
-  src.lane.git_reader._parse_commits → src.lane.git_reader._finalize_commit
-  src.lane.git_reader._parse_commits → src.lane.git_reader._parse_commit_metadata
-  src.lane.git_reader._filter_git_paths → src.lane.git_reader._should_ignore_git_path
-  src.lane.git_reader._should_include_todo_line → src.lane.git_reader._should_ignore_git_path
-  src.lane.planner.generate_next_tasks → src.lane.project_analyzer.analyze_project
-  src.lane.planner.generate_next_tasks → src.lane.git_reader.read_git_context
-  src.lane.planner.generate_next_tasks → src.lane.llm_client.build_user_prompt
-  src.lane.planner.generate_next_tasks → src.lane.config.get_settings
-  src.lane.planner.generate_next_tasks → src.lane.koru_context.build_koru_context
-  src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
-  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._load_operations
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._format_operations_for_llm
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._format_project_state_for_llm
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._load_project_state
-  src.lane.ticket_generator.task_plan_to_tickets → src.lane.ticket_generator._map_priority
+  src.nxdo.cli.cmd_plan → src.nxdo.config.get_settings
+  src.nxdo.cli.cmd_print_context → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.cli.cmd_print_context → src.nxdo.git_reader.read_git_context
+  src.nxdo.cli.cmd_print_prompt → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.cli.cmd_print_prompt → src.nxdo.git_reader.read_git_context
+  src.nxdo.cli.cmd_print_prompt → src.nxdo.llm_client.build_user_prompt
+  src.nxdo.cli._sync_todos_if_requested → src.nxdo.ticket_generator.sync_to_todo_md
+  src.nxdo.cli._sync_planfile_if_requested → src.nxdo.ticket_generator.sync_to_planfile
+  src.nxdo.cli._export_yaml_if_requested → src.nxdo.ticket_generator.export_to_planfile_yaml
+  src.nxdo.cli._display_tickets → src.nxdo.cli._get_priority_emoji
+  src.nxdo.cli.cmd_metrics → src.nxdo.metrics.complexity.collect_file_metrics
+  src.nxdo.cli.cmd_auto → src.nxdo.metrics.hotspots.identify_bug_hotspots
+  src.nxdo.cli.cmd_auto → src.nxdo.metrics.complexity.collect_file_metrics
+  src.nxdo.git_reader._is_git_repo → src.nxdo.git_reader._run
+  src.nxdo.git_reader._run_git_command → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_branch → src.nxdo.git_reader._run_git_command
+  src.nxdo.git_reader._get_git_remote → src.nxdo.git_reader._run_git_command
+  src.nxdo.git_reader._get_git_commits → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_commits → src.nxdo.git_reader._parse_commits
+  src.nxdo.git_reader._count_file_frequencies → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._count_file_frequencies
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._format_file_summary
+  src.nxdo.git_reader._get_git_todos → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_todos → src.nxdo.git_reader._should_include_todo_line
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_branch
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_remote
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_commits
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_file_frequency
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_todos
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._is_git_repo
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._create_empty_context
+  src.nxdo.git_reader._create_commit_info → src.nxdo.git_reader._filter_git_paths
+  src.nxdo.git_reader._finalize_commit → src.nxdo.git_reader._create_commit_info
+  src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._finalize_commit
+  src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._parse_commit_metadata
+  src.nxdo.git_reader._filter_git_paths → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._should_include_todo_line → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.planner.generate_next_tasks → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.planner.generate_next_tasks → src.nxdo.git_reader.read_git_context
+  src.nxdo.planner.generate_next_tasks → src.nxdo.llm_client.build_user_prompt
+  src.nxdo.planner.generate_next_tasks → src.nxdo.config.get_settings
+  src.nxdo.planner.generate_next_tasks → src.nxdo.koru_context.build_koru_context
+  src.nxdo.llm_client.parse_task_plan_response → src.nxdo.providers.openai_compat._parse_response
+  src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.nxdo.llm_client.build_user_prompt
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._load_operations
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._format_operations_for_llm
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._format_project_state_for_llm
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._load_project_state
+  src.nxdo.ticket_generator.task_plan_to_tickets → src.nxdo.ticket_generator._map_priority
 ```
 
 ## Test Contracts

@@ -1,0 +1,495 @@
+Project: nxdo
+Description: Generate the next 10 project tasks from project state, git history and an LLM prompt.
+Stack: Python
+
+--- README.md ---
+# nxdo
+
+
+## AI Cost Tracking
+
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.23-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.67-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-11.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+
+- 🤖 **LLM usage:** $1.6742 (26 commits)
+- 👤 **Human dev:** ~$1128 (11.3h @ $100/h, 30min dedup)
+
+Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+
+---
+
+`nxdo` is a Python package that inspects the current project state, reads recent git history, adds a user question for an LLM, and returns a concrete plan for the next 10 engineering tasks.
+
+## What is included
+
+- **Project snapshot analysis** — README, manifests (pyproject.toml, package.json, Cargo.toml, …), directory tree, stack detection
+- **Git context** — recent commits, most-changed files, TODO/FIXME markers
+- **Advanced code metrics** — cyclomatic complexity, coupling analysis, bug hotspots, bus factor detection
+- **Koru-aware planning** — Deep integration with koru framework for intelligent task generation
+- **Pydantic models** — validated data models for tasks and plans (`Task`, `TaskPlan`)
+- **Provider abstraction** — pluggable LLM backends; ships with an OpenAI-compatible provider (works with OpenRouter and any OpenAI-style API)
+- **Planner orchestrator** — `generate_next_tasks()` composes analysis + prompt + LLM call into a validated TaskPlan
+- **Rich CLI** — `nxdo plan`, `nxdo auto`, `nxdo metrics`, `nxdo print-context`, `nxdo print-prompt`, `nxdo validate`, `nxdo tickets`
+- **Reliability** — `httpx` for HTTP, `tenacity` for automatic retry/backoff, `pydantic-settings` for environment config
+
+## Quick start
+
+```bash
+python -m venv .venv
+. .venv/bin/activate
+pip install -e .
+nxdo print-prompt .
+```
+
+To generate a real plan, set `OPENROUTER_API_KEY` or `OPENAI_API_KEY` and run:
+
+```bash
+nxdo plan . --extra-context "What should we build next for this repository?"
+```
+
+Output as JSON:
+
+```bash
+nxdo plan . --json
+```
+
+Inspect captured project and git context without calling the LLM:
+
+```bash
+nxdo print-context .
+```
+
+Validate a saved plan file:
+
+```bash
+nxdo validate plan.json
+```
+
+Analyze code metrics and coupling:
+
+```bash
+nxdo metrics .
+```
+
+## CLI Reference
+
+### `nxdo plan`
+Generate a 10-task engineering plan for a repository.
+
+**Usage:**
+```bash
+nxdo plan [REPO_PATH] [OPTIONS]
+```
+
+**Options:**
+- `--extra-context, -e TEXT`: Additional prompt context for the LLM
+- `--model, -m TEXT`: Override the LLM model name
+- `--base-url TEXT`: Override the API base URL
+- `--json`: Output plan as JSON instead of formatted text
+- `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
+
+### `nxdo print-context`
+Print the assembled proje
+... [truncated, 9357 chars total]
+
+--- CHANGELOG.md ---
+# Changelog
+
+## [Unreleased]
+
+## [0.2.23] - 2026-06-16
+
+### Docs
+- Update CHANGELOG.md
+- Update CONTRIBUTING.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update testql-scenarios/generated-cli-tests.testql.toon.yaml
+- Update tests/test_cli.py
+- Update tests/test_config.py
+- Update tests/test_git_reader.py
+- Update tests/test_llm_client.py
+- Update tests/test_metrics.py
+- Update tests/test_models.py
+- Update tests/test_output.py
+- Update tests/test_planner.py
+- Update tests/test_project_analyzer.py
+- ... and 2 more files
+
+### Other
+- Update .planfile/config.yaml
+- Update MANIFEST.in
+- Update VERSION
+- Update app.doql.less
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- ... and 14 more files
+
+## [0.2.22] - 2026-06-16
+
+### Changed
+- Rename package from `lane` to `nxdo` (PyPI, CLI, Python module `src/nxdo/`)
+- Replace git dependency on `planfile` with PyPI pin `planfile>=0.1.103`
+
+## [0.2.21] - 2026-06-16
+
+### Docs
+- Update README.md
+
+### Other
+- Update .gitignore
+- Update uv.lock
+
+## [0.2.20] - 2026-05-31
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .code2llm_cache/__init___1779821607395592181_519.pkl
+- Update .code2llm_cache/__init___1779894083798767302_824.pkl
+- Update .code2llm_cache/cli_1779893581396958879_15255.pkl
+- Update .code2llm_cache/complexity_1779821572467241675_9445.pkl
+- Update .code2llm_cache/config_1779821240832920270_1187.pkl
+- Update .code2llm_cache/coupling_1779821509364609700_6186.pkl
+- Update .code2llm_cache/git_reader_1779893743779838285_8178.pkl
+- Update .code2llm_cache/hotspots_1779821541366929991_9235.pkl
+- Update .code2llm_cache/koru_context_1779825224753000000_9708.pkl
+- Update .code2llm_cache/llm_client_1779823632969000000_2527.pkl
+- ... and 26 more files
+
+## [0.2.19] - 2026-05-27
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_git_reader.py
+- Update tests/test_project_analyzer.py
+
+## [0.2.18] - 2026-05-27
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_ticket_generator.py
+
+## [0.2.17] - 2026-05-27
+
+### Docs
+- Update .planfile/.koru/README.md
+- Update README.md
+
+### Other
+- Update .koru/event-store.jsonl
+- Update .koru/events/observability.jsonl
+- Update .planfile/.koru/queue-runner.lock
+- Update .planfile/.koru/runs/queue-20260526T194440Z-947266.jsonl
+- Update .planfile/.koru/runs/queue-20260526T195237Z-990505.jsonl
+- Update .planfile/config.yaml
+- Update .planfile/sprints/backlog.yaml
+- Update .planfile/sprints/current.yaml
+
+## [0.2.16] - 2026-05-26
+
+### Docs
+- Update README.md
+
+## [0.2.15] - 2026-05-26
+
+### Docs
+- Update README.md
+
+## [0.2.14] - 2026-05-26
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_metrics.py
+
+## [0.2.13] - 2026-05-26
+... [truncated, 11879 chars total]
+
+--- TODO.md ---
+# TODO
+
+Tasks and improvements to be done.
+
+## Generated by nxdo — 2026-05-26 17:26 UTC
+
+- [ ] 🔴 Implement `--sync-todo` functionality  <!-- nxdo:task-1 -->
+  Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers.
+- [ ] 🔴 Enhance Git context extraction  <!-- nxdo:task-2 -->
+  Improve the functionality for extracting git context, including recent commits and changed files, to provide better insights for task generation.
+- [ ] 🟠 Add unit tests for `sync-todo` feature  <!-- nxdo:task-3 -->
+  Create unit tests to ensure the new `sync-todo` functionality works as expected and handles edge cases.
+- [ ] 🟠 Refactor CLI command handling  <!-- nxdo:task-4 -->
+  Refactor the command handling in the CLI to improve readability and maintainability, especially around the new features added.
+- [ ] 🟠 Update README with new features  <!-- nxdo:task-5 -->
+  Revise the README.md to include documentation for the new `sync-todo` feature and any other recent changes.
+- [ ] 🔴 Fix API error handling  <!-- nxdo:task-6 -->
+  Review and enhance the API error handling to ensure detailed error messages are provided for API failures.
+- [ ] 🟠 Add integration tests for CLI commands  <!-- nxdo:task-7 -->
+  Implement integration tests for the CLI commands to ensure they work correctly with the overall system.
+- [ ] 🟡 Improve error messages in CLI  <!-- nxdo:task-8 -->
+  Enhance the error messages provided by the CLI to be more user-friendly and informative.
+- [ ] 🟠 Document planfile integration  <!-- nxdo:task-9 -->
+  Create documentation for the planfile integration feature, explaining how to use it and its benefits.
+- [ ] 🟡 Review and clean up TODO.md  <!-- nxdo:task-10 -->
+  Go through the TODO.md file to clean up any outdated tasks and ensure it reflects the current project priorities.
+
+## Generated by nxdo — 2026-05-26 18:15 UTC
+
+- [ ] 🔴 Implement `--sync-todo` functionality  <!-- nxdo:task-1 -->
+  Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers.
+- [ ] 🔴 Enhance Git context extraction  <!-- nxdo:task-2 -->
+  Improve the functionality for extracting git context, including recent commits and changed files, to provide better insights for task generation.
+- [ ] 🟠 Add unit tests for `sync-todo` feature  <!-- nxdo:task-3 -->
+  Create unit tests to ensure the new `sync-todo` functionality works as expected and handles edge cases.
+- [ ] 🟠 Refactor CLI command handling  <!-- nxdo:task-4 -->
+  Refactor the command handling in the CLI to improve readability and maintainability, especially around the new features added.
+- [ ] 🟠 Update README with new features  <!-- nxdo:task-5 -->
+  Revise the README.md to include documentation for the new `sync-todo` feature and any other recent changes.
+- [ ] 🔴 Fix API error handling  <!-- nxdo:task-6 -->
+  Review and enhance the API error handling to ensure detailed error messages are provided for API failures.
+- [ ] 🟠 Add integration tests for CLI co
+... [truncated, 7207 chars total]
+
+--- pyproject.toml ---
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nxdo"
+version = "0.2.23"
+description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "semcod" }, {name = "Tom Sapletta",email = "tom@sapletta.com"}]
+keywords = ["planning", "llm", "git", "roadmap", "tasks"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development",
+]
+dependencies = [
+  "pydantic>=2",
+  "pydantic-settings>=2",
+  "typer>=0.12",
+  "rich>=13",
+  "httpx>=0.27",
+  "tenacity>=8",
+  "pyyaml>=6.0",
+  "planfile>=0.1.103",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-mock",
+  "ruff",
+  "mypy",
+  "goal>=2.1.0",
+  "costs>=0.1.20",
+  "pfix>=0.1.60",
+]
+
+[project.urls]
+Homepage = "https://github.com/semcod/nxdo"
+Repository = "https://github.com/semcod/nxdo"
+Issues = "https://github.com/semcod/nxdo/issues"
+
+[project.scripts]
+nxdo = "nxdo.cli:app_entry"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"nxdo" = ["examples/**/*.yaml", "examples/**/*.yml"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+
+
+[tool.pfix]
+# Self-healing Python configuration
+model = "openrouter/qwen/qwen3-coder-next"
+auto_apply = true
+auto_install_deps = true
+auto_restart = false
+max_retries = 3
+create_backups = false
+git_auto_commit = false
+
+[tool.pfix.runtime_todo]
+enabled = true
+todo_file = "TODO.md"
+min_severity = "low"
+deduplicate = true
+
+[tool.costs]
+# AI Cost tracking configuration
+badge = true
+update_readme = true
+readme_path = "README.md"
+default_model = "openrouter/qwen/qwen3-coder-next"
+analysis_mode = "byok"
+full_history = true
+max_commits = 500
+
+# Cost thresholds for badge colors (USD)
+badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0 }
+
+
+--- Directory tree ---
+├── docs
+├── examples
+│   ├── nxdo-self-context.txt
+│   └── nxdo-self-plan.json
+├── project
+│   ├── analysis.toon.yaml
+│   ├── calls.mmd
+│   ├── calls.toon.yaml
+│   ├── calls.yaml
+│   ├── compact_flow.mmd
+│   ├── context.md
+│   ├── duplication.toon.yaml
+│   ├── evolution.toon.yaml
+│   ├── flow.mmd
+│   ├── index.html
+│   ├── logic.pl
+│   ├── map.toon.yaml
+│   ├── mermaid.export
+│   ├── planfile-tickets.yaml
+│   ├── project.toon.yaml
+│   ├── prompt.txt
+│   └── README.md
+├── src
+│   └── nxdo
+│       ├── metrics
+│       ├── providers
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── cli.py
+│       ├── config.py
+│       ├── git_reader.py
+│       ├── koru_context.py
+│       ├── llm_client.py
+│       ├── models.py
+│       ├── output.py
+│       ├── planner.py
+│       ├── project_analyzer.py
+│       └── ticket_generator.py
+├── testql-scenarios
+│   ├── generated-cli-tests.testql.toon.yaml
+│   └── generated-from-pytests.testql.toon.yaml
+├── tests
+│   ├── test_cli.py
+│   ├── test_config.py
+│   ├── test_git_reader.py
+│   ├── test_llm_client.py
+│   ├── test_metrics.py
+│   ├── test_models.py
+│   ├── test_output.py
+│   ├── test_planner.py
+│   ├── test_project_analyzer.py
+│   ├── test_providers.py
+│   └── test_ticket_generator.py
+├── app.doql.less
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── goal.yaml
+├── LICENSE
+├── MANIFEST.in
+├── project.sh
+├── pyproject.toml
+├── README.md
+├── strategy.yaml
+├── SUMD.md
+├── SUMR.md
+├── todo.md
+├── TODO.md
+├── tree.sh
+├── tree.txt
+└── VERSION
+
+Branch: main
+Remote: git@github.com:semcod/nxdo.git
+
+Recent 5 commits:
+  2026-06-16 [6418469] feat(tests): add markdown output (.github/workflows/ci.yml, CHANGELOG.md, CONTRIBUTING.md, MANIFEST.in, README.md (+57 more))
+  2026-06-16 [b2947b0] refactor(docs): configuration management system (.gitignore, CHANGELOG.md, README.md, VERSION, pyproject.toml (+1 more))
+  2026-06-08 [5061983] Regenerate app.doql.less with adopt fixes (entry points, env_vars, no empty pages). (app.doql.less)
+  2026-05-31 [91f10a1] refactor(docs): code analysis engine (.gitignore, CHANGELOG.md, README.md, SUMD.md, SUMR.md (+22 more))
+  2026-05-27 [8e79244] feat(tests): update docs (CHANGELOG.md, README.md, VERSION, pyproject.toml, src/nxdo/__init__.py (+4 more))
+
+Most active files recently:
+    4x  CHANGELOG.md
+    4x  README.md
+    4x  VERSION
+    4x  pyproject.toml
+    3x  app.doql.less
+    3x  src/nxdo/__init__.py
+    2x  .gitignore
+    2x  SUMD.md
+    2x  SUMR.md
+    2x  project/README.md
+    2x  project/analysis.toon.yaml
+    2x  project/calls.mmd
+    2x  project/calls.toon.yaml
+    2x  project/calls.yaml
+    2x  project/compact_flow.mmd
+
+TODO/FIXME markers found in code:
+  CHANGELOG.md:13:- Update TODO.md
+  CHANGELOG.md:147:- Update TODO.md
+  CHANGELOG.md:158:- Update TODO.md
+  CHANGELOG.md:172:- Update TODO.md
+  CHANGELOG.md:251:- Add `--sync-todo` flag to sync tasks to TODO.md checkboxes
+  CHANGELOG.md:436:- Git context extraction (commits, changed files, TODO/FIXME markers)
+  README.md:21:- **Git context** — recent commits, most-changed files, TODO/FIXME markers
+  README.md:183:This command generates tickets from a TaskPlan and optionally syncs them to TODO.md, .planfile/, or exports to planfile YAML format.
+  README.md:195:- `--sync-todo`: Sync tasks to TODO.md checkboxes using planfile
+  README.md:206:# Sync to TODO.md
+  TODO.md:1:# TODO
+  TODO.md:8:  Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers.
+  TODO.md:25:- [ ] 🟡 Review and clean up TODO.md  <!-- nxdo:task-10 -->
+  TODO.md:26:  Go through the TODO.md file to clean up any outdated tasks and ensure it reflects the current project priorities.
+  TODO.md:31:  Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers.
+  TODO.md:48:- [ ] 🟡 Review and clean up TODO.md  <!-- nxdo:task-10 -->
+  TODO.md:49:  Go through the TODO.md file to clean up any outdated tasks and ensure it reflects the current project priorities.
+  TODO.md:54:  Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers.
+  TODO.md:71:- [ ] 🟡 Review and clean up TODO.md  <!-- nxdo:task-10 -->
+  TODO.md:72:  Go through the TODO.md file to clean up any outdated tasks and ensure it reflects the current project priorities.

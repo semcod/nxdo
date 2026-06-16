@@ -1,6 +1,6 @@
-from .cli import main
+from .cli import app_entry
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    app_entry()
 

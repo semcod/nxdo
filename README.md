@@ -3,10 +3,10 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.23-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.67-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-11.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.24-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.89-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-11.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.6742 (26 commits)
+- 🤖 **LLM usage:** $1.8940 (27 commits)
 - 👤 **Human dev:** ~$1128 (11.3h @ $100/h, 30min dedup)
 
 Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
@@ -14,6 +14,40 @@ Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrou
 ---
 
 `nxdo` is a Python package that inspects the current project state, reads recent git history, adds a user question for an LLM, and returns a concrete plan for the next 10 engineering tasks.
+
+**Documentation:** [docs/](docs/) · **Examples:** [examples/](examples/) · **Step-by-step guide:** [docs/how-it-works.md](docs/how-it-works.md)
+
+## How it works (step by step)
+
+1. **Analyze the repo** — README, manifests, tree, stack (`project_analyzer`)
+2. **Read git context** — commits, changed files, TODO/FIXME markers (`git_reader`)
+3. **Optional metrics** — complexity, coupling, hotspots (`metrics`)
+4. **Build prompt** — snapshot + git + your `--extra-context` (`llm_client`)
+5. **Call LLM** — OpenAI-compatible API, default OpenRouter (`providers`)
+6. **Validate plan** — 10 tasks as Pydantic `TaskPlan` (`models`)
+7. **Output** — terminal, JSON, TODO.md, or `.planfile/` (`tickets`, `auto`)
+
+```bash
+pip install nxdo
+export OPENROUTER_API_KEY="your-key"
+
+# 1–2: inspect context (no API cost)
+nxdo print-context .
+
+# 3: metrics only (no API cost)
+nxdo metrics .
+
+# 4–6: generate plan
+nxdo plan . -e "What should we build next?"
+
+# 7: export or sync tickets
+nxdo plan . --json > plan.json
+nxdo tickets . --sync-planfile
+```
+
+Real outputs from running nxdo **on this repo**: [examples/nxdo-self-plan.json](examples/nxdo-self-plan.json) · [examples/nxdo-self-context.txt](examples/nxdo-self-context.txt) · [examples/nxdo-self-metrics.txt](examples/nxdo-self-metrics.txt)
+
+See the full walkthrough in [docs/how-it-works.md](docs/how-it-works.md).
 
 ## What is included
 
@@ -258,52 +292,58 @@ nxdo print-prompt . --extra-context "Review security issues"
 
 ### Generate a plan and save as JSON
 ```bash
-lane plan . --json > plan.json
-lane validate plan.json
+nxdo plan . --json > plan.json
+nxdo validate plan.json
 ```
 
 ### Analyze a project with limited git history
 ```bash
-lane plan . --max-commits 10
+nxdo plan . --max-commits 10
 ```
 
 ### Quick auto mode (analyze + generate + sync)
 
 ```bash
 # One command to analyze project and create tickets in planfile
-lane auto
+nxdo auto
 
 # With custom focus
-lane auto . -e "Refactor authentication system"
+nxdo auto . -e "Refactor authentication system"
 ```
 
 ### Code metrics analysis
 
 ```bash
 # Full metrics report
-lane metrics .
+nxdo metrics .
 
 # High coupling files
-lane metrics . --top 10 --min-coupling 0.6
+nxdo metrics . --top 10 --min-coupling 0.6
 ```
 
 ### Koru-aware planning
 
 ```bash
-lane tickets . --koru-aware --sync-planfile
+nxdo tickets . --koru-aware --sync-planfile
 ```
 
 ## Architecture
 
 ### Modules
 
-- **lane.project_analyzer** — Project analysis (manifests, structure, stack)
-- **lane.git_reader** — Git history analysis
-- **lane.metrics** — Code metrics (complexity, coupling, hotspots)
-- **lane.koru_context** — Koru framework integration
-- **lane.planner** — Orchestrates analysis → LLM → TaskPlan
-- **lane.providers** — Pluggable LLM backends
-- **lane.ticket_generator** — Planfile integration
+- **nxdo.project_analyzer** — Project analysis (manifests, structure, stack)
+- **nxdo.git_reader** — Git history analysis
+- **nxdo.metrics** — Code metrics (complexity, coupling, hotspots)
+- **nxdo.koru_context** — Koru framework integration
+- **nxdo.planner** — Orchestrates analysis → LLM → TaskPlan
+- **nxdo.providers** — Pluggable LLM backends
+- **nxdo.ticket_generator** — Planfile integration
+
+### Docs and examples
+
+- [docs/README.md](docs/README.md) — documentation index
+- [docs/how-it-works.md](docs/how-it-works.md) — pipeline and step-by-step tutorial
+- [examples/](examples/) — sample outputs from self-analysis
 
 ## Development
 
@@ -316,11 +356,12 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 ## Changelog
 
 ### 0.2.x
-- **Added** `lane auto` command — one-command workflow (analyze + generate + sync)
-- **Added** `lane metrics` command (complexity, coupling, hotspots, bus factor)
+- **Added** `nxdo auto` command — one-command workflow (analyze + generate + sync)
+- **Added** `nxdo metrics` command (complexity, coupling, hotspots, bus factor)
 - **Added** `--koru-aware` flag for koru-integrated planning
-- **Added** `lane.metrics` module
-- **Added** `lane.koru_context` module
+- **Added** `nxdo.metrics` module
+- **Added** `nxdo.koru_context` module
+- **Renamed** package from `lane` to `nxdo` on PyPI and GitHub
 - **Improved** Test coverage to 97%
 - **Improved** Refactored CC hotspots
 

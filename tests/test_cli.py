@@ -281,10 +281,10 @@ class CLITests(unittest.TestCase):
         self.assertIsNotNone(__main__)
 
     def test_main_module_has_app_entry(self) -> None:
-        """Test that __main__ module has app_entry for script execution (line 5)."""
+        """Test that __main__ module exposes app_entry for script execution."""
         from nxdo import __main__
-        self.assertTrue(hasattr(__main__, 'main'))
-        self.assertTrue(callable(__main__.main))
+        self.assertTrue(hasattr(__main__, 'app_entry'))
+        self.assertTrue(callable(__main__.app_entry))
 
     @patch("nxdo.cli.generate_next_tasks")
     def test_cmd_plan_handles_value_error(self, mock_generate: MagicMock) -> None:
