@@ -1,4 +1,4 @@
-"""Rich-based rendering helpers for lane output."""
+"""Rich-based rendering helpers for nxdo output."""
 
 from __future__ import annotations
 

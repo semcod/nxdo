@@ -9,7 +9,7 @@ from typing import Optional
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
-from ..config import LaneSettings, get_settings
+from ..config import NxdoSettings, get_settings
 from ..models import Priority, Task, TaskPlan, TaskType
 from .base import LLMProvider
 
@@ -63,8 +63,8 @@ class OpenAICompatProvider(LLMProvider):
         api_key: Optional[str] = None,
         model: Optional[str] = None,
         base_url: Optional[str] = None,
-        settings: Optional[LaneSettings] = None,
-        app_name: str = "lane",
+        settings: Optional[NxdoSettings] = None,
+        app_name: str = "nxdo",
         koru_aware: bool = False,
     ) -> None:
         cfg = settings or get_settings()
@@ -110,7 +110,7 @@ class OpenAICompatProvider(LLMProvider):
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/semcod/lane",
+            "HTTP-Referer": "https://github.com/semcod/nxdo",
             "X-Title": self.app_name,
         }
 

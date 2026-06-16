@@ -1,4 +1,4 @@
-# redup/duplication | 2 groups | 19f 2883L | 2026-05-29
+# redup/duplication | 2 groups | 19f 2883L | 2026-06-16
 
 SUMMARY:
   files_scanned: 19
@@ -6,27 +6,27 @@ SUMMARY:
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   6
-  scan_ms:       2346
+  scan_ms:       2058
 
 HOTSPOTS[2] (files with most duplication):
-  src/lane/git_reader.py  dup=6L  groups=1  frags=2  (0.2%)
-  src/lane/project_analyzer.py  dup=6L  groups=1  frags=2  (0.2%)
+  src/nxdo/git_reader.py  dup=6L  groups=1  frags=2  (0.2%)
+  src/nxdo/project_analyzer.py  dup=6L  groups=1  frags=2  (0.2%)
 
 DUPLICATES[2] (ranked by impact):
   [398e7fc98c20a6ea]   STRU  _get_git_branch  L=3 N=2 saved=3 sim=1.00
-      src/lane/git_reader.py:109-111  (_get_git_branch)
-      src/lane/git_reader.py:114-116  (_get_git_remote)
+      src/nxdo/git_reader.py:109-111  (_get_git_branch)
+      src/nxdo/git_reader.py:114-116  (_get_git_remote)
   [dba932c7fb158cc5]   STRU  _get_connector  L=3 N=2 saved=3 sim=1.00
-      src/lane/project_analyzer.py:245-247  (_get_connector)
-      src/lane/project_analyzer.py:250-252  (_get_extension)
+      src/nxdo/project_analyzer.py:245-247  (_get_connector)
+      src/nxdo/project_analyzer.py:250-252  (_get_extension)
 
 REFACTOR[2] (ranked by priority):
-  [1] ○ extract_function   → src/lane/utils/_get_git_branch.py
+  [1] ○ extract_function   → src/nxdo/utils/_get_git_branch.py
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
-      FILES: src/lane/git_reader.py
-  [2] ○ extract_function   → src/lane/utils/_get_connector.py
+      FILES: src/nxdo/git_reader.py
+  [2] ○ extract_function   → src/nxdo/utils/_get_connector.py
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
-      FILES: src/lane/project_analyzer.py
+      FILES: src/nxdo/project_analyzer.py
 
 EFFORT_ESTIMATE (total ≈ 0.2h):
   easy   _get_git_branch                     saved=3L  ~6min

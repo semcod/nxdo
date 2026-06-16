@@ -1,18 +1,18 @@
-description: The lane project is a Python package designed for generating task plans
+description: The nxdo project is a Python package designed for generating task plans
   based on project state and git history. Recent commits indicate a focus on documentation
   updates and feature enhancements, particularly around the CLI and error handling.
   There are several TODO items that need to be addressed, including implementing new
   features and improving test coverage.
 domain: development
-goal: The lane project is a Python package designed for generating task plans based
+goal: The nxdo project is a Python package designed for generating task plans based
   on project state and git history. Recent commits indicate a focus on documentation
   updates and feature enhancements, particularly around the CLI and error handling.
   There are several TODO items that need to be addressed, including implementing new
   features and improving test coverage.
-name: lane
+name: nxdo
 project_type: software
 sprints:
-- goal: The lane project is a Python package designed for generating task plans based
+- goal: The nxdo project is a Python package designed for generating task plans based
     on project state and git history. Recent commits indicate a focus on documentation
     updates and feature enhancements, particularly around the CLI and error handling.
     There are several TODO items that need to be addressed, including implementing

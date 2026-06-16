@@ -1,9 +1,9 @@
-# code2llm | 26f 3770L | python:19,yaml:4,txt:1,shell:1,toml:1 | 2026-05-29
-# generated in 0.01s
+# code2llm | 26f 3779L | python:19,yaml:4,txt:1,shell:1,toml:1 | 2026-06-16
+# generated in 0.00s
 # CC̅=4.0 | critical:2/111 | dups:0 | cycles:1
 
 HEALTH[3]:
-  🔴 CYCLE Circular dependency detected: src.lane.project_analyzer._get_subtree_lines -> src.lane.project_analyzer._build_tree. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: src.nxdo.project_analyzer._build_tree -> src.nxdo.project_analyzer._get_subtree_lines. This indicates high coupling and may lead to infinite recursion or initialization issues.
   🟡 CC    identify_bug_hotspots CC=16 (limit:15)
   🟡 CC    collect_coupling_matrix CC=18 (limit:15)
 
@@ -12,43 +12,43 @@ REFACTOR[2]:
   2. break 1 circular dependencies
 
 PIPELINES[23]:
-  [1] Src [__str__]: __str__
+  [1] Src [cmd_plan]: cmd_plan → get_settings
       PURITY: 100% pure
-  [2] Src [to_dict]: to_dict
+  [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
       PURITY: 100% pure
-  [3] Src [__str__]: __str__
+  [3] Src [cmd_print_prompt]: cmd_print_prompt → analyze_project → _collect_file_contents → _read_file_safely
       PURITY: 100% pure
-  [4] Src [to_dict]: to_dict
+  [4] Src [cmd_validate]: cmd_validate
       PURITY: 100% pure
-  [5] Src [cmd_plan]: cmd_plan → get_settings
+  [5] Src [cmd_tickets]: cmd_tickets → get_settings
       PURITY: 100% pure
-  [6] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
+  [6] Src [cmd_metrics]: cmd_metrics → collect_file_metrics → _calculate_fan_in
       PURITY: 100% pure
-  [7] Src [cmd_print_prompt]: cmd_print_prompt → analyze_project → _collect_file_contents → _read_file_safely
+  [7] Src [cmd_auto]: cmd_auto → identify_bug_hotspots → _get_file_commits_with_info
       PURITY: 100% pure
-  [8] Src [cmd_validate]: cmd_validate
+  [8] Src [app_entry]: app_entry
       PURITY: 100% pure
-  [9] Src [cmd_tickets]: cmd_tickets → get_settings
+  [9] Src [main]: main → get_settings
       PURITY: 100% pure
-  [10] Src [cmd_metrics]: cmd_metrics → collect_file_metrics → _calculate_fan_in
+  [10] Src [__str__]: __str__
       PURITY: 100% pure
-  [11] Src [cmd_auto]: cmd_auto → identify_bug_hotspots → _get_file_commits_with_info
+  [11] Src [to_text]: to_text
       PURITY: 100% pure
-  [12] Src [app_entry]: app_entry
+  [12] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [13] Src [main]: main → get_settings
+  [13] Src [__init__]: __init__
       PURITY: 100% pure
-  [14] Src [__str__]: __str__
+  [14] Src [generate_task_plan]: generate_task_plan → build_user_prompt
       PURITY: 100% pure
   [15] Src [to_text]: to_text
       PURITY: 100% pure
-  [16] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
+  [16] Src [__str__]: __str__
       PURITY: 100% pure
-  [17] Src [__init__]: __init__
+  [17] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [18] Src [generate_task_plan]: generate_task_plan → build_user_prompt
+  [18] Src [__str__]: __str__
       PURITY: 100% pure
-  [19] Src [to_text]: to_text
+  [19] Src [to_dict]: to_dict
       PURITY: 100% pure
   [20] Src [__init__]: __init__ → get_settings
       PURITY: 100% pure
@@ -85,7 +85,7 @@ LAYERS:
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
   │ strategy.yaml              142L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              98L  0C    0m  CC=0.0    ←0
-  │ tree.txt                    57L  0C    0m  CC=0.0    ←0
+  │ tree.txt                    66L  0C    0m  CC=0.0    ←0
   │ project.sh                  48L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0

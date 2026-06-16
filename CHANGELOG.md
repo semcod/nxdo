@@ -2,6 +2,50 @@
 
 ## [Unreleased]
 
+## [0.2.23] - 2026-06-16
+
+### Docs
+- Update CHANGELOG.md
+- Update CONTRIBUTING.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update testql-scenarios/generated-cli-tests.testql.toon.yaml
+- Update tests/test_cli.py
+- Update tests/test_config.py
+- Update tests/test_git_reader.py
+- Update tests/test_llm_client.py
+- Update tests/test_metrics.py
+- Update tests/test_models.py
+- Update tests/test_output.py
+- Update tests/test_planner.py
+- Update tests/test_project_analyzer.py
+- ... and 2 more files
+
+### Other
+- Update .planfile/config.yaml
+- Update MANIFEST.in
+- Update VERSION
+- Update app.doql.less
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/compact_flow.mmd
+- ... and 14 more files
+
+## [0.2.22] - 2026-06-16
+
+### Changed
+- Rename package from `lane` to `nxdo` (PyPI, CLI, Python module `src/nxdo/`)
+- Replace git dependency on `planfile` with PyPI pin `planfile>=0.1.103`
+
 ## [0.2.21] - 2026-06-16
 
 ### Docs
@@ -202,7 +246,7 @@
 
 ### New
 - Add planfile integration for ticket generation
-- Add `lane tickets` CLI command with planfile support
+- Add `nxdo tickets` CLI command with planfile support
 - Add ticket_generator module with TaskPlan to planfile conversion
 - Add `--sync-todo` flag to sync tasks to TODO.md checkboxes
 - Add `--export-yaml` flag to export to planfile YAML format
@@ -352,7 +396,7 @@
 - Update .idea/.gitignore
 - Update .idea/inspectionProfiles/Project_Default.xml
 - Update .idea/inspectionProfiles/profiles_settings.xml
-- Update .idea/lane.iml
+- Update .idea/nxdo.iml
 - Update .idea/modules.xml
 - Update .idea/pyProjectModel.xml
 - Update .idea/vcs.xml
@@ -387,11 +431,11 @@ All notable changes to this project will be documented in this file.
 ## [0.1.0] - 2026-05-26
 
 ### Added
-- Initial release of lane
+- Initial release of nxdo
 - Project snapshot analysis (README, manifests, directory tree, stack detection)
 - Git context extraction (commits, changed files, TODO/FIXME markers)
 - Pydantic models for tasks and plans
 - Provider abstraction with OpenAI-compatible provider
-- Rich CLI with `lane plan`, `lane print-context`, `lane print-prompt`, `lane validate`
+- Rich CLI with `nxdo plan`, `nxdo print-context`, `nxdo print-prompt`, `nxdo validate`
 - HTTP reliability with httpx and tenacity retry/backoff
 - Environment-based configuration with pydantic-settings

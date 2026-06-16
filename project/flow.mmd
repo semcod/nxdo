@@ -5,26 +5,26 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
-        src__lane__models__Task____str__["__str__"]
-        src__lane__models__Task__to_dict["to_dict"]
-        src__lane__models__TaskPlan____str__["__str__"]
-        src__lane__models__TaskPlan__to_dict["to_dict"]
-        src__lane__providers__base__LLMProvider__generate_plan["generate_plan"]
-        src__lane__cli__cmd_plan["cmd_plan"]
-        src__lane__cli__cmd_print_context["cmd_print_context"]
-        src__lane__cli__cmd_print_prompt["cmd_print_prompt"]
-        src__lane__cli__cmd_validate["cmd_validate"]
-        src__lane__cli___sync_todos_if_requested["_sync_todos_if_requested"]
-        src__lane__cli___sync_planfile_if_requested["_sync_planfile_if_requested"]
-        src__lane__cli___get_priority_emoji["_get_priority_emoji"]
-        src__lane__cli___display_tickets["_display_tickets"]
-        src__lane__cli__cmd_tickets["cmd_tickets"]
-        src__lane__cli__cmd_metrics["cmd_metrics"]
+        src__nxdo__cli__cmd_plan["cmd_plan"]
+        src__nxdo__cli__cmd_print_context["cmd_print_context"]
+        src__nxdo__cli__cmd_print_prompt["cmd_print_prompt"]
+        src__nxdo__cli__cmd_validate["cmd_validate"]
+        src__nxdo__cli___sync_todos_if_requested["_sync_todos_if_requested"]
+        src__nxdo__cli___sync_planfile_if_requested["_sync_planfile_if_requested"]
+        src__nxdo__cli___get_priority_emoji["_get_priority_emoji"]
+        src__nxdo__cli___display_tickets["_display_tickets"]
+        src__nxdo__cli__cmd_tickets["cmd_tickets"]
+        src__nxdo__cli__cmd_metrics["cmd_metrics"]
+        src__nxdo__cli__cmd_auto["cmd_auto"]
+        src__nxdo__cli__app_entry["app_entry"]
+        src__nxdo__cli__main["main"]
+        src__nxdo__git_reader__CommitInfo____str__["__str__"]
+        src__nxdo__git_reader__GitContext__to_text["to_text"]
         ...["+24 more"]
     end
 
     subgraph Exporters
-        src__lane__cli___export_yaml_if_requested["_export_yaml_if_requested"]
+        src__nxdo__cli___export_yaml_if_requested["_export_yaml_if_requested"]
     end
 
-    class src__lane__models__Task____str__,src__lane__models__Task__to_dict,src__lane__models__TaskPlan____str__,src__lane__models__TaskPlan__to_dict,src__lane__providers__base__LLMProvider__generate_plan,src__lane__cli__cmd_plan,src__lane__cli__cmd_print_context,src__lane__cli__cmd_print_prompt,src__lane__cli__cmd_validate,src__lane__cli___sync_todos_if_requested entry
+    class src__nxdo__cli__cmd_plan,src__nxdo__cli__cmd_print_context,src__nxdo__cli__cmd_print_prompt,src__nxdo__cli__cmd_validate,src__nxdo__cli___sync_todos_if_requested,src__nxdo__cli___sync_planfile_if_requested,src__nxdo__cli___export_yaml_if_requested,src__nxdo__cli___get_priority_emoji,src__nxdo__cli___display_tickets,src__nxdo__cli__cmd_tickets entry

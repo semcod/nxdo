@@ -1,10 +1,10 @@
-"""Tests for lane.metrics module."""
+"""Tests for nxdo.metrics module."""
 
 import tempfile
 import unittest
 from pathlib import Path
 
-from lane.metrics import (
+from nxdo.metrics import (
     collect_file_metrics,
     collect_coupling_matrix,
     get_coupling_clusters,
@@ -63,7 +63,7 @@ class MetricsTests(unittest.TestCase):
 
     def test_coupling_clusters_group_files(self) -> None:
         # Mock coupling metrics
-        from lane.metrics.coupling import CouplingMetrics
+        from nxdo.metrics.coupling import CouplingMetrics
         
         coupling = [
             CouplingMetrics("a.py", "b.py", 0.8, 8, 10, 10),
@@ -75,7 +75,7 @@ class MetricsTests(unittest.TestCase):
         self.assertGreaterEqual(len(clusters), 1)
 
     def test_coupling_clusters_empty_when_low_coupling(self) -> None:
-        from lane.metrics.coupling import CouplingMetrics
+        from nxdo.metrics.coupling import CouplingMetrics
         
         coupling = [
             CouplingMetrics("a.py", "b.py", 0.2, 2, 10, 10),

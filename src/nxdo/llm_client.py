@@ -1,7 +1,7 @@
 """Generate task plans with an OpenAI-compatible LLM endpoint.
 
 This module is kept for backwards compatibility. New code should use
-``lane.providers.OpenAICompatProvider`` and ``lane.planner.generate_next_tasks``.
+``nxdo.providers.OpenAICompatProvider`` and ``nxdo.planner.generate_next_tasks``.
 """
 
 from __future__ import annotations
@@ -62,7 +62,7 @@ class OpenAICompatibleLLMClient:
         api_key: str | None = None,
         model: str = DEFAULT_MODEL,
         base_url: str = DEFAULT_BASE_URL,
-        app_name: str = "lane",
+        app_name: str = "nxdo",
     ) -> None:
         self._provider = OpenAICompatProvider(
             api_key=api_key or os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENAI_API_KEY"),

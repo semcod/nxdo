@@ -19,7 +19,7 @@ from .providers import OpenAICompatProvider
 from .ticket_generator import export_to_planfile_yaml, sync_to_planfile, sync_to_todo_md, task_plan_to_tickets
 
 app = typer.Typer(
-    name="lane",
+    name="nxdo",
     help="Generate a 10-task engineering plan from project state, git history and LLM context.",
     no_args_is_help=False,
     add_completion=False,
@@ -202,7 +202,7 @@ def cmd_metrics(
     min_coupling: float = typer.Option(0.3, "--min-coupling", help="Minimum coupling score to display."),
 ) -> None:
     """Display code metrics: complexity, coupling, hotspots."""
-    from lane.metrics import (
+    from nxdo.metrics import (
         collect_coupling_matrix,
         get_coupling_clusters,
         identify_bug_hotspots,
@@ -268,12 +268,12 @@ def cmd_auto(
     2. Generates tickets using koru-aware planning
     3. Syncs to .planfile/ for execution via koru queue
 
-    Equivalent to: lane tickets . --koru-aware --sync-planfile
+    Equivalent to: nxdo tickets . --koru-aware --sync-planfile
     """
-    from lane.metrics import collect_file_metrics, identify_bug_hotspots
+    from nxdo.metrics import collect_file_metrics, identify_bug_hotspots
 
     repo_path = repo.resolve()
-    console.print(f"[bold]🚀 Lane Auto Mode for {repo_path.name}[/bold]\n")
+    console.print(f"[bold]🚀 Nxdo Auto Mode for {repo_path.name}[/bold]\n")
 
     # Quick analysis to inform user
     console.print("[dim]Analyzing project...[/dim]")
@@ -296,7 +296,7 @@ def cmd_auto(
 
     if dry_run:
         console.print("\n[dim]Dry run mode - would execute:[/dim]")
-        console.print(f"  lane tickets {repo_path} --koru-aware --sync-planfile")
+        console.print(f"  nxdo tickets {repo_path} --koru-aware --sync-planfile")
         return
 
     # Execute auto workflow
@@ -330,7 +330,7 @@ def cmd_auto(
 
 
 def app_entry() -> None:
-    """Entry point used by the installed `lane` script."""
+    """Entry point used by the installed `nxdo` script."""
     app()
 
 
@@ -342,7 +342,7 @@ def main(argv: list[str] | None = None) -> int:
     """Compatibility shim — maps legacy argparse argv to Typer sub-commands."""
     import argparse
 
-    parser = argparse.ArgumentParser(prog="lane", add_help=False)
+    parser = argparse.ArgumentParser(prog="nxdo", add_help=False)
     parser.add_argument("repo", nargs="?", default=".")
     parser.add_argument("--extra-context", default="")
     parser.add_argument("--max-commits", type=int, default=30)

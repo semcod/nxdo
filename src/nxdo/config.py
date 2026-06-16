@@ -1,4 +1,4 @@
-"""Environment-based configuration for lane using pydantic-settings."""
+"""Environment-based configuration for nxdo using pydantic-settings."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class LaneSettings(BaseSettings):
+class NxdoSettings(BaseSettings):
     """Runtime configuration loaded from environment variables."""
 
     openrouter_api_key: Optional[str] = None
@@ -33,12 +33,12 @@ class LaneSettings(BaseSettings):
         return self.openrouter_api_key or self.openai_api_key
 
 
-_settings: Optional[LaneSettings] = None
+_settings: Optional[NxdoSettings] = None
 
 
-def get_settings() -> LaneSettings:
-    """Return a cached singleton of LaneSettings."""
+def get_settings() -> NxdoSettings:
+    """Return a cached singleton of NxdoSettings."""
     global _settings
     if _settings is None:
-        _settings = LaneSettings()
+        _settings = NxdoSettings()
     return _settings

@@ -3,8 +3,8 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lane"
-version = "0.2.21"
+name = "nxdo"
+version = "0.2.23"
 description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -27,7 +27,7 @@ dependencies = [
   "httpx>=0.27",
   "tenacity>=8",
   "pyyaml>=6.0",
-  "planfile @ git+https://github.com/semcod/planfile.git",
+  "planfile>=0.1.103",
 ]
 
 [project.optional-dependencies]
@@ -42,12 +42,12 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/semcod/lane"
-Repository = "https://github.com/semcod/lane"
-Issues = "https://github.com/semcod/lane/issues"
+Homepage = "https://github.com/semcod/nxdo"
+Repository = "https://github.com/semcod/nxdo"
+Issues = "https://github.com/semcod/nxdo/issues"
 
 [project.scripts]
-lane = "lane.cli:app_entry"
+nxdo = "nxdo.cli:app_entry"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -56,7 +56,7 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-"lane" = ["examples/**/*.yaml", "examples/**/*.yml"]
+"nxdo" = ["examples/**/*.yaml", "examples/**/*.yml"]
 
 [tool.ruff]
 line-length = 120

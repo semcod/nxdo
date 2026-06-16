@@ -3,8 +3,8 @@ from io import StringIO
 
 from rich.console import Console
 
-from lane.models import Priority, Task, TaskPlan, TaskType
-from lane.output import render_plan, render_plan_json, render_context
+from nxdo.models import Priority, Task, TaskPlan, TaskType
+from nxdo.output import render_plan, render_plan_json, render_context
 
 
 class OutputTests(unittest.TestCase):

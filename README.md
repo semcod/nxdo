@@ -1,19 +1,19 @@
-# lane
+# nxdo
 
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.21-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.58-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-10.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.23-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.67-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-11.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.5846 (25 commits)
-- 👤 **Human dev:** ~$1028 (10.3h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $1.6742 (26 commits)
+- 👤 **Human dev:** ~$1128 (11.3h @ $100/h, 30min dedup)
 
 Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
-`lane` is a Python package that inspects the current project state, reads recent git history, adds a user question for an LLM, and returns a concrete plan for the next 10 engineering tasks.
+`nxdo` is a Python package that inspects the current project state, reads recent git history, adds a user question for an LLM, and returns a concrete plan for the next 10 engineering tasks.
 
 ## What is included
 
@@ -24,7 +24,7 @@ Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrou
 - **Pydantic models** — validated data models for tasks and plans (`Task`, `TaskPlan`)
 - **Provider abstraction** — pluggable LLM backends; ships with an OpenAI-compatible provider (works with OpenRouter and any OpenAI-style API)
 - **Planner orchestrator** — `generate_next_tasks()` composes analysis + prompt + LLM call into a validated TaskPlan
-- **Rich CLI** — `lane plan`, `lane auto`, `lane metrics`, `lane print-context`, `lane print-prompt`, `lane validate`, `lane tickets`
+- **Rich CLI** — `nxdo plan`, `nxdo auto`, `nxdo metrics`, `nxdo print-context`, `nxdo print-prompt`, `nxdo validate`, `nxdo tickets`
 - **Reliability** — `httpx` for HTTP, `tenacity` for automatic retry/backoff, `pydantic-settings` for environment config
 
 ## Quick start
@@ -33,47 +33,47 @@ Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrou
 python -m venv .venv
 . .venv/bin/activate
 pip install -e .
-lane print-prompt .
+nxdo print-prompt .
 ```
 
 To generate a real plan, set `OPENROUTER_API_KEY` or `OPENAI_API_KEY` and run:
 
 ```bash
-lane plan . --extra-context "What should we build next for this repository?"
+nxdo plan . --extra-context "What should we build next for this repository?"
 ```
 
 Output as JSON:
 
 ```bash
-lane plan . --json
+nxdo plan . --json
 ```
 
 Inspect captured project and git context without calling the LLM:
 
 ```bash
-lane print-context .
+nxdo print-context .
 ```
 
 Validate a saved plan file:
 
 ```bash
-lane validate plan.json
+nxdo validate plan.json
 ```
 
 Analyze code metrics and coupling:
 
 ```bash
-lane metrics .
+nxdo metrics .
 ```
 
 ## CLI Reference
 
-### `lane plan`
+### `nxdo plan`
 Generate a 10-task engineering plan for a repository.
 
 **Usage:**
 ```bash
-lane plan [REPO_PATH] [OPTIONS]
+nxdo plan [REPO_PATH] [OPTIONS]
 ```
 
 **Options:**
@@ -83,44 +83,44 @@ lane plan [REPO_PATH] [OPTIONS]
 - `--json`: Output plan as JSON instead of formatted text
 - `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
 
-### `lane print-context`
+### `nxdo print-context`
 Print the assembled project and git context without calling the LLM.
 
 **Usage:**
 ```bash
-lane print-context [REPO_PATH] [OPTIONS]
+nxdo print-context [REPO_PATH] [OPTIONS]
 ```
 
 **Options:**
 - `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
 - `--raw`: Print raw text instead of Rich panels
 
-### `lane print-prompt`
+### `nxdo print-prompt`
 Print the full prompt that would be sent to the LLM.
 
 **Usage:**
 ```bash
-lane print-prompt [REPO_PATH] [OPTIONS]
+nxdo print-prompt [REPO_PATH] [OPTIONS]
 ```
 
 **Options:**
 - `--extra-context, -e TEXT`: Additional prompt context for the LLM
 - `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
 
-### `lane validate`
+### `nxdo validate`
 Validate a saved JSON plan file against the TaskPlan schema.
 
 **Usage:**
 ```bash
-lane validate PLAN_FILE
+nxdo validate PLAN_FILE
 ```
 
-### `lane auto`
+### `nxdo auto`
 Auto-generate and sync tickets for the most important work. This is the quickest way to get actionable tickets into your planfile.
 
 **Usage:**
 ```bash
-lane auto [REPO_PATH] [OPTIONS]
+nxdo auto [REPO_PATH] [OPTIONS]
 ```
 
 **What it does:**
@@ -135,26 +135,26 @@ lane auto [REPO_PATH] [OPTIONS]
 **Example:**
 ```bash
 # Quick auto mode - analyze, generate, sync
-lane auto
+nxdo auto
 
 # With extra context
-lane auto . -e "Focus on security improvements"
+nxdo auto . -e "Focus on security improvements"
 
 # Dry run to preview
-lane auto --dry-run
+nxdo auto --dry-run
 ```
 
 **Equivalent to:**
 ```bash
-lane tickets . --koru-aware --sync-planfile
+nxdo tickets . --koru-aware --sync-planfile
 ```
 
-### `lane metrics`
+### `nxdo metrics`
 Display comprehensive code metrics for the project including cyclomatic complexity, change coupling, bug hotspots, and bus factor analysis.
 
 **Usage:**
 ```bash
-lane metrics [REPO_PATH] [OPTIONS]
+nxdo metrics [REPO_PATH] [OPTIONS]
 ```
 
 **Options:**
@@ -171,20 +171,20 @@ lane metrics [REPO_PATH] [OPTIONS]
 **Example:**
 ```bash
 # Show metrics for current project
-lane metrics .
+nxdo metrics .
 
 # Show top 5 with higher coupling threshold
-lane metrics . --top 5 --min-coupling 0.5
+nxdo metrics . --top 5 --min-coupling 0.5
 ```
 
-### `lane tickets`
+### `nxdo tickets`
 Generate tickets from a plan using planfile integration.
 
 This command generates tickets from a TaskPlan and optionally syncs them to TODO.md, .planfile/, or exports to planfile YAML format.
 
 **Usage:**
 ```bash
-lane tickets [REPO_PATH] [OPTIONS]
+nxdo tickets [REPO_PATH] [OPTIONS]
 ```
 
 **Options:**
@@ -201,16 +201,16 @@ lane tickets [REPO_PATH] [OPTIONS]
 **Examples:**
 ```bash
 # Generate and display tickets
-lane tickets .
+nxdo tickets .
 
 # Sync to TODO.md
-lane tickets . --sync-todo
+nxdo tickets . --sync-todo
 
 # Export to planfile YAML
-lane tickets . --export-yaml --output strategy.yaml
+nxdo tickets . --export-yaml --output strategy.yaml
 
 # Koru-aware planning (generates tasks referencing koru operations)
-lane tickets . --koru-aware --sync-planfile
+nxdo tickets . --koru-aware --sync-planfile
 ```
 
 **Note:** This feature requires the planfile package. It will be auto-installed if missing.
@@ -243,17 +243,17 @@ All settings are read from environment variables:
 ### Generate a plan for a Python project
 ```bash
 export OPENROUTER_API_KEY="your-api-key"
-lane plan /path/to/project --extra-context "Focus on improving test coverage"
+nxdo plan /path/to/project --extra-context "Focus on improving test coverage"
 ```
 
 ### Use a custom model
 ```bash
-lane plan . --model "openrouter/anthropic/claude-3.5-sonnet"
+nxdo plan . --model "openrouter/anthropic/claude-3.5-sonnet"
 ```
 
 ### Inspect what data is sent to the LLM
 ```bash
-lane print-prompt . --extra-context "Review security issues"
+nxdo print-prompt . --extra-context "Review security issues"
 ```
 
 ### Generate a plan and save as JSON

@@ -1,18 +1,12 @@
 // LESS format — define @variables here as needed
 
 app {
-  name: lane;
-  version: 0.2.20;
-  description: "Generate the next 10 project tasks from project state, git history and an LLM prompt.";
-  license: Apache-2.0;
-  authors: "semcod, Tom Sapletta <tom@sapletta.com>";
-  keywords: "planning, llm, git, roadmap, tasks";
-  homepage: https://github.com/semcod/lane;
-  repository: https://github.com/semcod/lane;
+  name: kodo;
+  version: 0.2.21;
 }
 
 dependencies {
-  runtime: "pydantic>=2, pydantic-settings>=2, typer>=0.12, rich>=13, httpx>=0.27, tenacity>=8, pyyaml>=6.0, planfile @ git+https://github.com/semcod/planfile.git";
+  runtime: "pydantic>=2, pydantic-settings>=2, typer>=0.12, rich>=13, httpx>=0.27, tenacity>=8, pyyaml>=6.0, planfile>=0.1.103";
   dev: "pytest, pytest-mock, ruff, mypy, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
 }
 
@@ -38,8 +32,8 @@ entity[name="TaskPlan"] {
 interface[type="cli"] {
   framework: argparse;
 }
-interface[type="cli"] page[name="lane"] {
-  entry: lane.cli:app_entry;
+interface[type="cli"] page[name="kodo"] {
+  entry: nxdo.cli:app_entry;
 }
 
 tests {

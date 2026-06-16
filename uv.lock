@@ -1300,52 +1300,6 @@ wheels = [
 ]
 
 [[package]]
-name = "lane"
-version = "0.2.21"
-source = { editable = "." }
-dependencies = [
-    { name = "httpx" },
-    { name = "planfile" },
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-    { name = "pyyaml" },
-    { name = "rich" },
-    { name = "tenacity" },
-    { name = "typer" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "costs" },
-    { name = "goal" },
-    { name = "mypy" },
-    { name = "pfix" },
-    { name = "pytest" },
-    { name = "pytest-mock" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
-    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
-    { name = "httpx", specifier = ">=0.27" },
-    { name = "mypy", marker = "extra == 'dev'" },
-    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
-    { name = "planfile", git = "https://github.com/semcod/planfile.git" },
-    { name = "pydantic", specifier = ">=2" },
-    { name = "pydantic-settings", specifier = ">=2" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest-mock", marker = "extra == 'dev'" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "rich", specifier = ">=13" },
-    { name = "ruff", marker = "extra == 'dev'" },
-    { name = "tenacity", specifier = ">=8" },
-    { name = "typer", specifier = ">=0.12" },
-]
-provides-extras = ["dev"]
-
-[[package]]
 name = "librt"
 version = "0.11.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2000,6 +1954,52 @@ wheels = [
 ]
 
 [[package]]
+name = "nxdo"
+version = "0.2.23"
+source = { editable = "." }
+dependencies = [
+    { name = "httpx" },
+    { name = "planfile" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "pyyaml" },
+    { name = "rich" },
+    { name = "tenacity" },
+    { name = "typer" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "costs" },
+    { name = "goal" },
+    { name = "mypy" },
+    { name = "pfix" },
+    { name = "pytest" },
+    { name = "pytest-mock" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "mypy", marker = "extra == 'dev'" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
+    { name = "planfile", specifier = ">=0.1.103" },
+    { name = "pydantic", specifier = ">=2" },
+    { name = "pydantic-settings", specifier = ">=2" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-mock", marker = "extra == 'dev'" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "rich", specifier = ">=13" },
+    { name = "ruff", marker = "extra == 'dev'" },
+    { name = "tenacity", specifier = ">=8" },
+    { name = "typer", specifier = ">=0.12" },
+]
+provides-extras = ["dev"]
+
+[[package]]
 name = "openai"
 version = "2.41.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2244,7 +2244,7 @@ wheels = [
 [[package]]
 name = "planfile"
 version = "0.1.103"
-source = { git = "https://github.com/semcod/planfile.git#f3add88d229266e9d662744afbc6e4a6ed31030a" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
     { name = "httpx" },
@@ -2256,6 +2256,10 @@ dependencies = [
     { name = "requests" },
     { name = "rich" },
     { name = "typer" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8c/a4/e115f77406c7d5bf4fd720d50464c5a1b25d599535f1bc476f22d23194e8/planfile-0.1.103.tar.gz", hash = "sha256:5395bd36b006bbf0d231b823dc17de42b21c68ec74b2c13d47606f9096c789ec", size = 215932, upload-time = "2026-06-05T08:11:23.203Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ad/b3/2f4ce9adb0ee1f71c6f466b4940a2190f90f40ce17b3059af465d741e2b2/planfile-0.1.103-py3-none-any.whl", hash = "sha256:2818465a040cb50bb8b3ab2c9360fce23dd975f95d566ad2f5d952a7f86843b2", size = 223111, upload-time = "2026-06-05T08:11:21.439Z" },
 ]
 
 [[package]]

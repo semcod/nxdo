@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-from .config import LaneSettings, get_settings
+from .config import NxdoSettings, get_settings
 from .git_reader import read_git_context
 from .llm_client import build_user_prompt
 from .models import TaskPlan
@@ -17,7 +17,7 @@ def generate_next_tasks(
     repo_path: Path,
     extra_context: str = "",
     provider: Optional[LLMProvider] = None,
-    settings: Optional[LaneSettings] = None,
+    settings: Optional[NxdoSettings] = None,
     koru_aware: bool = False,
 ) -> TaskPlan:
     """Analyze *repo_path* and return a TaskPlan with the next 10 tasks.

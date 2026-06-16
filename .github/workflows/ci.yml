@@ -29,12 +29,12 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          PYTHONPATH=src python -m pytest tests/ -v --cov=lane --cov-report=term-missing --cov-fail-under=95
+          PYTHONPATH=src python -m pytest tests/ -v --cov=nxdo --cov-report=term-missing --cov-fail-under=95
 
       - name: Run type checking
         run: |
-          mypy src/lane
+          mypy src/nxdo
 
       - name: Run linting
         run: |
-          ruff check src/lane tests/
+          ruff check src/nxdo tests/

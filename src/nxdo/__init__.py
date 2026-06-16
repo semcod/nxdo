@@ -1,6 +1,6 @@
-"""lane package."""
+"""nxdo package."""
 
-from .config import LaneSettings, get_settings
+from .config import NxdoSettings, get_settings
 from .git_reader import GitContext, read_git_context
 from .llm_client import OpenAICompatibleLLMClient, build_user_prompt, parse_task_plan_response
 from .models import Priority, Task, TaskPlan, TaskType
@@ -11,7 +11,7 @@ from .providers import LLMProvider, OpenAICompatProvider
 __all__ = [
     "GitContext",
     "LLMProvider",
-    "LaneSettings",
+    "NxdoSettings",
     "OpenAICompatProvider",
     "OpenAICompatibleLLMClient",
     "Priority",
@@ -27,5 +27,5 @@ __all__ = [
     "read_git_context",
 ]
 
-__version__ = "0.2.21"
+__version__ = "0.2.23"
 

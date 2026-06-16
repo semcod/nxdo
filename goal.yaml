@@ -13,7 +13,7 @@
 
 version: '1.0'
 project:
-  name: lane
+  name: nxdo
   type:
   - python
   description: Generate the next 10 project tasks from project state, git history
@@ -31,7 +31,7 @@ versioning:
 git:
   commit:
     strategy: conventional
-    scope: lane
+    scope: nxdo
     abstraction_level: auto
     abstraction_levels:
       high: '{type}({domain}): {benefit}'
@@ -225,7 +225,7 @@ strategies:
   python:
     test: pytest tests/ -v
     build: python -m build
-    publish: twine upload dist/lane-{version}*
+    publish: twine upload dist/nxdo-{version}*
     publish_enabled: true
     dependencies:
       file: requirements.txt

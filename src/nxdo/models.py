@@ -1,4 +1,4 @@
-"""Data models used by lane."""
+"""Data models used by nxdo."""
 
 from enum import Enum
 from typing import Optional

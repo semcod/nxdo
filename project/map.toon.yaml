@@ -1,31 +1,31 @@
-# lane | 33f 4747L | python:30,shell:2,less:1 | 2026-05-29
+# nxdo | 33f 4759L | python:30,shell:2,less:1 | 2026-06-16
 # stats: 98 func | 29 cls | 33 mod | CC̄=4.1 | critical:9 | cycles:0
 # alerts[5]: CC collect_coupling_matrix=18; CC identify_bug_hotspots=16; CC _analyze_types=14; CC _get_file_commits_with_info=14; CC calculate_bus_factor=14
 # hotspots[5]: cmd_auto fan=17; cmd_tickets fan=16; cmd_metrics fan=15; main fan=15; collect_file_metrics fan=15
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[33]:
-  app.doql.less,48
+  app.doql.less,60
   project.sh,48
-  src/lane/__init__.py,32
-  src/lane/__main__.py,7
-  src/lane/cli.py,381
-  src/lane/config.py,45
-  src/lane/git_reader.py,269
-  src/lane/koru_context.py,284
-  src/lane/llm_client.py,86
-  src/lane/metrics/__init__.py,17
-  src/lane/metrics/complexity.py,301
-  src/lane/metrics/coupling.py,195
-  src/lane/metrics/hotspots.py,271
-  src/lane/models.py,91
-  src/lane/output.py,68
-  src/lane/planner.py,59
-  src/lane/project_analyzer.py,283
-  src/lane/providers/__init__.py,7
-  src/lane/providers/base.py,20
-  src/lane/providers/openai_compat.py,205
-  src/lane/ticket_generator.py,281
+  src/nxdo/__init__.py,32
+  src/nxdo/__main__.py,7
+  src/nxdo/cli.py,381
+  src/nxdo/config.py,45
+  src/nxdo/git_reader.py,269
+  src/nxdo/koru_context.py,284
+  src/nxdo/llm_client.py,86
+  src/nxdo/metrics/__init__.py,17
+  src/nxdo/metrics/complexity.py,301
+  src/nxdo/metrics/coupling.py,195
+  src/nxdo/metrics/hotspots.py,271
+  src/nxdo/models.py,91
+  src/nxdo/output.py,68
+  src/nxdo/planner.py,59
+  src/nxdo/project_analyzer.py,283
+  src/nxdo/providers/__init__.py,7
+  src/nxdo/providers/base.py,20
+  src/nxdo/providers/openai_compat.py,205
+  src/nxdo/ticket_generator.py,281
   tests/test_cli.py,342
   tests/test_config.py,52
   tests/test_git_reader.py,216
@@ -39,9 +39,9 @@ M[33]:
   tests/test_ticket_generator.py,289
   tree.sh,2
 D:
-  src/lane/__init__.py:
-  src/lane/__main__.py:
-  src/lane/cli.py:
+  src/nxdo/__init__.py:
+  src/nxdo/__main__.py:
+  src/nxdo/cli.py:
     e: cmd_plan,cmd_print_context,cmd_print_prompt,cmd_validate,_sync_todos_if_requested,_sync_planfile_if_requested,_export_yaml_if_requested,_get_priority_emoji,_display_tickets,cmd_tickets,cmd_metrics,cmd_auto,app_entry,main
     cmd_plan(repo;extra_context;model;base_url;as_json;max_commits)
     cmd_print_context(repo;max_commits;raw)
@@ -57,11 +57,11 @@ D:
     cmd_auto(repo;extra_context;dry_run)
     app_entry()
     main(argv)
-  src/lane/config.py:
-    e: get_settings,LaneSettings
-    LaneSettings: api_key(0)  # Runtime configuration loaded from environment variables.
+  src/nxdo/config.py:
+    e: get_settings,NxdoSettings
+    NxdoSettings: api_key(0)  # Runtime configuration loaded from environment variables.
     get_settings()
-  src/lane/git_reader.py:
+  src/nxdo/git_reader.py:
     e: _run,_is_git_repo,_run_git_command,_get_git_branch,_get_git_remote,_get_git_commits,_count_file_frequencies,_format_file_summary,_get_file_frequency,_get_git_todos,_create_empty_context,read_git_context,_parse_commit_metadata,_create_commit_info,_finalize_commit,_parse_commits,_filter_git_paths,_should_ignore_git_path,_should_include_todo_line,CommitInfo,GitContext
     CommitInfo: __str__(0)
     GitContext: to_text(0)
@@ -84,24 +84,24 @@ D:
     _filter_git_paths(paths)
     _should_ignore_git_path(path)
     _should_include_todo_line(line)
-  src/lane/koru_context.py:
+  src/nxdo/koru_context.py:
     e: _load_operations,_load_project_state,_format_operations_for_llm,_format_project_state_for_llm,build_koru_context,get_koru_system_prompt_extension,KoruOperation,KoruProjectState,KoruContext
     KoruOperation:  # A single koru operation available for task planning.
     KoruProjectState:  # Current project state as seen by koru.
-    KoruContext:  # Full koru context for enriching the lane LLM prompt.
+    KoruContext:  # Full koru context for enriching the nxdo LLM prompt.
     _load_operations()
     _load_project_state(project_path)
     _format_operations_for_llm(operations)
     _format_project_state_for_llm(state)
     build_koru_context(project_path;include_project_state)
     get_koru_system_prompt_extension()
-  src/lane/llm_client.py:
+  src/nxdo/llm_client.py:
     e: build_user_prompt,parse_task_plan_response,OpenAICompatibleLLMClient
     OpenAICompatibleLLMClient: __init__(4),generate_task_plan(4)  # Minimal client for OpenRouter or another OpenAI-compatible e
     build_user_prompt(project_snapshot_text;git_context_text;extra_context;koru_schema)
     parse_task_plan_response(raw;project_name;model)
-  src/lane/metrics/__init__.py:
-  src/lane/metrics/complexity.py:
+  src/nxdo/metrics/__init__.py:
+  src/nxdo/metrics/complexity.py:
     e: _count_lines,_calculate_cyclomatic_complexity,_analyze_imports,_analyze_types,_calculate_fan_in,collect_file_metrics,get_high_complexity_files,get_poorly_typed_files,FileMetrics
     FileMetrics:  # Comprehensive metrics for a source file.
     _count_lines(content)
@@ -112,13 +112,13 @@ D:
     collect_file_metrics(project_path;file_filter)
     get_high_complexity_files(metrics;cc_threshold;fan_out_threshold)
     get_poorly_typed_files(metrics;coverage_threshold)
-  src/lane/metrics/coupling.py:
+  src/nxdo/metrics/coupling.py:
     e: _get_commits_with_files,collect_coupling_matrix,get_coupling_clusters,CouplingMetrics
     CouplingMetrics:  # Metrics for file pair coupling.
     _get_commits_with_files(repo_path;max_commits)
     collect_coupling_matrix(repo_path;max_commits;min_coupling;file_filter)
     get_coupling_clusters(coupling_metrics;min_coupling)
-  src/lane/metrics/hotspots.py:
+  src/nxdo/metrics/hotspots.py:
     e: _get_file_commits_with_info,_get_bug_fix_commits,identify_bug_hotspots,calculate_bus_factor,get_critical_bus_factor_files,HotspotMetrics
     HotspotMetrics:  # Bug hotspot metrics for a file.
     _get_file_commits_with_info(repo_path;file_path;since)
@@ -126,21 +126,21 @@ D:
     identify_bug_hotspots(repo_path;files;top_n;since)
     calculate_bus_factor(repo_path;files;critical_threshold)
     get_critical_bus_factor_files(repo_path;bus_factors)
-  src/lane/models.py:
+  src/nxdo/models.py:
     e: Priority,TaskType,Task,TaskPlan
     Priority:
     TaskType:
     Task: __str__(0),to_dict(0)
     TaskPlan: __str__(0),to_dict(0)
-  src/lane/output.py:
+  src/nxdo/output.py:
     e: render_plan,render_plan_json,render_context
     render_plan(plan;console)
     render_plan_json(plan;console)
     render_context(project_text;git_text;console)
-  src/lane/planner.py:
+  src/nxdo/planner.py:
     e: generate_next_tasks
     generate_next_tasks(repo_path;extra_context;provider;settings;koru_aware)
-  src/lane/project_analyzer.py:
+  src/nxdo/project_analyzer.py:
     e: _read_file_safely,_truncate_file_content,_collect_file_contents,_resolve_name_and_description,analyze_project,_check_pattern_match,_detect_stack,_parse_pyproject_tomllib,_parse_pyproject_regex,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_should_ignore_entry,_get_tree_symbol,_get_connector,_get_extension,_get_subtree_lines,_build_tree,ProjectSnapshot
     ProjectSnapshot: to_text(0)
     _read_file_safely(path)
@@ -162,11 +162,11 @@ D:
     _get_extension(is_last)
     _get_subtree_lines(entry;max_depth;depth;is_last;prefix)
     _build_tree(root;max_depth;depth;prefix)
-  src/lane/providers/__init__.py:
-  src/lane/providers/base.py:
+  src/nxdo/providers/__init__.py:
+  src/nxdo/providers/base.py:
     e: LLMProvider
     LLMProvider: generate_plan(2)  # Interface every LLM backend must implement.
-  src/lane/providers/openai_compat.py:
+  src/nxdo/providers/openai_compat.py:
     e: _strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response,OpenAICompatProvider
     OpenAICompatProvider: __init__(6),generate_plan(2),_call_api(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint.
     _strip_markdown_fences(raw)
@@ -174,7 +174,7 @@ D:
     _create_task_from_dict(item;task_index)
     _parse_tasks_from_data(data)
     _parse_response(raw;project_name;model)
-  src/lane/ticket_generator.py:
+  src/nxdo/ticket_generator.py:
     e: task_plan_to_tickets,_map_priority,sync_to_todo_md,_resolve_todo_path,_build_todo_section,_sync_todo_section,_remove_generated_todo_sections,_remove_managed_todo_blocks,_remove_legacy_generated_todo_sections,_ensure_planfile_installed,sync_to_planfile,export_to_planfile_yaml
     task_plan_to_tickets(task_plan)
     _map_priority(priority)

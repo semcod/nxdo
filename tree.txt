@@ -9,7 +9,14 @@
 ├── pyproject.toml
 ├── README.md
 ├── src
-│   ├── lane
+│   ├── kodo.egg-info
+│   │   ├── dependency_links.txt
+│   │   ├── entry_points.txt
+│   │   ├── PKG-INFO
+│   │   ├── requires.txt
+│   │   ├── SOURCES.txt
+│   │   └── top_level.txt
+│   ├── nxdo
 │   │   ├── cli.py
 │   │   ├── config.py
 │   │   ├── git_reader.py
@@ -31,7 +38,7 @@
 │   │   │   ├── __init__.py
 │   │   │   └── openai_compat.py
 │   │   └── ticket_generator.py
-│   └── lane.egg-info
+│   └── nxdo.egg-info
 │       ├── dependency_links.txt
 │       ├── entry_points.txt
 │       ├── PKG-INFO
@@ -63,4 +70,4 @@
 ├── uv.lock
 └── VERSION
 
-8 directories, 56 files
+9 directories, 62 files

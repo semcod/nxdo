@@ -2,7 +2,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from lane.project_analyzer import (
+from nxdo.project_analyzer import (
     analyze_project,
     _parse_pyproject,
     _parse_pyproject_tomllib,
@@ -23,19 +23,19 @@ class ProjectAnalyzerTests(unittest.TestCase):
                 "\n".join(
                     [
                         "[project]",
-                        'name = "lane"',
+                        'name = "nxdo"',
                         'description = "Task planner"',
                     ]
                 ),
                 encoding="utf-8",
             )
-            (root / "README.md").write_text("# lane\n\nTask planner\n", encoding="utf-8")
+            (root / "README.md").write_text("# nxdo\n\nTask planner\n", encoding="utf-8")
             (root / "src").mkdir()
             (root / "src" / "demo.py").write_text("print('ok')\n", encoding="utf-8")
 
             snapshot = analyze_project(root)
 
-        self.assertEqual(snapshot.name, "lane")
+        self.assertEqual(snapshot.name, "nxdo")
         self.assertEqual(snapshot.description, "Task planner")
         self.assertIn("Python", snapshot.language_stack)
         self.assertIn("README.md", snapshot.file_contents)
@@ -60,9 +60,9 @@ class ProjectAnalyzerTests(unittest.TestCase):
         self.assertIsInstance(desc, str)
 
     def test_parse_pyproject_valid_toml(self) -> None:
-        text = '[project]\nname = "lane"\ndescription = "Task planner"'
+        text = '[project]\nname = "nxdo"\ndescription = "Task planner"'
         name, desc = _parse_pyproject(text, "fallback")
-        self.assertEqual(name, "lane")
+        self.assertEqual(name, "nxdo")
         self.assertEqual(desc, "Task planner")
 
     def test_readme_summary_skips_headers(self) -> None:
@@ -181,7 +181,7 @@ class ProjectAnalyzerTests(unittest.TestCase):
 
     def test_parse_pyproject_tomllib_returns_none_when_tomllib_unavailable(self) -> None:
         """Test _parse_pyproject_tomllib returns None when tomllib is None (line 152)."""
-        import lane.project_analyzer as pa
+        import nxdo.project_analyzer as pa
         original = pa.tomllib
         pa.tomllib = None
         try:
@@ -209,8 +209,8 @@ class ProjectAnalyzerTests(unittest.TestCase):
             (root / "project").mkdir()
             (root / "project" / "flow.png").write_text("", encoding="utf-8")
             (root / "uv.lock").write_text("", encoding="utf-8")
-            (root / "lane.egg-info").mkdir()
-            (root / "lane.egg-info" / "PKG-INFO").write_text("", encoding="utf-8")
+            (root / "nxdo.egg-info").mkdir()
+            (root / "nxdo.egg-info" / "PKG-INFO").write_text("", encoding="utf-8")
 
             tree = _build_tree(root, max_depth=3)
 
@@ -218,7 +218,7 @@ class ProjectAnalyzerTests(unittest.TestCase):
         self.assertIn("project", tree)
         self.assertNotIn("flow.png", tree)
         self.assertNotIn("uv.lock", tree)
-        self.assertNotIn("lane.egg-info", tree)
+        self.assertNotIn("nxdo.egg-info", tree)
 
     def test_should_ignore_entry_filters_generated_names(self) -> None:
         self.assertTrue(_should_ignore_entry(".planfile"))

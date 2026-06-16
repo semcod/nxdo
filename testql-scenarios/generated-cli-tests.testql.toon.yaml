@@ -3,18 +3,18 @@
 # GENERATED: true
 
 CONFIG[2]{key, value}:
-  cli_command, python -m lane
+  cli_command, python -m nxdo
   timeout_ms, 10000
 
 # Test 1: CLI help command
-SHELL "python -m lane --help" 5000
+SHELL "python -m nxdo --help" 5000
 ASSERT_EXIT_CODE 0
 ASSERT_STDOUT_CONTAINS "usage"
 
 # Test 2: CLI version command
-SHELL "python -m lane --version" 5000
+SHELL "python -m nxdo --version" 5000
 ASSERT_EXIT_CODE 0
 
 # Test 3: CLI main workflow (dry-run)
-SHELL "python -m lane --help" 10000
+SHELL "python -m nxdo --help" 10000
 ASSERT_EXIT_CODE 0

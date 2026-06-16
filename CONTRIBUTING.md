@@ -1,13 +1,13 @@
-# Contributing to lane
+# Contributing to nxdo
 
-Thank you for your interest in contributing to `lane`!
+Thank you for your interest in contributing to `nxdo`!
 
 ## Development Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/semcod/lane.git
-cd lane
+git clone https://github.com/semcod/nxdo.git
+cd nxdo
 ```
 
 2. Create a virtual environment:
@@ -37,22 +37,22 @@ PYTHONPATH=src python -m pytest tests/test_models.py -v
 
 Run type checking:
 ```bash
-mypy src/lane
+mypy src/nxdo
 ```
 
 Run linting:
 ```bash
-ruff check src/lane tests/
+ruff check src/nxdo tests/
 ```
 
 Auto-fix linting issues:
 ```bash
-ruff check --fix src/lane tests/
+ruff check --fix src/nxdo tests/
 ```
 
 ## Project Structure
 
-- `src/lane/` - Main package source code
+- `src/nxdo/` - Main package source code
   - `cli.py` - Command-line interface
   - `config.py` - Configuration management
   - `git_reader.py` - Git history analysis
@@ -80,10 +80,10 @@ git checkout -b feature/your-feature-name
 
 To add a new LLM provider:
 
-1. Create a new file in `src/lane/providers/`
+1. Create a new file in `src/nxdo/providers/`
 2. Implement the `LLMProvider` interface from `providers/base.py`
 3. Add appropriate tests in `tests/test_providers.py`
-4. Export the provider in `src/lane/providers/__init__.py`
+4. Export the provider in `src/nxdo/providers/__init__.py`
 
 ## License
 

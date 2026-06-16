@@ -1,6 +1,6 @@
 import unittest
 
-from lane.models import Priority, Task, TaskPlan, TaskType
+from nxdo.models import Priority, Task, TaskPlan, TaskType
 
 
 class TaskModelTests(unittest.TestCase):
@@ -26,7 +26,7 @@ class TaskModelTests(unittest.TestCase):
 
     def test_task_plan_to_dict_serializes_enums(self) -> None:
         plan = TaskPlan(
-            project_name="lane",
+            project_name="nxdo",
             summary="summary",
             tasks=[Task(number=1, title="One", description="Desc")],
             model_used="demo",

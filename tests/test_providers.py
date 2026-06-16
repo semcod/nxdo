@@ -1,10 +1,10 @@
-"""Tests for lane.providers."""
+"""Tests for nxdo.providers."""
 
 import json
 import unittest
 from unittest.mock import MagicMock, patch
 
-from lane.providers.openai_compat import OpenAICompatProvider, _parse_response
+from nxdo.providers.openai_compat import OpenAICompatProvider, _parse_response
 
 
 _VALID_RAW = json.dumps({
@@ -60,9 +60,9 @@ class ParseResponseTests(unittest.TestCase):
 
 class OpenAICompatProviderTests(unittest.TestCase):
     def test_no_api_key_raises_value_error(self) -> None:
-        from lane.config import LaneSettings
+        from nxdo.config import NxdoSettings
 
-        settings = LaneSettings(_env_file=None)
+        settings = NxdoSettings(_env_file=None)
         provider = OpenAICompatProvider(api_key=None, settings=settings)
         with patch.dict("os.environ", {}, clear=True):
             with self.assertRaises(ValueError) as ctx:
@@ -76,7 +76,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
         self.assertEqual(plan.project_name, "demo")
         self.assertEqual(len(plan.tasks), 1)
 
-    @patch("lane.providers.openai_compat.httpx.Client")
+    @patch("nxdo.providers.openai_compat.httpx.Client")
     def test_call_api_constructs_correct_payload(self, mock_client_class: MagicMock) -> None:
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
@@ -98,7 +98,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
         self.assertEqual(len(payload["messages"]), 2)
         self.assertEqual(payload["messages"][1]["content"], "user prompt")
 
-    @patch("lane.providers.openai_compat.httpx.Client")
+    @patch("nxdo.providers.openai_compat.httpx.Client")
     def test_call_api_sets_correct_headers(self, mock_client_class: MagicMock) -> None:
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
@@ -117,7 +117,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
         self.assertEqual(headers["Authorization"], "Bearer sk-test")
         self.assertEqual(headers["X-Title"], "test-app")
 
-    @patch("lane.providers.openai_compat.httpx.Client")
+    @patch("nxdo.providers.openai_compat.httpx.Client")
     def test_call_api_handles_unexpected_response(self, mock_client_class: MagicMock) -> None:
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
@@ -131,7 +131,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
             provider._call_api("prompt")
         self.assertIn("Unexpected LLM response", str(ctx.exception))
 
-    @patch("lane.providers.openai_compat.httpx.Client")
+    @patch("nxdo.providers.openai_compat.httpx.Client")
     def test_call_api_raises_on_http_error(self, mock_client_class: MagicMock) -> None:
         """Test that _call_api raises ValueError on non-2xx response (lines 106-107)."""
         mock_response = MagicMock()
@@ -149,7 +149,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
 
     def test_create_task_from_dict_handles_string_dep(self) -> None:
         """Test _create_task_from_dict skips non-numeric string dependencies (lines 146-149)."""
-        from lane.providers.openai_compat import _create_task_from_dict
+        from nxdo.providers.openai_compat import _create_task_from_dict
         item = {
             "number": 1,
             "title": "T",

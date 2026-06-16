@@ -1,52 +1,52 @@
-# code2llm call graph | /home/tom/github/semcod/lane
+# code2llm call graph | /home/tom/github/semcod/nxdo
 # generated in 0.04s
 # nodes: 92 | edges: 96 | modules: 12
 # CC̄=4.0
 
 HUBS[20]:
-  src.lane.cli.cmd_auto
-    CC=9  in:0  out:33  total:33
-  src.lane.cli.cmd_metrics
+  src.nxdo.cli.cmd_metrics
     CC=11  in:0  out:33  total:33
-  src.lane.providers.openai_compat._create_task_from_dict
+  src.nxdo.cli.cmd_auto
+    CC=9  in:0  out:33  total:33
+  src.nxdo.providers.openai_compat._create_task_from_dict
     CC=6  in:1  out:20  total:21
-  src.lane.metrics.hotspots.identify_bug_hotspots
+  src.nxdo.metrics.hotspots.identify_bug_hotspots
     CC=16  in:2  out:18  total:20
-  src.lane.metrics.complexity._calculate_fan_in
+  src.nxdo.metrics.complexity._calculate_fan_in
     CC=12  in:1  out:17  total:18
-  src.lane.metrics.complexity.collect_file_metrics
+  src.nxdo.metrics.complexity.collect_file_metrics
     CC=8  in:2  out:16  total:18
-  src.lane.koru_context._format_project_state_for_llm
+  src.nxdo.koru_context._format_project_state_for_llm
     CC=7  in:1  out:16  total:17
-  src.lane.metrics.hotspots.calculate_bus_factor
+  src.nxdo.metrics.hotspots.calculate_bus_factor
     CC=14  in:2  out:14  total:16
-  src.lane.cli.cmd_plan
+  src.nxdo.cli.cmd_plan
     CC=4  in:0  out:16  total:16
-  src.lane.koru_context._format_operations_for_llm
+  src.nxdo.koru_context._format_operations_for_llm
     CC=7  in:1  out:14  total:15
-  src.lane.metrics.coupling.collect_coupling_matrix
-    CC=18  in:1  out:13  total:14
-  src.lane.metrics.hotspots._get_file_commits_with_info
-    CC=14  in:1  out:13  total:14
-  src.lane.cli.cmd_print_context
+  src.nxdo.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
-  src.lane.project_analyzer._build_tree
+  src.nxdo.project_analyzer._build_tree
     CC=6  in:2  out:12  total:14
-  src.lane.metrics.coupling._get_commits_with_files
+  src.nxdo.metrics.coupling._get_commits_with_files
     CC=13  in:1  out:13  total:14
-  src.lane.planner.generate_next_tasks
-    CC=5  in:4  out:9  total:13
-  src.lane.ticket_generator.sync_to_planfile
+  src.nxdo.metrics.coupling.collect_coupling_matrix
+    CC=18  in:1  out:13  total:14
+  src.nxdo.metrics.hotspots._get_file_commits_with_info
+    CC=14  in:1  out:13  total:14
+  src.nxdo.ticket_generator.sync_to_planfile
     CC=8  in:1  out:12  total:13
-  src.lane.cli.cmd_print_prompt
+  src.nxdo.cli.cmd_print_prompt
     CC=1  in:0  out:13  total:13
-  src.lane.git_reader.read_git_context
-    CC=2  in:4  out:8  total:12
-  src.lane.providers.openai_compat.OpenAICompatProvider._call_api
+  src.nxdo.planner.generate_next_tasks
+    CC=5  in:4  out:9  total:13
+  src.nxdo.providers.openai_compat.OpenAICompatProvider._call_api
     CC=5  in:0  out:12  total:12
+  src.nxdo.git_reader.read_git_context
+    CC=2  in:4  out:8  total:12
 
 MODULES:
-  src.lane.cli  [10 funcs]
+  src.nxdo.cli  [10 funcs]
     _display_tickets  CC=3  out:5
     _export_yaml_if_requested  CC=3  out:1
     _get_priority_emoji  CC=1  out:1
@@ -57,9 +57,9 @@ MODULES:
     cmd_plan  CC=4  out:16
     cmd_print_context  CC=2  out:14
     cmd_print_prompt  CC=1  out:13
-  src.lane.config  [1 funcs]
+  src.nxdo.config  [1 funcs]
     get_settings  CC=2  out:1
-  src.lane.git_reader  [19 funcs]
+  src.nxdo.git_reader  [19 funcs]
     _count_file_frequencies  CC=4  out:4
     _create_commit_info  CC=1  out:2
     _create_empty_context  CC=1  out:1
@@ -70,36 +70,36 @@ MODULES:
     _get_git_branch  CC=1  out:1
     _get_git_commits  CC=1  out:2
     _get_git_remote  CC=1  out:1
-  src.lane.koru_context  [6 funcs]
+  src.nxdo.koru_context  [6 funcs]
     _format_operations_for_llm  CC=7  out:14
     _format_project_state_for_llm  CC=7  out:16
     _load_operations  CC=3  out:2
     _load_project_state  CC=6  out:10
     build_koru_context  CC=3  out:9
     get_koru_system_prompt_extension  CC=1  out:0
-  src.lane.llm_client  [3 funcs]
+  src.nxdo.llm_client  [3 funcs]
     generate_task_plan  CC=1  out:2
     build_user_prompt  CC=3  out:1
     parse_task_plan_response  CC=1  out:1
-  src.lane.metrics.complexity  [6 funcs]
+  src.nxdo.metrics.complexity  [6 funcs]
     _analyze_imports  CC=7  out:10
     _analyze_types  CC=14  out:6
     _calculate_cyclomatic_complexity  CC=5  out:5
     _calculate_fan_in  CC=12  out:17
     _count_lines  CC=4  out:3
     collect_file_metrics  CC=8  out:16
-  src.lane.metrics.coupling  [2 funcs]
+  src.nxdo.metrics.coupling  [2 funcs]
     _get_commits_with_files  CC=13  out:13
     collect_coupling_matrix  CC=18  out:13
-  src.lane.metrics.hotspots  [5 funcs]
+  src.nxdo.metrics.hotspots  [5 funcs]
     _get_bug_fix_commits  CC=6  out:7
     _get_file_commits_with_info  CC=14  out:13
     calculate_bus_factor  CC=14  out:14
     get_critical_bus_factor_files  CC=7  out:11
     identify_bug_hotspots  CC=16  out:18
-  src.lane.planner  [1 funcs]
+  src.nxdo.planner  [1 funcs]
     generate_next_tasks  CC=5  out:9
-  src.lane.project_analyzer  [19 funcs]
+  src.nxdo.project_analyzer  [19 funcs]
     _build_tree  CC=6  out:12
     _check_pattern_match  CC=2  out:3
     _collect_file_contents  CC=4  out:3
@@ -110,7 +110,7 @@ MODULES:
     _get_tree_symbol  CC=4  out:0
     _parse_cargo  CC=3  out:4
     _parse_package_json  CC=2  out:4
-  src.lane.providers.openai_compat  [8 funcs]
+  src.nxdo.providers.openai_compat  [8 funcs]
     __init__  CC=5  out:2
     _call_api  CC=5  out:12
     generate_plan  CC=1  out:2
@@ -119,7 +119,7 @@ MODULES:
     _parse_response  CC=1  out:8
     _parse_tasks_from_data  CC=2  out:4
     _strip_markdown_fences  CC=3  out:4
-  src.lane.ticket_generator  [12 funcs]
+  src.nxdo.ticket_generator  [12 funcs]
     _build_todo_section  CC=4  out:5
     _ensure_planfile_installed  CC=3  out:5
     _map_priority  CC=1  out:2
@@ -132,53 +132,53 @@ MODULES:
     sync_to_planfile  CC=8  out:12
 
 EDGES:
-  src.lane.cli.cmd_plan → src.lane.config.get_settings
-  src.lane.cli.cmd_print_context → src.lane.project_analyzer.analyze_project
-  src.lane.cli.cmd_print_context → src.lane.git_reader.read_git_context
-  src.lane.cli.cmd_print_prompt → src.lane.project_analyzer.analyze_project
-  src.lane.cli.cmd_print_prompt → src.lane.git_reader.read_git_context
-  src.lane.cli.cmd_print_prompt → src.lane.llm_client.build_user_prompt
-  src.lane.cli._sync_todos_if_requested → src.lane.ticket_generator.sync_to_todo_md
-  src.lane.cli._sync_planfile_if_requested → src.lane.ticket_generator.sync_to_planfile
-  src.lane.cli._export_yaml_if_requested → src.lane.ticket_generator.export_to_planfile_yaml
-  src.lane.cli._display_tickets → src.lane.cli._get_priority_emoji
-  src.lane.cli.cmd_metrics → src.lane.metrics.complexity.collect_file_metrics
-  src.lane.cli.cmd_auto → src.lane.metrics.hotspots.identify_bug_hotspots
-  src.lane.cli.cmd_auto → src.lane.metrics.complexity.collect_file_metrics
-  src.lane.git_reader._is_git_repo → src.lane.git_reader._run
-  src.lane.git_reader._run_git_command → src.lane.git_reader._run
-  src.lane.git_reader._get_git_branch → src.lane.git_reader._run_git_command
-  src.lane.git_reader._get_git_remote → src.lane.git_reader._run_git_command
-  src.lane.git_reader._get_git_commits → src.lane.git_reader._run
-  src.lane.git_reader._get_git_commits → src.lane.git_reader._parse_commits
-  src.lane.git_reader._count_file_frequencies → src.lane.git_reader._should_ignore_git_path
-  src.lane.git_reader._get_file_frequency → src.lane.git_reader._run
-  src.lane.git_reader._get_file_frequency → src.lane.git_reader._count_file_frequencies
-  src.lane.git_reader._get_file_frequency → src.lane.git_reader._format_file_summary
-  src.lane.git_reader._get_git_todos → src.lane.git_reader._run
-  src.lane.git_reader._get_git_todos → src.lane.git_reader._should_include_todo_line
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_branch
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_remote
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_commits
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_file_frequency
-  src.lane.git_reader.read_git_context → src.lane.git_reader._get_git_todos
-  src.lane.git_reader.read_git_context → src.lane.git_reader._is_git_repo
-  src.lane.git_reader.read_git_context → src.lane.git_reader._create_empty_context
-  src.lane.git_reader._create_commit_info → src.lane.git_reader._filter_git_paths
-  src.lane.git_reader._finalize_commit → src.lane.git_reader._create_commit_info
-  src.lane.git_reader._parse_commits → src.lane.git_reader._finalize_commit
-  src.lane.git_reader._parse_commits → src.lane.git_reader._parse_commit_metadata
-  src.lane.git_reader._filter_git_paths → src.lane.git_reader._should_ignore_git_path
-  src.lane.git_reader._should_include_todo_line → src.lane.git_reader._should_ignore_git_path
-  src.lane.planner.generate_next_tasks → src.lane.project_analyzer.analyze_project
-  src.lane.planner.generate_next_tasks → src.lane.git_reader.read_git_context
-  src.lane.planner.generate_next_tasks → src.lane.llm_client.build_user_prompt
-  src.lane.planner.generate_next_tasks → src.lane.config.get_settings
-  src.lane.planner.generate_next_tasks → src.lane.koru_context.build_koru_context
-  src.lane.llm_client.parse_task_plan_response → src.lane.providers.openai_compat._parse_response
-  src.lane.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.lane.llm_client.build_user_prompt
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._load_operations
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._format_operations_for_llm
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._format_project_state_for_llm
-  src.lane.koru_context.build_koru_context → src.lane.koru_context._load_project_state
-  src.lane.ticket_generator.task_plan_to_tickets → src.lane.ticket_generator._map_priority
+  src.nxdo.cli.cmd_plan → src.nxdo.config.get_settings
+  src.nxdo.cli.cmd_print_context → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.cli.cmd_print_context → src.nxdo.git_reader.read_git_context
+  src.nxdo.cli.cmd_print_prompt → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.cli.cmd_print_prompt → src.nxdo.git_reader.read_git_context
+  src.nxdo.cli.cmd_print_prompt → src.nxdo.llm_client.build_user_prompt
+  src.nxdo.cli._sync_todos_if_requested → src.nxdo.ticket_generator.sync_to_todo_md
+  src.nxdo.cli._sync_planfile_if_requested → src.nxdo.ticket_generator.sync_to_planfile
+  src.nxdo.cli._export_yaml_if_requested → src.nxdo.ticket_generator.export_to_planfile_yaml
+  src.nxdo.cli._display_tickets → src.nxdo.cli._get_priority_emoji
+  src.nxdo.cli.cmd_metrics → src.nxdo.metrics.complexity.collect_file_metrics
+  src.nxdo.cli.cmd_auto → src.nxdo.metrics.hotspots.identify_bug_hotspots
+  src.nxdo.cli.cmd_auto → src.nxdo.metrics.complexity.collect_file_metrics
+  src.nxdo.git_reader._is_git_repo → src.nxdo.git_reader._run
+  src.nxdo.git_reader._run_git_command → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_branch → src.nxdo.git_reader._run_git_command
+  src.nxdo.git_reader._get_git_remote → src.nxdo.git_reader._run_git_command
+  src.nxdo.git_reader._get_git_commits → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_commits → src.nxdo.git_reader._parse_commits
+  src.nxdo.git_reader._count_file_frequencies → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._count_file_frequencies
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._format_file_summary
+  src.nxdo.git_reader._get_git_todos → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_todos → src.nxdo.git_reader._should_include_todo_line
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_branch
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_remote
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_commits
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_file_frequency
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_todos
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._is_git_repo
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._create_empty_context
+  src.nxdo.git_reader._create_commit_info → src.nxdo.git_reader._filter_git_paths
+  src.nxdo.git_reader._finalize_commit → src.nxdo.git_reader._create_commit_info
+  src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._finalize_commit
+  src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._parse_commit_metadata
+  src.nxdo.git_reader._filter_git_paths → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._should_include_todo_line → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.planner.generate_next_tasks → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.planner.generate_next_tasks → src.nxdo.git_reader.read_git_context
+  src.nxdo.planner.generate_next_tasks → src.nxdo.llm_client.build_user_prompt
+  src.nxdo.planner.generate_next_tasks → src.nxdo.config.get_settings
+  src.nxdo.planner.generate_next_tasks → src.nxdo.koru_context.build_koru_context
+  src.nxdo.llm_client.parse_task_plan_response → src.nxdo.providers.openai_compat._parse_response
+  src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.nxdo.llm_client.build_user_prompt
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._load_operations
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._format_operations_for_llm
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._format_project_state_for_llm
+  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._load_project_state
+  src.nxdo.ticket_generator.task_plan_to_tickets → src.nxdo.ticket_generator._map_priority

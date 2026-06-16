@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from lane.llm_client import build_user_prompt, parse_task_plan_response, OpenAICompatibleLLMClient
+from nxdo.llm_client import build_user_prompt, parse_task_plan_response, OpenAICompatibleLLMClient
 
 
 class LLMClientTests(unittest.TestCase):
@@ -18,12 +18,12 @@ class LLMClientTests(unittest.TestCase):
 
     def test_parse_task_plan_response_strips_fences(self) -> None:
         raw = """```json
-{"project_name":"lane","summary":"Ready","tasks":[{"number":1,"title":"Add CLI","description":"Ship it","priority":"high","task_type":"feature","estimated_hours":2,"acceptance_criteria":["CLI works"],"dependencies":[]}]}
+{"project_name":"nxdo","summary":"Ready","tasks":[{"number":1,"title":"Add CLI","description":"Ship it","priority":"high","task_type":"feature","estimated_hours":2,"acceptance_criteria":["CLI works"],"dependencies":[]}]}
 ```"""
 
-        plan = parse_task_plan_response(raw, "lane", "demo-model")
+        plan = parse_task_plan_response(raw, "nxdo", "demo-model")
 
-        self.assertEqual(plan.project_name, "lane")
+        self.assertEqual(plan.project_name, "nxdo")
         self.assertEqual(plan.tasks[0].priority.value, "high")
         self.assertEqual(plan.model_used, "demo-model")
 
@@ -57,7 +57,7 @@ class LLMClientTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_task_plan_response(raw, "p", "m")
 
-    @patch("lane.llm_client.OpenAICompatProvider")
+    @patch("nxdo.llm_client.OpenAICompatProvider")
     def test_openai_llm_client_initialization(self, mock_provider: MagicMock) -> None:
         mock_provider_instance = MagicMock()
         mock_provider.return_value = mock_provider_instance
@@ -75,9 +75,9 @@ class LLMClientTests(unittest.TestCase):
         self.assertEqual(client.model, "test-model")
         self.assertEqual(client.base_url, "http://test")
 
-    @patch("lane.llm_client.OpenAICompatProvider")
+    @patch("nxdo.llm_client.OpenAICompatProvider")
     def test_openai_llm_client_generate_task_plan(self, mock_provider: MagicMock) -> None:
-        from lane.models import TaskPlan
+        from nxdo.models import TaskPlan
 
         mock_provider_instance = MagicMock()
         mock_provider.return_value = mock_provider_instance

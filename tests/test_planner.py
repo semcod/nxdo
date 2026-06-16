@@ -2,22 +2,22 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from lane.models import TaskPlan
-from lane.planner import generate_next_tasks
+from nxdo.models import TaskPlan
+from nxdo.planner import generate_next_tasks
 
 
 class PlannerTests(unittest.TestCase):
-    @patch("lane.planner.analyze_project")
-    @patch("lane.planner.read_git_context")
-    @patch("lane.planner.build_user_prompt")
+    @patch("nxdo.planner.analyze_project")
+    @patch("nxdo.planner.read_git_context")
+    @patch("nxdo.planner.build_user_prompt")
     def test_generate_next_tasks_calls_provider(
         self,
         mock_build_prompt: MagicMock,
         mock_read_git: MagicMock,
         mock_analyze: MagicMock,
     ) -> None:
-        from lane.config import LaneSettings
-        from lane.providers import LLMProvider
+        from nxdo.config import NxdoSettings
+        from nxdo.providers import LLMProvider
 
         mock_snapshot = MagicMock()
         mock_snapshot.name = "test-project"
@@ -41,22 +41,22 @@ class PlannerTests(unittest.TestCase):
         result = generate_next_tasks(
             repo_path=Path("/fake/repo"),
             provider=mock_provider,
-            settings=LaneSettings(),
+            settings=NxdoSettings(),
         )
 
         mock_provider.generate_plan.assert_called_once_with("Full prompt", project_name="test-project")
         self.assertEqual(result.project_name, "test-project")
 
-    @patch("lane.planner.analyze_project")
-    @patch("lane.planner.read_git_context")
-    @patch("lane.planner.build_user_prompt")
+    @patch("nxdo.planner.analyze_project")
+    @patch("nxdo.planner.read_git_context")
+    @patch("nxdo.planner.build_user_prompt")
     def test_generate_next_tasks_uses_default_provider_when_none(
         self,
         mock_build_prompt: MagicMock,
         mock_read_git: MagicMock,
         mock_analyze: MagicMock,
     ) -> None:
-        from lane.config import LaneSettings
+        from nxdo.config import NxdoSettings
 
         mock_snapshot = MagicMock()
         mock_snapshot.name = "test-project"
@@ -69,7 +69,7 @@ class PlannerTests(unittest.TestCase):
 
         mock_build_prompt.return_value = "Full prompt"
 
-        with patch("lane.planner.OpenAICompatProvider") as mock_provider_class:
+        with patch("nxdo.planner.OpenAICompatProvider") as mock_provider_class:
             mock_provider = MagicMock()
             mock_plan = TaskPlan(
                 project_name="test-project",
@@ -81,7 +81,7 @@ class PlannerTests(unittest.TestCase):
 
             result = generate_next_tasks(
                 repo_path=Path("/fake/repo"),
-                settings=LaneSettings(),
+                settings=NxdoSettings(),
             )
 
             mock_provider_class.assert_called_once()

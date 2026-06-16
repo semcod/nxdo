@@ -111,7 +111,7 @@ def _analyze_imports(content: str, file_path: str) -> tuple[list[str], list[str]
                 
                 if module in stdlib_modules:
                     stdlib.append(module)
-                elif module.startswith("lane") or module.startswith("."):
+                elif module.startswith("nxdo") or module.startswith("."):
                     local.append(module)
                 else:
                     third_party.append(module)

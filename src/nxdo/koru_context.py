@@ -1,8 +1,8 @@
-"""Koru integration schema provider for lane's LLM planner.
+"""Koru integration schema provider for nxdo's LLM planner.
 
 Loads the full koru integration catalog and current project state from koru
 (planfile tickets, topology, doctor report) and formats it as structured
-context for the LLM prompt. This allows lane to generate tasks that reference
+context for the LLM prompt. This allows nxdo to generate tasks that reference
 specific koru operations as their implementation steps.
 """
 
@@ -37,7 +37,7 @@ class KoruProjectState:
 
 @dataclass
 class KoruContext:
-    """Full koru context for enriching the lane LLM prompt."""
+    """Full koru context for enriching the nxdo LLM prompt."""
     available: bool  # Whether koruapi is installed and reachable
     operations: list[KoruOperation]
     project_state: KoruProjectState
@@ -127,7 +127,7 @@ _DOMAIN_LABELS = {
     "health": "🏥 Health & Diagnostics",
     "events": "📡 Events",
     "http": "🌐 HTTP / Dashboard",
-    "lane": "🛤️ Lane Planning",
+    "nxdo": "🛤️ nxdo Planning",
 }
 
 
@@ -191,7 +191,7 @@ def build_koru_context(
     project_path: Path,
     include_project_state: bool = True,
 ) -> KoruContext:
-    """Build full koru context for lane's LLM prompt.
+    """Build full koru context for nxdo's LLM prompt.
 
     Args:
         project_path: Path to project root
@@ -262,10 +262,10 @@ ACCEPTANCE CRITERIA RULES:
    Example: "Implementation: invoke koru autopilot.drive to inject refactoring prompt"
 
 2. WORKFLOW SEQUENCING: Generate tasks that form a logical koru pipeline:
-   - Analysis tasks should use: doctor.run, scan.apply, lane.plan (dry_run)
+   - Analysis tasks should use: doctor.run, scan.apply, nxdo.plan (dry_run)
    - Implementation tasks: autopilot.drive, queue.loop (once)
    - Verification tasks: mcp.quality_gates, gate.regix
-   - Sync tasks: planfile.tickets (list), lane.plan (sync_planfile)
+   - Sync tasks: planfile.tickets (list), nxdo.plan (sync_planfile)
 
 3. PLANFILE INTEGRATION: If open tickets exist, the first task should
    RESOLVE them by processing through koru queue, not just list them.
