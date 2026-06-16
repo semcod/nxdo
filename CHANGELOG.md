@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [0.2.25] - 2026-06-16
+
+### Docs
+- Update README.md
+- Update docs/how-it-works.md
+- Update examples/README.md
+
+### Other
+- Update examples/check-examples.sh
+- Update examples/nxdo-self-context.txt
+- Update examples/nxdo-self-metrics.txt
+- Update examples/nxdo-self-plan.json
+- Update examples/nxdo-self-plan.txt
+- Update examples/nxdo-self-prompt.txt
+- Update uv.lock
+
 ## [0.2.24] - 2026-06-16
 
 ### Docs

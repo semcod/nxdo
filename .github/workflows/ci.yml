@@ -38,3 +38,7 @@ jobs:
       - name: Run linting
         run: |
           ruff check src/nxdo tests/
+
+      - name: Verify committed examples
+        run: |
+          ./examples/check-examples.sh

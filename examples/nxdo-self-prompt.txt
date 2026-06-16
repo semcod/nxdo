@@ -1,3 +1,6 @@
+Analyze the following project and generate the next 10 tasks.
+
+=== PROJECT STATE ===
 Project: nxdo
 Description: Generate the next 10 project tasks from project state, git history and an LLM prompt.
 Stack: Python
@@ -350,6 +353,7 @@ badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0
 │   ├── nxdo-self-context.txt
 │   ├── nxdo-self-metrics.txt
 │   ├── nxdo-self-plan.json
+│   ├── nxdo-self-prompt.txt
 │   └── README.md
 ├── project
 │   ├── analysis.toon.yaml
@@ -418,6 +422,8 @@ badge_color_thresholds = { low = 1.0, medium = 5.0, high = 10.0, critical = 50.0
 ├── tree.txt
 └── VERSION
 
+
+=== GIT HISTORY ===
 Branch: main
 Remote: git@github.com:semcod/nxdo.git
 
@@ -466,3 +472,11 @@ TODO/FIXME markers found in code:
   TODO.md:48:- [ ] 🟡 Review and clean up TODO.md  <!-- nxdo:task-10 -->
   TODO.md:49:  Go through the TODO.md file to clean up any outdated tasks and ensure it reflects the current project priorities.
   TODO.md:54:  Develop the `--sync-todo` feature to sync tasks to TODO.md checkboxes as outlined in the TODO markers.
+
+=== ADDITIONAL CONTEXT ===
+What are the next sensible engineering steps for nxdo?
+
+
+
+Generate the task plan now.
+

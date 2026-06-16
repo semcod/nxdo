@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.24-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.89-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-11.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.25-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.96-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-11.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.8940 (27 commits)
-- 👤 **Human dev:** ~$1128 (11.3h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $1.9598 (28 commits)
+- 👤 **Human dev:** ~$1130 (11.3h @ $100/h, 30min dedup)
 
 Generated on 2026-06-16 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -45,7 +45,9 @@ nxdo plan . --json > plan.json
 nxdo tickets . --sync-planfile
 ```
 
-Real outputs from running nxdo **on this repo**: [examples/nxdo-self-plan.json](examples/nxdo-self-plan.json) · [examples/nxdo-self-context.txt](examples/nxdo-self-context.txt) · [examples/nxdo-self-metrics.txt](examples/nxdo-self-metrics.txt)
+Real outputs from running nxdo **on this repo**: [examples/nxdo-self-plan.json](examples/nxdo-self-plan.json) · [examples/nxdo-self-plan.txt](examples/nxdo-self-plan.txt) · [examples/nxdo-self-context.txt](examples/nxdo-self-context.txt) · [examples/nxdo-self-prompt.txt](examples/nxdo-self-prompt.txt) · [examples/nxdo-self-metrics.txt](examples/nxdo-self-metrics.txt)
+
+Verify: `./examples/check-examples.sh`
 
 See the full walkthrough in [docs/how-it-works.md](docs/how-it-works.md).
 

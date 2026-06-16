@@ -60,6 +60,8 @@ nxdo print-prompt . -e "What should we build next after the lane→nxdo rename?"
 
 **Expected:** a single text block combining snapshot + git context + your extra question.
 
+Sample output: [examples/nxdo-self-prompt.txt](../examples/nxdo-self-prompt.txt)
+
 ### Step 3 — Code metrics (no LLM call)
 
 Find complexity hotspots and coupling before planning:
@@ -88,9 +90,9 @@ nxdo plan . \
 
 **Observed summary:** nxdo correctly detected recent docs/testing/rename work and proposed sensible follow-ups: CLI hardening (`python -m nxdo` subcommands), docs refresh, error handling, integration tests, planfile docs, TODO cleanup.
 
-Sample JSON: [examples/nxdo-self-plan.json](../examples/nxdo-self-plan.json)
+Sample JSON: [examples/nxdo-self-plan.json](../examples/nxdo-self-plan.json) · terminal output: [examples/nxdo-self-plan.txt](../examples/nxdo-self-plan.txt)
 
-Save JSON yourself:
+Verify all samples: `./examples/check-examples.sh`
 
 ```bash
 nxdo plan . -e "Your focus here" --json > my-plan.json

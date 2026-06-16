@@ -1,0 +1,171 @@
+╭───────────────────────────────── Task Plan ──────────────────────────────────╮
+│ nxdo                                                                         │
+│                                                                              │
+│ The nxdo project is in a stable state with recent updates focusing on        │
+│ documentation and testing enhancements. The next steps should prioritize     │
+│ implementing new features, improving error handling, and enhancing test      │
+│ coverage to ensure reliability and maintainability.                          │
+╰──────── Generated: 2026-06-16 20:24 UTC | Model: openai/gpt-4o-mini ─────────╯
+╭──────┬────────────┬──────────┬────────┬──────────────────┬───────────────────╮
+│ #    │ Type       │ Priority │ Est.   │ Title            │ Description       │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 1    │ feature    │ high     │ 4.0h   │ Implement        │ Develop the       │
+│      │            │          │        │ sync-todo        │ `--sync-todo`     │
+│      │            │          │        │ feature          │ feature to sync   │
+│      │            │          │        │                  │ tasks to TODO.md  │
+│      │            │          │        │                  │ checkboxes as     │
+│      │            │          │        │                  │ outlined in the   │
+│      │            │          │        │                  │ TODO markers.     │
+│      │            │          │        │                  │ This feature will │
+│      │            │          │        │                  │ enhance task      │
+│      │            │          │        │                  │ management by     │
+│      │            │          │        │                  │ ensuring that the │
+│      │            │          │        │                  │ TODO list is      │
+│      │            │          │        │                  │ always up-to-date │
+│      │            │          │        │                  │ with the latest   │
+│      │            │          │        │                  │ tasks, improving  │
+│      │            │          │        │                  │ project           │
+│      │            │          │        │                  │ organization.     │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 2    │ feature    │ high     │ 3.0h   │ Enhance Git      │ Improve the       │
+│      │            │          │        │ context          │ functionality for │
+│      │            │          │        │ extraction       │ extracting git    │
+│      │            │          │        │                  │ context,          │
+│      │            │          │        │                  │ including recent  │
+│      │            │          │        │                  │ commits and       │
+│      │            │          │        │                  │ changed files, to │
+│      │            │          │        │                  │ provide better    │
+│      │            │          │        │                  │ insights for task │
+│      │            │          │        │                  │ generation. This  │
+│      │            │          │        │                  │ enhancement will  │
+│      │            │          │        │                  │ allow for more    │
+│      │            │          │        │                  │ informed          │
+│      │            │          │        │                  │ decision-making   │
+│      │            │          │        │                  │ when planning     │
+│      │            │          │        │                  │ future tasks      │
+│      │            │          │        │                  │ based on recent   │
+│      │            │          │        │                  │ project activity. │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 3    │ test       │ medium   │ 2.0h   │ Add unit tests   │ Create unit tests │
+│      │            │          │        │ for sync-todo    │ to ensure the new │
+│      │            │          │        │                  │ `sync-todo`       │
+│      │            │          │        │                  │ functionality     │
+│      │            │          │        │                  │ works as expected │
+│      │            │          │        │                  │ and handles edge  │
+│      │            │          │        │                  │ cases.            │
+│      │            │          │        │                  │ Comprehensive     │
+│      │            │          │        │                  │ testing will help │
+│      │            │          │        │                  │ catch potential   │
+│      │            │          │        │                  │ bugs early and    │
+│      │            │          │        │                  │ ensure the        │
+│      │            │          │        │                  │ reliability of    │
+│      │            │          │        │                  │ the feature.      │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 4    │ refactor   │ medium   │ 3.0h   │ Refactor CLI     │ Refactor the      │
+│      │            │          │        │ command handling │ command handling  │
+│      │            │          │        │                  │ in the CLI to     │
+│      │            │          │        │                  │ improve           │
+│      │            │          │        │                  │ readability and   │
+│      │            │          │        │                  │ maintainability,  │
+│      │            │          │        │                  │ especially around │
+│      │            │          │        │                  │ the new features  │
+│      │            │          │        │                  │ added. This will  │
+│      │            │          │        │                  │ make it easier    │
+│      │            │          │        │                  │ for future        │
+│      │            │          │        │                  │ developers to     │
+│      │            │          │        │                  │ understand and    │
+│      │            │          │        │                  │ extend the CLI    │
+│      │            │          │        │                  │ functionality.    │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 5    │ docs       │ medium   │ 2.0h   │ Update README    │ Revise the        │
+│      │            │          │        │ with new         │ README.md to      │
+│      │            │          │        │ features         │ include           │
+│      │            │          │        │                  │ documentation for │
+│      │            │          │        │                  │ the new           │
+│      │            │          │        │                  │ `sync-todo`       │
+│      │            │          │        │                  │ feature and any   │
+│      │            │          │        │                  │ other recent      │
+│      │            │          │        │                  │ changes. Keeping  │
+│      │            │          │        │                  │ documentation     │
+│      │            │          │        │                  │ up-to-date is     │
+│      │            │          │        │                  │ crucial for user  │
+│      │            │          │        │                  │ adoption and      │
+│      │            │          │        │                  │ understanding of  │
+│      │            │          │        │                  │ the project.      │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 6    │ bug        │ high     │ 3.0h   │ Fix API error    │ Review and        │
+│      │            │          │        │ handling         │ enhance the API   │
+│      │            │          │        │                  │ error handling to │
+│      │            │          │        │                  │ ensure detailed   │
+│      │            │          │        │                  │ error messages    │
+│      │            │          │        │                  │ are provided for  │
+│      │            │          │        │                  │ API failures.     │
+│      │            │          │        │                  │ Improved error    │
+│      │            │          │        │                  │ handling will     │
+│      │            │          │        │                  │ enhance user      │
+│      │            │          │        │                  │ experience by     │
+│      │            │          │        │                  │ providing clearer │
+│      │            │          │        │                  │ guidance on       │
+│      │            │          │        │                  │ issues.           │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 7    │ test       │ medium   │ 4.0h   │ Add integration  │ Implement         │
+│      │            │          │        │ tests for CLI    │ integration tests │
+│      │            │          │        │ commands         │ for the CLI       │
+│      │            │          │        │                  │ commands to       │
+│      │            │          │        │                  │ ensure they work  │
+│      │            │          │        │                  │ correctly with    │
+│      │            │          │        │                  │ the overall       │
+│      │            │          │        │                  │ system. This will │
+│      │            │          │        │                  │ help catch issues │
+│      │            │          │        │                  │ that unit tests   │
+│      │            │          │        │                  │ might miss and    │
+│      │            │          │        │                  │ ensure the CLI    │
+│      │            │          │        │                  │ behaves as        │
+│      │            │          │        │                  │ expected in real  │
+│      │            │          │        │                  │ scenarios.        │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 8    │ refactor   │ low      │ 2.0h   │ Improve error    │ Enhance the error │
+│      │            │          │        │ messages in CLI  │ messages provided │
+│      │            │          │        │                  │ by the CLI to be  │
+│      │            │          │        │                  │ more              │
+│      │            │          │        │                  │ user-friendly and │
+│      │            │          │        │                  │ informative.      │
+│      │            │          │        │                  │ Clearer error     │
+│      │            │          │        │                  │ messages will     │
+│      │            │          │        │                  │ improve user      │
+│      │            │          │        │                  │ experience and    │
+│      │            │          │        │                  │ help users        │
+│      │            │          │        │                  │ troubleshoot      │
+│      │            │          │        │                  │ issues more       │
+│      │            │          │        │                  │ effectively.      │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 9    │ docs       │ medium   │ 2.0h   │ Document         │ Create            │
+│      │            │          │        │ planfile         │ documentation for │
+│      │            │          │        │ integration      │ the planfile      │
+│      │            │          │        │                  │ integration       │
+│      │            │          │        │                  │ feature,          │
+│      │            │          │        │                  │ explaining how to │
+│      │            │          │        │                  │ use it and its    │
+│      │            │          │        │                  │ benefits. Proper  │
+│      │            │          │        │                  │ documentation     │
+│      │            │          │        │                  │ will help users   │
+│      │            │          │        │                  │ understand how to │
+│      │            │          │        │                  │ leverage this     │
+│      │            │          │        │                  │ feature           │
+│      │            │          │        │                  │ effectively.      │
+├──────┼────────────┼──────────┼────────┼──────────────────┼───────────────────┤
+│ 10   │ chore      │ low      │ 1.0h   │ Review and clean │ Go through the    │
+│      │            │          │        │ up TODO.md       │ TODO.md file to   │
+│      │            │          │        │                  │ clean up any      │
+│      │            │          │        │                  │ outdated tasks    │
+│      │            │          │        │                  │ and ensure it     │
+│      │            │          │        │                  │ reflects the      │
+│      │            │          │        │                  │ current project   │
+│      │            │          │        │                  │ priorities.       │
+│      │            │          │        │                  │ Keeping the TODO  │
+│      │            │          │        │                  │ list updated is   │
+│      │            │          │        │                  │ essential for     │
+│      │            │          │        │                  │ effective project │
+│      │            │          │        │                  │ management and    │
+│      │            │          │        │                  │ focus.            │
+╰──────┴────────────┴──────────┴────────┴──────────────────┴───────────────────╯
