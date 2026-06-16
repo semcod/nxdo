@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [0.2.21] - 2026-06-16
+
+### Docs
+- Update README.md
+
+### Other
+- Update .gitignore
+- Update uv.lock
+
 ## [0.2.20] - 2026-05-31
 
 ### Docs
