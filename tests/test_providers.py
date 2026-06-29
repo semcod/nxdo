@@ -62,9 +62,13 @@ class OpenAICompatProviderTests(unittest.TestCase):
     def test_no_api_key_raises_value_error(self) -> None:
         from nxdo.config import NxdoSettings
 
-        settings = NxdoSettings(_env_file=None)
-        provider = OpenAICompatProvider(api_key=None, settings=settings)
+        # Clear the environment BEFORE building settings/provider so an ambient
+        # OPENROUTER_API_KEY/OPENAI_API_KEY cannot leak in at construction time.
+        # Combined with _env_file=None this deterministically exercises the
+        # missing-key guard without ever touching the network.
         with patch.dict("os.environ", {}, clear=True):
+            settings = NxdoSettings(_env_file=None)
+            provider = OpenAICompatProvider(api_key=None, settings=settings)
             with self.assertRaises(ValueError) as ctx:
                 provider._call_api("prompt")
         self.assertIn("API key", str(ctx.exception))

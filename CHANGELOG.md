@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.2.26] - 2026-06-29
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_providers.py
+
 ## [0.2.25] - 2026-06-16
 
 ### Docs

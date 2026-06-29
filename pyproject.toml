@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nxdo"
-version = "0.2.25"
+version = "0.2.26"
 description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
 readme = "README.md"
 requires-python = ">=3.10"
