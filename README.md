@@ -3,11 +3,13 @@
 
 ## AI Cost Tracking
 
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$4.50-green) ![AI Model](https://img.shields.io/badge/AI%20Model-openrouter%2Fqwen%2Fqwen3-coder-next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.26-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.01-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-13.5h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-This project uses AI-generated code. Total cost: **$4.5000** with **30** AI commits.
+- 🤖 **LLM usage:** $2.0131 (31 commits)
+- 👤 **Human dev:** ~$1345 (13.5h @ $100/h, 30min dedup)
 
-Generated on 2026-06-29 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/models/openrouter/qwen/qwen3-coder-next)
+Generated on 2026-07-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
@@ -226,7 +228,7 @@ nxdo tickets [REPO_PATH] [OPTIONS]
 - `--model, -m TEXT`: Override the LLM model name
 - `--base-url TEXT`: Override the API base URL
 - `--max-commits INTEGER`: How many recent commits to inspect (default: 30)
-- `--sync-todo`: Sync tasks to TODO.md checkboxes using planfile
+- `--sync-todo`: Append generated tasks to TODO.md as `- [ ]` checkboxes inside a managed `<!-- nxdo:generated-tasks -->` block (manual content is preserved; repeated runs replace the block idempotently)
 - `--sync-planfile`: Store tickets in .planfile/ and sync with markdown
 - `--export-yaml`: Export to planfile YAML format
 - `--output, -o PATH`: Output file for YAML export
