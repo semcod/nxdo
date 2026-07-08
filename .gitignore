@@ -224,3 +224,9 @@ __marimo__/
 .planfile/.koru/
 .koru/
 .planfile/sprints/*.bak-*
+.agents/
+.codex/
+.cursor/
+.github/
+.nlp2dsl/
+.planfile/
