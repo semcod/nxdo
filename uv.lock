@@ -1986,7 +1986,7 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.27" },
     { name = "mypy", marker = "extra == 'dev'" },
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
-    { name = "planfile", specifier = ">=0.1.103" },
+    { name = "planfile", specifier = ">=0.1.117" },
     { name = "pydantic", specifier = ">=2" },
     { name = "pydantic-settings", specifier = ">=2" },
     { name = "pytest", marker = "extra == 'dev'" },
@@ -2243,7 +2243,7 @@ wheels = [
 
 [[package]]
 name = "planfile"
-version = "0.1.103"
+version = "0.1.117"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
@@ -2257,9 +2257,9 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8c/a4/e115f77406c7d5bf4fd720d50464c5a1b25d599535f1bc476f22d23194e8/planfile-0.1.103.tar.gz", hash = "sha256:5395bd36b006bbf0d231b823dc17de42b21c68ec74b2c13d47606f9096c789ec", size = 215932, upload-time = "2026-06-05T08:11:23.203Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7f/a0/b84dc6ce2abf05412dc15021bea08ca87cf76250678f0ac30968552c4933/planfile-0.1.117.tar.gz", hash = "sha256:3461c7d8dde6f68ebce19901791a95b4e486df612254b69c92240fd1631a8335", size = 267346, upload-time = "2026-07-20T08:26:41.109Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ad/b3/2f4ce9adb0ee1f71c6f466b4940a2190f90f40ce17b3059af465d741e2b2/planfile-0.1.103-py3-none-any.whl", hash = "sha256:2818465a040cb50bb8b3ab2c9360fce23dd975f95d566ad2f5d952a7f86843b2", size = 223111, upload-time = "2026-06-05T08:11:21.439Z" },
+    { url = "https://files.pythonhosted.org/packages/e0/95/942617cd2131f29bdc134ab694e2afa59cf46a294562f465405fb70c5898/planfile-0.1.117-py3-none-any.whl", hash = "sha256:99388abba094146bead15b92fe3363892147e5e7b794e40aa6d84b2c3f16906d", size = 259055, upload-time = "2026-07-20T08:26:39.225Z" },
 ]
 
 [[package]]
