@@ -88,6 +88,68 @@ def _get_bug_fix_commits(repo_path: Path, file_path: str, since: str = "90.days.
         return 0
 
 
+_NON_CODE_EXTENSIONS = (".md", ".txt", ".json", ".yaml", ".yml", ".lock")
+
+
+def _resolve_target_files(repo_path: Path, files: list[str] | None) -> list[str]:
+    """Return ``files`` or fall back to ``git ls-files`` output."""
+    if files is not None:
+        return files
+    try:
+        result = subprocess.run(
+            ["git", "ls-files"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            return [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
+    except Exception:
+        pass
+    return []
+
+
+def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics | None:
+    """Analyze a single file; returns None for non-code or untouched files."""
+    if file_path.endswith(_NON_CODE_EXTENSIONS):
+        return None
+
+    commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
+    total_commits = len(commits)
+    if total_commits == 0:
+        return None
+
+    bug_fixes = _get_bug_fix_commits(repo_path, file_path, since)
+
+    author_counts: dict[str, int] = defaultdict(int)
+    for _, author, _ in commits:
+        author_counts[author] += 1
+
+    author_count = len(author_counts)
+    top_authors = sorted(author_counts.items(), key=lambda x: x[1], reverse=True)[:3]
+    bug_density = bug_fixes / total_commits
+
+    # Only include if there's actual risk
+    if not (bug_fixes > 0 or churn > 50 or author_count == 1):
+        return None
+
+    return HotspotMetrics(
+        file_path=file_path,
+        bug_fix_commits=bug_fixes,
+        total_commits=total_commits,
+        bug_density=round(bug_density, 2),
+        code_churn_lines=churn,
+        author_count=author_count,
+        top_authors=top_authors,
+    )
+
+
+def _hotspot_risk_score(h: HotspotMetrics) -> float:
+    """High bug density + high churn + low bus factor = high risk."""
+    bus_factor_penalty = 2.0 if h.author_count == 1 else 1.0
+    return h.bug_density * h.code_churn_lines * bus_factor_penalty
+
+
 def identify_bug_hotspots(
     repo_path: Path,
     files: list[str] | None = None,
@@ -107,71 +169,15 @@ def identify_bug_hotspots(
     Returns:
         List of HotspotMetrics sorted by risk score (bug_density * churn)
     """
-    # Get list of files if not provided
-    if files is None:
-        try:
-            result = subprocess.run(
-                ["git", "ls-files"],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode == 0:
-                files = [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
-            else:
-                files = []
-        except Exception:
-            files = []
-    
+    files = _resolve_target_files(repo_path, files)
     if not files:
         return []
     
-    # Analyze each file
-    hotspots: list[HotspotMetrics] = []
-    
-    for file_path in files:
-        # Skip non-code files
-        if any(file_path.endswith(ext) for ext in [".md", ".txt", ".json", ".yaml", ".yml", ".lock"]):
-            continue
-        
-        commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
-        total_commits = len(commits)
-        
-        if total_commits == 0:
-            continue
-        
-        bug_fixes = _get_bug_fix_commits(repo_path, file_path, since)
-        
-        # Count unique authors
-        author_counts: dict[str, int] = defaultdict(int)
-        for _, author, _ in commits:
-            author_counts[author] += 1
-        
-        author_count = len(author_counts)
-        top_authors = sorted(author_counts.items(), key=lambda x: x[1], reverse=True)[:3]
-        
-        bug_density = bug_fixes / total_commits if total_commits > 0 else 0
-        
-        # Only include if there's actual risk
-        if bug_fixes > 0 or churn > 50 or author_count == 1:
-            hotspots.append(HotspotMetrics(
-                file_path=file_path,
-                bug_fix_commits=bug_fixes,
-                total_commits=total_commits,
-                bug_density=round(bug_density, 2),
-                code_churn_lines=churn,
-                author_count=author_count,
-                top_authors=top_authors,
-            ))
-    
-    # Sort by risk score (bug_density * relative_churn)
-    def risk_score(h: HotspotMetrics) -> float:
-        # High bug density + high churn + low bus factor = high risk
-        bus_factor_penalty = 2.0 if h.author_count == 1 else 1.0
-        return h.bug_density * h.code_churn_lines * bus_factor_penalty
-    
-    hotspots.sort(key=risk_score, reverse=True)
-    
+    hotspots = [
+        m for f in files
+        if (m := _file_hotspot(repo_path, f, since)) is not None
+    ]
+    hotspots.sort(key=_hotspot_risk_score, reverse=True)
     return hotspots[:top_n]
 
 
