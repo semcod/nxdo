@@ -4,7 +4,7 @@ import json
 import unittest
 from unittest.mock import MagicMock, patch
 
-from nxdo.providers.openai_compat import OpenAICompatProvider, _parse_response
+from nxdo.providers.openai_compat import LLMAPIError, OpenAICompatProvider, _parse_response
 
 
 _VALID_RAW = json.dumps({
@@ -103,6 +103,7 @@ class OpenAICompatProviderTests(unittest.TestCase):
         self.assertEqual(payload["messages"][1]["content"], "user prompt")
 
     @patch("nxdo.providers.openai_compat.httpx.Client")
+    @patch.dict("os.environ", {}, clear=True)
     def test_call_api_sets_correct_headers(self, mock_client_class: MagicMock) -> None:
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
@@ -150,6 +151,73 @@ class OpenAICompatProviderTests(unittest.TestCase):
         with self.assertRaises(ValueError) as ctx:
             provider._call_api("prompt")
         self.assertIn("401", str(ctx.exception))
+
+    @patch("nxdo.providers.openai_compat.httpx.Client")
+    def test_call_api_extracts_error_message_from_json_envelope(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.is_success = False
+        mock_response.status_code = 401
+        mock_response.text = '{"error": {"message": "Invalid API key"}}'
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test", model="test-model")
+        with self.assertRaises(LLMAPIError) as ctx:
+            provider._call_api("prompt")
+        exc = ctx.exception
+        self.assertIn("401", str(exc))
+        self.assertIn("Invalid API key", str(exc))
+        self.assertIn("API key", str(exc))
+        self.assertEqual(exc.status_code, 401)
+        self.assertEqual(exc.model, "test-model")
+
+    @patch("nxdo.providers.openai_compat.httpx.Client")
+    def test_call_api_rate_limit_error_hint(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.is_success = False
+        mock_response.status_code = 429
+        mock_response.text = "Too many requests"
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test")
+        with self.assertRaises(LLMAPIError) as ctx:
+            provider._call_api("prompt")
+        self.assertIn("429", str(ctx.exception))
+        self.assertIn("rate limit", str(ctx.exception))
+
+    @patch("nxdo.providers.openai_compat.httpx.Client")
+    def test_call_api_non_json_success_response(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.is_success = True
+        mock_response.status_code = 200
+        mock_response.text = "<html>not json</html>"
+        mock_response.json.side_effect = ValueError("not valid JSON")
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test")
+        with self.assertRaises(LLMAPIError) as ctx:
+            provider._call_api("prompt")
+        self.assertIn("non-JSON", str(ctx.exception))
+
+    @patch("nxdo.providers.openai_compat.httpx.Client")
+    def test_call_api_unexpected_payload_names_missing_key(self, mock_client_class: MagicMock) -> None:
+        mock_response = MagicMock()
+        mock_response.is_success = True
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"choices": []}
+        mock_client = MagicMock()
+        mock_client.post.return_value = mock_response
+        mock_client_class.return_value.__enter__.return_value = mock_client
+
+        provider = OpenAICompatProvider(api_key="sk-test")
+        with self.assertRaises(LLMAPIError) as ctx:
+            provider._call_api("prompt")
+        self.assertIn("Unexpected LLM response", str(ctx.exception))
 
     def test_create_task_from_dict_handles_string_dep(self) -> None:
         """Test _create_task_from_dict skips non-numeric string dependencies (lines 146-149)."""

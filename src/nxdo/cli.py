@@ -8,7 +8,7 @@ from typing import Optional
 import typer
 from rich.console import Console
 
-from .config import get_settings
+from .config import NxdoSettings, get_settings
 from .git_reader import read_git_context
 from .llm_client import build_user_prompt
 from .output import render_context, render_plan, render_plan_json
@@ -29,6 +29,48 @@ console = Console()
 err_console = Console(stderr=True)
 
 
+def _build_provider(
+    model: Optional[str],
+    base_url: Optional[str],
+    settings: NxdoSettings,
+    *,
+    koru_aware: bool = False,
+) -> OpenAICompatProvider:
+    """Build the LLM provider shared by the planning commands."""
+    return OpenAICompatProvider(
+        model=model, base_url=base_url, settings=settings, koru_aware=koru_aware
+    )
+
+
+def _generate_plan(
+    *,
+    repo_path: Path,
+    extra_context: str,
+    provider: OpenAICompatProvider,
+    settings: NxdoSettings,
+    koru_aware: bool = False,
+) -> TaskPlan:
+    """Run the planning pipeline, surfacing provider errors as a user-facing exit."""
+    try:
+        return generate_next_tasks(
+            repo_path=repo_path,
+            extra_context=extra_context,
+            provider=provider,
+            settings=settings,
+            koru_aware=koru_aware,
+        )
+    except ValueError as exc:
+        err_console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(code=1)
+
+
+def _render_prompt_text(repo: Path, extra_context: str, max_commits: int) -> str:
+    """Assemble the full LLM prompt without making an API call."""
+    snapshot = analyze_project(repo.resolve())
+    git_ctx = read_git_context(repo.resolve(), max_commits=max_commits)
+    return build_user_prompt(snapshot.to_text(), git_ctx.to_text(), extra_context)
+
+
 @app.command("plan")
 def cmd_plan(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
@@ -43,18 +85,13 @@ def cmd_plan(
     if max_commits != 30:
         cfg.max_commits = max_commits  # type: ignore[misc]
 
-    provider = OpenAICompatProvider(model=model, base_url=base_url, settings=cfg)
-
-    try:
-        plan = generate_next_tasks(
-            repo_path=repo.resolve(),
-            extra_context=extra_context,
-            provider=provider,
-            settings=cfg,
-        )
-    except ValueError as exc:
-        err_console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(code=1)
+    provider = _build_provider(model, base_url, cfg)
+    plan = _generate_plan(
+        repo_path=repo.resolve(),
+        extra_context=extra_context,
+        provider=provider,
+        settings=cfg,
+    )
 
     if as_json:
         render_plan_json(plan, console)
@@ -88,10 +125,7 @@ def cmd_print_prompt(
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
 ) -> None:
     """Print the full prompt that would be sent to the LLM."""
-    snapshot = analyze_project(repo.resolve())
-    git_ctx = read_git_context(repo.resolve(), max_commits=max_commits)
-    prompt = build_user_prompt(snapshot.to_text(), git_ctx.to_text(), extra_context)
-    print(prompt)
+    print(_render_prompt_text(repo, extra_context, max_commits))
 
 
 @app.command("validate")
@@ -170,21 +204,14 @@ def cmd_tickets(
     if max_commits != 30:
         cfg.max_commits = max_commits  # type: ignore[misc]
 
-    provider = OpenAICompatProvider(
-        model=model, base_url=base_url, settings=cfg, koru_aware=koru_aware
+    provider = _build_provider(model, base_url, cfg, koru_aware=koru_aware)
+    plan = _generate_plan(
+        repo_path=repo.resolve(),
+        extra_context=extra_context,
+        provider=provider,
+        settings=cfg,
+        koru_aware=koru_aware,
     )
-
-    try:
-        plan = generate_next_tasks(
-            repo_path=repo.resolve(),
-            extra_context=extra_context,
-            provider=provider,
-            settings=cfg,
-            koru_aware=koru_aware,
-        )
-    except ValueError as exc:
-        err_console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(code=1)
 
     tickets = task_plan_to_tickets(plan)
     console.print(f"[green]✓[/green] Generated {len(tickets)} tickets from plan")
@@ -303,19 +330,14 @@ def cmd_auto(
     console.print("\n[bold]Generating koru-aware tickets...[/bold]")
 
     cfg = get_settings()
-    provider = OpenAICompatProvider(settings=cfg, koru_aware=True)
-
-    try:
-        plan = generate_next_tasks(
-            repo_path=repo_path,
-            extra_context=extra_context or "Focus on critical hotspots and technical debt",
-            provider=provider,
-            settings=cfg,
-            koru_aware=True,
-        )
-    except ValueError as exc:
-        err_console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(code=1)
+    provider = _build_provider(None, None, cfg, koru_aware=True)
+    plan = _generate_plan(
+        repo_path=repo_path,
+        extra_context=extra_context or "Focus on critical hotspots and technical debt",
+        provider=provider,
+        settings=cfg,
+        koru_aware=True,
+    )
 
     tickets = task_plan_to_tickets(plan)
     console.print(f"[green]✓[/green] Generated {len(tickets)} tickets")
@@ -354,14 +376,11 @@ def main(argv: list[str] | None = None) -> int:
 
     repo_path = Path(args.repo).resolve()
     if args.print_prompt:
-        snapshot = analyze_project(repo_path)
-        git_ctx = read_git_context(repo_path, max_commits=args.max_commits)
-        prompt = build_user_prompt(snapshot.to_text(), git_ctx.to_text(), args.extra_context)
-        print(prompt)
+        print(_render_prompt_text(repo_path, args.extra_context, args.max_commits))
         return 0
 
     cfg = get_settings()
-    provider = OpenAICompatProvider(model=args.model, base_url=args.base_url, settings=cfg)
+    provider = _build_provider(args.model, args.base_url, cfg)
     try:
         plan = generate_next_tasks(
             repo_path=repo_path,

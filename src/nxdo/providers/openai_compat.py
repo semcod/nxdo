@@ -56,6 +56,81 @@ JSON schema:
 """
 
 
+class LLMAPIError(ValueError):
+    """An LLM API failure with structured, actionable detail.
+
+    Subclasses :class:`ValueError` so existing callers that catch ``ValueError``
+    (e.g. the CLI) keep working unchanged while gaining access to the extra
+    context attributes.
+    """
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        status_code: Optional[int] = None,
+        endpoint: str = "",
+        model: Optional[str] = None,
+        response_body: str = "",
+    ) -> None:
+        super().__init__(message)
+        self.status_code = status_code
+        self.endpoint = endpoint
+        self.model = model
+        self.response_body = response_body
+
+
+_HTTP_STATUS_HINTS = {
+    400: "the request payload was rejected; verify your parameters",
+    401: "your API key is missing or invalid; check OPENROUTER_API_KEY/OPENAI_API_KEY",
+    402: "your account has insufficient credits",
+    403: "your API key does not have access to this model or endpoint",
+    404: "the model or endpoint was not found; verify the model name",
+    408: "the request timed out; retry",
+    409: "the request conflicted with another in-flight request",
+    413: "the request was too large; reduce the prompt size",
+    422: "the request failed validation; check your payload",
+    429: "you are rate limited or out of credits; wait and retry",
+    500: "the provider returned an internal server error; retry later",
+    502: "the provider gateway returned a bad gateway; retry later",
+    503: "the provider is temporarily unavailable; retry later",
+    504: "the provider gateway timed out; retry later",
+}
+
+
+def _extract_error_detail(response_body: str) -> str:
+    """Extract a human-readable message from an API error body.
+
+    Supports the OpenAI/OpenRouter error envelope
+    (``{"error": {"message": ...}}``) and simple ``{"message": ...}`` bodies,
+    falling back to the raw (truncated) text.
+    """
+    body = (response_body or "").strip()
+    if not body:
+        return ""
+    try:
+        data = json.loads(body)
+    except (json.JSONDecodeError, TypeError):
+        return body[:500]
+    if isinstance(data, dict):
+        error = data.get("error")
+        if isinstance(error, dict):
+            message = error.get("message")
+            if isinstance(message, str) and message.strip():
+                return message.strip()
+        if isinstance(error, str) and error.strip():
+            return error.strip()
+        message = data.get("message")
+        if isinstance(message, str) and message.strip():
+            return message.strip()
+    return body[:500]
+
+
+def _http_status_hint(status_code: int) -> str:
+    """Return an actionable hint for a given HTTP status code."""
+    return _HTTP_STATUS_HINTS.get(status_code, "check the provider status and retry")
+
+
 class OpenAICompatProvider(LLMProvider):
     """Provider for OpenRouter or any OpenAI-compatible endpoint."""
 
@@ -89,7 +164,7 @@ class OpenAICompatProvider(LLMProvider):
     )
     def _call_api(self, user_message: str) -> str:
         if not self.api_key:
-            raise ValueError(
+            raise LLMAPIError(
                 "Missing API key. Set OPENROUTER_API_KEY or OPENAI_API_KEY before generating a task plan."
             )
 
@@ -117,23 +192,51 @@ class OpenAICompatProvider(LLMProvider):
             "X-OpenRouter-Title": os.getenv("OPENROUTER_APP_NAME", self.app_name),
         }
 
+        endpoint = f"{self.base_url}/chat/completions"
         with httpx.Client(timeout=self.timeout) as client:
             response = client.post(
-                f"{self.base_url}/chat/completions",
+                endpoint,
                 json=payload,
                 headers=headers,
             )
-            if not response.is_success:
-                error_detail = response.text
-                raise ValueError(
-                    f"API request failed with status {response.status_code}: {error_detail}"
-                )
+
+        if not response.is_success:
+            detail = _extract_error_detail(response.text)
+            hint = _http_status_hint(response.status_code)
+            message = f"LLM API request failed with HTTP {response.status_code}"
+            if detail:
+                message += f": {detail}"
+            message += f". Hint: {hint}."
+            if endpoint:
+                message += f" Endpoint: {endpoint}."
+            if self.model:
+                message += f" Model: {self.model}."
+            raise LLMAPIError(
+                message,
+                status_code=response.status_code,
+                endpoint=endpoint,
+                model=self.model,
+                response_body=(response.text or "")[:1000],
+            )
+
+        try:
             data = response.json()
+        except (json.JSONDecodeError, ValueError) as exc:
+            raise LLMAPIError(
+                f"LLM API returned a non-JSON success response: {exc}",
+                status_code=response.status_code,
+                endpoint=endpoint,
+                model=self.model,
+                response_body=(response.text or "")[:1000],
+            ) from exc
 
         try:
             return data["choices"][0]["message"]["content"].strip()
-        except (KeyError, IndexError, AttributeError) as exc:
-            raise ValueError(f"Unexpected LLM response payload: {data}") from exc
+        except (KeyError, IndexError, AttributeError, TypeError) as exc:
+            raise LLMAPIError(
+                f"Unexpected LLM response payload (missing {exc}). Received: {data}",
+                model=self.model,
+            ) from exc
 
 
 def _strip_markdown_fences(raw: str) -> str:
