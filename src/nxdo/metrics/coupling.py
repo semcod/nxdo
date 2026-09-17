@@ -60,6 +60,47 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
         return []
 
 
+def _filtered_commit_files(
+    commit_files: list[str],
+    file_filter: set[str] | None,
+) -> list[str]:
+    """Keep only files matching ``file_filter`` extensions and drop
+    binary/test/generated paths."""
+    filtered = commit_files
+    if file_filter:
+        filtered = [f for f in filtered if any(f.endswith(ext) for ext in file_filter)]
+    return [
+        f for f in filtered
+        if not any(x in f for x in ["test", "__pycache__", ".pyc", ".min.", "dist/", "build/"])
+    ]
+
+
+def _score_file_pairs(
+    file_commits: dict[str, int],
+    file_pair_commits: dict[tuple[str, str], int],
+    min_coupling: float,
+) -> list[CouplingMetrics]:
+    """Score co-changing file pairs: commits_together / min(total_a, total_b)."""
+    results: list[CouplingMetrics] = []
+    for (file_a, file_b), together in file_pair_commits.items():
+        total_a = file_commits[file_a]
+        total_b = file_commits[file_b]
+        if total_a <= 0 or total_b <= 0:
+            continue
+        coupling = together / min(total_a, total_b)
+        if coupling < min_coupling:
+            continue
+        results.append(CouplingMetrics(
+            file_a=file_a,
+            file_b=file_b,
+            coupling_score=round(coupling, 2),
+            commits_together=together,
+            total_commits_a=total_a,
+            total_commits_b=total_b,
+        ))
+    return results
+
+
 def collect_coupling_matrix(
     repo_path: Path,
     max_commits: int = 100,
@@ -91,54 +132,17 @@ def collect_coupling_matrix(
     file_pair_commits: dict[tuple[str, str], int] = defaultdict(int)
     
     for commit_files in commits:
-        # Filter files
-        filtered = commit_files
-        if file_filter:
-            filtered = [f for f in commit_files if any(f.endswith(ext) for ext in file_filter)]
-        
-        # Skip binary/test files
-        filtered = [
-            f for f in filtered 
-            if not any(x in f for x in ["test", "__pycache__", ".pyc", ".min.", "dist/", "build/"])
-        ]
-        
-        # Count individual files
+        filtered = _filtered_commit_files(commit_files, file_filter)
         for f in filtered:
             file_commits[f] += 1
-        
-        # Count pairs (only if both files in same commit)
         for i, f1 in enumerate(filtered):
             for f2 in filtered[i+1:]:
-                if f1 < f2:
-                    file_pair_commits[(f1, f2)] += 1
-                else:
-                    file_pair_commits[(f2, f1)] += 1
+                pair = (f1, f2) if f1 < f2 else (f2, f1)
+                file_pair_commits[pair] += 1
     
     # Calculate coupling scores
-    results: list[CouplingMetrics] = []
-    
-    for (file_a, file_b), together in file_pair_commits.items():
-        total_a = file_commits[file_a]
-        total_b = file_commits[file_b]
-        
-        # Coupling = commits_together / min(total_a, total_b)
-        # This shows: "when A changes, how often does B also change?"
-        if total_a > 0 and total_b > 0:
-            coupling = together / min(total_a, total_b)
-            
-            if coupling >= min_coupling:
-                results.append(CouplingMetrics(
-                    file_a=file_a,
-                    file_b=file_b,
-                    coupling_score=round(coupling, 2),
-                    commits_together=together,
-                    total_commits_a=total_a,
-                    total_commits_b=total_b,
-                ))
-    
-    # Sort by coupling score descending
+    results = _score_file_pairs(file_commits, file_pair_commits, min_coupling)
     results.sort(key=lambda x: x.coupling_score, reverse=True)
-    
     return results
 
 
