@@ -173,4 +173,14 @@ for task in plan.tasks:
 | `python -m nxdo metrics` runs **plan** instead | Old `__main__` shim | Upgrade to nxdo ≥ 0.2.24 or use `nxdo metrics` entry point |
 | Plan mentions wrong project name | First CLI arg treated as repo | Use `nxdo plan .` not `nxdo plan metrics` |
 | `Error: No API key` | Missing env var | Set `OPENROUTER_API_KEY` or `OPENAI_API_KEY` |
+| `Error: ... HTTP 401` | Invalid or missing API key | Check `OPENROUTER_API_KEY` / `OPENAI_API_KEY` |
+| `Error: ... HTTP 429` | Rate limited or out of credits | Wait and retry, or check your provider credits |
+| `Error: ... non-JSON success response` | Wrong endpoint or a non-OpenAI-compatible server | Verify `LLM_BASE_URL` and `LLM_MODEL` |
 | Generic “init git repo” tasks | Empty or shallow git history | Commit work first; increase `--max-commits` |
+
+API failures raise an `nxdo.providers.openai_compat.LLMAPIError` (a `ValueError`
+subclass) whose message includes the HTTP status code, the provider's error
+message when one is returned, an actionable hint, and the endpoint and model in
+use. Catch `ValueError` to handle both API failures and invalid response parsing
+uniformly.
+
