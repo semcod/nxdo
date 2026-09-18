@@ -123,15 +123,15 @@ def collect_coupling_matrix(
         >>> for m in metrics[:5]:
         ...     print(f"{m.file_a} <-> {m.file_b}: {m.coupling_score:.2f}")
     """
-    commits = _get_commits_with_files(repo_path, max_commits)
-    if not commits:
+    commit_file_groups = _get_commits_with_files(repo_path, max_commits)
+    if not commit_file_groups:
         return []
-    
+
     # Count file occurrences and co-occurrences
     file_commits: dict[str, int] = defaultdict(int)
     file_pair_commits: dict[tuple[str, str], int] = defaultdict(int)
-    
-    for commit_files in commits:
+
+    for commit_files in commit_file_groups:
         filtered = _filtered_commit_files(commit_files, file_filter)
         for f in filtered:
             file_commits[f] += 1

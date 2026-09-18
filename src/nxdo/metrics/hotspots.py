@@ -114,15 +114,15 @@ def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics
     if file_path.endswith(_NON_CODE_EXTENSIONS):
         return None
 
-    commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
-    total_commits = len(commits)
+    file_commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
+    total_commits = len(file_commits)
     if total_commits == 0:
         return None
 
     bug_fixes = _get_bug_fix_commits(repo_path, file_path, since)
 
     author_counts: dict[str, int] = defaultdict(int)
-    for _, author, _ in commits:
+    for _, author, _ in file_commits:
         author_counts[author] += 1
 
     author_count = len(author_counts)
