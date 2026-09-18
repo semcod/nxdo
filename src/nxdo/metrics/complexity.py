@@ -35,12 +35,12 @@ class FileMetrics:
 
 def _count_lines(content: str) -> tuple[int, int, int]:
     """Count LOC, comments, blank lines."""
-    lines = content.split("\n")
+    source_lines = content.split("\n")
     loc = 0
     comments = 0
     blank = 0
     
-    for line in lines:
+    for line in source_lines:
         stripped = line.strip()
         if not stripped:
             blank += 1
