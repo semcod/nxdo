@@ -96,14 +96,14 @@ def _resolve_target_files(repo_path: Path, files: list[str] | None) -> list[str]
     if files is not None:
         return files
     try:
-        result = subprocess.run(
+        ls_files_result = subprocess.run(
             ["git", "ls-files"],
             cwd=repo_path,
             capture_output=True,
             text=True,
         )
-        if result.returncode == 0:
-            return [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
+        if ls_files_result.returncode == 0:
+            return [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
     except Exception:
         pass
     return []

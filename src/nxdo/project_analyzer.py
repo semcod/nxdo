@@ -192,9 +192,9 @@ def _parse_pyproject_regex(text: str, fallback: str) -> tuple[str, str]:
 
 
 def _parse_pyproject(text: str, fallback: str) -> tuple[str, str]:
-    result = _parse_pyproject_tomllib(text, fallback)
-    if result is not None:
-        return result
+    tomllib_result = _parse_pyproject_tomllib(text, fallback)
+    if tomllib_result is not None:
+        return tomllib_result
     return _parse_pyproject_regex(text, fallback)
 
 

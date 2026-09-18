@@ -25,19 +25,19 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
     Returns: List of [file1, file2, ...] for each commit
     """
     try:
-        result = subprocess.run(
+        log_result = subprocess.run(
             ["git", "log", f"-{max_commits}", "--name-only", "--pretty=format:%H"],
             cwd=repo_path,
             capture_output=True,
             text=True,
         )
-        if result.returncode != 0:
+        if log_result.returncode != 0:
             return []
-        
+
         commits = []
         current_files: list[str] = []
-        
-        for line in result.stdout.strip().split("\n"):
+
+        for line in log_result.stdout.strip().split("\n"):
             if not line:
                 if current_files:
                     commits.append(current_files)

@@ -83,7 +83,7 @@ class GitContext:
 def _run(cmd: list[str], cwd: Path) -> str:
     """Run *cmd* in *cwd* and return stdout; return empty string on any failure."""
     try:
-        result = subprocess.run(
+        completed_process = subprocess.run(
             cmd,
             cwd=cwd,
             capture_output=True,
@@ -93,7 +93,7 @@ def _run(cmd: list[str], cwd: Path) -> str:
         )
     except (OSError, subprocess.TimeoutExpired):
         return ""
-    return result.stdout.strip() if result.returncode == 0 else ""
+    return completed_process.stdout.strip() if completed_process.returncode == 0 else ""
 
 
 def _is_git_repo(path: Path) -> bool:

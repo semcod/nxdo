@@ -76,29 +76,29 @@ def _load_project_state(project_path: Path) -> KoruProjectState:
     # Load open planfile tickets
     try:
         from koruapi.invoke import invoke_integration
-        result = invoke_integration(
+        tickets_result = invoke_integration(
             "planfile.tickets",
             project=project_path,
             method="list",
             body={"status": "open"},
         )
-        if result.get("ok"):
-            state.open_tickets = result.get("tickets", [])[:10]
+        if tickets_result.get("ok"):
+            state.open_tickets = tickets_result.get("tickets", [])[:10]
     except Exception:
         pass
 
     # Load doctor status
     try:
         from koruapi.invoke import invoke_integration
-        result = invoke_integration(
+        doctor_result = invoke_integration(
             "doctor.run",
             project=project_path,
             method="run",
             body={},
         )
-        if result.get("ok") is not None:
-            report = result.get("report", {})
-            state.doctor_ok = result.get("ok", True)
+        if doctor_result.get("ok") is not None:
+            report = doctor_result.get("report", {})
+            state.doctor_ok = doctor_result.get("ok", True)
             state.doctor_issues = [
                 f"{check}: {msg}"
                 for check, msg in report.get("failures", {}).items()
