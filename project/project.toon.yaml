@@ -1,56 +1,53 @@
-# nxdo | 111 func | 15f | 3779L | python | 2026-06-16
+# nxdo | 126 func | 16f | 5498L | python | 2026-09-18
 # generated in 0.00s
 
 HEALTH:
-  CC̄=4.0  critical=9 (limit:10)  dup=0  cycles=1
+  CC̄=3.7  critical=9 (limit:10)  dup=0  cycles=0
 
-ALERTS[20]:
-  !!  high_fan_out     cmd_auto = 18 (limit:10)
-  !!  high_fan_out     cmd_tickets = 17 (limit:10)
-  !!  high_fan_out     main = 16 (limit:10)
-  !!  high_fan_out     identify_bug_hotspots = 16 (limit:10)
+ALERTS[13]:
   !!  high_fan_out     cmd_metrics = 15 (limit:10)
-  !!  high_fan_out     collect_file_metrics = 15 (limit:10)
-  !   cc_exceeded      collect_coupling_matrix = 18 (limit:15)
-  !   cc_exceeded      identify_bug_hotspots = 16 (limit:15)
-  !   high_fan_out     cmd_plan = 12 (limit:10)
-  !   high_fan_out     _build_tree = 12 (limit:10)
+  !!  high_fan_out     cmd_auto = 15 (limit:10)
+  !!  high_fan_out     _build_tree = 15 (limit:10)
+  !   high_fan_out     cmd_tickets = 14 (limit:10)
+  !   high_fan_out     OpenAICompatProvider._call_api = 13 (limit:10)
+  !   high_fan_out     main = 12 (limit:10)
+  !   high_fan_out     _calculate_fan_in = 12 (limit:10)
+  !   high_fan_out     cmd_print_context = 11 (limit:10)
+  !   high_fan_out     get_coupling_clusters = 11 (limit:10)
+  !   high_fan_out     _create_task_from_dict = 10 (limit:10)
 
-MODULES[26] (top by size):
-  M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[src/nxdo/cli.py] 380L C:0 F:14 CC↑11 D:0 (python)
-  M[src/nxdo/metrics/complexity.py] 300L C:1 F:8 CC↑14 D:1 (python)
+MODULES[35] (top by size):
+  M[goal.yaml] 528L C:0 F:0 CC↑0 D:0 (yaml)
+  M[examples/nxdo-self-prompt.txt] 482L C:0 F:0 CC↑0 D:0 (txt)
+  M[examples/nxdo-self-context.txt] 468L C:0 F:0 CC↑0 D:0 (txt)
+  M[src/nxdo/cli.py] 388L C:0 F:16 CC↑11 D:0 (python)
+  M[src/nxdo/providers/openai_compat.py] 310L C:2 F:11 CC↑12 D:1 (python)
+  M[src/nxdo/metrics/complexity.py] 301L C:1 F:10 CC↑14 D:1 (python)
+  M[src/nxdo/project_analyzer.py] 285L C:1 F:19 CC↑5 D:2 (python)
   M[src/nxdo/koru_context.py] 283L C:3 F:6 CC↑7 D:2 (python)
-  M[src/nxdo/project_analyzer.py] 282L C:1 F:20 CC↑6 D:2 (python)
   M[src/nxdo/ticket_generator.py] 280L C:0 F:12 CC↑8 D:1 (python)
-  M[src/nxdo/metrics/hotspots.py] 270L C:1 F:5 CC↑16 D:1 (python)
+  M[src/nxdo/metrics/hotspots.py] 271L C:1 F:8 CC↑14 D:1 (python)
   M[src/nxdo/git_reader.py] 268L C:2 F:21 CC↑7 D:2 (python)
-  M[src/nxdo/providers/openai_compat.py] 204L C:1 F:8 CC↑6 D:1 (python)
-  M[src/nxdo/metrics/coupling.py] 194L C:1 F:3 CC↑18 D:1 (python)
+  M[src/nxdo/metrics/coupling.py] 198L C:1 F:5 CC↑13 D:1 (python)
+  M[examples/nxdo-self-plan.txt] 171L C:0 F:0 CC↑0 D:0 (txt)
   M[strategy.yaml] 142L C:0 F:0 CC↑0 D:0 (yaml)
-  M[pyproject.toml] 98L C:0 F:0 CC↑0 D:0 (toml)
-  M[src/nxdo/models.py] 90L C:4 F:4 CC↑7 D:0 (python)
-  M[src/nxdo/llm_client.py] 85L C:1 F:4 CC↑3 D:2 (python)
-  M[src/nxdo/output.py] 67L C:0 F:3 CC↑4 D:1 (python)
-  LANGS: python:19/yaml:4/shell:1/toml:1/txt:1
+  M[koru.yaml] 141L C:0 F:0 CC↑0 D:0 (yaml)
+  LANGS: python:19/yaml:7/txt:6/shell:2/toml:1
 
 HOTSPOTS[10]:
-  ★ cmd_auto fan=18  // Auto-generate and sync tickets for the most important work.
+  ★ cmd_metrics fan=15  // Display code metrics: complexity, coupling, hotspots.
+  ★ cmd_auto fan=15  // Auto-generate and sync tickets for the most important work.
 
 This command automa
-  ★ cmd_tickets fan=17  // Generate tickets from a plan using planfile integration.
-  ★ main fan=16  // Compatibility shim — maps legacy argparse argv to Typer sub-commands.
-  ★ identify_bug_hotspots fan=16  // Identify files with high bug-fix density and code churn.
+  ★ _build_tree fan=15  // Build ASCII tree representation of directory structure.
+  ★ cmd_tickets fan=14  // Generate tickets from a plan using planfile integration.
+  ★ OpenAICompatProvider._call_api fan=13  // Orchestrates 13 calls
 
-These files are risky 
-  ★ cmd_metrics fan=15  // Display code metrics: complexity, coupling, hotspots.
-
-REFACTOR[7]:
-  [1] H/H Split god module goal.yaml (512L, 0 classes)
-  [2] M/L Split identify_bug_hotspots (CC=16)
-  [3] M/L Split collect_coupling_matrix (CC=18)
-  [4] M/L Break circular dependency: src.nxdo.project_analyzer._build_tree → src.nxdo.project_analyzer._get_subtree_lines
-  [5] M/M Reduce cmd_auto fan-out (currently 18)
+REFACTOR[4]:
+  [1] H/H Split god module goal.yaml (528L, 0 classes)
+  [2] M/M Reduce cmd_metrics fan-out (currently 15)
+  [3] M/M Reduce cmd_auto fan-out (currently 15)
+  [4] M/M Reduce _build_tree fan-out (currently 15)
 
 EVOLUTION:
-  2026-06-16 CC̄=4.0 crit=9 3779L // Automated analysis
+  2026-09-18 CC̄=3.7 crit=9 5498L // Automated analysis

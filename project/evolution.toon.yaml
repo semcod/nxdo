@@ -1,17 +1,9 @@
-# code2llm/evolution | 111 func | 15f | 2026-06-16
+# code2llm/evolution | 122 func | 15f | 2026-09-18
 # generated in 0.00s
 
-NEXT[3] (ranked by impact):
-  [1] !  SPLIT-FUNC      identify_bug_hotspots  CC=16  fan=16
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 256
-
-  [2] !  SPLIT-FUNC      collect_coupling_matrix  CC=18  fan=11
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 198
-
-  [3] !! SPLIT           goal.yaml
-      WHY: 512L, 0 classes, max CC=0
+NEXT[1] (ranked by impact):
+  [1] !! SPLIT           goal.yaml
+      WHY: 528L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
@@ -19,10 +11,10 @@ RISKS[1]:
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          4.0 → ≤2.8
-  max-CC:      18 → ≤9
+  CC̄:          3.9 → ≤2.7
+  max-CC:      14 → ≤7
   god-modules: 1 → 0
-  high-CC(≥15): 2 → ≤1
+  high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -50,4 +42,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=4.0 → now CC̄=4.0
+  prev CC̄=3.9 → now CC̄=3.9
