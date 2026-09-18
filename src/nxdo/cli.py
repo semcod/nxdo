@@ -1,7 +1,6 @@
 """CLI for generating the next 10 project tasks."""
 
 import json
-import sys
 from pathlib import Path
 from typing import Optional
 
@@ -29,28 +28,19 @@ console = Console()
 err_console = Console(stderr=True)
 
 
-def _build_provider(
-    model: Optional[str],
-    base_url: Optional[str],
-    settings: NxdoSettings,
-    *,
-    koru_aware: bool = False,
-) -> OpenAICompatProvider:
-    """Build the LLM provider shared by the planning commands."""
-    return OpenAICompatProvider(
-        model=model, base_url=base_url, settings=settings, koru_aware=koru_aware
-    )
-
-
 def _generate_plan(
     *,
     repo_path: Path,
     extra_context: str,
-    provider: OpenAICompatProvider,
+    model: Optional[str],
+    base_url: Optional[str],
     settings: NxdoSettings,
     koru_aware: bool = False,
 ) -> TaskPlan:
-    """Run the planning pipeline, surfacing provider errors as a user-facing exit."""
+    """Build the LLM provider and run the planning pipeline for a command."""
+    provider = OpenAICompatProvider(
+        model=model, base_url=base_url, settings=settings, koru_aware=koru_aware
+    )
     try:
         return generate_next_tasks(
             repo_path=repo_path,
@@ -85,11 +75,11 @@ def cmd_plan(
     if max_commits != 30:
         cfg.max_commits = max_commits  # type: ignore[misc]
 
-    provider = _build_provider(model, base_url, cfg)
     plan = _generate_plan(
         repo_path=repo.resolve(),
         extra_context=extra_context,
-        provider=provider,
+        model=model,
+        base_url=base_url,
         settings=cfg,
     )
 
@@ -204,11 +194,11 @@ def cmd_tickets(
     if max_commits != 30:
         cfg.max_commits = max_commits  # type: ignore[misc]
 
-    provider = _build_provider(model, base_url, cfg, koru_aware=koru_aware)
     plan = _generate_plan(
         repo_path=repo.resolve(),
         extra_context=extra_context,
-        provider=provider,
+        model=model,
+        base_url=base_url,
         settings=cfg,
         koru_aware=koru_aware,
     )
@@ -330,11 +320,11 @@ def cmd_auto(
     console.print("\n[bold]Generating koru-aware tickets...[/bold]")
 
     cfg = get_settings()
-    provider = _build_provider(None, None, cfg, koru_aware=True)
     plan = _generate_plan(
         repo_path=repo_path,
         extra_context=extra_context or "Focus on critical hotspots and technical debt",
-        provider=provider,
+        model=None,
+        base_url=None,
         settings=cfg,
         koru_aware=True,
     )
@@ -380,17 +370,16 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     cfg = get_settings()
-    provider = _build_provider(args.model, args.base_url, cfg)
     try:
-        plan = generate_next_tasks(
+        plan = _generate_plan(
             repo_path=repo_path,
             extra_context=args.extra_context,
-            provider=provider,
+            model=args.model,
+            base_url=args.base_url,
             settings=cfg,
         )
-    except ValueError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
-        return 1
+    except typer.Exit as exit_request:
+        return int(exit_request.exit_code)
 
     if args.json:
         print(json.dumps(plan.to_dict(), indent=2))
