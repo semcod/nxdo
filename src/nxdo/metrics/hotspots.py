@@ -28,20 +28,20 @@ def _get_file_commits_with_info(
     """Get commits for specific file: [(hash, author, added+deleted), ...]."""
     try:
         # Get commit info with stats
-        result = subprocess.run(
+        commit_log_result = subprocess.run(
             ["git", "log", f"--since={since}", "--format=%H|%an", "--numstat", "--", file_path],
             cwd=repo_path,
             capture_output=True,
             text=True,
         )
-        if result.returncode != 0:
+        if commit_log_result.returncode != 0:
             return [], 0
         
         commits = []
         current_author = ""
         churn = 0
         
-        for line in result.stdout.strip().split("\n"):
+        for line in commit_log_result.stdout.strip().split("\n"):
             if "|" in line and not line.startswith("\t"):
                 # Commit hash|author line
                 parts = line.split("|")
@@ -73,17 +73,17 @@ def _get_bug_fix_commits(repo_path: Path, file_path: str, since: str = "90.days.
     bug_patterns = ["fix", "bug", "repair", "hotfix", "patch", "resolve", "issue"]
     
     try:
-        result = subprocess.run(
+        bug_log_result = subprocess.run(
             ["git", "log", f"--since={since}", "--format=%H", "-i",
              *(f"--grep={pattern}" for pattern in bug_patterns), "--", file_path],
             cwd=repo_path,
             capture_output=True,
             text=True,
         )
-        if result.returncode != 0:
+        if bug_log_result.returncode != 0:
             return 0
         # Git combines these patterns with OR and emits each commit once.
-        return len({line.strip() for line in result.stdout.splitlines() if line.strip()})
+        return len({line.strip() for line in bug_log_result.stdout.splitlines() if line.strip()})
     except Exception:
         return 0
 
@@ -197,14 +197,14 @@ def calculate_bus_factor(
     """
     if files is None:
         try:
-            result = subprocess.run(
+            ls_files_result = subprocess.run(
                 ["git", "ls-files"],
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
             )
-            if result.returncode == 0:
-                files = [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
+            if ls_files_result.returncode == 0:
+                files = [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
             else:
                 return {}
         except Exception:
@@ -219,14 +219,14 @@ def calculate_bus_factor(
         
         try:
             # Get unique authors
-            result = subprocess.run(
+            authors_result = subprocess.run(
                 ["git", "log", "--format=%an", "--", file_path],
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
             )
-            if result.returncode == 0:
-                authors = set(line.strip() for line in result.stdout.strip().split("\n") if line.strip())
+            if authors_result.returncode == 0:
+                authors = set(line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip())
                 author_count = len(authors)
                 
                 if author_count <= critical_threshold:
@@ -253,14 +253,14 @@ def get_critical_bus_factor_files(
     
     for file_path, author_count in bus_factors.items():
         try:
-            result = subprocess.run(
+            authors_result = subprocess.run(
                 ["git", "log", "--format=%an", "--", file_path],
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
             )
-            if result.returncode == 0:
-                authors = list(set(line.strip() for line in result.stdout.strip().split("\n") if line.strip()))
+            if authors_result.returncode == 0:
+                authors = list(set(line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip()))
                 critical.append((file_path, author_count, authors))
         except Exception:
             pass
