@@ -109,18 +109,18 @@ def _extract_error_detail(response_body: str) -> str:
     if not body:
         return ""
     try:
-        data = json.loads(body)
+        error_json = json.loads(body)
     except (json.JSONDecodeError, TypeError):
         return body[:500]
-    if isinstance(data, dict):
-        error = data.get("error")
+    if isinstance(error_json, dict):
+        error = error_json.get("error")
         if isinstance(error, dict):
             message = error.get("message")
             if isinstance(message, str) and message.strip():
                 return message.strip()
         if isinstance(error, str) and error.strip():
             return error.strip()
-        message = data.get("message")
+        message = error_json.get("message")
         if isinstance(message, str) and message.strip():
             return message.strip()
     return body[:500]
@@ -220,7 +220,7 @@ class OpenAICompatProvider(LLMProvider):
             )
 
         try:
-            data = response.json()
+            response_json = response.json()
         except (json.JSONDecodeError, ValueError) as exc:
             raise LLMAPIError(
                 f"LLM API returned a non-JSON success response: {exc}",
@@ -231,10 +231,10 @@ class OpenAICompatProvider(LLMProvider):
             ) from exc
 
         try:
-            return data["choices"][0]["message"]["content"].strip()
+            return response_json["choices"][0]["message"]["content"].strip()
         except (KeyError, IndexError, AttributeError, TypeError) as exc:
             raise LLMAPIError(
-                f"Unexpected LLM response payload (missing {exc}). Received: {data}",
+                f"Unexpected LLM response payload (missing {exc}). Received: {response_json}",
                 model=self.model,
             ) from exc
 
@@ -250,14 +250,14 @@ def _strip_markdown_fences(raw: str) -> str:
 def _parse_json_response(raw: str) -> dict:
     """Parse JSON from raw response with error handling."""
     try:
-        data = json.loads(raw)
+        parsed_json = json.loads(raw)
     except json.JSONDecodeError as exc:
         raise ValueError(f"LLM returned invalid JSON. Raw response:\n{raw[:500]}") from exc
 
-    if not isinstance(data, dict):
-        raise ValueError(f"Expected a JSON object, got: {type(data).__name__}")
+    if not isinstance(parsed_json, dict):
+        raise ValueError(f"Expected a JSON object, got: {type(parsed_json).__name__}")
 
-    return data
+    return parsed_json
 
 
 def _create_task_from_dict(item: dict, task_index: int) -> Task:
@@ -298,12 +298,12 @@ def _parse_tasks_from_data(data: dict) -> list[Task]:
 def _parse_response(raw: str, project_name: str, model: str) -> TaskPlan:
     """Parse and validate the raw JSON response from the LLM."""
     raw = _strip_markdown_fences(raw)
-    data = _parse_json_response(raw)
-    tasks = _parse_tasks_from_data(data)
+    plan_json = _parse_json_response(raw)
+    tasks = _parse_tasks_from_data(plan_json)
 
     return TaskPlan(
-        project_name=data.get("project_name", project_name),
-        summary=data.get("summary", ""),
+        project_name=plan_json.get("project_name", project_name),
+        summary=plan_json.get("summary", ""),
         tasks=tasks,
         generated_at=datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         model_used=model,
