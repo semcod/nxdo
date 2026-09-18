@@ -18,11 +18,16 @@ _PRIORITY_STYLE = {
 }
 
 
+def _resolve_console(console: Console | None) -> Console:
+    """Return the caller-provided console or create the default one."""
+    return console if console is not None else Console()
+
+
 def render_plan(plan: TaskPlan, console: Console | None = None) -> None:
     """Render a TaskPlan as a Rich table with a summary panel."""
-    console = console or Console()
+    out = _resolve_console(console)
 
-    console.print(
+    out.print(
         Panel(
             f"[bold]{plan.project_name}[/bold]\n\n{plan.summary}",
             title="Task Plan",
@@ -51,17 +56,16 @@ def render_plan(plan: TaskPlan, console: Console | None = None) -> None:
             task.description,
         )
 
-    console.print(table)
+    out.print(table)
 
 
 def render_plan_json(plan: TaskPlan, console: Console | None = None) -> None:
     """Print the plan as indented JSON."""
-    console = console or Console()
-    console.print_json(json.dumps(plan.to_dict(), indent=2))
+    _resolve_console(console).print_json(json.dumps(plan.to_dict(), indent=2))
 
 
 def render_context(project_text: str, git_text: str, console: Console | None = None) -> None:
     """Render captured project and git context for inspection."""
-    console = console or Console()
-    console.print(Panel(project_text, title="Project Snapshot", border_style="green"))
-    console.print(Panel(git_text, title="Git Context", border_style="cyan"))
+    out = _resolve_console(console)
+    out.print(Panel(project_text, title="Project Snapshot", border_style="green"))
+    out.print(Panel(git_text, title="Git Context", border_style="cyan"))
