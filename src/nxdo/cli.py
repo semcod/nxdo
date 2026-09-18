@@ -137,12 +137,12 @@ def cmd_validate(
 
     try:
         data = json.loads(plan_file.read_text(encoding="utf-8"))
-        plan = TaskPlan.model_validate(data)
+        loaded_plan = TaskPlan.model_validate(data)
     except (json.JSONDecodeError, ValueError) as exc:
         err_console.print(f"[bold red]Validation failed:[/bold red] {exc}")
         raise typer.Exit(code=1)
 
-    console.print(f"[bold green]✓[/bold green] Plan '{plan.project_name}' is valid ({len(plan.tasks)} tasks).")
+    console.print(f"[bold green]✓[/bold green] Plan '{loaded_plan.project_name}' is valid ({len(loaded_plan.tasks)} tasks).")
 
 
 def _sync_todos_if_requested(plan: TaskPlan, repo: Path, sync_todo: bool) -> None:
