@@ -201,6 +201,57 @@ def _calculate_fan_in(project_path: Path, all_files: list[Path]) -> dict[str, in
     return dict(fan_in)
 
 
+_IGNORE_PATTERNS = ["__pycache__", ".venv", "venv", "dist", "build", ".git", "node_modules"]
+
+
+def _find_source_files(project_path: Path, file_filter: set[str]) -> list[Path]:
+    """Find all files matching the given extensions, excluding ignore patterns."""
+    all_files: list[Path] = []
+    for ext in file_filter:
+        all_files.extend(project_path.rglob(f"*{ext}"))
+    
+    return [
+        f for f in all_files
+        if not any(pattern in str(f) for pattern in _IGNORE_PATTERNS)
+    ]
+
+
+def _build_file_metrics(
+    project_path: Path,
+    file_path: Path,
+    fan_in_map: dict[str, int],
+) -> FileMetrics | None:
+    """Compute metrics for a single file, or None if it cannot be read."""
+    try:
+        content = file_path.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return None
+    
+    rel_path = str(file_path.relative_to(project_path))
+    
+    loc, comments, blank = _count_lines(content)
+    cc = _calculate_cyclomatic_complexity(content)
+    stdlib, third_party, local, fan_out = _analyze_imports(content, rel_path)
+    typed, total, coverage = _analyze_types(content)
+    fan_in = fan_in_map.get(rel_path, 0)
+    
+    return FileMetrics(
+        file_path=rel_path,
+        lines_of_code=loc,
+        lines_of_comments=comments,
+        blank_lines=blank,
+        cyclomatic_complexity=cc,
+        fan_in=fan_in,
+        fan_out=fan_out,
+        typed_functions=typed,
+        total_functions=total,
+        type_coverage=coverage,
+        stdlib_imports=stdlib,
+        third_party_imports=third_party,
+        local_imports=local,
+    )
+
+
 def collect_file_metrics(
     project_path: Path,
     file_filter: set[str] | None = None,
@@ -217,67 +268,17 @@ def collect_file_metrics(
     if file_filter is None:
         file_filter = {".py"}
     
-    # Find all matching files
-    all_files: list[Path] = []
-    for ext in file_filter:
-        all_files.extend(project_path.rglob(f"*{ext}"))
-    
-    # Filter out common ignore patterns
-    ignore_patterns = ["__pycache__", ".venv", "venv", "dist", "build", ".git", "node_modules"]
-    all_files = [
-        f for f in all_files 
-        if not any(pattern in str(f) for pattern in ignore_patterns)
-    ]
-    
-    # Calculate fan-in across all files
+    all_files = _find_source_files(project_path, file_filter)
     fan_in_map = _calculate_fan_in(project_path, all_files)
     
-    # Analyze each file
-    metrics: list[FileMetrics] = []
-    
-    for file_path in all_files:
-        try:
-            content = file_path.read_text(encoding="utf-8", errors="ignore")
-        except Exception:
-            continue
-        
-        rel_path = str(file_path.relative_to(project_path))
-        
-        # Line counts
-        loc, comments, blank = _count_lines(content)
-        
-        # Complexity
-        cc = _calculate_cyclomatic_complexity(content)
-        
-        # Imports
-        stdlib, third_party, local, fan_out = _analyze_imports(content, rel_path)
-        
-        # Type coverage
-        typed, total, coverage = _analyze_types(content)
-        
-        # Fan-in
-        fan_in = fan_in_map.get(rel_path, 0)
-        
-        metrics.append(FileMetrics(
-            file_path=rel_path,
-            lines_of_code=loc,
-            lines_of_comments=comments,
-            blank_lines=blank,
-            cyclomatic_complexity=cc,
-            fan_in=fan_in,
-            fan_out=fan_out,
-            typed_functions=typed,
-            total_functions=total,
-            type_coverage=coverage,
-            stdlib_imports=stdlib,
-            third_party_imports=third_party,
-            local_imports=local,
-        ))
+    metrics = [
+        m
+        for m in (_build_file_metrics(project_path, f, fan_in_map) for f in all_files)
+        if m is not None
+    ]
     
     # Sort by cyclomatic complexity descending
-    metrics.sort(key=lambda x: x.cyclomatic_complexity, reverse=True)
-    
-    return metrics
+    return sorted(metrics, key=lambda x: x.cyclomatic_complexity, reverse=True)
 
 
 def get_high_complexity_files(
