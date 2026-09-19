@@ -918,6 +918,14 @@ sprint:
           Make the smallest refactor that removes the smell and run local tests.'
         source: koru task
         timestamp: '2026-09-18T18:52:15.416127+00:00'
+      - action: status_change
+        changes:
+        - outputs
+        - status
+        previous_status: open
+        source: planfile.store
+        status: done
+        timestamp: '2026-09-19T14:55:00.000000+00:00'
       id: PLF-065
       inputs:
         api_headers: {}
@@ -984,7 +992,8 @@ sprint:
       name: 'Address code smell: God Function: _count_lines'
       outputs:
         artifacts: []
-        notes: []
+        notes:
+        - 'Completed in dafe3c0 (Closes #67); mutations 8->1, smell cleared.'
       priority: normal
       source:
         context:
@@ -1025,13 +1034,13 @@ sprint:
         timestamp: '2026-09-18T18:52:15.416127+00:00'
         tool: koru-project-discovery
       sprint: current
-      status: open
+      status: done
       sync:
         github:
           id: '67'
           key: semcod/nxdo#67
           url: https://github.com/semcod/nxdo/issues/67
-      updated_at: '2026-09-18T18:52:15.416127+00:00'
+      updated_at: '2026-09-19T14:55:00.000000+00:00'
     PLF-067:
       backend: github
       blocked_by: []
