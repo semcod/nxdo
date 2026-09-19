@@ -4,7 +4,7 @@ import json
 import unittest
 from unittest.mock import MagicMock, patch
 
-from nxdo.providers.openai_compat import LLMAPIError, OpenAICompatProvider, _parse_response
+from nxdo.providers.openai_compat import LLMAPIError, OpenAICompatProvider, ResponseInputs, _parse_response
 
 _VALID_RAW = json.dumps({
     "project_name": "demo",
@@ -26,19 +26,22 @@ _VALID_RAW = json.dumps({
 
 class ParseResponseTests(unittest.TestCase):
     def test_valid_response_parsed(self) -> None:
-        plan = _parse_response(_VALID_RAW, "demo", "model-x")
+        inputs = ResponseInputs(raw=_VALID_RAW, project_name="demo", model="model-x")
+        plan = _parse_response(inputs)
         self.assertEqual(plan.project_name, "demo")
         self.assertEqual(len(plan.tasks), 1)
         self.assertEqual(plan.tasks[0].title, "Add tests")
 
     def test_invalid_json_raises(self) -> None:
+        inputs = ResponseInputs(raw="not json", project_name="p", model="m")
         with self.assertRaises(ValueError) as ctx:
-            _parse_response("not json", "p", "m")
+            _parse_response(inputs)
         self.assertIn("invalid JSON", str(ctx.exception))
 
     def test_non_object_raises(self) -> None:
+        inputs = ResponseInputs(raw=json.dumps([1, 2, 3]), project_name="p", model="m")
         with self.assertRaises(ValueError) as ctx:
-            _parse_response(json.dumps([1, 2, 3]), "p", "m")
+            _parse_response(inputs)
         self.assertIn("JSON object", str(ctx.exception))
 
     def test_bad_task_priority_raises(self) -> None:
@@ -47,13 +50,14 @@ class ParseResponseTests(unittest.TestCase):
             "summary": "s",
             "tasks": [{"number": 1, "title": "T", "description": "D", "priority": "NOPE"}],
         })
+        inputs = ResponseInputs(raw=raw, project_name="p", model="m")
         with self.assertRaises(ValueError) as ctx:
-            _parse_response(raw, "p", "m")
+            _parse_response(inputs)
         self.assertIn("Invalid task data", str(ctx.exception))
 
     def test_fenced_code_block_stripped(self) -> None:
-        raw = f"```json\n{_VALID_RAW}\n```"
-        plan = _parse_response(raw, "demo", "m")
+        inputs = ResponseInputs(raw=f"```json\n{_VALID_RAW}\n```", project_name="demo", model="m")
+        plan = _parse_response(inputs)
         self.assertEqual(plan.project_name, "demo")
 
 

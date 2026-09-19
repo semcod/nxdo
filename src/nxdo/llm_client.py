@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 
 from .models import TaskPlan
-from .providers.openai_compat import OpenAICompatProvider, _parse_response
+from .providers.openai_compat import OpenAICompatProvider, ResponseInputs, _parse_response
 
 DEFAULT_MODEL = os.environ.get("LLM_MODEL", "openrouter/qwen/qwen3-coder-next")
 DEFAULT_BASE_URL = os.environ.get("LLM_BASE_URL", "https://openrouter.ai/api/v1")
@@ -48,7 +48,7 @@ def build_user_prompt(
 
 def parse_task_plan_response(raw: str, project_name: str, model: str) -> TaskPlan:
     """Parse a raw JSON string from the LLM into a TaskPlan. (Compatibility wrapper.)"""
-    return _parse_response(raw, project_name, model)
+    return _parse_response(ResponseInputs(raw=raw, project_name=project_name, model=model))
 
 
 class OpenAICompatibleLLMClient:

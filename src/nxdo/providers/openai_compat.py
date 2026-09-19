@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+from dataclasses import dataclass
 from datetime import datetime, timezone
 
 import httpx
@@ -153,7 +154,7 @@ class OpenAICompatProvider(LLMProvider):
 
     def generate_plan(self, user_prompt: str, project_name: str) -> TaskPlan:
         raw = self._call_api(user_prompt)
-        return _parse_response(raw, project_name, self.model)
+        return _parse_response(ResponseInputs(raw=raw, project_name=project_name, model=self.model))
 
     @retry(
         retry=retry_if_exception_type(httpx.TransportError),
@@ -238,6 +239,15 @@ class OpenAICompatProvider(LLMProvider):
             ) from exc
 
 
+@dataclass
+class ResponseInputs:
+    """Raw LLM response text plus the metadata needed to parse it into a TaskPlan."""
+
+    raw: str
+    project_name: str
+    model: str
+
+
 def _strip_markdown_fences(raw: str) -> str:
     """Remove markdown code fences from the response."""
     if raw.startswith("```"):
@@ -296,16 +306,16 @@ def _parse_tasks_from_data(plan_json: dict) -> list[Task]:
     return tasks
 
 
-def _parse_response(raw: str, project_name: str, model: str) -> TaskPlan:
+def _parse_response(inputs: ResponseInputs) -> TaskPlan:
     """Parse and validate the raw JSON response from the LLM."""
-    raw = _strip_markdown_fences(raw)
+    raw = _strip_markdown_fences(inputs.raw)
     plan_json = _parse_json_response(raw)
     tasks = _parse_tasks_from_data(plan_json)
 
     return TaskPlan(
-        project_name=plan_json.get("project_name", project_name),
+        project_name=plan_json.get("project_name", inputs.project_name),
         summary=plan_json.get("summary", ""),
         tasks=tasks,
         generated_at=datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-        model_used=model,
+        model_used=inputs.model,
     )
