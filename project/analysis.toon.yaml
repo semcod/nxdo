@@ -1,12 +1,12 @@
-# code2llm | 36f 5642L | python:20,yaml:7,txt:6,shell:2,toml:1 | 2026-09-19
+# code2llm | 37f 5784L | python:21,yaml:7,txt:6,shell:2,toml:1 | 2026-09-19
 # generated in 0.01s
-# CC̅=3.3 | critical:0/146 | dups:0 | cycles:0
+# CC̅=3.4 | critical:0/150 | dups:0 | cycles:0
 
 HEALTH[0]: ok
 
 REFACTOR[0]: none needed
 
-PIPELINES[33]:
+PIPELINES[34]:
   [1] Src [cmd_plan]: cmd_plan → _generate_plan → generate_next_tasks → analyze_project → ...(2 more)
       PURITY: 100% pure
   [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
@@ -73,8 +73,13 @@ PIPELINES[33]:
       PURITY: 100% pure
   [33] Src [get_critical_bus_factor_files]: get_critical_bus_factor_files → calculate_bus_factor → _resolve_target_files
       PURITY: 100% pure
+  [34] Src [main]: main → print
+      PURITY: 100% pure
 
 LAYERS:
+  scripts/                        CC̄=8.0    ←in:0  →out:3
+  │ check_import_layers        142L  0C    4m  CC=13     ←0
+  │
   src/                            CC̄=3.4    ←in:0  →out:0
   │ cli                        390L  1C   16m  CC=11     ←0
   │ complexity                 366L  4C   18m  CC=6      ←1
@@ -97,11 +102,11 @@ LAYERS:
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │ __main__                     5L  0C    0m  CC=0.0    ←0
   │
-  examples/                       CC̄=0.0    ←in:6  →out:0
+  examples/                       CC̄=0.0    ←in:9  →out:0
   │ nxdo-self-prompt.txt       482L  0C    0m  CC=0.0    ←0
   │ nxdo-self-context.txt      468L  0C    0m  CC=0.0    ←0
   │ nxdo-self-plan.txt         171L  0C    0m  CC=0.0    ←0
-  │ check-examples.sh           70L  0C    4m  CC=0.0    ←1
+  │ check-examples.sh           70L  0C    4m  CC=0.0    ←2
   │ nxdo-self-metrics.txt       48L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
@@ -121,15 +126,14 @@ LAYERS:
   │
 
 COUPLING:
-                    src.nxdo          nxdo      examples  nxdo.metrics
-      src.nxdo            ──            11             6             2  !! fan-out
-          nxdo           ←11            ──                              hub
-      examples            ←6                          ──                hub
-  nxdo.metrics            ←2                                        ──
+                    examples      src.nxdo       scripts  nxdo.metrics
+      examples            ──            ←6            ←3                hub
+      src.nxdo             6            ──                           2  !! fan-out
+       scripts             3                          ──              
+  nxdo.metrics                          ←2                          ──
   CYCLES: none
-  HUB: examples/ (fan-in=6)
-  HUB: nxdo/ (fan-in=11)
-  SMELL: src.nxdo/ fan-out=19 → split needed
+  HUB: examples/ (fan-in=9)
+  SMELL: src.nxdo/ fan-out=8 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

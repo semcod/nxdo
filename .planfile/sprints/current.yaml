@@ -96,6 +96,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, user_prompt, self'
       outputs:
         artifacts: []
@@ -211,6 +216,11 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -386,6 +396,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: since, file_path, repo_path'
       outputs:
         artifacts: []
@@ -502,6 +517,11 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -669,6 +689,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: raw, project_name, model'
       outputs:
         artifacts: []
@@ -780,6 +805,11 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -945,6 +975,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, extra_context, max_commits'
       outputs:
         artifacts: []
@@ -1060,6 +1095,11 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1222,6 +1262,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: user_prompt, self, project_name'
       outputs:
         artifacts: []
@@ -1332,6 +1377,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1489,6 +1539,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _format_project_state_for_llm'
       outputs:
         artifacts: []
@@ -1598,6 +1653,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1751,6 +1811,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, self, user_prompt'
       outputs:
         artifacts: []
@@ -1866,6 +1931,11 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2017,6 +2087,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo_path, file_path, since'
       outputs:
         artifacts: []
@@ -2131,6 +2206,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2271,6 +2351,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _load_project_state'
       outputs:
         artifacts: []
@@ -2384,6 +2469,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2528,6 +2618,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _resolve_name_and_description'
       outputs:
         artifacts: []
@@ -2637,6 +2732,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2769,6 +2869,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_auto'
       outputs:
         artifacts: []
@@ -2876,6 +2981,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3004,6 +3114,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _build_tree'
       outputs:
         artifacts: []
@@ -3111,6 +3226,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3235,6 +3355,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_print_context'
       outputs:
         artifacts: []
@@ -3342,6 +3467,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3462,6 +3592,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: generate_next_tasks'
       outputs:
         artifacts: []
@@ -3569,6 +3704,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3685,6 +3825,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: main'
       outputs:
         artifacts: []
@@ -3795,6 +3940,11 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: render_plan'
       outputs:
         artifacts: []
@@ -3902,6 +4052,11 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       name: 'Address code smell: God Function: sync_to_planfile'
@@ -4122,3 +4277,287 @@ sprint:
       status: open
       sync: {}
       updated_at: '2026-09-19T19:40:41.349590Z'
+    PLF-140:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T20:23:02.979015+00:00'
+      description: 'code2llm reports `God Function: check_file` in `scripts/check_import_layers.py:93`.
+
+
+        Function ''check_file'' is oversized: CC=11, fan-out=11, mutations=6.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '132'
+      files:
+      - scripts/check_import_layers.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: check_file` in `scripts/check_import_layers.py:93`.
+
+
+          Function ''check_file'' is oversized: CC=11, fan-out=11, mutations=6.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T20:23:02.979015+00:00'
+      id: PLF-140
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: check_file` in `scripts/check_import_layers.py:93`.
+
+
+          Function ''check_file'' is oversized: CC=11, fan-out=11, mutations=6.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: check_file'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:scripts/check_import_layers.py:93:God
+            Function: check_file'
+          evidence:
+            artifact:
+              mtime_ns: 1789849376639282887
+              path: project/analysis.toon.yaml
+              sha256: 9ec5c7d6b503e66ea61b81172e26b9bce6eb9f05b016fa5ef551e33ed15cfb00
+              size_bytes: 7133
+            files:
+            - mtime_ns: 1789849188536355671
+              path: scripts/check_import_layers.py
+              sha256: 18a4bd7d2e8ec85340e15954f06b37847d26d738c73e15f24a0da2e81d31064e
+              size_bytes: 5398
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789849376682657089
+              path: project/planfile-tickets.yaml
+              sha256: 9cd350d806dddd44e1f54002e45ce7026d4f383be4dba44e67b2545ab56cbd1d
+              size_bytes: 12719
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: check_file` in `scripts/check_import_layers.py:93`.
+
+
+            Function ''check_file'' is oversized: CC=11, fan-out=11, mutations=6.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T20:23:02.979015+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '132'
+          key: semcod/nxdo#132
+          url: https://github.com/semcod/nxdo/issues/132
+      updated_at: '2026-09-19T20:23:02.979015+00:00'
+    PLF-141:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T20:26:43.463138+00:00'
+      description: 'code2llm reports `God Function: resolve_import` in `scripts/check_import_layers.py:70`.
+
+
+        Function ''resolve_import'' is oversized: CC=13, fan-out=5, mutations=5.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '133'
+      files:
+      - scripts/check_import_layers.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: resolve_import` in `scripts/check_import_layers.py:70`.
+
+
+          Function ''resolve_import'' is oversized: CC=13, fan-out=5, mutations=5.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T20:26:43.463138+00:00'
+      id: PLF-141
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: resolve_import` in `scripts/check_import_layers.py:70`.
+
+
+          Function ''resolve_import'' is oversized: CC=13, fan-out=5, mutations=5.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      name: 'Address code smell: God Function: resolve_import'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:scripts/check_import_layers.py:70:God
+            Function: resolve_import'
+          evidence:
+            artifact:
+              mtime_ns: 1789849376639282887
+              path: project/analysis.toon.yaml
+              sha256: 9ec5c7d6b503e66ea61b81172e26b9bce6eb9f05b016fa5ef551e33ed15cfb00
+              size_bytes: 7133
+            files:
+            - mtime_ns: 1789849188536355671
+              path: scripts/check_import_layers.py
+              sha256: 18a4bd7d2e8ec85340e15954f06b37847d26d738c73e15f24a0da2e81d31064e
+              size_bytes: 5398
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789849376682657089
+              path: project/planfile-tickets.yaml
+              sha256: 9cd350d806dddd44e1f54002e45ce7026d4f383be4dba44e67b2545ab56cbd1d
+              size_bytes: 12719
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: resolve_import` in `scripts/check_import_layers.py:70`.
+
+
+            Function ''resolve_import'' is oversized: CC=13, fan-out=5, mutations=5.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T20:26:43.463138+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '133'
+          key: semcod/nxdo#133
+          url: https://github.com/semcod/nxdo/issues/133
+      updated_at: '2026-09-19T20:26:43.463138+00:00'
+    PLF-143:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-19T20:43:02.902622Z'
+      description: 'Discovery pass PLF-142 verified that planning artifacts are stale
+        and mislead every later LLM/discovery pass.
+
+
+        Stale items to reconcile (verified 2026-09-19):
+
+        1. TODO.md task-3 (unit tests for sync-todo): tests already exist (tests/test_cli.py::test_cmd_tickets_sync_todo,
+        tests/test_ticket_generator.py sync_todo_section tests); the referenced branch
+        fix/lane-6-api-error-handling no longer exists.
+
+        2. TODO.md task-6 (fix API error handling): superseded by structured LLMAPIError
+        + tenacity retry in src/nxdo/providers/openai_compat.py; the referenced branch
+        is gone.
+
+        3. TODO.md task-7 (CLI integration tests): tests/test_cli_integration.py and
+        tests/test_auto_cli.py exist and pass.
+
+        4. todo.md (root): coverage targets already met (total 96% vs 95% goal; __main__.py
+        67% vs claimed 0%); listed CC hotspots are already covered by open tickets
+        PLF-099..PLF-141; listed duplication hotspots no longer exist in code.
+
+        5. project/duplication.toon.yaml (dated 2026-06-16) lists duplicates _get_git_branch/_get_git_remote
+        (git_reader.py:109-116) and _get_connector/_get_extension (project_analyzer.py:245-252)
+        — none of these functions exist anymore. Regenerate with redup or delete the
+        stale export.
+
+
+        Work: update both TODO files to reflect verified reality (check off / remove
+        stale items, keep genuinely open ones like git-context extraction task-2 only
+        if still relevant), and regenerate or remove the stale duplication export.
+        No broad code edits. Run pytest afterwards.'
+      dsl: SODL/1 id=evt_37c81bd981f7b0bc76d42a78 event_hash=6ccdab6fce25262f87019a7f6d29c9994866217bfe8bd9e9cc31c2e7c6bf8c51
+        timestamp=2026-09-19T20%3A43%3A02.902622%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-143 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-143%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-143 causation_id=- input_hash=7d3526637b8761d146836bbc165559c1752c2f1ce1e18510e4236995f91f15d1
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMjA6NDM6MDIuOTAyNjIyWiIsImRlc2NyaXB0aW9uIjoiRGlzY292ZXJ5IHBhc3MgUExGLTE0MiB2ZXJpZmllZCB0aGF0IHBsYW5uaW5nIGFydGlmYWN0cyBhcmUgc3RhbGUgYW5kIG1pc2xlYWQgZXZlcnkgbGF0ZXIgTExNL2Rpc2NvdmVyeSBwYXNzLlxuXG5TdGFsZSBpdGVtcyB0byByZWNvbmNpbGUgKHZlcmlmaWVkIDIwMjYtMDktMTkpOlxuMS4gVE9ETy5tZCB0YXNrLTMgKHVuaXQgdGVzdHMgZm9yIHN5bmMtdG9kbyk6IHRlc3RzIGFscmVhZHkgZXhpc3QgKHRlc3RzL3Rlc3RfY2xpLnB5Ojp0ZXN0X2NtZF90aWNrZXRzX3N5bmNfdG9kbywgdGVzdHMvdGVzdF90aWNrZXRfZ2VuZXJhdG9yLnB5IHN5bmNfdG9kb19zZWN0aW9uIHRlc3RzKTsgdGhlIHJlZmVyZW5jZWQgYnJhbmNoIGZpeC9sYW5lLTYtYXBpLWVycm9yLWhhbmRsaW5nIG5vIGxvbmdlciBleGlzdHMuXG4yLiBUT0RPLm1kIHRhc2stNiAoZml4IEFQSSBlcnJvciBoYW5kbGluZyk6IHN1cGVyc2VkZWQgYnkgc3RydWN0dXJlZCBMTE1BUElFcnJvciArIHRlbmFjaXR5IHJldHJ5IGluIHNyYy9ueGRvL3Byb3ZpZGVycy9vcGVuYWlfY29tcGF0LnB5OyB0aGUgcmVmZXJlbmNlZCBicmFuY2ggaXMgZ29uZS5cbjMuIFRPRE8ubWQgdGFzay03IChDTEkgaW50ZWdyYXRpb24gdGVzdHMpOiB0ZXN0cy90ZXN0X2NsaV9pbnRlZ3JhdGlvbi5weSBhbmQgdGVzdHMvdGVzdF9hdXRvX2NsaS5weSBleGlzdCBhbmQgcGFzcy5cbjQuIHRvZG8ubWQgKHJvb3QpOiBjb3ZlcmFnZSB0YXJnZXRzIGFscmVhZHkgbWV0ICh0b3RhbCA5NiUgdnMgOTUlIGdvYWw7IF9fbWFpbl9fLnB5IDY3JSB2cyBjbGFpbWVkIDAlKTsgbGlzdGVkIENDIGhvdHNwb3RzIGFyZSBhbHJlYWR5IGNvdmVyZWQgYnkgb3BlbiB0aWNrZXRzIFBMRi0wOTkuLlBMRi0xNDE7IGxpc3RlZCBkdXBsaWNhdGlvbiBob3RzcG90cyBubyBsb25nZXIgZXhpc3QgaW4gY29kZS5cbjUuIHByb2plY3QvZHVwbGljYXRpb24udG9vbi55YW1sIChkYXRlZCAyMDI2LTA2LTE2KSBsaXN0cyBkdXBsaWNhdGVzIF9nZXRfZ2l0X2JyYW5jaC9fZ2V0X2dpdF9yZW1vdGUgKGdpdF9yZWFkZXIucHk6MTA5LTExNikgYW5kIF9nZXRfY29ubmVjdG9yL19nZXRfZXh0ZW5zaW9uIChwcm9qZWN0X2FuYWx5emVyLnB5OjI0NS0yNTIpIOKAlCBub25lIG9mIHRoZXNlIGZ1bmN0aW9ucyBleGlzdCBhbnltb3JlLiBSZWdlbmVyYXRlIHdpdGggcmVkdXAgb3IgZGVsZXRlIHRoZSBzdGFsZSBleHBvcnQuXG5cbldvcms6IHVwZGF0ZSBib3RoIFRPRE8gZmlsZXMgdG8gcmVmbGVjdCB2ZXJpZmllZCByZWFsaXR5IChjaGVjayBvZmYgLyByZW1vdmUgc3RhbGUgaXRlbXMsIGtlZXAgZ2VudWluZWx5IG9wZW4gb25lcyBsaWtlIGdpdC1jb250ZXh0IGV4dHJhY3Rpb24gdGFzay0yIG9ubHkgaWYgc3RpbGwgcmVsZXZhbnQpLCBhbmQgcmVnZW5lcmF0ZSBvciByZW1vdmUgdGhlIHN0YWxlIGR1cGxpY2F0aW9uIGV4cG9ydC4gTm8gYnJvYWQgY29kZSBlZGl0cy4gUnVuIHB5dGVzdCBhZnRlcndhcmRzLiIsImZpbGVzIjpbIlRPRE8ubWQiLCJ0b2RvLm1kIiwicHJvamVjdC9kdXBsaWNhdGlvbi50b29uLnlhbWwiXSwiaWQiOiJQTEYtMTQzIiwiaW50ZWdyYXRpb24iOlsiZ2l0aHViIl0sImxhYmVscyI6WyJrb3J1Iiwic2NhbiIsImRvY3MiLCJjbGVhbnVwIl0sIm5hbWUiOiJSZWNvbmNpbGUgc3RhbGUgcGxhbm5pbmcgYXJ0aWZhY3RzIChUT0RPLm1kLCB0b2RvLm1kLCBkdXBsaWNhdGlvbi50b29uLnlhbWwpIHdpdGggdmVyaWZpZWQgc3RhdGUiLCJwcmlvcml0eSI6Im5vcm1hbCIsInNvdXJjZSI6eyJjb250ZXh0Ijp7fSwidGltZXN0YW1wIjoiMjAyNi0wOS0xOVQyMDo0MzowMi44OTAwODNaIiwidG9vbCI6ImtvcnUtc2NhbiJ9LCJzcHJpbnQiOiJjdXJyZW50Iiwic3RhdHVzIjoib3BlbiIsInN5bmMiOnt9LCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0xOVQyMDo0MzowMi45MDI2MjdaIn19
+      files:
+      - TODO.md
+      - todo.md
+      - project/duplication.toon.yaml
+      history: []
+      id: PLF-143
+      integration:
+      - github
+      labels:
+      - koru
+      - scan
+      - docs
+      - cleanup
+      name: Reconcile stale planning artifacts (TODO.md, todo.md, duplication.toon.yaml)
+        with verified state
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-19T20:43:02.890083Z'
+        tool: koru-scan
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-19T20:43:02.902627Z'

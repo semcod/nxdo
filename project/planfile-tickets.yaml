@@ -198,6 +198,25 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:131:God Function:
     analyze_project'
 - signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: check_file'
+  description: 'code2llm reports `God Function: check_file` in `scripts/check_import_layers.py:93`.
+
+
+    Function ''check_file'' is oversized: CC=11, fan-out=11, mutations=6.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - scripts/check_import_layers.py
+  dedupe_key: 'code2llm:smell:god_function:scripts/check_import_layers.py:93:God Function:
+    check_file'
+- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_auto'
   description: 'code2llm reports `God Function: cmd_auto` in `src/nxdo/cli.py:279`.
 
@@ -342,6 +361,25 @@ tickets:
   files:
   - src/nxdo/output.py
   dedupe_key: 'code2llm:smell:god_function:src/nxdo/output.py:26:God Function: render_plan'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: resolve_import'
+  description: 'code2llm reports `God Function: resolve_import` in `scripts/check_import_layers.py:70`.
+
+
+    Function ''resolve_import'' is oversized: CC=13, fan-out=5, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - scripts/check_import_layers.py
+  dedupe_key: 'code2llm:smell:god_function:scripts/check_import_layers.py:70:God Function:
+    resolve_import'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: sync_to_planfile'
   description: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:190`.

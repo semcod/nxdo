@@ -5,21 +5,21 @@
 
 - **Project**: /home/tom/github/semcod/nxdo
 - **Primary Language**: python
-- **Languages**: python: 20, yaml: 7, txt: 6, shell: 2, toml: 1
+- **Languages**: python: 21, yaml: 7, txt: 6, shell: 2, toml: 1
 - **Analysis Mode**: static
-- **Total Functions**: 146
+- **Total Functions**: 150
 - **Total Classes**: 26
-- **Modules**: 36
-- **Entry Points**: 40
+- **Modules**: 37
+- **Entry Points**: 41
 
 ## Architecture by Module
 
-### nxdo.git_reader
+### src.nxdo.git_reader
 - **Functions**: 19
 - **Classes**: 2
 - **File**: `git_reader.py`
 
-### nxdo.project_analyzer
+### src.nxdo.project_analyzer
 - **Functions**: 19
 - **Classes**: 1
 - **File**: `project_analyzer.py`
@@ -39,7 +39,7 @@
 - **Classes**: 1
 - **File**: `cli.py`
 
-### nxdo.ticket_generator
+### src.nxdo.ticket_generator
 - **Functions**: 13
 - **File**: `ticket_generator.py`
 
@@ -71,10 +71,14 @@
 - **Classes**: 1
 - **File**: `llm_client.py`
 
-### nxdo.models
+### src.nxdo.models
 - **Functions**: 4
 - **Classes**: 4
 - **File**: `models.py`
+
+### scripts.check_import_layers
+- **Functions**: 4
+- **File**: `check_import_layers.py`
 
 ### nxdo.text_builder
 - **Functions**: 3
@@ -120,16 +124,19 @@ This command automatically:
 
 ### src.nxdo.cli.cmd_print_context
 > Print the assembled project and git context (no LLM call).
-- **Calls**: app.command, typer.Argument, typer.Option, typer.Option, nxdo.project_analyzer.analyze_project, nxdo.git_reader.read_git_context, snapshot.to_text, git_ctx.to_text
+- **Calls**: app.command, typer.Argument, typer.Option, typer.Option, src.nxdo.project_analyzer.analyze_project, src.nxdo.git_reader.read_git_context, snapshot.to_text, git_ctx.to_text
 
 ### src.nxdo.cli.cmd_plan
 > Generate a 10-task plan for the repository.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, src.nxdo.cli._generate_plan
 
-### nxdo.models.TaskPlan.__str__
+### src.nxdo.models.TaskPlan.__str__
 - **Calls**: LineBuilder, builder.text, builder.line, builder.line, builder.line, builder.line, str, builder.line
 
-### nxdo.git_reader.GitContext.to_text
+### scripts.check_import_layers.main
+- **Calls**: sorted, examples.check-examples.print, PACKAGE_ROOT.rglob, scripts.check_import_layers.module_name, violations.extend, examples.check-examples.print, violations.append, scripts.check_import_layers.check_file
+
+### src.nxdo.git_reader.GitContext.to_text
 - **Calls**: LineBuilder, builder.line, builder.text, builder.line, builder.line, builder.line, builder.line, builder.line
 
 ### src.nxdo.cli.cmd_validate
@@ -143,7 +150,7 @@ This command automatically:
 > Print the full prompt that would be sent to the LLM.
 - **Calls**: app.command, typer.Argument, typer.Option, typer.Option, PromptInputs, examples.check-examples.print, Path, src.nxdo.cli._render_prompt_text
 
-### nxdo.project_analyzer.ProjectSnapshot.to_text
+### src.nxdo.project_analyzer.ProjectSnapshot.to_text
 - **Calls**: LineBuilder, self.file_contents.items, builder.text, builder.line, builder.line, None.join
 
 ### src.nxdo.metrics.hotspots.get_critical_bus_factor_files
@@ -156,7 +163,7 @@ Returns:
 ### src.nxdo.providers.openai_compat.OpenAICompatProvider._post_chat
 - **Calls**: httpx.Client, client.post, self._build_payload, self._build_headers
 
-### nxdo.git_reader.CommitInfo.__str__
+### src.nxdo.git_reader.CommitInfo.__str__
 - **Calls**: None.join, len, len
 
 ### src.nxdo.llm_client.OpenAICompatibleLLMClient.__init__
@@ -165,7 +172,7 @@ Returns:
 ### src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan
 - **Calls**: src.nxdo.llm_client.build_user_prompt, self._provider.generate_plan, PlanRequest
 
-### nxdo.models.Task.__str__
+### src.nxdo.models.Task.__str__
 - **Calls**: self.task_type.value.upper, int, int
 
 ### src.nxdo.providers.openai_compat.OpenAICompatProvider.generate_plan
@@ -204,9 +211,6 @@ Returns:
 ### nxdo.text_builder.LineBuilder.text
 > Return the accumulated lines joined with newlines.
 - **Calls**: None.join
-
-### nxdo.models.Task.to_dict
-- **Calls**: self.model_dump
 
 ## Process Flows
 
@@ -248,12 +252,12 @@ cmd_plan [src.nxdo.cli]
 
 ### Flow 7: __str__
 ```
-__str__ [nxdo.models.TaskPlan]
+__str__ [src.nxdo.models.TaskPlan]
 ```
 
 ### Flow 8: to_text
 ```
-to_text [nxdo.git_reader.GitContext]
+to_text [src.nxdo.git_reader.GitContext]
 ```
 
 ### Flow 9: cmd_validate
@@ -287,14 +291,14 @@ Kept for backwards compatibili
 - **Methods**: 2
 - **Key Methods**: src.nxdo.llm_client.OpenAICompatibleLLMClient.__init__, src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan
 
-### nxdo.models.Task
+### src.nxdo.models.Task
 - **Methods**: 2
-- **Key Methods**: nxdo.models.Task.__str__, nxdo.models.Task.to_dict
+- **Key Methods**: src.nxdo.models.Task.__str__, src.nxdo.models.Task.to_dict
 - **Inherits**: BaseModel
 
-### nxdo.models.TaskPlan
+### src.nxdo.models.TaskPlan
 - **Methods**: 2
-- **Key Methods**: nxdo.models.TaskPlan.__str__, nxdo.models.TaskPlan.to_dict
+- **Key Methods**: src.nxdo.models.TaskPlan.__str__, src.nxdo.models.TaskPlan.to_dict
 - **Inherits**: BaseModel
 
 ### src.nxdo.config.NxdoSettings
@@ -303,17 +307,17 @@ Kept for backwards compatibili
 - **Key Methods**: src.nxdo.config.NxdoSettings.api_key
 - **Inherits**: BaseSettings
 
-### nxdo.git_reader.CommitInfo
+### src.nxdo.git_reader.CommitInfo
 - **Methods**: 1
-- **Key Methods**: nxdo.git_reader.CommitInfo.__str__
+- **Key Methods**: src.nxdo.git_reader.CommitInfo.__str__
 
-### nxdo.git_reader.GitContext
+### src.nxdo.git_reader.GitContext
 - **Methods**: 1
-- **Key Methods**: nxdo.git_reader.GitContext.to_text
+- **Key Methods**: src.nxdo.git_reader.GitContext.to_text
 
-### nxdo.project_analyzer.ProjectSnapshot
+### src.nxdo.project_analyzer.ProjectSnapshot
 - **Methods**: 1
-- **Key Methods**: nxdo.project_analyzer.ProjectSnapshot.to_text
+- **Key Methods**: src.nxdo.project_analyzer.ProjectSnapshot.to_text
 
 ### src.nxdo.providers.base.LLMProvider
 > Interface every LLM backend must implement.
@@ -345,11 +349,11 @@ Subclasses :class:`ValueError` so existing c
 > Full koru context for enriching the nxdo LLM prompt.
 - **Methods**: 0
 
-### nxdo.models.Priority
+### src.nxdo.models.Priority
 - **Methods**: 0
 - **Inherits**: str, Enum
 
-### nxdo.models.TaskType
+### src.nxdo.models.TaskType
 - **Methods**: 0
 - **Inherits**: str, Enum
 
@@ -374,17 +378,17 @@ Key functions that process and transform data:
 > Validate a saved JSON plan file against the TaskPlan schema.
 - **Output to**: app.command, typer.Argument, console.print, json.loads, TaskPlan.model_validate
 
-### nxdo.git_reader._format_file_summary
+### src.nxdo.git_reader._format_file_summary
 > Format file frequency summary as a list of strings.
 - **Output to**: sorted, file_freq.items
 
-### nxdo.git_reader._parse_commit_metadata
+### src.nxdo.git_reader._parse_commit_metadata
 > Parse a commit metadata line and return hash, author, date, message.
 - **Output to**: line.split, len
 
-### nxdo.git_reader._parse_commits
+### src.nxdo.git_reader._parse_commits
 > Parse git log output into list of CommitInfo objects.
-- **Output to**: log_raw.splitlines, nxdo.git_reader._finalize_commit, nxdo.git_reader._parse_commit_metadata, nxdo.git_reader._finalize_commit, line.strip
+- **Output to**: log_raw.splitlines, src.nxdo.git_reader._finalize_commit, src.nxdo.git_reader._parse_commit_metadata, src.nxdo.git_reader._finalize_commit, line.strip
 
 ### src.nxdo.llm_client.parse_task_plan_response
 > Parse a raw JSON string from the LLM into a TaskPlan. (Compatibility wrapper.)
@@ -398,21 +402,21 @@ Key functions that process and transform data:
 > Format current koru project state for LLM prompt.
 - **Output to**: state_lines.append, state_lines.append, state_lines.append, state_lines.append, None.join
 
-### nxdo.project_analyzer._parse_pyproject_tomllib
+### src.nxdo.project_analyzer._parse_pyproject_tomllib
 > Parse pyproject.toml using tomllib if available.
 - **Output to**: parsed.get, isinstance, tomllib.loads, project.get, project.get
 
-### nxdo.project_analyzer._parse_pyproject_regex
+### src.nxdo.project_analyzer._parse_pyproject_regex
 > Parse pyproject.toml using regex fallback.
 - **Output to**: re.search, re.search, name_match.group, description_match.group
 
-### nxdo.project_analyzer._parse_pyproject
-- **Output to**: nxdo.project_analyzer._parse_pyproject_tomllib, nxdo.project_analyzer._parse_pyproject_regex
+### src.nxdo.project_analyzer._parse_pyproject
+- **Output to**: src.nxdo.project_analyzer._parse_pyproject_tomllib, src.nxdo.project_analyzer._parse_pyproject_regex
 
-### nxdo.project_analyzer._parse_package_json
+### src.nxdo.project_analyzer._parse_package_json
 - **Output to**: json.loads, package_json.get, package_json.get, path.read_text
 
-### nxdo.project_analyzer._parse_cargo
+### src.nxdo.project_analyzer._parse_cargo
 - **Output to**: re.search, re.search, name_match.group, description_match.group
 
 ### src.nxdo.providers.openai_compat.OpenAICompatProvider._parse_success_json
@@ -438,42 +442,42 @@ Functions exposed as public API (no underscore prefix):
 - `src.nxdo.cli.cmd_auto` - 30 calls
 - `src.nxdo.cli.cmd_tickets` - 25 calls
 - `src.nxdo.cli.main` - 21 calls
+- `scripts.check_import_layers.check_file` - 15 calls
 - `src.nxdo.cli.cmd_print_context` - 14 calls
 - `src.nxdo.output.render_plan` - 14 calls
 - `src.nxdo.cli.cmd_plan` - 13 calls
-- `nxdo.ticket_generator.sync_to_planfile` - 13 calls
+- `src.nxdo.ticket_generator.sync_to_planfile` - 13 calls
 - `src.nxdo.metrics.coupling.get_coupling_clusters` - 13 calls
-- `nxdo.git_reader.GitContext.to_text` - 10 calls
+- `scripts.check_import_layers.main` - 12 calls
+- `src.nxdo.git_reader.GitContext.to_text` - 10 calls
 - `src.nxdo.planner.generate_next_tasks` - 10 calls
 - `src.nxdo.cli.cmd_validate` - 9 calls
 - `src.nxdo.cli.cmd_print_prompt` - 8 calls
-- `nxdo.git_reader.read_git_context` - 8 calls
+- `src.nxdo.git_reader.read_git_context` - 8 calls
 - `src.nxdo.koru_context.build_koru_context` - 8 calls
 - `src.nxdo.metrics.coupling.collect_coupling_matrix` - 7 calls
-- `nxdo.ticket_generator.sync_to_todo_md` - 6 calls
-- `nxdo.project_analyzer.ProjectSnapshot.to_text` - 6 calls
+- `scripts.check_import_layers.resolve_import` - 7 calls
+- `src.nxdo.ticket_generator.sync_to_todo_md` - 6 calls
+- `src.nxdo.project_analyzer.ProjectSnapshot.to_text` - 6 calls
 - `src.nxdo.output.render_context` - 5 calls
-- `nxdo.project_analyzer.analyze_project` - 5 calls
+- `src.nxdo.project_analyzer.analyze_project` - 5 calls
 - `src.nxdo.metrics.hotspots.get_critical_bus_factor_files` - 5 calls
 - `src.nxdo.output.render_plan_json` - 4 calls
-- `nxdo.ticket_generator.export_to_planfile_yaml` - 4 calls
+- `src.nxdo.ticket_generator.export_to_planfile_yaml` - 4 calls
 - `nxdo.metrics.complexity.collect_file_metrics` - 4 calls
 - `src.nxdo.metrics.hotspots.identify_bug_hotspots` - 4 calls
 - `src.nxdo.metrics.hotspots.calculate_bus_factor` - 4 calls
+- `scripts.check_import_layers.module_name` - 4 calls
 - `src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan` - 3 calls
 - `src.nxdo.providers.openai_compat.OpenAICompatProvider.generate_plan` - 3 calls
 - `src.nxdo.config.get_settings` - 2 calls
 - `src.nxdo.llm_client.parse_task_plan_response` - 2 calls
-- `nxdo.ticket_generator.task_plan_to_tickets` - 2 calls
+- `src.nxdo.ticket_generator.task_plan_to_tickets` - 2 calls
 - `src.nxdo.cli.app_entry` - 1 calls
 - `src.nxdo.llm_client.build_user_prompt` - 1 calls
 - `nxdo.text_builder.LineBuilder.line` - 1 calls
 - `nxdo.text_builder.LineBuilder.text` - 1 calls
-- `nxdo.models.Task.to_dict` - 1 calls
-- `nxdo.models.TaskPlan.to_dict` - 1 calls
-- `examples.check-examples.fail` - 0 calls
-- `examples.check-examples.pass` - 0 calls
-- `examples.check-examples.require_file` - 0 calls
+- `src.nxdo.models.Task.to_dict` - 1 calls
 
 ## System Interactions
 
@@ -504,13 +508,13 @@ graph TD
     __str__ --> LineBuilder
     __str__ --> text
     __str__ --> line
+    main --> sorted
+    main --> print
+    main --> rglob
+    main --> module_name
+    main --> extend
     to_text --> LineBuilder
     to_text --> line
-    to_text --> text
-    cmd_validate --> command
-    cmd_validate --> Argument
-    cmd_validate --> print
-    cmd_validate --> loads
 ```
 
 ## Reverse Engineering Guidelines

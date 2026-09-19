@@ -1,11 +1,11 @@
-# nxdo | 36f 5642L | yaml:7,txt:6,toml:1,shell:2,python:20 | 2026-09-19
+# nxdo | 37f 5784L | yaml:7,txt:6,toml:1,shell:2,python:21 | 2026-09-19
 # generated in 0.01s
-# stats: 146 func | 0 cls | 36 mod | CC̄=3.3 | critical:0 | cycles:0
-# alerts[5]: fan-out cmd_auto=15; fan-out cmd_metrics=15; fan-out cmd_tickets=14; fan-out main=13; fan-out cmd_print_context=11
+# stats: 150 func | 0 cls | 37 mod | CC̄=3.4 | critical:0 | cycles:0
+# alerts[5]: fan-out cmd_auto=15; fan-out cmd_metrics=15; fan-out cmd_tickets=14; fan-out main=13; fan-out check_file=11
 # hotspots[5]: cmd_metrics fan=15; cmd_auto fan=15; cmd_tickets fan=14; main fan=13; cmd_print_context fan=11
-# evolution: CC̄ 3.4→3.3 (improved -0.1)
+# evolution: CC̄ 3.4→3.4 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[36]:
+M[37]:
   examples/check-examples.sh,70
   examples/nxdo-self-context.txt,468
   examples/nxdo-self-metrics.txt,48
@@ -14,29 +14,30 @@ M[36]:
   goal.yaml,528
   koru.yaml,148
   local.dev.txt,12
-  src/nxdo/git_reader.py,257
   src/nxdo/metrics/complexity.py,366
-  src/nxdo/models.py,91
-  src/nxdo/project_analyzer.py,288
   src/nxdo/text_builder.py,18
-  src/nxdo/ticket_generator.py,287
   project.sh,48
   pyproject.toml,100
   regix.yaml,93
+  scripts/check_import_layers.py,142
   src/nxdo/__init__.py,31
   src/nxdo/__main__.py,5
   src/nxdo/cli.py,390
   src/nxdo/config.py,46
+  src/nxdo/git_reader.py,257
   src/nxdo/koru_context.py,282
   src/nxdo/llm_client.py,88
   src/nxdo/metrics/__init__.py,16
   src/nxdo/metrics/coupling.py,199
   src/nxdo/metrics/hotspots.py,264
+  src/nxdo/models.py,91
   src/nxdo/output.py,71
   src/nxdo/planner.py,58
+  src/nxdo/project_analyzer.py,288
   src/nxdo/providers/__init__.py,6
   src/nxdo/providers/base.py,24
   src/nxdo/providers/openai_compat.py,342
+  src/nxdo/ticket_generator.py,287
   strategy.yaml,142
   testql-scenarios/generated-cli-tests.testql.toon.yaml,20
   testql-scenarios/generated-from-pytests.testql.toon.yaml,10
@@ -65,6 +66,12 @@ D:
     _score_file_pairs(file_commits;file_pair_commits;min_coupling)
     collect_coupling_matrix(repo_path;max_commits;min_coupling;file_filter)
     get_coupling_clusters(coupling_metrics;min_coupling)
+  scripts/check_import_layers.py:
+    e: module_name,resolve_import,check_file,main
+    module_name(path)
+    resolve_import(node;source_module;is_package_init)
+    check_file(path)
+    main()
   src/nxdo/providers/openai_compat.py:
     e: LLMAPIError,OpenAICompatProvider,ResponseInputs,_extract_error_detail,_http_status_hint,_extract_content,_strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response
     LLMAPIError(ValueError): __init__(1)  # An LLM API failure with structured, actionable detail.

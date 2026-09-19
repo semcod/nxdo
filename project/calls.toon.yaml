@@ -1,7 +1,7 @@
 # code2llm call graph | /home/tom/github/semcod/nxdo
-# generated in 0.08s
-# nodes: 118 | edges: 119 | modules: 14
-# CC̄=3.3
+# generated in 0.12s
+# nodes: 122 | edges: 124 | modules: 15
+# CC̄=3.4
 
 HUBS[20]:
   src.nxdo.cli.cmd_metrics
@@ -14,51 +14,40 @@ HUBS[20]:
     CC=12  in:1  out:16  total:17
   src.nxdo.koru_context._format_project_state_for_llm
     CC=7  in:1  out:16  total:17
-  src.nxdo.output.render_plan
-    CC=3  in:1  out:14  total:15
+  scripts.check_import_layers.check_file
+    CC=11  in:1  out:15  total:16
   src.nxdo.koru_context._format_operations_for_llm
     CC=7  in:1  out:14  total:15
+  src.nxdo.output.render_plan
+    CC=3  in:1  out:14  total:15
   src.nxdo.metrics.coupling._get_commits_with_files
     CC=13  in:1  out:13  total:14
   src.nxdo.metrics.hotspots._get_file_commits_with_info
     CC=14  in:1  out:13  total:14
+  src.nxdo.ticket_generator.sync_to_planfile
+    CC=8  in:1  out:13  total:14
   src.nxdo.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
-  nxdo.ticket_generator.sync_to_planfile
-    CC=8  in:1  out:13  total:14
   src.nxdo.koru_context._load_project_state
     CC=6  in:1  out:12  total:13
   src.nxdo.cli.cmd_plan
     CC=2  in:0  out:13  total:13
-  nxdo.git_reader.read_git_context
+  scripts.check_import_layers.main
+    CC=5  in:0  out:12  total:12
+  src.nxdo.git_reader.read_git_context
     CC=2  in:3  out:8  total:11
   src.nxdo.planner.generate_next_tasks
     CC=5  in:1  out:10  total:11
-  src.nxdo.providers.openai_compat._parse_response
-    CC=1  in:2  out:8  total:10
   nxdo.metrics.complexity._build_file_metrics
     CC=2  in:1  out:9  total:10
-  src.nxdo.providers.openai_compat.OpenAICompatProvider._call_api
-    CC=3  in:0  out:9  total:9
-  nxdo.metrics.complexity._build_module_to_file
-    CC=4  in:1  out:8  total:9
-  src.nxdo.koru_context.build_koru_context
-    CC=3  in:1  out:8  total:9
+  src.nxdo.providers.openai_compat._parse_response
+    CC=1  in:2  out:8  total:10
+  examples.check-examples.print
+    CC=0  in:9  out:0  total:9
 
 MODULES:
   examples.check-examples  [1 funcs]
     print  CC=0  out:0
-  nxdo.git_reader  [17 funcs]
-    _count_file_frequencies  CC=4  out:4
-    _create_commit_info  CC=1  out:2
-    _create_empty_context  CC=1  out:1
-    _filter_git_paths  CC=3  out:1
-    _finalize_commit  CC=2  out:2
-    _format_file_summary  CC=2  out:2
-    _get_file_frequency  CC=1  out:3
-    _get_git_commits  CC=1  out:2
-    _get_git_todos  CC=3  out:3
-    _is_git_repo  CC=1  out:2
   nxdo.metrics.complexity  [16 funcs]
     _analyze_imports  CC=2  out:7
     _analyze_types  CC=6  out:7
@@ -70,28 +59,11 @@ MODULES:
     _classify_line  CC=3  out:2
     _count_lines  CC=2  out:4
     _find_source_files  CC=5  out:4
-  nxdo.project_analyzer  [18 funcs]
-    _build_tree  CC=4  out:7
-    _check_pattern_match  CC=2  out:3
-    _collect_file_contents  CC=4  out:3
-    _detect_stack  CC=4  out:4
-    _get_tree_symbol  CC=4  out:0
-    _parse_cargo  CC=3  out:4
-    _parse_package_json  CC=2  out:4
-    _parse_pyproject  CC=2  out:2
-    _parse_pyproject_regex  CC=3  out:4
-    _parse_pyproject_tomllib  CC=4  out:5
-  nxdo.ticket_generator  [13 funcs]
-    _build_todo_section  CC=3  out:3
-    _ensure_planfile_installed  CC=3  out:5
-    _map_priority  CC=1  out:2
-    _remove_generated_todo_sections  CC=1  out:5
-    _remove_legacy_generated_todo_sections  CC=6  out:4
-    _remove_managed_todo_blocks  CC=5  out:3
-    _resolve_todo_path  CC=3  out:1
-    _sync_todo_section  CC=2  out:6
-    _todo_task_lines  CC=4  out:2
-    export_to_planfile_yaml  CC=3  out:4
+  scripts.check_import_layers  [4 funcs]
+    check_file  CC=11  out:15
+    main  CC=5  out:12
+    module_name  CC=3  out:4
+    resolve_import  CC=13  out:7
   src.nxdo.cli  [12 funcs]
     _display_tickets  CC=3  out:5
     _export_yaml_if_requested  CC=3  out:1
@@ -105,6 +77,17 @@ MODULES:
     cmd_plan  CC=2  out:13
   src.nxdo.config  [1 funcs]
     get_settings  CC=3  out:2
+  src.nxdo.git_reader  [17 funcs]
+    _count_file_frequencies  CC=4  out:4
+    _create_commit_info  CC=1  out:2
+    _create_empty_context  CC=1  out:1
+    _filter_git_paths  CC=3  out:1
+    _finalize_commit  CC=2  out:2
+    _format_file_summary  CC=2  out:2
+    _get_file_frequency  CC=1  out:3
+    _get_git_commits  CC=1  out:2
+    _get_git_todos  CC=3  out:3
+    _is_git_repo  CC=1  out:2
   src.nxdo.koru_context  [6 funcs]
     _format_operations_for_llm  CC=7  out:14
     _format_project_state_for_llm  CC=7  out:16
@@ -138,6 +121,17 @@ MODULES:
     render_plan_json  CC=1  out:4
   src.nxdo.planner  [1 funcs]
     generate_next_tasks  CC=5  out:10
+  src.nxdo.project_analyzer  [18 funcs]
+    _build_tree  CC=4  out:7
+    _check_pattern_match  CC=2  out:3
+    _collect_file_contents  CC=4  out:3
+    _detect_stack  CC=4  out:4
+    _get_tree_symbol  CC=4  out:0
+    _parse_cargo  CC=3  out:4
+    _parse_package_json  CC=2  out:4
+    _parse_pyproject  CC=2  out:2
+    _parse_pyproject_regex  CC=3  out:4
+    _parse_pyproject_tomllib  CC=4  out:5
   src.nxdo.providers.openai_compat  [13 funcs]
     __init__  CC=5  out:2
     _build_system_prompt  CC=2  out:1
@@ -149,52 +143,63 @@ MODULES:
     _extract_error_detail  CC=12  out:16
     _http_status_hint  CC=1  out:1
     _parse_json_response  CC=3  out:5
+  src.nxdo.ticket_generator  [13 funcs]
+    _build_todo_section  CC=3  out:3
+    _ensure_planfile_installed  CC=3  out:5
+    _map_priority  CC=1  out:2
+    _remove_generated_todo_sections  CC=1  out:5
+    _remove_legacy_generated_todo_sections  CC=6  out:4
+    _remove_managed_todo_blocks  CC=5  out:3
+    _resolve_todo_path  CC=3  out:1
+    _sync_todo_section  CC=2  out:6
+    _todo_task_lines  CC=4  out:2
+    export_to_planfile_yaml  CC=3  out:4
 
 EDGES:
   src.nxdo.cli._generate_plan → src.nxdo.planner.generate_next_tasks
-  src.nxdo.cli._render_prompt_text → nxdo.project_analyzer.analyze_project
-  src.nxdo.cli._render_prompt_text → nxdo.git_reader.read_git_context
+  src.nxdo.cli._render_prompt_text → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.cli._render_prompt_text → src.nxdo.git_reader.read_git_context
   src.nxdo.cli._render_prompt_text → src.nxdo.llm_client.build_user_prompt
   src.nxdo.cli.cmd_plan → src.nxdo.cli._generate_plan
   src.nxdo.cli.cmd_plan → src.nxdo.output.render_plan_json
-  src.nxdo.cli.cmd_print_context → nxdo.project_analyzer.analyze_project
-  src.nxdo.cli.cmd_print_context → nxdo.git_reader.read_git_context
+  src.nxdo.cli.cmd_print_context → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.cli.cmd_print_context → src.nxdo.git_reader.read_git_context
   src.nxdo.cli.cmd_print_prompt → examples.check-examples.print
   src.nxdo.cli.cmd_print_prompt → src.nxdo.cli._render_prompt_text
-  src.nxdo.cli._sync_todos_if_requested → nxdo.ticket_generator.sync_to_todo_md
-  src.nxdo.cli._sync_planfile_if_requested → nxdo.ticket_generator.sync_to_planfile
-  src.nxdo.cli._export_yaml_if_requested → nxdo.ticket_generator.export_to_planfile_yaml
+  src.nxdo.cli._sync_todos_if_requested → src.nxdo.ticket_generator.sync_to_todo_md
+  src.nxdo.cli._sync_planfile_if_requested → src.nxdo.ticket_generator.sync_to_planfile
+  src.nxdo.cli._export_yaml_if_requested → src.nxdo.ticket_generator.export_to_planfile_yaml
   src.nxdo.cli._display_tickets → src.nxdo.cli._get_priority_emoji
   src.nxdo.cli.cmd_metrics → nxdo.metrics.complexity.collect_file_metrics
   src.nxdo.cli.cmd_auto → src.nxdo.metrics.hotspots.identify_bug_hotspots
   src.nxdo.cli.cmd_auto → nxdo.metrics.complexity.collect_file_metrics
-  nxdo.git_reader._is_git_repo → nxdo.git_reader._run
-  nxdo.git_reader._run_git_command → nxdo.git_reader._run
-  nxdo.git_reader._get_git_commits → nxdo.git_reader._run
-  nxdo.git_reader._get_git_commits → nxdo.git_reader._parse_commits
-  nxdo.git_reader._count_file_frequencies → nxdo.git_reader._should_ignore_git_path
-  nxdo.git_reader._get_file_frequency → nxdo.git_reader._run
-  nxdo.git_reader._get_file_frequency → nxdo.git_reader._count_file_frequencies
-  nxdo.git_reader._get_file_frequency → nxdo.git_reader._format_file_summary
-  nxdo.git_reader._get_git_todos → nxdo.git_reader._run
-  nxdo.git_reader._get_git_todos → nxdo.git_reader._should_include_todo_line
-  nxdo.git_reader.read_git_context → nxdo.git_reader._run_git_command
-  nxdo.git_reader.read_git_context → nxdo.git_reader._get_git_commits
-  nxdo.git_reader.read_git_context → nxdo.git_reader._get_file_frequency
-  nxdo.git_reader.read_git_context → nxdo.git_reader._get_git_todos
-  nxdo.git_reader.read_git_context → nxdo.git_reader._is_git_repo
-  nxdo.git_reader.read_git_context → nxdo.git_reader._create_empty_context
-  nxdo.git_reader._create_commit_info → nxdo.git_reader._filter_git_paths
-  nxdo.git_reader._finalize_commit → nxdo.git_reader._create_commit_info
-  nxdo.git_reader._parse_commits → nxdo.git_reader._finalize_commit
-  nxdo.git_reader._parse_commits → nxdo.git_reader._parse_commit_metadata
-  nxdo.git_reader._filter_git_paths → nxdo.git_reader._should_ignore_git_path
-  nxdo.git_reader._should_include_todo_line → nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._is_git_repo → src.nxdo.git_reader._run
+  src.nxdo.git_reader._run_git_command → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_commits → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_commits → src.nxdo.git_reader._parse_commits
+  src.nxdo.git_reader._count_file_frequencies → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._count_file_frequencies
+  src.nxdo.git_reader._get_file_frequency → src.nxdo.git_reader._format_file_summary
+  src.nxdo.git_reader._get_git_todos → src.nxdo.git_reader._run
+  src.nxdo.git_reader._get_git_todos → src.nxdo.git_reader._should_include_todo_line
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._run_git_command
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_commits
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_file_frequency
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._get_git_todos
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._is_git_repo
+  src.nxdo.git_reader.read_git_context → src.nxdo.git_reader._create_empty_context
+  src.nxdo.git_reader._create_commit_info → src.nxdo.git_reader._filter_git_paths
+  src.nxdo.git_reader._finalize_commit → src.nxdo.git_reader._create_commit_info
+  src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._finalize_commit
+  src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._parse_commit_metadata
+  src.nxdo.git_reader._filter_git_paths → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.git_reader._should_include_todo_line → src.nxdo.git_reader._should_ignore_git_path
   src.nxdo.output.render_plan → src.nxdo.output._resolve_console
   src.nxdo.output.render_plan_json → src.nxdo.output._resolve_console
   src.nxdo.output.render_context → src.nxdo.output._resolve_console
-  src.nxdo.planner.generate_next_tasks → nxdo.project_analyzer.analyze_project
-  src.nxdo.planner.generate_next_tasks → nxdo.git_reader.read_git_context
+  src.nxdo.planner.generate_next_tasks → src.nxdo.project_analyzer.analyze_project
+  src.nxdo.planner.generate_next_tasks → src.nxdo.git_reader.read_git_context
   src.nxdo.planner.generate_next_tasks → src.nxdo.llm_client.build_user_prompt
   src.nxdo.planner.generate_next_tasks → src.nxdo.config.get_settings
   src.nxdo.planner.generate_next_tasks → src.nxdo.koru_context.build_koru_context

@@ -1,22 +1,22 @@
-# nxdo | 146 func | 17f | 5642L | python | 2026-09-19
-# generated in 0.00s
+# nxdo | 150 func | 18f | 5784L | python | 2026-09-19
+# generated in 0.02s
 
 HEALTH:
-  CC̄=3.3  critical=5 (limit:10)  dup=0  cycles=0
+  CC̄=3.4  critical=7 (limit:10)  dup=0  cycles=0
 
-ALERTS[10]:
+ALERTS[11]:
   !!  high_fan_out     cmd_metrics = 15 (limit:10)
   !!  high_fan_out     cmd_auto = 15 (limit:10)
   !   high_fan_out     cmd_tickets = 14 (limit:10)
   !   high_fan_out     main = 13 (limit:10)
   !   high_fan_out     cmd_print_context = 11 (limit:10)
   !   high_fan_out     get_coupling_clusters = 11 (limit:10)
+  !   high_fan_out     check_file = 11 (limit:10)
   !   high_fan_out     generate_next_tasks = 10 (limit:10)
   !   high_fan_out     _create_task_from_dict = 10 (limit:10)
   !   high_fan_out     _get_file_commits_with_info = 10 (limit:10)
-  !   high_fan_out     _get_commits_with_files = 10 (limit:10)
 
-MODULES[36] (top by size):
+MODULES[37] (top by size):
   M[goal.yaml] 528L C:0 F:0 CC↑0 D:0 (yaml)
   M[examples/nxdo-self-prompt.txt] 482L C:0 F:0 CC↑0 D:0 (txt)
   M[examples/nxdo-self-context.txt] 468L C:0 F:0 CC↑0 D:0 (txt)
@@ -31,8 +31,8 @@ MODULES[36] (top by size):
   M[src/nxdo/metrics/coupling.py] 199L C:1 F:5 CC↑13 D:1 (python)
   M[examples/nxdo-self-plan.txt] 171L C:0 F:0 CC↑0 D:0 (txt)
   M[koru.yaml] 148L C:0 F:0 CC↑0 D:0 (yaml)
-  M[strategy.yaml] 142L C:0 F:0 CC↑0 D:0 (yaml)
-  LANGS: python:20/yaml:7/txt:6/shell:2/toml:1
+  M[scripts/check_import_layers.py] 142L C:0 F:4 CC↑13 D:0 (python)
+  LANGS: python:21/yaml:7/txt:6/shell:2/toml:1
 
 HOTSPOTS[10]:
   ★ cmd_metrics fan=15  // Display code metrics: complexity, coupling, hotspots.
@@ -49,4 +49,4 @@ REFACTOR[3]:
   [3] M/M Reduce cmd_auto fan-out (currently 15)
 
 EVOLUTION:
-  2026-09-19 CC̄=3.3 crit=5 5642L // Automated analysis
+  2026-09-19 CC̄=3.4 crit=7 5784L // Automated analysis
