@@ -132,8 +132,8 @@ def cmd_validate(
     from .models import TaskPlan
 
     try:
-        data = json.loads(plan_file.read_text(encoding="utf-8"))
-        loaded_plan = TaskPlan.model_validate(data)
+        plan_json = json.loads(plan_file.read_text(encoding="utf-8"))
+        loaded_plan = TaskPlan.model_validate(plan_json)
     except (json.JSONDecodeError, ValueError) as exc:
         err_console.print(f"[bold red]Validation failed:[/bold red] {exc}")
         raise typer.Exit(code=1)

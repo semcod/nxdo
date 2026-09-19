@@ -42,10 +42,10 @@ class Task(BaseModel):
         return f"{self.number:02d}. {tag} {pri}{est} {self.title}"
 
     def to_dict(self) -> dict[str, object]:
-        data = self.model_dump()
-        data["priority"] = self.priority.value
-        data["task_type"] = self.task_type.value
-        return data
+        task_dict = self.model_dump()
+        task_dict["priority"] = self.priority.value
+        task_dict["task_type"] = self.task_type.value
+        return task_dict
 
 
 class TaskPlan(BaseModel):

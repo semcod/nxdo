@@ -287,10 +287,10 @@ def _create_task_from_dict(item: dict, task_index: int) -> Task:
         raise ValueError(f"Invalid task data in LLM response: {item}") from exc
 
 
-def _parse_tasks_from_data(data: dict) -> list[Task]:
-    """Parse tasks from the response data."""
+def _parse_tasks_from_data(plan_json: dict) -> list[Task]:
+    """Parse tasks from the parsed plan JSON."""
     tasks: list[Task] = []
-    for index, item in enumerate(data.get("tasks", [])):
+    for index, item in enumerate(plan_json.get("tasks", [])):
         tasks.append(_create_task_from_dict(item, index))
     return tasks
 

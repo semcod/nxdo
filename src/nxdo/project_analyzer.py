@@ -200,10 +200,10 @@ def _parse_pyproject(text: str, fallback: str) -> tuple[str, str]:
 
 def _parse_package_json(path: Path, fallback: str) -> tuple[str, str]:
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        package_json = json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return fallback, ""
-    return data.get("name", fallback), data.get("description", "")
+    return package_json.get("name", fallback), package_json.get("description", "")
 
 
 def _parse_cargo(text: str, fallback: str) -> tuple[str, str]:
