@@ -2064,66 +2064,6 @@ sprint:
       status: open
       sync: {}
       updated_at: '2026-09-18T19:51:18.433213Z'
-    PLF-074:
-      acceptance_criteria: []
-      blocked_by: []
-      blocks: []
-      children: []
-      contract_version: planfile.ticket/v1
-      created_at: '2026-09-18T19:51:26.863879Z'
-      description: 'PLF-031 discovery finding (queue health). The open queue holds
-        ~48 auto-generated smell tickets that are permutations of the same few findings:
-        the data clump {repo, max_commits, extra_context} appears as PLF-021/037/048/063/066,
-        {raw, model, project_name} as PLF-022/023/035/036/042/043/049/050/059/060,
-        {self, user_prompt, project_name} as PLF-025/026/039/040/051/052/054/055/061/062/068/069,
-        {repo_path, since, file_path} as PLF-024/038/047, ''Shotgun Surgery: lines''
-        as PLF-041 and PLF-046, ''Shotgun Surgery: data'' as PLF-033 and PLF-057.
-        Several are already fixed: bbfbb1b (PLF-020) dropped ''Shotgun Surgery: result''
-        below threshold yet PLF-034/053 are still open; 4972007 (PLF-017) renamed
-        the ''lines'' locals. Work: for each smell group keep one canonical ticket
-        (or close all if the smell is gone in current code), close the rest as duplicates
-        with a note, and re-run a single koru scan to confirm no regeneration loop.
-        Acceptance: open queue contains at most one ticket per distinct smell; no
-        ticket references code already refactored away.'
-      dsl: SODL/1 id=evt_0748225cd47a5f3caa9f7a6c event_hash=98b2bdfda3a14acb0f6f0d94abccdcc92052fabc59bc594a5dccbc059a525ee1
-        timestamp=2026-09-18T19%3A51%3A26.863879%2B00%3A00 kind=task source=planfile.ticket
-        ticket_id=PLF-074 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-074%2Fcommand%2Fcreate
-        mode=apply status=open correlation_id=PLF-074 causation_id=- input_hash=9beb983e975a728cf94fb1bf057861154d1f088f0d48aec871d82ac22c10669e
-        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMThUMTk6NTE6MjYuODYzODc5WiIsImRlc2NyaXB0aW9uIjoiUExGLTAzMSBkaXNjb3ZlcnkgZmluZGluZyAocXVldWUgaGVhbHRoKS4gVGhlIG9wZW4gcXVldWUgaG9sZHMgfjQ4IGF1dG8tZ2VuZXJhdGVkIHNtZWxsIHRpY2tldHMgdGhhdCBhcmUgcGVybXV0YXRpb25zIG9mIHRoZSBzYW1lIGZldyBmaW5kaW5nczogdGhlIGRhdGEgY2x1bXAge3JlcG8sIG1heF9jb21taXRzLCBleHRyYV9jb250ZXh0fSBhcHBlYXJzIGFzIFBMRi0wMjEvMDM3LzA0OC8wNjMvMDY2LCB7cmF3LCBtb2RlbCwgcHJvamVjdF9uYW1lfSBhcyBQTEYtMDIyLzAyMy8wMzUvMDM2LzA0Mi8wNDMvMDQ5LzA1MC8wNTkvMDYwLCB7c2VsZiwgdXNlcl9wcm9tcHQsIHByb2plY3RfbmFtZX0gYXMgUExGLTAyNS8wMjYvMDM5LzA0MC8wNTEvMDUyLzA1NC8wNTUvMDYxLzA2Mi8wNjgvMDY5LCB7cmVwb19wYXRoLCBzaW5jZSwgZmlsZV9wYXRofSBhcyBQTEYtMDI0LzAzOC8wNDcsICdTaG90Z3VuIFN1cmdlcnk6IGxpbmVzJyBhcyBQTEYtMDQxIGFuZCBQTEYtMDQ2LCAnU2hvdGd1biBTdXJnZXJ5OiBkYXRhJyBhcyBQTEYtMDMzIGFuZCBQTEYtMDU3LiBTZXZlcmFsIGFyZSBhbHJlYWR5IGZpeGVkOiBiYmZiYjFiIChQTEYtMDIwKSBkcm9wcGVkICdTaG90Z3VuIFN1cmdlcnk6IHJlc3VsdCcgYmVsb3cgdGhyZXNob2xkIHlldCBQTEYtMDM0LzA1MyBhcmUgc3RpbGwgb3BlbjsgNDk3MjAwNyAoUExGLTAxNykgcmVuYW1lZCB0aGUgJ2xpbmVzJyBsb2NhbHMuIFdvcms6IGZvciBlYWNoIHNtZWxsIGdyb3VwIGtlZXAgb25lIGNhbm9uaWNhbCB0aWNrZXQgKG9yIGNsb3NlIGFsbCBpZiB0aGUgc21lbGwgaXMgZ29uZSBpbiBjdXJyZW50IGNvZGUpLCBjbG9zZSB0aGUgcmVzdCBhcyBkdXBsaWNhdGVzIHdpdGggYSBub3RlLCBhbmQgcmUtcnVuIGEgc2luZ2xlIGtvcnUgc2NhbiB0byBjb25maXJtIG5vIHJlZ2VuZXJhdGlvbiBsb29wLiBBY2NlcHRhbmNlOiBvcGVuIHF1ZXVlIGNvbnRhaW5zIGF0IG1vc3Qgb25lIHRpY2tldCBwZXIgZGlzdGluY3Qgc21lbGw7IG5vIHRpY2tldCByZWZlcmVuY2VzIGNvZGUgYWxyZWFkeSByZWZhY3RvcmVkIGF3YXkuIiwiZmlsZXMiOltdLCJpZCI6IlBMRi0wNzQiLCJsYWJlbHMiOlsia29ydSIsImxsbS1yZWFkeSIsInF1ZXVlLWh5Z2llbmUiLCJwcmlvcml0eTogaGlnaCJdLCJuYW1lIjoiUXVldWUgaHlnaWVuZTogdHJpYWdlIGR1cGxpY2F0ZS9zdGFsZSBjb2RlLXNtZWxsIHRpY2tldHMgUExGLTAyMS4uUExGLTA2OSIsInByaW9yaXR5IjoiaGlnaCIsInNvdXJjZSI6eyJjb250ZXh0Ijp7fSwidGltZXN0YW1wIjoiMjAyNi0wOS0xOFQxOTo1MToyNi44NTUzNzhaIiwidG9vbCI6ImtvcnUtc2NhbiJ9LCJzcHJpbnQiOiJjdXJyZW50Iiwic3RhdHVzIjoib3BlbiIsInN5bmMiOnt9LCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0xOFQxOTo1MToyNi44NjM4ODNaIn19
-      execution:
-        attempt: 0
-        max_attempts: 1
-        queue: default
-        started_at: '2026-09-19T07:25:03.082612Z'
-        state: running
-      files: []
-      history:
-      - action: status_change
-        changes:
-        - execution
-        - status
-        execution_state: running
-        previous_execution_state: null
-        previous_status: open
-        source: planfile.store
-        status: in_progress
-        timestamp: '2026-09-19T07:25:03.088154+00:00'
-      id: PLF-074
-      labels:
-      - koru
-      - llm-ready
-      - queue-hygiene
-      - 'priority: high'
-      name: 'Queue hygiene: triage duplicate/stale code-smell tickets PLF-021..PLF-069'
-      priority: high
-      source:
-        context: {}
-        timestamp: '2026-09-18T19:51:26.855378Z'
-        tool: koru-scan
-      sprint: current
-      status: in_progress
-      sync: {}
-      updated_at: '2026-09-19T07:25:03.088105+00:00'
     PLF-075:
       backend: github
       blocked_by: []
