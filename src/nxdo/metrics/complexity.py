@@ -234,52 +234,48 @@ def _analyze_types(content: str) -> TypeCoverage:
     )
 
 
-def _calculate_fan_in(project_path: Path, all_files: list[Path]) -> dict[str, int]:
-    """Calculate fan-in: how many files import each file."""
-    fan_in: dict[str, int] = defaultdict(int)
+def _read_text_or_empty(file_path: Path) -> str:
+    """Read a file's text, returning an empty string on OS errors."""
+    try:
+        return file_path.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return ""
 
-    # Build module name -> file path mapping
+
+def _build_module_to_file(project_path: Path, all_files: list[Path]) -> dict[str, str]:
+    """Map dotted module names (full and src.-stripped) to relative file paths."""
     module_to_file: dict[str, str] = {}
-    for file_path in all_files:
-        if file_path.suffix == ".py":
-            # Convert path to module name
-            rel_path = file_path.relative_to(project_path)
-            module = str(rel_path.with_suffix("")).replace("/", ".").replace("\\", ".")
-            module_to_file[module] = str(rel_path)
-            # Also add short name
-            if module.startswith("src."):
-                short = module[4:]  # Remove src.
-                module_to_file[short] = str(rel_path)
-
-    # Analyze each file for imports
     for file_path in all_files:
         if file_path.suffix != ".py":
             continue
+        rel_path = file_path.relative_to(project_path)
+        module = str(rel_path.with_suffix("")).replace("/", ".").replace("\\", ".")
+        module_to_file[module] = str(rel_path)
+        if module.startswith("src."):
+            module_to_file[module[4:]] = str(rel_path)  # Remove src. prefix
+    return module_to_file
 
-        try:
-            content = file_path.read_text(encoding="utf-8", errors="ignore")
-        except OSError:
-            content = ""
 
-        # Find imports
-        for line in content.split("\n"):
-            stripped = line.strip()
+def _iter_matched_imports(content: str, module_to_file: dict[str, str]) -> Iterator[str]:
+    """Yield the mapped file path for each import statement in content."""
+    for line in content.split("\n"):
+        if match := _IMPORT_RE.match(line.strip()):
+            module = next(group for group in match.groups() if group)
+            if module in module_to_file:
+                yield module_to_file[module]
 
-            # from X import ...
-            match = re.match(r"from\s+([\w.]+)\s+import", stripped)
-            if match:
-                module = match.group(1)
-                if module in module_to_file:
-                    imported_file = module_to_file[module]
-                    fan_in[imported_file] += 1
 
-            # import X
-            match = re.match(r"import\s+([\w.]+)", stripped)
-            if match:
-                module = match.group(1)
-                if module in module_to_file:
-                    imported_file = module_to_file[module]
-                    fan_in[imported_file] += 1
+def _calculate_fan_in(project_path: Path, all_files: list[Path]) -> dict[str, int]:
+    """Calculate fan-in: how many files import each file."""
+    module_to_file = _build_module_to_file(project_path, all_files)
+
+    fan_in: dict[str, int] = defaultdict(int)
+    for file_path in all_files:
+        if file_path.suffix != ".py":
+            continue
+        content = _read_text_or_empty(file_path)
+        for imported_file in _iter_matched_imports(content, module_to_file):
+            fan_in[imported_file] += 1
 
     return dict(fan_in)
 
