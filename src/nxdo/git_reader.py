@@ -4,7 +4,7 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
-from nxdo.text_builder import LineBuilder
+from .text_builder import LineBuilder
 
 IGNORED_PATH_PARTS = {
     ".code2llm_cache",

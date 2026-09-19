@@ -5,7 +5,7 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from nxdo.text_builder import LineBuilder
+from .text_builder import LineBuilder
 
 try:
     import tomllib

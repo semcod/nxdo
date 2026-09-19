@@ -3,6 +3,7 @@
 | Document | Description |
 |----------|-------------|
 | [How it works](./how-it-works.md) | End-to-end pipeline, step-by-step walkthrough, troubleshooting |
+| [Architecture seam](./architecture.md) | `src/nxdo` layering rules, import-style rule and the CI import-layer gate |
 | [Planfile integration](./planfile-integration.md) | `--sync-planfile`, `--export-yaml`, `--koru-aware` — tickets into `.planfile/` |
 | [Examples](../examples/) | Real `print-context`, `metrics`, and `plan` outputs from the nxdo repo |
 | [CLI reference](../README.md#cli-reference) | All commands and flags |

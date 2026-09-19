@@ -222,7 +222,7 @@ def cmd_metrics(
     min_coupling: float = typer.Option(0.3, "--min-coupling", help="Minimum coupling score to display."),
 ) -> None:
     """Display code metrics: complexity, coupling, hotspots."""
-    from nxdo.metrics import (
+    from .metrics import (
         calculate_bus_factor,
         collect_coupling_matrix,
         collect_file_metrics,
@@ -290,7 +290,7 @@ def cmd_auto(
 
     Equivalent to: nxdo tickets . --koru-aware --sync-planfile
     """
-    from nxdo.metrics import collect_file_metrics, identify_bug_hotspots
+    from .metrics import collect_file_metrics, identify_bug_hotspots
 
     repo_path = repo.resolve()
     console.print(f"[bold]🚀 Nxdo Auto Mode for {repo_path.name}[/bold]\n")

@@ -50,6 +50,11 @@ Auto-fix linting issues:
 ruff check --fix src/nxdo tests/
 ```
 
+Check the import layering seam (see [docs/architecture.md](docs/architecture.md)):
+```bash
+python scripts/check_import_layers.py
+```
+
 ## Project Structure
 
 - `src/nxdo/` - Main package source code

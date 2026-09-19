@@ -8,7 +8,7 @@ from typing import Any
 import yaml
 from rich.console import Console
 
-from nxdo.models import Task, TaskPlan
+from .models import Task, TaskPlan
 
 console = Console()
 

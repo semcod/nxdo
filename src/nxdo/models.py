@@ -4,7 +4,7 @@ from enum import Enum
 
 from pydantic import BaseModel, Field
 
-from nxdo.text_builder import LineBuilder
+from .text_builder import LineBuilder
 
 
 class Priority(str, Enum):

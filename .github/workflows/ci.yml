@@ -43,6 +43,10 @@ jobs:
         run: |
           uv run --no-sync ruff check src/nxdo tests/
 
+      - name: Check import layers
+        run: |
+          uv run --no-sync python scripts/check_import_layers.py
+
       - name: Verify committed examples
         run: |
           uv run --no-sync bash examples/check-examples.sh
