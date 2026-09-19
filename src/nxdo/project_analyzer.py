@@ -242,16 +242,6 @@ def _get_tree_symbol(is_last: bool, connector: bool) -> str:
         return "    " if is_last else "│   "
 
 
-def _get_connector(is_last: bool) -> str:
-    """Get the tree connector symbol."""
-    return _get_tree_symbol(is_last, connector=True)
-
-
-def _get_extension(is_last: bool) -> str:
-    """Get the tree extension for nested levels."""
-    return _get_tree_symbol(is_last, connector=False)
-
-
 def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
     """Build ASCII tree representation of directory structure."""
     lines: list[str] = []
@@ -268,10 +258,10 @@ def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") ->
             entry = visible_entries[index]
             is_last = index == last_index
             item = (
-                node_prefix + _get_connector(is_last) + entry.name,
+                node_prefix + _get_tree_symbol(is_last, connector=True) + entry.name,
                 entry,
                 node_depth,
-                node_prefix + _get_extension(is_last),
+                node_prefix + _get_tree_symbol(is_last, connector=False),
             )
             stack.append(item)
 

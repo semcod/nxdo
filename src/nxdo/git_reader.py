@@ -104,16 +104,6 @@ def _run_git_command(repo_path: Path, command: list[str], default: str) -> str:
     return _run(command, repo_path) or default
 
 
-def _get_git_branch(repo_path: Path) -> str:
-    """Get the current git branch name."""
-    return _run_git_command(repo_path, ["git", "rev-parse", "--abbrev-ref", "HEAD"], "unknown")
-
-
-def _get_git_remote(repo_path: Path) -> str:
-    """Get the git remote URL."""
-    return _run_git_command(repo_path, ["git", "remote", "get-url", "origin"], "no remote")
-
-
 def _get_git_commits(repo_path: Path, max_commits: int) -> list[CommitInfo]:
     """Get recent git commits."""
     log_raw = _run(
@@ -179,8 +169,8 @@ def read_git_context(repo_path: Path, max_commits: int = 30) -> GitContext:
     if not _is_git_repo(repo_path):
         return _create_empty_context(repo_path)
 
-    branch = _get_git_branch(repo_path)
-    remote_url = _get_git_remote(repo_path)
+    branch = _run_git_command(repo_path, ["git", "rev-parse", "--abbrev-ref", "HEAD"], "unknown")
+    remote_url = _run_git_command(repo_path, ["git", "remote", "get-url", "origin"], "no remote")
     recent_commits = _get_git_commits(repo_path, max_commits)
     changed_files_summary = _get_file_frequency(repo_path, max_commits)
     open_todos = _get_git_todos(repo_path)
