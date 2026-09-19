@@ -4,6 +4,8 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
+from nxdo.text_builder import LineBuilder
+
 IGNORED_PATH_PARTS = {
     ".code2llm_cache",
     ".git",
@@ -54,28 +56,28 @@ class GitContext:
     open_todos: list[str]
 
     def to_text(self) -> str:
-        lines = [
+        builder = LineBuilder(
             f"Branch: {self.branch}",
             f"Remote: {self.remote_url}",
             "",
             f"Recent {len(self.recent_commits)} commits:",
-        ]
+        )
         if self.recent_commits:
             for commit in self.recent_commits:
-                lines.append(f"  {commit}")
+                builder.line(f"  {commit}")
         else:
-            lines.append("  (no commits found)")
-        lines += ["", "Most active files recently:"]
+            builder.line("  (no commits found)")
+        builder.line("", "Most active files recently:")
         if self.changed_files_summary:
             for changed_file in self.changed_files_summary[:15]:
-                lines.append(f"  {changed_file}")
+                builder.line(f"  {changed_file}")
         else:
-            lines.append("  (no file activity found)")
+            builder.line("  (no file activity found)")
         if self.open_todos:
-            lines += ["", "TODO/FIXME markers found in code:"]
+            builder.line("", "TODO/FIXME markers found in code:")
             for todo in self.open_todos[:20]:
-                lines.append(f"  {todo}")
-        return "\n".join(lines)
+                builder.line(f"  {todo}")
+        return builder.text()
 
 
 def _run(cmd: list[str], cwd: Path) -> str:

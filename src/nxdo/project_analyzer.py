@@ -5,6 +5,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from nxdo.text_builder import LineBuilder
+
 try:
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover - Python 3.10 fallback
@@ -64,17 +66,17 @@ class ProjectSnapshot:
     extras: dict[str, str] = field(default_factory=dict)
 
     def to_text(self) -> str:
-        lines = [
+        builder = LineBuilder(
             f"Project: {self.name}",
             f"Description: {self.description or 'n/a'}",
             f"Stack: {', '.join(self.language_stack) or 'unknown'}",
             "",
-        ]
+        )
         for file_name, content in self.file_contents.items():
-            lines += [f"--- {file_name} ---", content, ""]
+            builder.line(f"--- {file_name} ---", content, "")
         if self.directory_tree:
-            lines += ["--- Directory tree ---", self.directory_tree, ""]
-        return "\n".join(lines)
+            builder.line("--- Directory tree ---", self.directory_tree, "")
+        return builder.text()
 
 
 def _read_file_safely(path: Path) -> str | None:
@@ -273,14 +275,14 @@ def _push_tree_children(stack: list[TreeStackItem], directory: Path, node_depth:
 
 def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
     """Build ASCII tree representation of directory structure."""
-    lines: list[str] = []
+    builder = LineBuilder()
     stack: list[TreeStackItem] = []
 
     _push_tree_children(stack, root, depth, prefix)
     while stack:
         line, entry, node_depth, entry_prefix = stack.pop()
-        lines.append(line)
+        builder.line(line)
         if entry.is_dir() and node_depth < max_depth - 1:
             _push_tree_children(stack, entry, node_depth + 1, entry_prefix)
 
-    return "\n".join(lines)
+    return builder.text()

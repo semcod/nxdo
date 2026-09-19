@@ -90,10 +90,9 @@ def _todo_task_lines(task: Task) -> list[str]:
     """Build markdown checkbox lines for a single task."""
     prio = _map_priority(task.priority.value)
     emoji = _PRIORITY_EMOJI.get(prio, "⚪")
-    lines = [f"- [ ] {emoji} {task.title}  <!-- nxdo:task-{task.number} -->"]
-    if task.description:
-        lines.append(f"  {task.description}")
-    return lines
+    checkbox = f"- [ ] {emoji} {task.title}  <!-- nxdo:task-{task.number} -->"
+    description = f"  {task.description}" if task.description else ""
+    return [line for line in (checkbox, description) if line]
 
 
 def _build_todo_section(task_plan: TaskPlan) -> list[str]:

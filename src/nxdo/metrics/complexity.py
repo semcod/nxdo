@@ -303,15 +303,15 @@ def _build_file_metrics(
         return None
 
     rel_path = str(file_path.relative_to(project_path))
-    lines = _count_lines(content)
+    counts = _count_lines(content)
     imports = _analyze_imports(content, rel_path)
     types = _analyze_types(content)
 
     return FileMetrics(
         file_path=rel_path,
-        lines_of_code=lines.lines_of_code,
-        lines_of_comments=lines.lines_of_comments,
-        blank_lines=lines.blank_lines,
+        lines_of_code=counts.lines_of_code,
+        lines_of_comments=counts.lines_of_comments,
+        blank_lines=counts.blank_lines,
         cyclomatic_complexity=_calculate_cyclomatic_complexity(content),
         fan_in=fan_in_map.get(rel_path, 0),
         fan_out=imports.fan_out,

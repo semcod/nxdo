@@ -4,6 +4,8 @@ from enum import Enum
 
 from pydantic import BaseModel, Field
 
+from nxdo.text_builder import LineBuilder
+
 
 class Priority(str, Enum):
     HIGH = "high"
@@ -55,28 +57,28 @@ class TaskPlan(BaseModel):
     model_used: str = ""
 
     def __str__(self) -> str:
-        lines = [
+        builder = LineBuilder(
             f"# Task Plan — {self.project_name}",
             "",
             self.summary,
             "",
             "## Tasks",
             "",
-        ]
+        )
         for task in self.tasks:
-            lines.append(str(task))
-            lines.append(f"   {task.description}")
+            builder.line(str(task))
+            builder.line(f"   {task.description}")
             if task.acceptance_criteria:
-                lines.append("   Criteria:")
+                builder.line("   Criteria:")
                 for criterion in task.acceptance_criteria:
-                    lines.append(f"     • {criterion}")
+                    builder.line(f"     • {criterion}")
             if task.dependencies:
                 deps = ", ".join(str(dep) for dep in task.dependencies)
-                lines.append(f"   Dependencies: {deps}")
-            lines.append("")
+                builder.line(f"   Dependencies: {deps}")
+            builder.line("")
         if self.generated_at:
-            lines.append(f"_Generated: {self.generated_at} | Model: {self.model_used}_")
-        return "\n".join(lines)
+            builder.line(f"_Generated: {self.generated_at} | Model: {self.model_used}_")
+        return builder.text()
 
     def to_dict(self) -> dict[str, object]:
         return {
