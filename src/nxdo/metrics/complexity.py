@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import ast
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Iterator
 from dataclasses import dataclass
 from pathlib import Path
@@ -61,23 +61,22 @@ class FileMetrics:
     local_imports: list[str]
 
 
+def _classify_line(line: str) -> str:
+    """Classify a single source line as blank, comment, or code."""
+    stripped = line.strip()
+    if not stripped:
+        return "blank"
+    return "comment" if stripped.startswith("#") else "code"
+
+
 def _count_lines(content: str) -> LineCounts:
     """Count LOC, comments, blank lines."""
-    source_lines = content.split("\n")
-    loc = 0
-    comments = 0
-    blank = 0
-
-    for line in source_lines:
-        stripped = line.strip()
-        if not stripped:
-            blank += 1
-        elif stripped.startswith("#"):
-            comments += 1
-        else:
-            loc += 1
-
-    return LineCounts(lines_of_code=loc, lines_of_comments=comments, blank_lines=blank)
+    counts = Counter(_classify_line(line) for line in content.split("\n"))
+    return LineCounts(
+        lines_of_code=counts["code"],
+        lines_of_comments=counts["comment"],
+        blank_lines=counts["blank"],
+    )
 
 
 def _calculate_cyclomatic_complexity(content: str) -> int:
