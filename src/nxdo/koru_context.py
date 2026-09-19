@@ -8,9 +8,12 @@ specific koru operations as their implementation steps.
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -84,8 +87,8 @@ def _load_project_state(project_path: Path) -> KoruProjectState:
         )
         if tickets_result.get("ok"):
             state.open_tickets = tickets_result.get("tickets", [])[:10]
-    except Exception:
-        pass
+    except (ImportError, RuntimeError) as exc:
+        logger.debug("planfile.tickets state unavailable: %s", exc)
 
     # Load doctor status
     try:
@@ -103,8 +106,8 @@ def _load_project_state(project_path: Path) -> KoruProjectState:
                 f"{check}: {msg}"
                 for check, msg in report.get("failures", {}).items()
             ]
-    except Exception:
-        pass
+    except (ImportError, RuntimeError) as exc:
+        logger.debug("doctor.run state unavailable: %s", exc)
 
     return state
 
@@ -215,14 +218,10 @@ def build_koru_context(
     ops_text = _format_operations_for_llm(operations)
     state_text = _format_project_state_for_llm(state)
 
-    schema_text = "\n".join([
-        "=== KORU INTEGRATION SCHEMA ===",
-        "",
-        ops_text,
-        "=== CURRENT PROJECT STATE (koru) ===",
-        "",
-        state_text,
-    ])
+    schema_text = (
+        f"=== KORU INTEGRATION SCHEMA ===\n\n{ops_text}"
+        f"\n=== CURRENT PROJECT STATE (koru) ===\n\n{state_text}"
+    )
 
     return KoruContext(
         available=True,

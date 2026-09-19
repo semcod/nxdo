@@ -5,10 +5,9 @@ from __future__ import annotations
 import json
 import os
 from datetime import datetime, timezone
-from typing import Optional
 
 import httpx
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from ..config import NxdoSettings, get_settings
 from ..models import Priority, Task, TaskPlan, TaskType
@@ -68,9 +67,9 @@ class LLMAPIError(ValueError):
         self,
         message: str,
         *,
-        status_code: Optional[int] = None,
+        status_code: int | None = None,
         endpoint: str = "",
-        model: Optional[str] = None,
+        model: str | None = None,
         response_body: str = "",
     ) -> None:
         super().__init__(message)
@@ -136,10 +135,10 @@ class OpenAICompatProvider(LLMProvider):
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
-        base_url: Optional[str] = None,
-        settings: Optional[NxdoSettings] = None,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+        settings: NxdoSettings | None = None,
         app_name: str = "nxdo",
         koru_aware: bool = False,
     ) -> None:
@@ -255,7 +254,9 @@ def _parse_json_response(raw: str) -> dict:
         raise ValueError(f"LLM returned invalid JSON. Raw response:\n{raw[:500]}") from exc
 
     if not isinstance(parsed_json, dict):
-        raise ValueError(f"Expected a JSON object, got: {type(parsed_json).__name__}")
+        # ValueError is the documented parse-error contract consumed by the CLI
+        # error handler and the public parse_task_plan_response API.
+        raise ValueError(f"Expected a JSON object, got: {type(parsed_json).__name__}")  # noqa: TRY004
 
     return parsed_json
 

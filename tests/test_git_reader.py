@@ -1,21 +1,19 @@
-import unittest
-from unittest.mock import patch, MagicMock
-
-from nxdo.git_reader import _count_file_frequencies, _parse_commits, read_git_context, _run, CommitInfo, GitContext
-from pathlib import Path
 import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+from nxdo.git_reader import CommitInfo, GitContext, _count_file_frequencies, _parse_commits, _run, read_git_context
 
 
 class GitReaderTests(unittest.TestCase):
     def test_parse_commits_keeps_files_with_each_commit(self) -> None:
-        log_raw = "\n".join(
-            [
-                "abc123|||Alice|||2026-05-26T10:00:00+00:00|||Add planner",
-                "src/nxdo/cli.py",
-                "README.md",
-                "def456|||Bob|||2026-05-25T09:00:00+00:00|||Fix tests",
-                "tests/test_cli.py",
-            ]
+        log_raw = (
+            "abc123|||Alice|||2026-05-26T10:00:00+00:00|||Add planner\n"
+            "src/nxdo/cli.py\n"
+            "README.md\n"
+            "def456|||Bob|||2026-05-25T09:00:00+00:00|||Fix tests\n"
+            "tests/test_cli.py"
         )
 
         commits = _parse_commits(log_raw)
@@ -25,15 +23,13 @@ class GitReaderTests(unittest.TestCase):
         self.assertEqual(commits[1].message, "Fix tests")
 
     def test_parse_commits_filters_generated_files(self) -> None:
-        log_raw = "\n".join(
-            [
-                "abc123|||Alice|||2026-05-26T10:00:00+00:00|||Generated artifacts",
-                ".planfile/.koru/runs/queue.jsonl",
-                "project/calls.png",
-                "src/nxdo.egg-info/PKG-INFO",
-                "uv.lock",
-                "src/nxdo/cli.py",
-            ]
+        log_raw = (
+            "abc123|||Alice|||2026-05-26T10:00:00+00:00|||Generated artifacts\n"
+            ".planfile/.koru/runs/queue.jsonl\n"
+            "project/calls.png\n"
+            "src/nxdo.egg-info/PKG-INFO\n"
+            "uv.lock\n"
+            "src/nxdo/cli.py"
         )
 
         commits = _parse_commits(log_raw)
@@ -42,15 +38,13 @@ class GitReaderTests(unittest.TestCase):
         self.assertEqual(commits[0].files_changed, ["src/nxdo/cli.py"])
 
     def test_count_file_frequencies_filters_generated_files(self) -> None:
-        raw_output = "\n".join(
-            [
-                "README.md",
-                "README.md",
-                ".code2llm_cache/blob.pkl",
-                "project/flow.png",
-                "uv.lock",
-                "src/nxdo/git_reader.py",
-            ]
+        raw_output = (
+            "README.md\n"
+            "README.md\n"
+            ".code2llm_cache/blob.pkl\n"
+            "project/flow.png\n"
+            "uv.lock\n"
+            "src/nxdo/git_reader.py"
         )
 
         file_freq = _count_file_frequencies(raw_output)
@@ -179,12 +173,10 @@ class GitReaderTests(unittest.TestCase):
             "no remote",
             "",
             "",
-            "\n".join(
-                [
-                    ".planfile/sprints/current.yaml:1: TODO generated",
-                    "project/calls.png:1: TODO generated image",
-                    "src/nxdo/git_reader.py:1: TODO code",
-                ]
+            (
+                ".planfile/sprints/current.yaml:1: TODO generated\n"
+                "project/calls.png:1: TODO generated image\n"
+                "src/nxdo/git_reader.py:1: TODO code"
             ),
         ]
 

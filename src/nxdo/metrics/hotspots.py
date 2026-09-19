@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import subprocess
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from collections import defaultdict
-import subprocess
 
 
 @dataclass
@@ -33,6 +33,7 @@ def _get_file_commits_with_info(
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
         if commit_log_result.returncode != 0:
             return [], 0
@@ -64,7 +65,7 @@ def _get_file_commits_with_info(
                         pass
         
         return commits, churn
-    except Exception:
+    except OSError:
         return [], 0
 
 
@@ -79,12 +80,13 @@ def _get_bug_fix_commits(repo_path: Path, file_path: str, since: str = "90.days.
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
         if bug_log_result.returncode != 0:
             return 0
         # Git combines these patterns with OR and emits each commit once.
         return len({line.strip() for line in bug_log_result.stdout.splitlines() if line.strip()})
-    except Exception:
+    except OSError:
         return 0
 
 
@@ -101,12 +103,13 @@ def _resolve_target_files(repo_path: Path, files: list[str] | None) -> list[str]
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
-        if ls_files_result.returncode == 0:
-            return [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
-    except Exception:
-        pass
-    return []
+    except OSError:
+        return []
+    if ls_files_result.returncode != 0:
+        return []
+    return [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
 
 
 def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics | None:
@@ -202,12 +205,13 @@ def calculate_bus_factor(
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
+                check=False,
             )
             if ls_files_result.returncode == 0:
                 files = [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
             else:
                 return {}
-        except Exception:
+        except OSError:
             return {}
     
     bus_factors: dict[str, int] = {}
@@ -218,21 +222,21 @@ def calculate_bus_factor(
             continue
         
         try:
-            # Get unique authors
             authors_result = subprocess.run(
                 ["git", "log", "--format=%an", "--", file_path],
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
+                check=False,
             )
-            if authors_result.returncode == 0:
-                authors = set(line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip())
-                author_count = len(authors)
-                
-                if author_count <= critical_threshold:
-                    bus_factors[file_path] = author_count
-        except Exception:
-            pass
+        except OSError:
+            authors_result = None
+        if authors_result is not None and authors_result.returncode == 0:
+            authors = {line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip()}
+            author_count = len(authors)
+            
+            if author_count <= critical_threshold:
+                bus_factors[file_path] = author_count
     
     return bus_factors
 
@@ -258,12 +262,13 @@ def get_critical_bus_factor_files(
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
+                check=False,
             )
-            if authors_result.returncode == 0:
-                authors = list(set(line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip()))
-                critical.append((file_path, author_count, authors))
-        except Exception:
-            pass
+        except OSError:
+            authors_result = None
+        if authors_result is not None and authors_result.returncode == 0:
+            authors = list({line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip()})
+            critical.append((file_path, author_count, authors))
     
     # Sort by author_count asc, then by path
     critical.sort(key=lambda x: (x[1], x[0]))

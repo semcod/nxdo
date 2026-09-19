@@ -1,10 +1,8 @@
 """Read recent git history and repository metadata."""
 
-from dataclasses import dataclass
-from pathlib import Path
-from pathlib import PurePosixPath
 import subprocess
-
+from dataclasses import dataclass
+from pathlib import Path, PurePosixPath
 
 IGNORED_PATH_PARTS = {
     ".code2llm_cache",

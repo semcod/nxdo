@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+import yaml
 from rich.console import Console
 
 from nxdo.models import TaskPlan
@@ -157,7 +158,7 @@ def _remove_legacy_generated_todo_sections(lines: list[str]) -> list[str]:
 def _ensure_planfile_installed() -> bool:
     """Ensure planfile package is installed, auto-install if missing."""
     try:
-        import planfile  # noqa: F401
+        import planfile
         return True
     except ImportError:
         console.print("[yellow]⚠️  planfile not installed, attempting auto-install...[/yellow]")
@@ -175,7 +176,7 @@ def _ensure_planfile_installed() -> bool:
             import planfile  # noqa: F401
             console.print("[green]✓[/green] planfile installed successfully")
             return True
-        except Exception as install_exc:
+        except (subprocess.CalledProcessError, ImportError) as install_exc:
             console.print(f"[red]✗[/red] Failed to install planfile: {install_exc}")
             return False
 
@@ -198,9 +199,9 @@ def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dic
         return {"enabled": False, "created": 0, "planfile_dir": ""}
 
     try:
-        from planfile.core.store import Store
-        from planfile.core.models import Ticket, TicketStatus
         from planfile.cli.groups.sync.core import sync_integration
+        from planfile.core.models import Ticket, TicketStatus
+        from planfile.core.store import Store
     except ImportError as exc:
         console.print(f"[yellow]⚠️  planfile import failed after install: {exc}[/yellow]")
         return {"enabled": False, "created": 0, "planfile_dir": ""}
@@ -223,12 +224,12 @@ def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dic
         try:
             store.create_ticket(ticket)
             created += 1
-        except Exception:
-            pass
+        except (OSError, ValueError, yaml.YAMLError) as exc:
+            console.print(f"[yellow]⚠️  Failed to store {ticket_id}: {exc}[/yellow]")
 
     try:
         sync_integration("markdown", str(project_path), dry_run=False, direction="to", show_header=False)
-    except Exception as exc:
+    except (OSError, ValueError, yaml.YAMLError) as exc:
         console.print(f"[yellow]⚠️  markdown sync warning: {exc}[/yellow]")
 
     planfile_dir = str(store.base_dir)

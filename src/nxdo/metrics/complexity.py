@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from pathlib import Path
-from collections import defaultdict
 import ast
 import re
+from collections import defaultdict
+from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass
@@ -111,7 +111,7 @@ def _analyze_imports(content: str, file_path: str) -> tuple[list[str], list[str]
                 
                 if module in stdlib_modules:
                     stdlib.append(module)
-                elif module.startswith("nxdo") or module.startswith("."):
+                elif module.startswith(("nxdo", ".")):
                     local.append(module)
                 else:
                     third_party.append(module)
@@ -175,8 +175,8 @@ def _calculate_fan_in(project_path: Path, all_files: list[Path]) -> dict[str, in
         
         try:
             content = file_path.read_text(encoding="utf-8", errors="ignore")
-        except Exception:
-            continue
+        except OSError:
+            content = ""
         
         # Find imports
         for line in content.split("\n"):
@@ -224,7 +224,7 @@ def _build_file_metrics(
     """Compute metrics for a single file, or None if it cannot be read."""
     try:
         content = file_path.read_text(encoding="utf-8", errors="ignore")
-    except Exception:
+    except OSError:
         return None
     
     rel_path = str(file_path.relative_to(project_path))

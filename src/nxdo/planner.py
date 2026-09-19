@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 from .config import NxdoSettings, get_settings
 from .git_reader import read_git_context
@@ -16,8 +15,8 @@ from .providers import LLMProvider, OpenAICompatProvider
 def generate_next_tasks(
     repo_path: Path,
     extra_context: str = "",
-    provider: Optional[LLMProvider] = None,
-    settings: Optional[NxdoSettings] = None,
+    provider: LLMProvider | None = None,
+    settings: NxdoSettings | None = None,
     koru_aware: bool = False,
 ) -> TaskPlan:
     """Analyze *repo_path* and return a TaskPlan with the next 10 tasks.

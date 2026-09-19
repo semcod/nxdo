@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from nxdo.llm_client import build_user_prompt, parse_task_plan_response, OpenAICompatibleLLMClient
+from nxdo.llm_client import OpenAICompatibleLLMClient, build_user_prompt, parse_task_plan_response
 
 
 class LLMClientTests(unittest.TestCase):

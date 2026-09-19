@@ -1,7 +1,6 @@
 """Data models used by nxdo."""
 
 from enum import Enum
-from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -27,7 +26,7 @@ class Task(BaseModel):
     description: str
     priority: Priority = Priority.MEDIUM
     task_type: TaskType = TaskType.FEATURE
-    estimated_hours: Optional[float] = None
+    estimated_hours: float | None = None
     acceptance_criteria: list[str] = Field(default_factory=list)
     dependencies: list[int] = Field(default_factory=list)
 

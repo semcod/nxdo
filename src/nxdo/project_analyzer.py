@@ -1,9 +1,9 @@
 """Collect static project metadata for the LLM prompt."""
 
-from dataclasses import dataclass, field
 import json
-from pathlib import Path
 import re
+from dataclasses import dataclass, field
+from pathlib import Path
 
 try:
     import tomllib
@@ -173,7 +173,7 @@ def _parse_pyproject_tomllib(text: str, fallback: str) -> tuple[str, str] | None
         return None
     try:
         parsed = tomllib.loads(text)
-    except Exception:
+    except ValueError:
         return None
     project = parsed.get("project", {})
     if isinstance(project, dict):
@@ -201,7 +201,7 @@ def _parse_pyproject(text: str, fallback: str) -> tuple[str, str]:
 def _parse_package_json(path: Path, fallback: str) -> tuple[str, str]:
     try:
         package_json = json.loads(path.read_text(encoding="utf-8"))
-    except Exception:
+    except (OSError, ValueError):
         return fallback, ""
     return package_json.get("name", fallback), package_json.get("description", "")
 

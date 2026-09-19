@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import json
 
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-from rich import box
 
 from .models import Priority, TaskPlan
 

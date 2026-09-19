@@ -2,7 +2,6 @@
 
 import json
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -10,8 +9,8 @@ from rich.console import Console
 from .config import NxdoSettings, get_settings
 from .git_reader import read_git_context
 from .llm_client import build_user_prompt
-from .output import render_context, render_plan, render_plan_json
 from .models import TaskPlan
+from .output import render_context, render_plan, render_plan_json
 from .planner import generate_next_tasks
 from .project_analyzer import analyze_project
 from .providers import OpenAICompatProvider
@@ -40,8 +39,8 @@ def _generate_plan(
     *,
     repo_path: Path,
     extra_context: str,
-    model: Optional[str],
-    base_url: Optional[str],
+    model: str | None,
+    base_url: str | None,
     settings: NxdoSettings,
     koru_aware: bool = False,
 ) -> TaskPlan:
@@ -73,8 +72,8 @@ def _render_prompt_text(repo: Path, extra_context: str, max_commits: int) -> str
 def cmd_plan(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
     extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
-    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
-    base_url: Optional[str] = typer.Option(None, "--base-url", help="Override the API base URL."),
+    model: str | None = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
+    base_url: str | None = typer.Option(None, "--base-url", help="Override the API base URL."),
     as_json: bool = typer.Option(False, "--json", help="Output plan as JSON."),
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
 ) -> None:
@@ -159,7 +158,7 @@ def _sync_planfile_if_requested(plan: TaskPlan, repo: Path, sync_planfile: bool)
         console.print("[yellow]⚠[/yellow] planfile not available")
 
 
-def _export_yaml_if_requested(plan: TaskPlan, repo: Path, export_yaml: bool, output_path: Optional[Path]) -> None:
+def _export_yaml_if_requested(plan: TaskPlan, repo: Path, export_yaml: bool, output_path: Path | None) -> None:
     """Export to planfile YAML if requested."""
     if not export_yaml:
         return
@@ -186,13 +185,13 @@ def _display_tickets(tickets: list[dict[str, str]]) -> None:
 def cmd_tickets(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
     extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
-    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
-    base_url: Optional[str] = typer.Option(None, "--base-url", help="Override the API base URL."),
+    model: str | None = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
+    base_url: str | None = typer.Option(None, "--base-url", help="Override the API base URL."),
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
     sync_todo: bool = typer.Option(False, "--sync-todo", help="Append tasks to TODO.md as checkboxes."),
     sync_planfile: bool = typer.Option(False, "--sync-planfile", help="Store tickets in .planfile/ and sync with markdown."),
     export_yaml: bool = typer.Option(False, "--export-yaml", help="Export to planfile YAML format."),
-    output_path: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
+    output_path: Path | None = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
     koru_aware: bool = typer.Option(False, "--koru-aware", help="Enable koru integration schema for smart task planning."),
 ) -> None:
     """Generate tickets from a plan using planfile integration."""
@@ -224,11 +223,11 @@ def cmd_metrics(
 ) -> None:
     """Display code metrics: complexity, coupling, hotspots."""
     from nxdo.metrics import (
+        calculate_bus_factor,
         collect_coupling_matrix,
+        collect_file_metrics,
         get_coupling_clusters,
         identify_bug_hotspots,
-        calculate_bus_factor,
-        collect_file_metrics,
     )
 
     repo_path = repo.resolve()

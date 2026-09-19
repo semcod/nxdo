@@ -1,11 +1,12 @@
-from io import StringIO
-from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch, MagicMock
+from io import StringIO
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+from typer.testing import CliRunner
 
 from nxdo.cli import app, app_entry, main
-from typer.testing import CliRunner
 
 runner = CliRunner()
 
@@ -38,9 +39,11 @@ class CLITests(unittest.TestCase):
             import os
 
             env = {k: v for k, v in os.environ.items() if k not in ("OPENROUTER_API_KEY", "OPENAI_API_KEY")}
-            with patch.dict(os.environ, env, clear=True):
-                with patch("nxdo.cli.get_settings", return_value=NxdoSettings(_env_file=None)):
-                    exit_code = main([str(root)])
+            with (
+                patch.dict(os.environ, env, clear=True),
+                patch("nxdo.cli.get_settings", return_value=NxdoSettings(_env_file=None)),
+            ):
+                exit_code = main([str(root)])
 
         self.assertEqual(exit_code, 1)
 
@@ -62,10 +65,12 @@ class CLITests(unittest.TestCase):
             import os
 
             env = {k: v for k, v in os.environ.items() if k not in ("OPENROUTER_API_KEY", "OPENAI_API_KEY")}
-            with patch.dict(os.environ, env, clear=True):
-                with patch("nxdo.cli.get_settings", return_value=NxdoSettings(_env_file=None)):
-                    exit_code = main([str(root), "--json"])
-                    self.assertEqual(exit_code, 1)  # No API key, so fails
+            with (
+                patch.dict(os.environ, env, clear=True),
+                patch("nxdo.cli.get_settings", return_value=NxdoSettings(_env_file=None)),
+            ):
+                exit_code = main([str(root), "--json"])
+                self.assertEqual(exit_code, 1)  # No API key, so fails
 
     def test_max_commits_override(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -109,7 +114,7 @@ class CLITests(unittest.TestCase):
     @patch("nxdo.cli.generate_next_tasks")
     def test_cmd_tickets_generates_and_displays(self, mock_generate: MagicMock) -> None:
         """Test cmd_tickets happy path (lines 125-163)."""
-        from nxdo.models import TaskPlan, Task, Priority, TaskType
+        from nxdo.models import Priority, Task, TaskPlan, TaskType
         mock_plan = TaskPlan(
             project_name="test",
             summary="test summary",
@@ -136,7 +141,7 @@ class CLITests(unittest.TestCase):
     @patch("nxdo.cli.generate_next_tasks")
     def test_cmd_tickets_sync_todo(self, mock_generate: MagicMock) -> None:
         """Test cmd_tickets with --sync-todo flag."""
-        from nxdo.models import TaskPlan, Task, Priority, TaskType
+        from nxdo.models import Priority, Task, TaskPlan, TaskType
         mock_plan = TaskPlan(
             project_name="test", summary="s", generated_at="2026-01-01 00:00 UTC",
             tasks=[Task(number=1, title="T", description="", priority=Priority.LOW, task_type=TaskType.CHORE)],
@@ -152,7 +157,7 @@ class CLITests(unittest.TestCase):
     @patch("nxdo.cli.generate_next_tasks")
     def test_cmd_tickets_export_yaml(self, mock_generate: MagicMock) -> None:
         """Test cmd_tickets with --export-yaml flag."""
-        from nxdo.models import TaskPlan, Task, Priority, TaskType
+        from nxdo.models import Priority, Task, TaskPlan, TaskType
         mock_plan = TaskPlan(
             project_name="test", summary="s", generated_at="2026-01-01 00:00 UTC",
             tasks=[Task(number=1, title="T", description="", priority=Priority.LOW, task_type=TaskType.CHORE)],
@@ -180,7 +185,7 @@ class CLITests(unittest.TestCase):
     @patch("nxdo.cli.generate_next_tasks")
     def test_cmd_tickets_sync_planfile(self, mock_generate: MagicMock) -> None:
         """Test cmd_tickets with --sync-planfile flag."""
-        from nxdo.models import TaskPlan, Task, Priority, TaskType
+        from nxdo.models import Priority, Task, TaskPlan, TaskType
         mock_plan = TaskPlan(
             project_name="test", summary="s", generated_at="2026-01-01 00:00 UTC",
             tasks=[Task(number=1, title="T", description="", priority=Priority.HIGH, task_type=TaskType.FEATURE)],
@@ -225,7 +230,7 @@ class CLITests(unittest.TestCase):
 
     @patch("nxdo.cli.generate_next_tasks")
     def test_typer_plan_command_with_mocked_provider(self, mock_generate: MagicMock) -> None:
-        from nxdo.models import TaskPlan, Task, Priority, TaskType
+        from nxdo.models import Priority, Task, TaskPlan, TaskType
 
         mock_plan = TaskPlan(
             project_name="test-project",

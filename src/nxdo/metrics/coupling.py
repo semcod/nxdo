@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import subprocess
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from collections import defaultdict
-import subprocess
 
 
 @dataclass
@@ -30,6 +30,7 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
         if log_result.returncode != 0:
             return []
@@ -56,7 +57,7 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
             commits.append(current_files)
         
         return commits
-    except Exception:
+    except OSError:
         return []
 
 
