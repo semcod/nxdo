@@ -1,30 +1,25 @@
-# code2llm | 26f 3779L | python:19,yaml:4,txt:1,shell:1,toml:1 | 2026-06-16
-# generated in 0.00s
-# CC̅=4.0 | critical:2/111 | dups:0 | cycles:1
+# code2llm | 35f 5498L | python:19,yaml:7,txt:6,shell:2,toml:1 | 2026-09-18
+# generated in 0.01s
+# CC̅=3.7 | critical:0/126 | dups:0 | cycles:0
 
-HEALTH[3]:
-  🔴 CYCLE Circular dependency detected: src.nxdo.project_analyzer._build_tree -> src.nxdo.project_analyzer._get_subtree_lines. This indicates high coupling and may lead to infinite recursion or initialization issues.
-  🟡 CC    identify_bug_hotspots CC=16 (limit:15)
-  🟡 CC    collect_coupling_matrix CC=18 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[2]:
-  1. split 2 high-CC methods  (CC>15)
-  2. break 1 circular dependencies
+REFACTOR[0]: none needed
 
-PIPELINES[23]:
+PIPELINES[24]:
   [1] Src [cmd_plan]: cmd_plan → get_settings
       PURITY: 100% pure
   [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
       PURITY: 100% pure
-  [3] Src [cmd_print_prompt]: cmd_print_prompt → analyze_project → _collect_file_contents → _read_file_safely
+  [3] Src [cmd_print_prompt]: cmd_print_prompt → print
       PURITY: 100% pure
   [4] Src [cmd_validate]: cmd_validate
       PURITY: 100% pure
   [5] Src [cmd_tickets]: cmd_tickets → get_settings
       PURITY: 100% pure
-  [6] Src [cmd_metrics]: cmd_metrics → collect_file_metrics → _calculate_fan_in
+  [6] Src [cmd_metrics]: cmd_metrics → collect_file_metrics → _find_source_files
       PURITY: 100% pure
-  [7] Src [cmd_auto]: cmd_auto → identify_bug_hotspots → _get_file_commits_with_info
+  [7] Src [cmd_auto]: cmd_auto → identify_bug_hotspots → _resolve_target_files
       PURITY: 100% pure
   [8] Src [app_entry]: app_entry
       PURITY: 100% pure
@@ -50,26 +45,28 @@ PIPELINES[23]:
       PURITY: 100% pure
   [19] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [20] Src [__init__]: __init__ → get_settings
+  [20] Src [__init__]: __init__
       PURITY: 100% pure
-  [21] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
+  [21] Src [__init__]: __init__ → get_settings
       PURITY: 100% pure
-  [22] Src [_call_api]: _call_api → get_koru_system_prompt_extension
+  [22] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [23] Src [get_critical_bus_factor_files]: get_critical_bus_factor_files → calculate_bus_factor
+  [23] Src [_call_api]: _call_api → get_koru_system_prompt_extension
+      PURITY: 100% pure
+  [24] Src [get_critical_bus_factor_files]: get_critical_bus_factor_files → calculate_bus_factor
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=4.0    ←in:0  →out:0
-  │ cli                        380L  0C   14m  CC=11     ←0
-  │ complexity                 300L  1C    8m  CC=14     ←1
+  src/                            CC̄=3.9    ←in:0  →out:0
+  │ cli                        388L  0C   16m  CC=11     ←0
+  │ openai_compat              310L  2C   11m  CC=12     ←1
+  │ complexity                 301L  1C   10m  CC=14     ←1
+  │ project_analyzer           285L  1C   19m  CC=5      ←2
   │ koru_context               283L  3C    6m  CC=7      ←2
-  │ project_analyzer           282L  1C   20m  CC=6      ←2
   │ ticket_generator           280L  0C   12m  CC=8      ←1
-  │ !! hotspots                   270L  1C    5m  CC=16     ←1
+  │ hotspots                   271L  1C    8m  CC=14     ←1
   │ git_reader                 268L  2C   21m  CC=7      ←2
-  │ openai_compat              204L  1C    8m  CC=6      ←1
-  │ !! coupling                   194L  1C    3m  CC=18     ←1
+  │ coupling                   198L  1C    5m  CC=13     ←1
   │ models                      90L  4C    4m  CC=7      ←0
   │ llm_client                  85L  1C    4m  CC=3      ←2
   │ output                      67L  0C    3m  CC=4      ←1
@@ -81,19 +78,35 @@ LAYERS:
   │ __main__                     6L  0C    0m  CC=0.0    ←0
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
+  examples/                       CC̄=0.0    ←in:6  →out:0
+  │ nxdo-self-prompt.txt       482L  0C    0m  CC=0.0    ←0
+  │ nxdo-self-context.txt      468L  0C    0m  CC=0.0    ←0
+  │ nxdo-self-plan.txt         171L  0C    0m  CC=0.0    ←0
+  │ check-examples.sh           70L  0C    4m  CC=0.0    ←1
+  │ nxdo-self-metrics.txt       48L  0C    0m  CC=0.0    ←0
+  │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
+  │ !! goal.yaml                  528L  0C    0m  CC=0.0    ←0
   │ strategy.yaml              142L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              98L  0C    0m  CC=0.0    ←0
-  │ tree.txt                    66L  0C    0m  CC=0.0    ←0
+  │ koru.yaml                  141L  0C    0m  CC=0.0    ←0
+  │ wup.yaml                   100L  0C    0m  CC=0.0    ←0
+  │ regix.yaml                  93L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              86L  0C    0m  CC=0.0    ←0
+  │ tree.txt                    73L  0C    0m  CC=0.0    ←0
   │ project.sh                  48L  0C    0m  CC=0.0    ←0
+  │ local.dev.txt               12L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
   │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
   │ generated-from-pytests.testql.toon.yaml    10L  0C    0m  CC=0.0    ←0
   │
 
-COUPLING: no cross-package imports detected
+COUPLING:
+            examples  src.nxdo
+  examples        ──        ←6  hub
+  src.nxdo         6        ──
+  CYCLES: none
+  HUB: examples/ (fan-in=6)
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

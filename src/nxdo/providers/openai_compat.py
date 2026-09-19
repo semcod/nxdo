@@ -5,10 +5,9 @@ from __future__ import annotations
 import json
 import os
 from datetime import datetime, timezone
-from typing import Optional
 
 import httpx
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from ..config import NxdoSettings, get_settings
 from ..models import Priority, Task, TaskPlan, TaskType
@@ -68,9 +67,9 @@ class LLMAPIError(ValueError):
         self,
         message: str,
         *,
-        status_code: Optional[int] = None,
+        status_code: int | None = None,
         endpoint: str = "",
-        model: Optional[str] = None,
+        model: str | None = None,
         response_body: str = "",
     ) -> None:
         super().__init__(message)
@@ -109,18 +108,18 @@ def _extract_error_detail(response_body: str) -> str:
     if not body:
         return ""
     try:
-        data = json.loads(body)
+        error_json = json.loads(body)
     except (json.JSONDecodeError, TypeError):
         return body[:500]
-    if isinstance(data, dict):
-        error = data.get("error")
+    if isinstance(error_json, dict):
+        error = error_json.get("error")
         if isinstance(error, dict):
             message = error.get("message")
             if isinstance(message, str) and message.strip():
                 return message.strip()
         if isinstance(error, str) and error.strip():
             return error.strip()
-        message = data.get("message")
+        message = error_json.get("message")
         if isinstance(message, str) and message.strip():
             return message.strip()
     return body[:500]
@@ -136,10 +135,10 @@ class OpenAICompatProvider(LLMProvider):
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
-        base_url: Optional[str] = None,
-        settings: Optional[NxdoSettings] = None,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+        settings: NxdoSettings | None = None,
         app_name: str = "nxdo",
         koru_aware: bool = False,
     ) -> None:
@@ -220,7 +219,7 @@ class OpenAICompatProvider(LLMProvider):
             )
 
         try:
-            data = response.json()
+            response_json = response.json()
         except (json.JSONDecodeError, ValueError) as exc:
             raise LLMAPIError(
                 f"LLM API returned a non-JSON success response: {exc}",
@@ -231,10 +230,10 @@ class OpenAICompatProvider(LLMProvider):
             ) from exc
 
         try:
-            return data["choices"][0]["message"]["content"].strip()
+            return response_json["choices"][0]["message"]["content"].strip()
         except (KeyError, IndexError, AttributeError, TypeError) as exc:
             raise LLMAPIError(
-                f"Unexpected LLM response payload (missing {exc}). Received: {data}",
+                f"Unexpected LLM response payload (missing {exc}). Received: {response_json}",
                 model=self.model,
             ) from exc
 
@@ -250,14 +249,16 @@ def _strip_markdown_fences(raw: str) -> str:
 def _parse_json_response(raw: str) -> dict:
     """Parse JSON from raw response with error handling."""
     try:
-        data = json.loads(raw)
+        parsed_json = json.loads(raw)
     except json.JSONDecodeError as exc:
         raise ValueError(f"LLM returned invalid JSON. Raw response:\n{raw[:500]}") from exc
 
-    if not isinstance(data, dict):
-        raise ValueError(f"Expected a JSON object, got: {type(data).__name__}")
+    if not isinstance(parsed_json, dict):
+        # ValueError is the documented parse-error contract consumed by the CLI
+        # error handler and the public parse_task_plan_response API.
+        raise ValueError(f"Expected a JSON object, got: {type(parsed_json).__name__}")  # noqa: TRY004
 
-    return data
+    return parsed_json
 
 
 def _create_task_from_dict(item: dict, task_index: int) -> Task:
@@ -287,10 +288,10 @@ def _create_task_from_dict(item: dict, task_index: int) -> Task:
         raise ValueError(f"Invalid task data in LLM response: {item}") from exc
 
 
-def _parse_tasks_from_data(data: dict) -> list[Task]:
-    """Parse tasks from the response data."""
+def _parse_tasks_from_data(plan_json: dict) -> list[Task]:
+    """Parse tasks from the parsed plan JSON."""
     tasks: list[Task] = []
-    for index, item in enumerate(data.get("tasks", [])):
+    for index, item in enumerate(plan_json.get("tasks", [])):
         tasks.append(_create_task_from_dict(item, index))
     return tasks
 
@@ -298,12 +299,12 @@ def _parse_tasks_from_data(data: dict) -> list[Task]:
 def _parse_response(raw: str, project_name: str, model: str) -> TaskPlan:
     """Parse and validate the raw JSON response from the LLM."""
     raw = _strip_markdown_fences(raw)
-    data = _parse_json_response(raw)
-    tasks = _parse_tasks_from_data(data)
+    plan_json = _parse_json_response(raw)
+    tasks = _parse_tasks_from_data(plan_json)
 
     return TaskPlan(
-        project_name=data.get("project_name", project_name),
-        summary=data.get("summary", ""),
+        project_name=plan_json.get("project_name", project_name),
+        summary=plan_json.get("summary", ""),
         tasks=tasks,
         generated_at=datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         model_used=model,

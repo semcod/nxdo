@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import subprocess
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from collections import defaultdict
-import subprocess
 
 
 @dataclass
@@ -25,19 +25,20 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
     Returns: List of [file1, file2, ...] for each commit
     """
     try:
-        result = subprocess.run(
+        log_result = subprocess.run(
             ["git", "log", f"-{max_commits}", "--name-only", "--pretty=format:%H"],
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
-        if result.returncode != 0:
+        if log_result.returncode != 0:
             return []
-        
+
         commits = []
         current_files: list[str] = []
-        
-        for line in result.stdout.strip().split("\n"):
+
+        for line in log_result.stdout.strip().split("\n"):
             if not line:
                 if current_files:
                     commits.append(current_files)
@@ -56,7 +57,7 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
             commits.append(current_files)
         
         return commits
-    except Exception:
+    except OSError:
         return []
 
 
@@ -123,15 +124,15 @@ def collect_coupling_matrix(
         >>> for m in metrics[:5]:
         ...     print(f"{m.file_a} <-> {m.file_b}: {m.coupling_score:.2f}")
     """
-    commits = _get_commits_with_files(repo_path, max_commits)
-    if not commits:
+    commit_file_groups = _get_commits_with_files(repo_path, max_commits)
+    if not commit_file_groups:
         return []
-    
+
     # Count file occurrences and co-occurrences
     file_commits: dict[str, int] = defaultdict(int)
     file_pair_commits: dict[tuple[str, str], int] = defaultdict(int)
-    
-    for commit_files in commits:
+
+    for commit_files in commit_file_groups:
         filtered = _filtered_commit_files(commit_files, file_filter)
         for f in filtered:
             file_commits[f] += 1

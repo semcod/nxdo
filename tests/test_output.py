@@ -4,7 +4,7 @@ from io import StringIO
 from rich.console import Console
 
 from nxdo.models import Priority, Task, TaskPlan, TaskType
-from nxdo.output import render_plan, render_plan_json, render_context
+from nxdo.output import render_context, render_plan, render_plan_json
 
 
 class OutputTests(unittest.TestCase):

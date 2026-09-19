@@ -1,8 +1,11 @@
 """Tests for ticket_generator module."""
 
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import ModuleType
+from unittest.mock import MagicMock, patch
 
 from nxdo.models import Priority, Task, TaskPlan, TaskType
 from nxdo.ticket_generator import (
@@ -16,6 +19,7 @@ from nxdo.ticket_generator import (
     _resolve_todo_path,
     _sync_todo_section,
     export_to_planfile_yaml,
+    sync_to_planfile,
     sync_to_todo_md,
     task_plan_to_tickets,
 )
@@ -544,6 +548,59 @@ class TicketGeneratorTests(unittest.TestCase):
         )
         tickets = task_plan_to_tickets(task_plan)
         self.assertEqual(tickets[0]["dependencies"], ["task-1"])
+
+    def test_sync_to_planfile_when_not_installed(self) -> None:
+        """Test sync_to_planfile returns disabled report when install check fails."""
+        task_plan = TaskPlan(project_name="proj", summary="sum", tasks=[])
+        with patch("nxdo.ticket_generator._ensure_planfile_installed", return_value=False):
+            report = sync_to_planfile(task_plan)
+            self.assertFalse(report["enabled"])
+            self.assertEqual(report["created"], 0)
+
+    def test_sync_to_planfile_success_and_error_handling(self) -> None:
+        """Test sync_to_planfile creates tickets and calls sync_integration."""
+        task_plan = TaskPlan(
+            project_name="proj",
+            summary="sum",
+            tasks=[
+                Task(number=1, title="T1", description="D1", priority=Priority.HIGH, task_type=TaskType.FEATURE),
+                Task(number=2, title="T2", description="D2", priority=Priority.LOW, task_type=TaskType.BUG),
+            ],
+        )
+
+        mock_store_inst = MagicMock()
+        mock_store_inst.base_dir = Path("/tmp/.planfile")
+        mock_store_cls = MagicMock(return_value=mock_store_inst)
+        # Make second ticket fail to test exception handling
+        mock_store_inst.create_ticket.side_effect = [None, ValueError("duplicate")]
+
+        mock_sync_integration = MagicMock()
+
+        # Build mock planfile modules
+        mock_core = ModuleType("planfile.core")
+        mock_store_mod = ModuleType("planfile.core.store")
+        mock_store_mod.Store = mock_store_cls
+        mock_models = ModuleType("planfile.core.models")
+        mock_models.Ticket = MagicMock()
+        mock_models.TicketStatus = MagicMock()
+        mock_cli_sync = ModuleType("planfile.cli.groups.sync.core")
+        mock_cli_sync.sync_integration = mock_sync_integration
+
+        mock_modules = {
+            "planfile.core": mock_core,
+            "planfile.core.store": mock_store_mod,
+            "planfile.core.models": mock_models,
+            "planfile.cli.groups.sync.core": mock_cli_sync,
+        }
+
+        with (
+            patch("nxdo.ticket_generator._ensure_planfile_installed", return_value=True),
+            patch.dict(sys.modules, mock_modules),
+        ):
+            report = sync_to_planfile(task_plan)
+            self.assertTrue(report["enabled"])
+            self.assertEqual(report["created"], 1)
+            self.assertEqual(report["planfile_dir"], "/tmp/.planfile")
 
 
 if __name__ == "__main__":

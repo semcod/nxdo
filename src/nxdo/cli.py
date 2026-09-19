@@ -1,9 +1,7 @@
 """CLI for generating the next 10 project tasks."""
 
 import json
-import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -11,8 +9,8 @@ from rich.console import Console
 from .config import NxdoSettings, get_settings
 from .git_reader import read_git_context
 from .llm_client import build_user_prompt
-from .output import render_context, render_plan, render_plan_json
 from .models import TaskPlan
+from .output import render_context, render_plan, render_plan_json
 from .planner import generate_next_tasks
 from .project_analyzer import analyze_project
 from .providers import OpenAICompatProvider
@@ -29,28 +27,27 @@ console = Console()
 err_console = Console(stderr=True)
 
 
-def _build_provider(
-    model: Optional[str],
-    base_url: Optional[str],
-    settings: NxdoSettings,
-    *,
-    koru_aware: bool = False,
-) -> OpenAICompatProvider:
-    """Build the LLM provider shared by the planning commands."""
-    return OpenAICompatProvider(
-        model=model, base_url=base_url, settings=settings, koru_aware=koru_aware
-    )
+def _settings_for(max_commits: int = 30) -> NxdoSettings:
+    """Return the shared settings with the CLI max-commits override applied."""
+    cfg = get_settings()
+    if max_commits != 30:
+        cfg.max_commits = max_commits  # type: ignore[misc]
+    return cfg
 
 
 def _generate_plan(
     *,
     repo_path: Path,
     extra_context: str,
-    provider: OpenAICompatProvider,
+    model: str | None,
+    base_url: str | None,
     settings: NxdoSettings,
     koru_aware: bool = False,
 ) -> TaskPlan:
-    """Run the planning pipeline, surfacing provider errors as a user-facing exit."""
+    """Build the LLM provider and run the planning pipeline for a command."""
+    provider = OpenAICompatProvider(
+        model=model, base_url=base_url, settings=settings, koru_aware=koru_aware
+    )
     try:
         return generate_next_tasks(
             repo_path=repo_path,
@@ -75,21 +72,19 @@ def _render_prompt_text(repo: Path, extra_context: str, max_commits: int) -> str
 def cmd_plan(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
     extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
-    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
-    base_url: Optional[str] = typer.Option(None, "--base-url", help="Override the API base URL."),
+    model: str | None = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
+    base_url: str | None = typer.Option(None, "--base-url", help="Override the API base URL."),
     as_json: bool = typer.Option(False, "--json", help="Output plan as JSON."),
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
 ) -> None:
     """Generate a 10-task plan for the repository."""
-    cfg = get_settings()
-    if max_commits != 30:
-        cfg.max_commits = max_commits  # type: ignore[misc]
+    cfg = _settings_for(max_commits)
 
-    provider = _build_provider(model, base_url, cfg)
     plan = _generate_plan(
         repo_path=repo.resolve(),
         extra_context=extra_context,
-        provider=provider,
+        model=model,
+        base_url=base_url,
         settings=cfg,
     )
 
@@ -136,13 +131,13 @@ def cmd_validate(
     from .models import TaskPlan
 
     try:
-        data = json.loads(plan_file.read_text(encoding="utf-8"))
-        plan = TaskPlan.model_validate(data)
+        plan_json = json.loads(plan_file.read_text(encoding="utf-8"))
+        loaded_plan = TaskPlan.model_validate(plan_json)
     except (json.JSONDecodeError, ValueError) as exc:
         err_console.print(f"[bold red]Validation failed:[/bold red] {exc}")
         raise typer.Exit(code=1)
 
-    console.print(f"[bold green]✓[/bold green] Plan '{plan.project_name}' is valid ({len(plan.tasks)} tasks).")
+    console.print(f"[bold green]✓[/bold green] Plan '{loaded_plan.project_name}' is valid ({len(loaded_plan.tasks)} tasks).")
 
 
 def _sync_todos_if_requested(plan: TaskPlan, repo: Path, sync_todo: bool) -> None:
@@ -163,7 +158,7 @@ def _sync_planfile_if_requested(plan: TaskPlan, repo: Path, sync_planfile: bool)
         console.print("[yellow]⚠[/yellow] planfile not available")
 
 
-def _export_yaml_if_requested(plan: TaskPlan, repo: Path, export_yaml: bool, output_path: Optional[Path]) -> None:
+def _export_yaml_if_requested(plan: TaskPlan, repo: Path, export_yaml: bool, output_path: Path | None) -> None:
     """Export to planfile YAML if requested."""
     if not export_yaml:
         return
@@ -190,25 +185,23 @@ def _display_tickets(tickets: list[dict[str, str]]) -> None:
 def cmd_tickets(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
     extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
-    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
-    base_url: Optional[str] = typer.Option(None, "--base-url", help="Override the API base URL."),
+    model: str | None = typer.Option(None, "--model", "-m", help="Override the LLM model name."),
+    base_url: str | None = typer.Option(None, "--base-url", help="Override the API base URL."),
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
     sync_todo: bool = typer.Option(False, "--sync-todo", help="Append tasks to TODO.md as checkboxes."),
     sync_planfile: bool = typer.Option(False, "--sync-planfile", help="Store tickets in .planfile/ and sync with markdown."),
     export_yaml: bool = typer.Option(False, "--export-yaml", help="Export to planfile YAML format."),
-    output_path: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
+    output_path: Path | None = typer.Option(None, "--output", "-o", help="Output file for YAML export."),
     koru_aware: bool = typer.Option(False, "--koru-aware", help="Enable koru integration schema for smart task planning."),
 ) -> None:
     """Generate tickets from a plan using planfile integration."""
-    cfg = get_settings()
-    if max_commits != 30:
-        cfg.max_commits = max_commits  # type: ignore[misc]
+    cfg = _settings_for(max_commits)
 
-    provider = _build_provider(model, base_url, cfg, koru_aware=koru_aware)
     plan = _generate_plan(
         repo_path=repo.resolve(),
         extra_context=extra_context,
-        provider=provider,
+        model=model,
+        base_url=base_url,
         settings=cfg,
         koru_aware=koru_aware,
     )
@@ -230,11 +223,11 @@ def cmd_metrics(
 ) -> None:
     """Display code metrics: complexity, coupling, hotspots."""
     from nxdo.metrics import (
+        calculate_bus_factor,
         collect_coupling_matrix,
+        collect_file_metrics,
         get_coupling_clusters,
         identify_bug_hotspots,
-        calculate_bus_factor,
-        collect_file_metrics,
     )
 
     repo_path = repo.resolve()
@@ -329,12 +322,12 @@ def cmd_auto(
     # Execute auto workflow
     console.print("\n[bold]Generating koru-aware tickets...[/bold]")
 
-    cfg = get_settings()
-    provider = _build_provider(None, None, cfg, koru_aware=True)
+    cfg = _settings_for()
     plan = _generate_plan(
         repo_path=repo_path,
         extra_context=extra_context or "Focus on critical hotspots and technical debt",
-        provider=provider,
+        model=None,
+        base_url=None,
         settings=cfg,
         koru_aware=True,
     )
@@ -379,18 +372,17 @@ def main(argv: list[str] | None = None) -> int:
         print(_render_prompt_text(repo_path, args.extra_context, args.max_commits))
         return 0
 
-    cfg = get_settings()
-    provider = _build_provider(args.model, args.base_url, cfg)
+    cfg = _settings_for(args.max_commits)
     try:
-        plan = generate_next_tasks(
+        plan = _generate_plan(
             repo_path=repo_path,
             extra_context=args.extra_context,
-            provider=provider,
+            model=args.model,
+            base_url=args.base_url,
             settings=cfg,
         )
-    except ValueError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
-        return 1
+    except typer.Exit as exit_request:
+        return int(exit_request.exit_code)
 
     if args.json:
         print(json.dumps(plan.to_dict(), indent=2))

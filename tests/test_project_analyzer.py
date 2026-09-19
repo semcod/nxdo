@@ -1,17 +1,17 @@
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
 from nxdo.project_analyzer import (
-    analyze_project,
+    _build_tree,
+    _detect_stack,
+    _parse_cargo,
+    _parse_package_json,
     _parse_pyproject,
     _parse_pyproject_tomllib,
     _readme_summary,
-    _parse_package_json,
-    _parse_cargo,
-    _detect_stack,
-    _build_tree,
     _should_ignore_entry,
+    analyze_project,
 )
 
 
@@ -20,13 +20,9 @@ class ProjectAnalyzerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             (root / "pyproject.toml").write_text(
-                "\n".join(
-                    [
-                        "[project]",
-                        'name = "nxdo"',
-                        'description = "Task planner"',
-                    ]
-                ),
+                "[project]\n"
+                'name = "nxdo"\n'
+                'description = "Task planner"',
                 encoding="utf-8",
             )
             (root / "README.md").write_text("# nxdo\n\nTask planner\n", encoding="utf-8")

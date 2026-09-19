@@ -8,9 +8,12 @@ specific koru operations as their implementation steps.
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -76,35 +79,35 @@ def _load_project_state(project_path: Path) -> KoruProjectState:
     # Load open planfile tickets
     try:
         from koruapi.invoke import invoke_integration
-        result = invoke_integration(
+        tickets_result = invoke_integration(
             "planfile.tickets",
             project=project_path,
             method="list",
             body={"status": "open"},
         )
-        if result.get("ok"):
-            state.open_tickets = result.get("tickets", [])[:10]
-    except Exception:
-        pass
+        if tickets_result.get("ok"):
+            state.open_tickets = tickets_result.get("tickets", [])[:10]
+    except (ImportError, RuntimeError) as exc:
+        logger.debug("planfile.tickets state unavailable: %s", exc)
 
     # Load doctor status
     try:
         from koruapi.invoke import invoke_integration
-        result = invoke_integration(
+        doctor_result = invoke_integration(
             "doctor.run",
             project=project_path,
             method="run",
             body={},
         )
-        if result.get("ok") is not None:
-            report = result.get("report", {})
-            state.doctor_ok = result.get("ok", True)
+        if doctor_result.get("ok") is not None:
+            report = doctor_result.get("report", {})
+            state.doctor_ok = doctor_result.get("ok", True)
             state.doctor_issues = [
                 f"{check}: {msg}"
                 for check, msg in report.get("failures", {}).items()
             ]
-    except Exception:
-        pass
+    except (ImportError, RuntimeError) as exc:
+        logger.debug("doctor.run state unavailable: %s", exc)
 
     return state
 
@@ -139,48 +142,48 @@ def _format_operations_for_llm(operations: list[KoruOperation]) -> str:
         primary_tag = op.tags[0] if op.tags else "other"
         by_domain.setdefault(primary_tag, []).append(op)
 
-    lines: list[str] = ["Available koru operations (use integration IDs in task steps):"]
-    lines.append("")
+    ops_lines: list[str] = ["Available koru operations (use integration IDs in task steps):"]
+    ops_lines.append("")
 
     for tag, ops in sorted(by_domain.items()):
         label = _DOMAIN_LABELS.get(tag, f"[{tag}]")
-        lines.append(f"  {label}")
+        ops_lines.append(f"  {label}")
         for op in ops:
             methods_str = " | ".join(op.methods) if op.methods else "invoke"
-            lines.append(f"    [{op.id}] {op.title}")
-            lines.append(f"      Methods: {methods_str}")
-            lines.append(f"      {op.description}")
+            ops_lines.append(f"    [{op.id}] {op.title}")
+            ops_lines.append(f"      Methods: {methods_str}")
+            ops_lines.append(f"      {op.description}")
             if op.cli_equivalent:
-                lines.append(f"      CLI: {op.cli_equivalent}")
-        lines.append("")
+                ops_lines.append(f"      CLI: {op.cli_equivalent}")
+        ops_lines.append("")
 
-    return "\n".join(lines)
+    return "\n".join(ops_lines)
 
 
 def _format_project_state_for_llm(state: KoruProjectState) -> str:
     """Format current koru project state for LLM prompt."""
-    lines: list[str] = []
+    state_lines: list[str] = []
 
     if state.open_tickets:
-        lines.append(f"Open planfile tickets ({len(state.open_tickets)}):")
+        state_lines.append(f"Open planfile tickets ({len(state.open_tickets)}):")
         for t in state.open_tickets[:5]:
             tid = t.get("id", "?")
             name = t.get("name", t.get("title", "?"))
             status = t.get("status", "open")
             priority = t.get("priority", "normal")
-            lines.append(f"  [{tid}] {name} ({status}, {priority})")
+            state_lines.append(f"  [{tid}] {name} ({status}, {priority})")
         if len(state.open_tickets) > 5:
-            lines.append(f"  ... and {len(state.open_tickets) - 5} more")
+            state_lines.append(f"  ... and {len(state.open_tickets) - 5} more")
     else:
-        lines.append("Open planfile tickets: none")
+        state_lines.append("Open planfile tickets: none")
 
     if not state.doctor_ok:
-        lines.append("")
-        lines.append("Project health issues (koru doctor):")
+        state_lines.append("")
+        state_lines.append("Project health issues (koru doctor):")
         for issue in state.doctor_issues[:5]:
-            lines.append(f"  ⚠ {issue}")
+            state_lines.append(f"  ⚠ {issue}")
 
-    return "\n".join(lines) if lines else "Project state: clean, no open issues."
+    return "\n".join(state_lines) if state_lines else "Project state: clean, no open issues."
 
 
 # ---------------------------------------------------------------------------
@@ -215,14 +218,10 @@ def build_koru_context(
     ops_text = _format_operations_for_llm(operations)
     state_text = _format_project_state_for_llm(state)
 
-    schema_text = "\n".join([
-        "=== KORU INTEGRATION SCHEMA ===",
-        "",
-        ops_text,
-        "=== CURRENT PROJECT STATE (koru) ===",
-        "",
-        state_text,
-    ])
+    schema_text = (
+        f"=== KORU INTEGRATION SCHEMA ===\n\n{ops_text}"
+        f"\n=== CURRENT PROJECT STATE (koru) ===\n\n{state_text}"
+    )
 
     return KoruContext(
         available=True,

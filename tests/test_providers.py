@@ -6,7 +6,6 @@ from unittest.mock import MagicMock, patch
 
 from nxdo.providers.openai_compat import LLMAPIError, OpenAICompatProvider, _parse_response
 
-
 _VALID_RAW = json.dumps({
     "project_name": "demo",
     "summary": "A good project.",

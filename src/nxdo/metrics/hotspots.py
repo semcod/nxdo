@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import subprocess
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from collections import defaultdict
-import subprocess
 
 
 @dataclass
@@ -28,20 +28,21 @@ def _get_file_commits_with_info(
     """Get commits for specific file: [(hash, author, added+deleted), ...]."""
     try:
         # Get commit info with stats
-        result = subprocess.run(
+        commit_log_result = subprocess.run(
             ["git", "log", f"--since={since}", "--format=%H|%an", "--numstat", "--", file_path],
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
-        if result.returncode != 0:
+        if commit_log_result.returncode != 0:
             return [], 0
         
         commits = []
         current_author = ""
         churn = 0
         
-        for line in result.stdout.strip().split("\n"):
+        for line in commit_log_result.stdout.strip().split("\n"):
             if "|" in line and not line.startswith("\t"):
                 # Commit hash|author line
                 parts = line.split("|")
@@ -64,7 +65,7 @@ def _get_file_commits_with_info(
                         pass
         
         return commits, churn
-    except Exception:
+    except OSError:
         return [], 0
 
 
@@ -73,18 +74,19 @@ def _get_bug_fix_commits(repo_path: Path, file_path: str, since: str = "90.days.
     bug_patterns = ["fix", "bug", "repair", "hotfix", "patch", "resolve", "issue"]
     
     try:
-        result = subprocess.run(
+        bug_log_result = subprocess.run(
             ["git", "log", f"--since={since}", "--format=%H", "-i",
              *(f"--grep={pattern}" for pattern in bug_patterns), "--", file_path],
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
-        if result.returncode != 0:
+        if bug_log_result.returncode != 0:
             return 0
         # Git combines these patterns with OR and emits each commit once.
-        return len({line.strip() for line in result.stdout.splitlines() if line.strip()})
-    except Exception:
+        return len({line.strip() for line in bug_log_result.stdout.splitlines() if line.strip()})
+    except OSError:
         return 0
 
 
@@ -96,17 +98,18 @@ def _resolve_target_files(repo_path: Path, files: list[str] | None) -> list[str]
     if files is not None:
         return files
     try:
-        result = subprocess.run(
+        ls_files_result = subprocess.run(
             ["git", "ls-files"],
             cwd=repo_path,
             capture_output=True,
             text=True,
+            check=False,
         )
-        if result.returncode == 0:
-            return [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
-    except Exception:
-        pass
-    return []
+    except OSError:
+        return []
+    if ls_files_result.returncode != 0:
+        return []
+    return [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
 
 
 def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics | None:
@@ -114,15 +117,15 @@ def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics
     if file_path.endswith(_NON_CODE_EXTENSIONS):
         return None
 
-    commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
-    total_commits = len(commits)
+    file_commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
+    total_commits = len(file_commits)
     if total_commits == 0:
         return None
 
     bug_fixes = _get_bug_fix_commits(repo_path, file_path, since)
 
     author_counts: dict[str, int] = defaultdict(int)
-    for _, author, _ in commits:
+    for _, author, _ in file_commits:
         author_counts[author] += 1
 
     author_count = len(author_counts)
@@ -181,6 +184,23 @@ def identify_bug_hotspots(
     return hotspots[:top_n]
 
 
+def _get_file_authors(repo_path: Path, file_path: str) -> list[str] | None:
+    """Return unique authors for a file, or None if git log fails."""
+    try:
+        authors_result = subprocess.run(
+            ["git", "log", "--format=%an", "--", file_path],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return None
+    if authors_result.returncode != 0:
+        return None
+    return sorted({line.strip() for line in authors_result.stdout.strip().split("\n") if line.strip()})
+
+
 def calculate_bus_factor(
     repo_path: Path,
     files: list[str] | None = None,
@@ -195,44 +215,20 @@ def calculate_bus_factor(
         Dict of {file_path: author_count}
         Only includes files with bus_factor <= critical_threshold
     """
-    if files is None:
-        try:
-            result = subprocess.run(
-                ["git", "ls-files"],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode == 0:
-                files = [f.strip() for f in result.stdout.strip().split("\n") if f.strip()]
-            else:
-                return {}
-        except Exception:
-            return {}
+    target_files = _resolve_target_files(repo_path, files)
+    if not target_files:
+        return {}
     
     bus_factors: dict[str, int] = {}
-    
-    for file_path in files:
-        # Skip non-code files
-        if any(file_path.endswith(ext) for ext in [".md", ".txt", ".json", ".yaml", ".yml"]):
+    for file_path in target_files:
+        if file_path.endswith(_NON_CODE_EXTENSIONS):
             continue
-        
-        try:
-            # Get unique authors
-            result = subprocess.run(
-                ["git", "log", "--format=%an", "--", file_path],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode == 0:
-                authors = set(line.strip() for line in result.stdout.strip().split("\n") if line.strip())
-                author_count = len(authors)
-                
-                if author_count <= critical_threshold:
-                    bus_factors[file_path] = author_count
-        except Exception:
-            pass
+        authors = _get_file_authors(repo_path, file_path)
+        if authors is None:
+            continue
+        author_count = len(authors)
+        if author_count <= critical_threshold:
+            bus_factors[file_path] = author_count
     
     return bus_factors
 
@@ -250,22 +246,12 @@ def get_critical_bus_factor_files(
         bus_factors = calculate_bus_factor(repo_path, critical_threshold=2)
     
     critical: list[tuple[str, int, list[str]]] = []
-    
     for file_path, author_count in bus_factors.items():
-        try:
-            result = subprocess.run(
-                ["git", "log", "--format=%an", "--", file_path],
-                cwd=repo_path,
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode == 0:
-                authors = list(set(line.strip() for line in result.stdout.strip().split("\n") if line.strip()))
-                critical.append((file_path, author_count, authors))
-        except Exception:
-            pass
+        authors = _get_file_authors(repo_path, file_path)
+        if authors is not None:
+            critical.append((file_path, author_count, authors))
     
     # Sort by author_count asc, then by path
     critical.sort(key=lambda x: (x[1], x[0]))
-    
     return critical
+

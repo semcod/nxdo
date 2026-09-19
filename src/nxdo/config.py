@@ -2,16 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class NxdoSettings(BaseSettings):
     """Runtime configuration loaded from environment variables."""
 
-    openrouter_api_key: Optional[str] = None
-    openai_api_key: Optional[str] = None
+    openrouter_api_key: str | None = None
+    openai_api_key: str | None = None
     llm_model: str = "openai/gpt-4o-mini"
     llm_base_url: str = "https://openrouter.ai/api/v1"
     llm_timeout: int = 60
@@ -28,12 +26,12 @@ class NxdoSettings(BaseSettings):
     )
 
     @property
-    def api_key(self) -> Optional[str]:
+    def api_key(self) -> str | None:
         """Return the first available API key."""
         return self.openrouter_api_key or self.openai_api_key
 
 
-_settings: Optional[NxdoSettings] = None
+_settings: NxdoSettings | None = None
 
 
 def get_settings() -> NxdoSettings:
