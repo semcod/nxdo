@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import re
 from collections import defaultdict
+from collections.abc import Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -78,46 +79,42 @@ def _calculate_cyclomatic_complexity(content: str) -> int:
     return complexity
 
 
+_STDLIB_MODULES = frozenset({
+    "abc", "argparse", "ast", "asyncio", "base64", "collections", "copy",
+    "csv", "dataclasses", "datetime", "decimal", "enum", "functools", "glob",
+    "hashlib", "http", "importlib", "inspect", "itertools", "json", "logging",
+    "math", "multiprocessing", "operator", "os", "pathlib", "pickle", "random",
+    "re", "shutil", "socket", "statistics", "string", "subprocess", "sys",
+    "tempfile", "textwrap", "threading", "time", "typing", "unittest", "urllib",
+    "uuid", "warnings", "xml", "zipfile",
+})
+
+_IMPORT_RE = re.compile(r"^(?:import\s+([\w.]+)|from\s+([\w.]+)\s+import)")
+
+
+def _iter_imported_modules(content: str) -> Iterator[str]:
+    """Yield the root module name of each import statement in content."""
+    for line in content.split("\n"):
+        if match := _IMPORT_RE.match(line.strip()):
+            yield next(group for group in match.groups() if group).split(".")[0]
+
+
+def _classify_import(module: str) -> str:
+    """Classify an imported root module as stdlib, local, or third_party."""
+    if module in _STDLIB_MODULES:
+        return "stdlib"
+    if module.startswith(("nxdo", ".")):
+        return "local"
+    return "third_party"
+
+
 def _analyze_imports(content: str, file_path: str) -> tuple[list[str], list[str], list[str], int]:
     """Analyze imports: stdlib, third-party, local."""
-    stdlib_modules = {
-        "abc", "argparse", "ast", "asyncio", "base64", "collections", "copy",
-        "csv", "dataclasses", "datetime", "decimal", "enum", "functools", "glob",
-        "hashlib", "http", "importlib", "inspect", "itertools", "json", "logging",
-        "math", "multiprocessing", "operator", "os", "pathlib", "pickle", "random",
-        "re", "shutil", "socket", "statistics", "string", "subprocess", "sys",
-        "tempfile", "textwrap", "threading", "time", "typing", "unittest", "urllib",
-        "uuid", "warnings", "xml", "zipfile",
-    }
-    
-    stdlib = []
-    third_party = []
-    local = []
-    fan_out = 0
-    
-    # Match import statements
-    import_patterns = [
-        r"^import\s+([\w.]+)",
-        r"^from\s+([\w.]+)\s+import",
-    ]
-    
-    for line in content.split("\n"):
-        stripped = line.strip()
-        for pattern in import_patterns:
-            match = re.match(pattern, stripped)
-            if match:
-                module = match.group(1).split(".")[0]
-                fan_out += 1
-                
-                if module in stdlib_modules:
-                    stdlib.append(module)
-                elif module.startswith(("nxdo", ".")):
-                    local.append(module)
-                else:
-                    third_party.append(module)
-                break
-    
-    return stdlib, third_party, local, fan_out
+    grouped: dict[str, list[str]] = defaultdict(list)
+    modules = list(_iter_imported_modules(content))
+    for module in modules:
+        grouped[_classify_import(module)].append(module)
+    return grouped["stdlib"], grouped["third_party"], grouped["local"], len(modules)
 
 
 def _analyze_types(content: str) -> tuple[int, int, float]:
