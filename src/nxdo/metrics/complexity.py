@@ -117,6 +117,21 @@ def _analyze_imports(content: str, file_path: str) -> tuple[list[str], list[str]
     return grouped["stdlib"], grouped["third_party"], grouped["local"], len(modules)
 
 
+def _has_annotated_args(args: ast.arguments) -> bool:
+    """Check whether any argument (positional, keyword-only, vararg, kwarg) is annotated."""
+    arg_nodes = [*args.args, *args.kwonlyargs]
+    if args.vararg is not None:
+        arg_nodes.append(args.vararg)
+    if args.kwarg is not None:
+        arg_nodes.append(args.kwarg)
+    return any(arg.annotation is not None for arg in arg_nodes)
+
+
+def _function_has_annotations(node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
+    """Check whether a function has a return or argument type annotation."""
+    return node.returns is not None or _has_annotated_args(node.args)
+
+
 def _analyze_types(content: str) -> tuple[int, int, float]:
     """Analyze type coverage in Python file."""
     try:
@@ -130,17 +145,7 @@ def _analyze_types(content: str) -> tuple[int, int, float]:
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             total_functions += 1
-            
-            # Check if function has type annotations
-            has_types = (
-                node.returns is not None or  # Return type
-                any(arg.annotation is not None for arg in node.args.args) or  # Args
-                any(arg.annotation is not None for arg in node.args.kwonlyargs) or
-                (node.args.vararg and node.args.vararg.annotation) or
-                (node.args.kwarg and node.args.kwarg.annotation)
-            )
-            
-            if has_types:
+            if _function_has_annotations(node):
                 typed_functions += 1
     
     coverage = (typed_functions / total_functions * 100) if total_functions > 0 else 100.0
