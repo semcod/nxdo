@@ -53,6 +53,13 @@ when:
       - koru scan --project .
       - koru scan --apply --project .
       - koru scan --apply --semcod-artifacts --project .
+      # PLF-073: goal.yaml is config for the `goal` advisory tool (read from
+      # the repo root as one file) — keep it whole and exclude it from
+      # code2llm so evolution does not flag a SPLIT god file. koru's own
+      # discovery run uses hardcoded default excludes (semcod/koru
+      # DEFAULT_EXCLUDES); this command is the canonical manual refresh
+      # until that default grows a per-project override.
+      - code2llm ./ -f all -o ./project --no-chunk --no-png --exclude '*.md' --exclude plugins --exclude goal.yaml
 
   autonomous_outer_loop:
     description: >
