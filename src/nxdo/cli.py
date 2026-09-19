@@ -1,6 +1,7 @@
 """CLI for generating the next 10 project tasks."""
 
 import json
+from dataclasses import dataclass
 from pathlib import Path
 
 import typer
@@ -25,6 +26,15 @@ app = typer.Typer(
 
 console = Console()
 err_console = Console(stderr=True)
+
+
+@dataclass
+class PromptInputs:
+    """Repository, extra context and history depth needed to assemble an LLM prompt."""
+
+    repo: Path
+    extra_context: str
+    max_commits: int
 
 
 def _generate_plan(
@@ -53,11 +63,12 @@ def _generate_plan(
         raise typer.Exit(code=1)
 
 
-def _render_prompt_text(repo: Path, extra_context: str, max_commits: int) -> str:
+def _render_prompt_text(inputs: PromptInputs) -> str:
     """Assemble the full LLM prompt without making an API call."""
-    snapshot = analyze_project(repo.resolve())
-    git_ctx = read_git_context(repo.resolve(), max_commits=max_commits)
-    return build_user_prompt(snapshot.to_text(), git_ctx.to_text(), extra_context)
+    repo = inputs.repo.resolve()
+    snapshot = analyze_project(repo)
+    git_ctx = read_git_context(repo, max_commits=inputs.max_commits)
+    return build_user_prompt(snapshot.to_text(), git_ctx.to_text(), inputs.extra_context)
 
 
 @app.command("plan")
@@ -110,7 +121,8 @@ def cmd_print_prompt(
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
 ) -> None:
     """Print the full prompt that would be sent to the LLM."""
-    print(_render_prompt_text(repo, extra_context, max_commits))
+    inputs = PromptInputs(repo=repo, extra_context=extra_context, max_commits=max_commits)
+    print(_render_prompt_text(inputs))
 
 
 @app.command("validate")
@@ -356,7 +368,8 @@ def main(argv: list[str] | None = None) -> int:
 
     repo_path = Path(args.repo).resolve()
     if args.print_prompt:
-        print(_render_prompt_text(repo_path, args.extra_context, args.max_commits))
+        inputs = PromptInputs(repo=repo_path, extra_context=args.extra_context, max_commits=args.max_commits)
+        print(_render_prompt_text(inputs))
         return 0
 
     try:
