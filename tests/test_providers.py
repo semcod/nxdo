@@ -4,6 +4,7 @@ import json
 import unittest
 from unittest.mock import MagicMock, patch
 
+from nxdo.providers import PlanRequest
 from nxdo.providers.openai_compat import LLMAPIError, OpenAICompatProvider, ResponseInputs, _parse_response
 
 _VALID_RAW = json.dumps({
@@ -78,8 +79,9 @@ class OpenAICompatProviderTests(unittest.TestCase):
 
     def test_generate_plan_uses_parse_response(self) -> None:
         provider = OpenAICompatProvider(api_key="sk-test")
-        with patch.object(provider, "_call_api", return_value=_VALID_RAW):
-            plan = provider.generate_plan("prompt", "demo")
+        with patch.object(provider, "_call_api", return_value=_VALID_RAW) as mock_call:
+            plan = provider.generate_plan(PlanRequest(user_prompt="prompt", project_name="demo"))
+        mock_call.assert_called_once_with("prompt")
         self.assertEqual(plan.project_name, "demo")
         self.assertEqual(len(plan.tasks), 1)
 

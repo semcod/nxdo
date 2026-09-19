@@ -8,6 +8,7 @@ import pytest
 
 from nxdo import koru_context, planner
 from nxdo.config import NxdoSettings
+from nxdo.providers import PlanRequest
 
 
 @pytest.fixture
@@ -80,6 +81,8 @@ def test_planner_passes_koru_context_to_provider_without_network(tmp_path, koru)
         tmp_path, provider=provider, settings=NxdoSettings(_env_file=None), koru_aware=True,
     )
     assert result is provider.generate_plan.return_value
-    prompt = provider.generate_plan.call_args.args[0]
-    assert "planfile.tickets" in prompt
-    assert "git: missing" in prompt
+    request = provider.generate_plan.call_args.args[0]
+    assert isinstance(request, PlanRequest)
+    assert request.project_name == tmp_path.name
+    assert "planfile.tickets" in request.user_prompt
+    assert "git: missing" in request.user_prompt

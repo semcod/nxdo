@@ -12,7 +12,7 @@ from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_ex
 
 from ..config import NxdoSettings, get_settings
 from ..models import Priority, Task, TaskPlan, TaskType
-from .base import LLMProvider
+from .base import LLMProvider, PlanRequest
 
 SYSTEM_PROMPT = """\
 You are an expert software engineering project manager and technical lead.
@@ -152,9 +152,11 @@ class OpenAICompatProvider(LLMProvider):
         self.app_name = app_name
         self.koru_aware = koru_aware
 
-    def generate_plan(self, user_prompt: str, project_name: str) -> TaskPlan:
-        raw = self._call_api(user_prompt)
-        return _parse_response(ResponseInputs(raw=raw, project_name=project_name, model=self.model))
+    def generate_plan(self, request: PlanRequest) -> TaskPlan:
+        raw = self._call_api(request.user_prompt)
+        return _parse_response(
+            ResponseInputs(raw=raw, project_name=request.project_name, model=self.model)
+        )
 
     @retry(
         retry=retry_if_exception_type(httpx.TransportError),

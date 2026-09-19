@@ -17,7 +17,7 @@ class PlannerTests(unittest.TestCase):
         mock_analyze: MagicMock,
     ) -> None:
         from nxdo.config import NxdoSettings
-        from nxdo.providers import LLMProvider
+        from nxdo.providers import LLMProvider, PlanRequest
 
         mock_snapshot = MagicMock()
         mock_snapshot.name = "test-project"
@@ -44,7 +44,9 @@ class PlannerTests(unittest.TestCase):
             settings=NxdoSettings(),
         )
 
-        mock_provider.generate_plan.assert_called_once_with("Full prompt", project_name="test-project")
+        mock_provider.generate_plan.assert_called_once_with(
+            PlanRequest(user_prompt="Full prompt", project_name="test-project")
+        )
         self.assertEqual(result.project_name, "test-project")
 
     @patch("nxdo.planner.analyze_project")

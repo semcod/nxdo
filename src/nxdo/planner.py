@@ -9,7 +9,7 @@ from .git_reader import read_git_context
 from .llm_client import build_user_prompt
 from .models import TaskPlan
 from .project_analyzer import analyze_project
-from .providers import LLMProvider, OpenAICompatProvider
+from .providers import LLMProvider, OpenAICompatProvider, PlanRequest
 
 
 def generate_next_tasks(
@@ -53,4 +53,6 @@ def generate_next_tasks(
 
     llm = OpenAICompatProvider(settings=settings, koru_aware=koru_aware) if provider is None else provider
 
-    return llm.generate_plan(user_prompt, project_name=snapshot.name)
+    return llm.generate_plan(
+        PlanRequest(user_prompt=user_prompt, project_name=snapshot.name)
+    )

@@ -9,7 +9,8 @@ from __future__ import annotations
 import os
 
 from .models import TaskPlan
-from .providers.openai_compat import OpenAICompatProvider, ResponseInputs, _parse_response
+from .providers import OpenAICompatProvider, PlanRequest
+from .providers.openai_compat import ResponseInputs, _parse_response
 
 DEFAULT_MODEL = os.environ.get("LLM_MODEL", "openrouter/qwen/qwen3-coder-next")
 DEFAULT_BASE_URL = os.environ.get("LLM_BASE_URL", "https://openrouter.ai/api/v1")
@@ -82,4 +83,6 @@ class OpenAICompatibleLLMClient:
         extra_context: str = "",
     ) -> TaskPlan:
         user_prompt = build_user_prompt(project_snapshot_text, git_context_text, extra_context)
-        return self._provider.generate_plan(user_prompt, project_name)
+        return self._provider.generate_plan(
+            PlanRequest(user_prompt=user_prompt, project_name=project_name)
+        )
