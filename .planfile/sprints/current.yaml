@@ -85,6 +85,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, user_prompt, self'
       outputs:
         artifacts: []
@@ -200,6 +210,16 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -353,6 +373,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: since, file_path, repo_path'
       outputs:
         artifacts: []
@@ -469,6 +499,16 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -614,6 +654,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: raw, project_name, model'
       outputs:
         artifacts: []
@@ -725,6 +775,16 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -868,6 +928,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, extra_context, max_commits'
       outputs:
         artifacts: []
@@ -983,6 +1053,16 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1123,6 +1203,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: user_prompt, self, project_name'
       outputs:
         artifacts: []
@@ -1233,6 +1323,16 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1368,6 +1468,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _format_project_state_for_llm'
       outputs:
         artifacts: []
@@ -1477,6 +1587,16 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1608,6 +1728,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, self, user_prompt'
       outputs:
         artifacts: []
@@ -1723,6 +1853,16 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1852,6 +1992,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo_path, file_path, since'
       outputs:
         artifacts: []
@@ -1971,6 +2121,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _get_file_commits_with_info'
       outputs:
         artifacts: []
@@ -2080,6 +2240,16 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2197,6 +2367,16 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2319,6 +2499,16 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _resolve_name_and_description'
       outputs:
         artifacts: []
@@ -2430,6 +2620,16 @@ sprint:
       - god-function
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: analyze_project'
       outputs:
         artifacts: []
@@ -2538,6 +2738,16 @@ sprint:
       - code-smell
       - god-function
       - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_auto'
       outputs:
         artifacts: []
@@ -2645,6 +2855,16 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_metrics'
       outputs:
         artifacts: []
@@ -2696,3 +2916,1129 @@ sprint:
           key: semcod/nxdo#117
           url: https://github.com/semcod/nxdo/issues/117
       updated_at: '2026-09-19T12:34:13.072675+00:00'
+    PLF-122:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:14:34.196101+00:00'
+      description: 'code2llm reports `God Function: _build_tree` in `src/nxdo/project_analyzer.py:274`.
+
+
+        Function ''_build_tree'' is oversized: CC=4, fan-out=5, mutations=10.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '119'
+      files:
+      - src/nxdo/project_analyzer.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: _build_tree` in `src/nxdo/project_analyzer.py:274`.
+
+
+          Function ''_build_tree'' is oversized: CC=4, fan-out=5, mutations=10.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:14:34.196101+00:00'
+      id: PLF-122
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: _build_tree` in `src/nxdo/project_analyzer.py:274`.
+
+
+          Function ''_build_tree'' is oversized: CC=4, fan-out=5, mutations=10.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: _build_tree'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:274:God
+            Function: _build_tree'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789823885407015544
+              path: src/nxdo/project_analyzer.py
+              sha256: d526a25459652781f9fc6e0a63219a2699d9f16ad93fa6ffcf97251573fb3aa3
+              size_bytes: 8839
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: _build_tree` in `src/nxdo/project_analyzer.py:274`.
+
+
+            Function ''_build_tree'' is oversized: CC=4, fan-out=5, mutations=10.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:14:34.196101+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '119'
+          key: semcod/nxdo#119
+          url: https://github.com/semcod/nxdo/issues/119
+      updated_at: '2026-09-19T18:14:34.196101+00:00'
+    PLF-123:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:17:06.293917+00:00'
+      description: 'code2llm reports `God Function: _file_hotspot` in `src/nxdo/metrics/hotspots.py:129`.
+
+
+        Function ''_file_hotspot'' is oversized: CC=6, fan-out=7, mutations=10.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '120'
+      files:
+      - src/nxdo/metrics/hotspots.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: _file_hotspot` in `src/nxdo/metrics/hotspots.py:129`.
+
+
+          Function ''_file_hotspot'' is oversized: CC=6, fan-out=7, mutations=10.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:17:06.293917+00:00'
+      id: PLF-123
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: _file_hotspot` in `src/nxdo/metrics/hotspots.py:129`.
+
+
+          Function ''_file_hotspot'' is oversized: CC=6, fan-out=7, mutations=10.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: _file_hotspot'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/hotspots.py:129:God
+            Function: _file_hotspot'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789833291603270315
+              path: src/nxdo/metrics/hotspots.py
+              sha256: 94d4051241ed2d460058680369e6182eedce336e32dcab0ae5beb01081673794
+              size_bytes: 8993
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: _file_hotspot` in `src/nxdo/metrics/hotspots.py:129`.
+
+
+            Function ''_file_hotspot'' is oversized: CC=6, fan-out=7, mutations=10.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:17:06.293917+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '120'
+          key: semcod/nxdo#120
+          url: https://github.com/semcod/nxdo/issues/120
+      updated_at: '2026-09-19T18:17:06.293917+00:00'
+    PLF-124:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:19:44.240544+00:00'
+      description: 'code2llm reports `God Function: cmd_print_context` in `src/nxdo/cli.py:99`.
+
+
+        Function ''cmd_print_context'' is oversized: CC=2, fan-out=11, mutations=4.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '121'
+      files:
+      - src/nxdo/cli.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: cmd_print_context` in `src/nxdo/cli.py:99`.
+
+
+          Function ''cmd_print_context'' is oversized: CC=2, fan-out=11, mutations=4.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:19:44.240544+00:00'
+      id: PLF-124
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: cmd_print_context` in `src/nxdo/cli.py:99`.
+
+
+          Function ''cmd_print_context'' is oversized: CC=2, fan-out=11, mutations=4.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: cmd_print_context'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:99:God Function:
+            cmd_print_context'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789813839761876559
+              path: src/nxdo/cli.py
+              sha256: 4bc132af4557414db93d0d84b36516741beb9edd678e62702fa80be8934d7592
+              size_bytes: 15437
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: cmd_print_context` in `src/nxdo/cli.py:99`.
+
+
+            Function ''cmd_print_context'' is oversized: CC=2, fan-out=11, mutations=4.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:19:44.240544+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '121'
+          key: semcod/nxdo#121
+          url: https://github.com/semcod/nxdo/issues/121
+      updated_at: '2026-09-19T18:19:44.240544+00:00'
+    PLF-125:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:22:36.918012+00:00'
+      description: 'code2llm reports `God Function: cmd_tickets` in `src/nxdo/cli.py:187`.
+
+
+        Function ''cmd_tickets'' is oversized: CC=1, fan-out=14, mutations=2.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '122'
+      files:
+      - src/nxdo/cli.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: cmd_tickets` in `src/nxdo/cli.py:187`.
+
+
+          Function ''cmd_tickets'' is oversized: CC=1, fan-out=14, mutations=2.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:22:36.918012+00:00'
+      id: PLF-125
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: cmd_tickets` in `src/nxdo/cli.py:187`.
+
+
+          Function ''cmd_tickets'' is oversized: CC=1, fan-out=14, mutations=2.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: cmd_tickets'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:187:God Function:
+            cmd_tickets'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789813839761876559
+              path: src/nxdo/cli.py
+              sha256: 4bc132af4557414db93d0d84b36516741beb9edd678e62702fa80be8934d7592
+              size_bytes: 15437
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: cmd_tickets` in `src/nxdo/cli.py:187`.
+
+
+            Function ''cmd_tickets'' is oversized: CC=1, fan-out=14, mutations=2.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:22:36.918012+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '122'
+          key: semcod/nxdo#122
+          url: https://github.com/semcod/nxdo/issues/122
+      updated_at: '2026-09-19T18:22:36.918012+00:00'
+    PLF-126:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:25:39.351503+00:00'
+      description: 'code2llm reports `God Function: generate_next_tasks` in `src/nxdo/planner.py:15`.
+
+
+        Function ''generate_next_tasks'' is oversized: CC=5, fan-out=10, mutations=8.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '123'
+      files:
+      - src/nxdo/planner.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: generate_next_tasks` in `src/nxdo/planner.py:15`.
+
+
+          Function ''generate_next_tasks'' is oversized: CC=5, fan-out=10, mutations=8.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:25:39.351503+00:00'
+      id: PLF-126
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: generate_next_tasks` in `src/nxdo/planner.py:15`.
+
+
+          Function ''generate_next_tasks'' is oversized: CC=5, fan-out=10, mutations=8.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: generate_next_tasks'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/planner.py:15:God Function:
+            generate_next_tasks'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789820765915754601
+              path: src/nxdo/planner.py
+              sha256: a18f2bfd00b939e170085396e4e98ce4e62ec0e4afcf4de42a38d38a70d953e2
+              size_bytes: 2002
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: generate_next_tasks` in `src/nxdo/planner.py:15`.
+
+
+            Function ''generate_next_tasks'' is oversized: CC=5, fan-out=10, mutations=8.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:25:39.351503+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '123'
+          key: semcod/nxdo#123
+          url: https://github.com/semcod/nxdo/issues/123
+      updated_at: '2026-09-19T18:25:39.351503+00:00'
+    PLF-127:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:29:11.643993+00:00'
+      description: 'code2llm reports `God Function: get_coupling_clusters` in `src/nxdo/metrics/coupling.py:150`.
+
+
+        Function ''get_coupling_clusters'' is oversized: CC=10, fan-out=11, mutations=9.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '124'
+      files:
+      - src/nxdo/metrics/coupling.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: get_coupling_clusters` in `src/nxdo/metrics/coupling.py:150`.
+
+
+          Function ''get_coupling_clusters'' is oversized: CC=10, fan-out=11, mutations=9.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:29:11.643993+00:00'
+      id: PLF-127
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: get_coupling_clusters` in `src/nxdo/metrics/coupling.py:150`.
+
+
+          Function ''get_coupling_clusters'' is oversized: CC=10, fan-out=11, mutations=9.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: get_coupling_clusters'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/coupling.py:150:God
+            Function: get_coupling_clusters'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789800863573294940
+              path: src/nxdo/metrics/coupling.py
+              sha256: d48f65edd7e35af818ac68e335a6e4a96eaa7a68bf4bb1532fd548c0d5830e11
+              size_bytes: 6362
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: get_coupling_clusters` in `src/nxdo/metrics/coupling.py:150`.
+
+
+            Function ''get_coupling_clusters'' is oversized: CC=10, fan-out=11, mutations=9.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:29:11.643993+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '124'
+          key: semcod/nxdo#124
+          url: https://github.com/semcod/nxdo/issues/124
+      updated_at: '2026-09-19T18:29:11.643993+00:00'
+    PLF-128:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:32:28.736907+00:00'
+      description: 'code2llm reports `God Function: main` in `src/nxdo/cli.py:355`.
+
+
+        Function ''main'' is oversized: CC=4, fan-out=13, mutations=15.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '125'
+      files:
+      - src/nxdo/cli.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: main` in `src/nxdo/cli.py:355`.
+
+
+          Function ''main'' is oversized: CC=4, fan-out=13, mutations=15.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:32:28.736907+00:00'
+      id: PLF-128
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: main` in `src/nxdo/cli.py:355`.
+
+
+          Function ''main'' is oversized: CC=4, fan-out=13, mutations=15.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: main'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:355:God Function:
+            main'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789813839761876559
+              path: src/nxdo/cli.py
+              sha256: 4bc132af4557414db93d0d84b36516741beb9edd678e62702fa80be8934d7592
+              size_bytes: 15437
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: main` in `src/nxdo/cli.py:355`.
+
+
+            Function ''main'' is oversized: CC=4, fan-out=13, mutations=15.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:32:28.736907+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '125'
+          key: semcod/nxdo#125
+          url: https://github.com/semcod/nxdo/issues/125
+      updated_at: '2026-09-19T18:32:28.736907+00:00'
+    PLF-129:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:35:52.045010+00:00'
+      description: 'code2llm reports `God Function: render_plan` in `src/nxdo/output.py:26`.
+
+
+        Function ''render_plan'' is oversized: CC=3, fan-out=8, mutations=11.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '126'
+      files:
+      - src/nxdo/output.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: render_plan` in `src/nxdo/output.py:26`.
+
+
+          Function ''render_plan'' is oversized: CC=3, fan-out=8, mutations=11.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:35:52.045010+00:00'
+      id: PLF-129
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: render_plan` in `src/nxdo/output.py:26`.
+
+
+          Function ''render_plan'' is oversized: CC=3, fan-out=8, mutations=11.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      - 'priority: normal'
+      name: 'Address code smell: God Function: render_plan'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/output.py:26:God Function:
+            render_plan'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789800863573294940
+              path: src/nxdo/output.py
+              sha256: 4a8efdc64eecc5bbc225b60550f4dbe0b32bb6e9a6c9473009a56e393b2c67bf
+              size_bytes: 2339
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: render_plan` in `src/nxdo/output.py:26`.
+
+
+            Function ''render_plan'' is oversized: CC=3, fan-out=8, mutations=11.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:35:52.045010+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '126'
+          key: semcod/nxdo#126
+          url: https://github.com/semcod/nxdo/issues/126
+      updated_at: '2026-09-19T18:35:52.045010+00:00'
+    PLF-130:
+      backend: github
+      blocked_by: []
+      blocks: []
+      created_at: '2026-09-19T18:39:12.156699+00:00'
+      description: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:191`.
+
+
+        Function ''sync_to_planfile'' is oversized: CC=8, fan-out=9, mutations=7.
+
+
+        Make the smallest refactor that removes the smell and run local tests.'
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: default
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '127'
+      files:
+      - src/nxdo/ticket_generator.py
+      history:
+      - action: created
+        message: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:191`.
+
+
+          Function ''sync_to_planfile'' is oversized: CC=8, fan-out=9, mutations=7.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+        source: koru task
+        timestamp: '2026-09-19T18:39:12.156699+00:00'
+      id: PLF-130
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:191`.
+
+
+          Function ''sync_to_planfile'' is oversized: CC=8, fan-out=9, mutations=7.
+
+
+          Make the smallest refactor that removes the smell and run local tests.'
+      integration:
+      - github
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      - god-function
+      - 'priority: normal'
+      name: 'Address code smell: God Function: sync_to_planfile'
+      outputs:
+        artifacts: []
+        notes: []
+      priority: normal
+      source:
+        context:
+          dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:191:God
+            Function: sync_to_planfile'
+          evidence:
+            artifact:
+              mtime_ns: 1789841458269571300
+              path: project/analysis.toon.yaml
+              sha256: f1bf94b9fdf229e0aaf49599211b1c6914e43f6d30357182893540e095e97eb9
+              size_bytes: 6464
+            files:
+            - mtime_ns: 1789822551740356033
+              path: src/nxdo/ticket_generator.py
+              sha256: fa89296a94b97af56590f319bbdd79f486389c1c7e1fb98d3e9c663bd5cdcd89
+              size_bytes: 10141
+            kind: code2llm_discovery
+            planfile_tickets:
+              mtime_ns: 1789841458291474138
+              path: project/planfile-tickets.yaml
+              sha256: 76c22af7da9b06436828bf2ae8bba78bdd1271a2b95783c65f06ce5fe97b4fab
+              size_bytes: 12148
+            regenerate_command: code2llm /home/tom/github/semcod/nxdo -f all -o /home/tom/github/semcod/nxdo/project
+              --no-chunk --exclude *.md --exclude plugins --planfile-apply --planfile-source
+              koru-project-discovery --planfile-sprint current --planfile-project
+              /home/tom/github/semcod/nxdo --planfile-limit 20
+            schema: koru.ticket_evidence.v1
+            staleness_check: Regenerate artifacts and compare artifact.sha256 / files[].sha256
+              before assuming this ticket is still current.
+          input: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:191`.
+
+
+            Function ''sync_to_planfile'' is oversized: CC=8, fan-out=9, mutations=7.
+
+
+            Make the smallest refactor that removes the smell and run local tests.'
+          signal: code2llm_smell_god_function
+        timestamp: '2026-09-19T18:39:12.156699+00:00'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync:
+        github:
+          id: '127'
+          key: semcod/nxdo#127
+          url: https://github.com/semcod/nxdo/issues/127
+      updated_at: '2026-09-19T18:39:12.156699+00:00'
+    PLF-132:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-19T19:30:38.518039Z'
+      description: 'Coverage gate finding from PLF-131 discovery pass (project/analysis
+        + pytest --cov): src/nxdo/ticket_generator.py is at 85% with 19 uncovered
+        lines (169-187, 211-213, 238-239). Uncovered: _ensure_planfile_installed auto-install
+        and install-failure branches, planfile import-failure branch in sync_to_planfile,
+        and markdown sync warning path. Add unit tests that monkeypatch the planfile
+        import/subprocess calls to exercise these branches and raise module coverage
+        to ~100%.'
+      dsl: SODL/1 id=evt_29af0d2ac7ea21560668a3ce event_hash=2fd82e801da5593d9a9f2ce216f861e1b8cc0eefd28e495d969d2cf3054bbfaa
+        timestamp=2026-09-19T19%3A30%3A38.518039%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-132 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-132%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-132 causation_id=- input_hash=10ceb97a489fa2dda43924fed24af5aa2ce9d9de46680fbb21fe9d8674059ec1
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMTk6MzA6MzguNTE4MDM5WiIsImRlc2NyaXB0aW9uIjoiQ292ZXJhZ2UgZ2F0ZSBmaW5kaW5nIGZyb20gUExGLTEzMSBkaXNjb3ZlcnkgcGFzcyAocHJvamVjdC9hbmFseXNpcyArIHB5dGVzdCAtLWNvdik6IHNyYy9ueGRvL3RpY2tldF9nZW5lcmF0b3IucHkgaXMgYXQgODUlIHdpdGggMTkgdW5jb3ZlcmVkIGxpbmVzICgxNjktMTg3LCAyMTEtMjEzLCAyMzgtMjM5KS4gVW5jb3ZlcmVkOiBfZW5zdXJlX3BsYW5maWxlX2luc3RhbGxlZCBhdXRvLWluc3RhbGwgYW5kIGluc3RhbGwtZmFpbHVyZSBicmFuY2hlcywgcGxhbmZpbGUgaW1wb3J0LWZhaWx1cmUgYnJhbmNoIGluIHN5bmNfdG9fcGxhbmZpbGUsIGFuZCBtYXJrZG93biBzeW5jIHdhcm5pbmcgcGF0aC4gQWRkIHVuaXQgdGVzdHMgdGhhdCBtb25rZXlwYXRjaCB0aGUgcGxhbmZpbGUgaW1wb3J0L3N1YnByb2Nlc3MgY2FsbHMgdG8gZXhlcmNpc2UgdGhlc2UgYnJhbmNoZXMgYW5kIHJhaXNlIG1vZHVsZSBjb3ZlcmFnZSB0byB-MTAwJS4iLCJmaWxlcyI6WyJzcmMvbnhkby90aWNrZXRfZ2VuZXJhdG9yLnB5Il0sImlkIjoiUExGLTEzMiIsImxhYmVscyI6WyJrb3J1IiwibmwtdGFzayIsImxsbS1yZWFkeSIsImNvZGUybGxtIiwibWlzc2luZy10ZXN0cyJdLCJuYW1lIjoiQWRkIHRlc3RzIGZvciBzeW5jX3RvX3BsYW5maWxlIGVycm9yIHBhdGhzIGluIHRpY2tldF9nZW5lcmF0b3IiLCJwcmlvcml0eSI6Im5vcm1hbCIsInNvdXJjZSI6eyJjb250ZXh0Ijp7fSwidGltZXN0YW1wIjoiMjAyNi0wOS0xOVQxOTozMDozOC41MDkyMjVaIiwidG9vbCI6ImtvcnUtc2NhbiJ9LCJzcHJpbnQiOiJjdXJyZW50Iiwic3RhdHVzIjoib3BlbiIsInN5bmMiOnt9LCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0xOVQxOTozMDozOC41MTgwNDNaIn19
+      files:
+      - src/nxdo/ticket_generator.py
+      history: []
+      id: PLF-132
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - missing-tests
+      name: Add tests for sync_to_planfile error paths in ticket_generator
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-19T19:30:38.509225Z'
+        tool: koru-scan
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-19T19:30:38.518043Z'
+    PLF-133:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-19T19:31:00.232851Z'
+      description: 'code2llm evolution queue (project/evolution.toon.yaml) ranks this
+        NEXT[1]: goal.yaml is 528 lines at repo root with no structure; SPLIT recommended,
+        effort ~4h (impact 0, config-only). Investigate whether goal.yaml is consumed
+        whole by any tool; if it supports includes or is only reference material,
+        split into per-domain section files (or move under docs/) and update references.
+        Low priority: no import paths at risk, purely organizational.'
+      dsl: SODL/1 id=evt_7b1af180c96afe77c4c0fe55 event_hash=ef64f19aecf548a00176935823e4bbfc05298759bd0f03e4eea44ee18be7b89d
+        timestamp=2026-09-19T19%3A31%3A00.232851%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-133 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-133%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-133 causation_id=- input_hash=f682ffd64c10648ddfc2b961b331d697a3177749be953d53f3d108ca2eaa2680
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMTk6MzE6MDAuMjMyODUxWiIsImRlc2NyaXB0aW9uIjoiY29kZTJsbG0gZXZvbHV0aW9uIHF1ZXVlIChwcm9qZWN0L2V2b2x1dGlvbi50b29uLnlhbWwpIHJhbmtzIHRoaXMgTkVYVFsxXTogZ29hbC55YW1sIGlzIDUyOCBsaW5lcyBhdCByZXBvIHJvb3Qgd2l0aCBubyBzdHJ1Y3R1cmU7IFNQTElUIHJlY29tbWVuZGVkLCBlZmZvcnQgfjRoIChpbXBhY3QgMCwgY29uZmlnLW9ubHkpLiBJbnZlc3RpZ2F0ZSB3aGV0aGVyIGdvYWwueWFtbCBpcyBjb25zdW1lZCB3aG9sZSBieSBhbnkgdG9vbDsgaWYgaXQgc3VwcG9ydHMgaW5jbHVkZXMgb3IgaXMgb25seSByZWZlcmVuY2UgbWF0ZXJpYWwsIHNwbGl0IGludG8gcGVyLWRvbWFpbiBzZWN0aW9uIGZpbGVzIChvciBtb3ZlIHVuZGVyIGRvY3MvKSBhbmQgdXBkYXRlIHJlZmVyZW5jZXMuIExvdyBwcmlvcml0eTogbm8gaW1wb3J0IHBhdGhzIGF0IHJpc2ssIHB1cmVseSBvcmdhbml6YXRpb25hbC4iLCJmaWxlcyI6WyJnb2FsLnlhbWwiXSwiaWQiOiJQTEYtMTMzIiwibGFiZWxzIjpbImtvcnUiLCJubC10YXNrIiwibGxtLXJlYWR5IiwiY29kZTJsbG0iLCJjb2RlLXNtZWxsIl0sIm5hbWUiOiJTcGxpdCBvdmVyc2l6ZWQgZ29hbC55YW1sIGludG8gc2VjdGlvbiBmaWxlcyIsInByaW9yaXR5IjoibG93Iiwic291cmNlIjp7ImNvbnRleHQiOnt9LCJ0aW1lc3RhbXAiOiIyMDI2LTA5LTE5VDE5OjMwOjU4LjU0OTc4NVoiLCJ0b29sIjoia29ydS1zY2FuIn0sInNwcmludCI6ImN1cnJlbnQiLCJzdGF0dXMiOiJvcGVuIiwic3luYyI6e30sInVwZGF0ZWRfYXQiOiIyMDI2LTA5LTE5VDE5OjMxOjAwLjIzMjg1NloifX0
+      files:
+      - goal.yaml
+      history: []
+      id: PLF-133
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - code-smell
+      name: Split oversized goal.yaml into section files
+      priority: low
+      source:
+        context: {}
+        timestamp: '2026-09-19T19:30:58.549785Z'
+        tool: koru-scan
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-19T19:31:00.232856Z'
+    PLF-134:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-19T19:31:02.608444Z'
+      description: 'Coverage gate finding from PLF-131 discovery pass (pytest --cov):
+        src/nxdo/metrics/complexity.py is at 85% with 23 uncovered lines (86-87, 107,
+        177-179, 200, 202, 215-216, 225, 240-241, 249, 254, 264, 274, 277, 302-303,
+        341, 358, 366). Uncovered: SyntaxError fallbacks in _calculate_cyclomatic_complexity/_analyze_types,
+        OSError fallback in _read_text_or_empty and file read in _build_file_metrics,
+        _build_module_to_file src-prefix stripping, _classify_import stdlib/local
+        branches, get_high_complexity_files and get_poorly_typed_files filter helpers.
+        Add unit tests with fixture files (bad syntax, unreadable path, src-layout
+        import) to close these gaps.'
+      dsl: SODL/1 id=evt_5938f6d24ad285e19d066ac7 event_hash=01d128b8d6f735dbb7970f0515ad6753832613fce8569561e5c4e1f79414a550
+        timestamp=2026-09-19T19%3A31%3A02.608444%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-134 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-134%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-134 causation_id=- input_hash=432585c81a4a791cc28f143db8f753484779a6472679dc76bcdf54920afcc0e1
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMTk6MzE6MDIuNjA4NDQ0WiIsImRlc2NyaXB0aW9uIjoiQ292ZXJhZ2UgZ2F0ZSBmaW5kaW5nIGZyb20gUExGLTEzMSBkaXNjb3ZlcnkgcGFzcyAocHl0ZXN0IC0tY292KTogc3JjL254ZG8vbWV0cmljcy9jb21wbGV4aXR5LnB5IGlzIGF0IDg1JSB3aXRoIDIzIHVuY292ZXJlZCBsaW5lcyAoODYtODcsIDEwNywgMTc3LTE3OSwgMjAwLCAyMDIsIDIxNS0yMTYsIDIyNSwgMjQwLTI0MSwgMjQ5LCAyNTQsIDI2NCwgMjc0LCAyNzcsIDMwMi0zMDMsIDM0MSwgMzU4LCAzNjYpLiBVbmNvdmVyZWQ6IFN5bnRheEVycm9yIGZhbGxiYWNrcyBpbiBfY2FsY3VsYXRlX2N5Y2xvbWF0aWNfY29tcGxleGl0eS9fYW5hbHl6ZV90eXBlcywgT1NFcnJvciBmYWxsYmFjayBpbiBfcmVhZF90ZXh0X29yX2VtcHR5IGFuZCBmaWxlIHJlYWQgaW4gX2J1aWxkX2ZpbGVfbWV0cmljcywgX2J1aWxkX21vZHVsZV90b19maWxlIHNyYy1wcmVmaXggc3RyaXBwaW5nLCBfY2xhc3NpZnlfaW1wb3J0IHN0ZGxpYi9sb2NhbCBicmFuY2hlcywgZ2V0X2hpZ2hfY29tcGxleGl0eV9maWxlcyBhbmQgZ2V0X3Bvb3JseV90eXBlZF9maWxlcyBmaWx0ZXIgaGVscGVycy4gQWRkIHVuaXQgdGVzdHMgd2l0aCBmaXh0dXJlIGZpbGVzIChiYWQgc3ludGF4LCB1bnJlYWRhYmxlIHBhdGgsIHNyYy1sYXlvdXQgaW1wb3J0KSB0byBjbG9zZSB0aGVzZSBnYXBzLiIsImZpbGVzIjpbInNyYy9ueGRvL21ldHJpY3MvY29tcGxleGl0eS5weSJdLCJpZCI6IlBMRi0xMzQiLCJsYWJlbHMiOlsia29ydSIsIm5sLXRhc2siLCJsbG0tcmVhZHkiLCJjb2RlMmxsbSIsIm1pc3NpbmctdGVzdHMiXSwibmFtZSI6IkFkZCB0ZXN0cyBmb3IgZGVmZW5zaXZlIHBhdGhzIGluIG1ldHJpY3MvY29tcGxleGl0eSIsInByaW9yaXR5Ijoibm9ybWFsIiwic291cmNlIjp7ImNvbnRleHQiOnt9LCJ0aW1lc3RhbXAiOiIyMDI2LTA5LTE5VDE5OjMwOjU5Ljc5MTI4OVoiLCJ0b29sIjoia29ydS1zY2FuIn0sInNwcmludCI6ImN1cnJlbnQiLCJzdGF0dXMiOiJvcGVuIiwic3luYyI6e30sInVwZGF0ZWRfYXQiOiIyMDI2LTA5LTE5VDE5OjMxOjAyLjYwODQ1MFoifX0
+      files:
+      - src/nxdo/metrics/complexity.py
+      history: []
+      id: PLF-134
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - code2llm
+      - missing-tests
+      name: Add tests for defensive paths in metrics/complexity
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-19T19:30:59.791289Z'
+        tool: koru-scan
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-19T19:31:02.608450Z'

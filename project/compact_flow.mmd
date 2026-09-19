@@ -1,5 +1,13 @@
 flowchart TD
-%% generated in 0.00s
+%% generated in 0.01s
     examples__check_examples["examples.check-examples<br/>4 funcs"]
-    src__nxdo["src.nxdo<br/>125 funcs"]
+    nxdo__git_reader["nxdo.git_reader<br/>19 funcs"]
+    nxdo__metrics["nxdo.metrics<br/>18 funcs"]
+    nxdo__project_analyzer["nxdo.project_analyzer<br/>19 funcs"]
+    nxdo__ticket_generator["nxdo.ticket_generator<br/>13 funcs"]
+    src__nxdo["src.nxdo<br/>66 funcs"]
     src__nxdo ==>|6| examples__check_examples
+    src__nxdo ==>|5| nxdo__ticket_generator
+    src__nxdo -->|3| nxdo__project_analyzer
+    src__nxdo -->|3| nxdo__git_reader
+    src__nxdo -->|2| nxdo__metrics

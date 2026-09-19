@@ -1,67 +1,57 @@
-# nxdo | 35f 5498L | yaml:7,txt:6,toml:1,shell:2,python:19 | 2026-09-19
+# nxdo | 36f 5642L | yaml:7,txt:6,toml:1,shell:2,python:20 | 2026-09-19
 # generated in 0.01s
-# stats: 129 func | 0 cls | 35 mod | CC̄=3.6 | critical:0 | cycles:0
-# alerts[5]: fan-out _build_tree=15; fan-out cmd_auto=15; fan-out cmd_metrics=15; fan-out cmd_tickets=14; fan-out OpenAICompatProvider._call_api=13
-# hotspots[5]: cmd_metrics fan=15; cmd_auto fan=15; _build_tree fan=15; cmd_tickets fan=14; OpenAICompatProvider._call_api fan=13
-# evolution: CC̄ 3.8→3.6 (improved -0.2)
+# stats: 146 func | 0 cls | 36 mod | CC̄=3.3 | critical:0 | cycles:0
+# alerts[5]: fan-out cmd_auto=15; fan-out cmd_metrics=15; fan-out cmd_tickets=14; fan-out main=13; fan-out cmd_print_context=11
+# hotspots[5]: cmd_metrics fan=15; cmd_auto fan=15; cmd_tickets fan=14; main fan=13; cmd_print_context fan=11
+# evolution: CC̄ 3.4→3.3 (improved -0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[35]:
+M[36]:
   examples/check-examples.sh,70
   examples/nxdo-self-context.txt,468
   examples/nxdo-self-metrics.txt,48
   examples/nxdo-self-plan.txt,171
   examples/nxdo-self-prompt.txt,482
   goal.yaml,528
-  koru.yaml,141
+  koru.yaml,148
   local.dev.txt,12
+  src/nxdo/git_reader.py,257
+  src/nxdo/metrics/complexity.py,366
+  src/nxdo/models.py,91
+  src/nxdo/project_analyzer.py,288
+  src/nxdo/text_builder.py,18
+  src/nxdo/ticket_generator.py,287
   project.sh,48
-  pyproject.toml,99
+  pyproject.toml,100
   regix.yaml,93
   src/nxdo/__init__.py,31
   src/nxdo/__main__.py,5
-  src/nxdo/cli.py,391
-  src/nxdo/config.py,42
-  src/nxdo/git_reader.py,266
+  src/nxdo/cli.py,390
+  src/nxdo/config.py,46
   src/nxdo/koru_context.py,282
-  src/nxdo/llm_client.py,85
+  src/nxdo/llm_client.py,88
   src/nxdo/metrics/__init__.py,16
-  src/nxdo/metrics/complexity.py,301
   src/nxdo/metrics/coupling.py,199
-  src/nxdo/metrics/hotspots.py,257
-  src/nxdo/models.py,89
+  src/nxdo/metrics/hotspots.py,264
   src/nxdo/output.py,71
-  src/nxdo/planner.py,56
-  src/nxdo/project_analyzer.py,285
+  src/nxdo/planner.py,58
   src/nxdo/providers/__init__.py,6
-  src/nxdo/providers/base.py,19
-  src/nxdo/providers/openai_compat.py,311
-  src/nxdo/ticket_generator.py,281
+  src/nxdo/providers/base.py,24
+  src/nxdo/providers/openai_compat.py,342
   strategy.yaml,142
   testql-scenarios/generated-cli-tests.testql.toon.yaml,20
   testql-scenarios/generated-from-pytests.testql.toon.yaml,10
   tree.txt,73
   wup.yaml,100
 D:
-  src/nxdo/metrics/complexity.py:
-    e: FileMetrics,_count_lines,_calculate_cyclomatic_complexity,_analyze_imports,_analyze_types,_calculate_fan_in,_find_source_files,_build_file_metrics,collect_file_metrics,get_high_complexity_files,get_poorly_typed_files
-    FileMetrics:  # Comprehensive metrics for a source file...
-    _count_lines(content)
-    _calculate_cyclomatic_complexity(content)
-    _analyze_imports(content;file_path)
-    _analyze_types(content)
-    _calculate_fan_in(project_path;all_files)
-    _find_source_files(project_path;file_filter)
-    _build_file_metrics(project_path;file_path;fan_in_map)
-    collect_file_metrics(project_path;file_filter)
-    get_high_complexity_files(metrics;cc_threshold;fan_out_threshold)
-    get_poorly_typed_files(metrics;coverage_threshold)
   src/nxdo/metrics/hotspots.py:
-    e: HotspotMetrics,_get_file_commits_with_info,_get_bug_fix_commits,_resolve_target_files,_file_hotspot,_hotspot_risk_score,identify_bug_hotspots,_get_file_authors,calculate_bus_factor,get_critical_bus_factor_files
+    e: HotspotMetrics,FileHistoryQuery,_get_file_commits_with_info,_get_bug_fix_commits,_resolve_target_files,_author_summary,_file_hotspot,_hotspot_risk_score,identify_bug_hotspots,_get_file_authors,calculate_bus_factor,get_critical_bus_factor_files
     HotspotMetrics:  # Bug hotspot metrics for a file...
-    _get_file_commits_with_info(repo_path;file_path;since)
-    _get_bug_fix_commits(repo_path;file_path;since)
+    FileHistoryQuery:  # Repository, file and time window for one git-history lookup...
+    _get_file_commits_with_info(query)
+    _get_bug_fix_commits(query)
     _resolve_target_files(repo_path;files)
-    _file_hotspot(repo_path;file_path;since)
+    _author_summary(file_commits)
+    _file_hotspot(query)
     _hotspot_risk_score(h)
     identify_bug_hotspots(repo_path;files;top_n;since)
     _get_file_authors(repo_path;file_path)
@@ -76,23 +66,25 @@ D:
     collect_coupling_matrix(repo_path;max_commits;min_coupling;file_filter)
     get_coupling_clusters(coupling_metrics;min_coupling)
   src/nxdo/providers/openai_compat.py:
-    e: LLMAPIError,OpenAICompatProvider,_extract_error_detail,_http_status_hint,_strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response
+    e: LLMAPIError,OpenAICompatProvider,ResponseInputs,_extract_error_detail,_http_status_hint,_extract_content,_strip_markdown_fences,_parse_json_response,_create_task_from_dict,_parse_tasks_from_data,_parse_response
     LLMAPIError(ValueError): __init__(1)  # An LLM API failure with structured, actionable detail.
 
 Subc...
-    OpenAICompatProvider(LLMProvider): __init__(6),generate_plan(2),_call_api(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint...
+    OpenAICompatProvider(LLMProvider): __init__(6),generate_plan(1),_call_api(1),_build_system_prompt(0),_build_payload(1),_build_headers(0),_post_chat(1),_http_error(1),_parse_success_json(1)  # Provider for OpenRouter or any OpenAI-compatible endpoint...
+    ResponseInputs:  # Raw LLM response text plus the metadata needed to parse it i...
     _extract_error_detail(response_body)
     _http_status_hint(status_code)
+    _extract_content(response_json;model)
     _strip_markdown_fences(raw)
     _parse_json_response(raw)
     _create_task_from_dict(item;task_index)
     _parse_tasks_from_data(plan_json)
-    _parse_response(raw;project_name;model)
+    _parse_response(inputs)
   src/nxdo/cli.py:
-    e: _settings_for,_generate_plan,_render_prompt_text,cmd_plan,cmd_print_context,cmd_print_prompt,cmd_validate,_sync_todos_if_requested,_sync_planfile_if_requested,_export_yaml_if_requested,_get_priority_emoji,_display_tickets,cmd_tickets,cmd_metrics,cmd_auto,app_entry,main
-    _settings_for(max_commits)
+    e: PromptInputs,_generate_plan,_render_prompt_text,cmd_plan,cmd_print_context,cmd_print_prompt,cmd_validate,_sync_todos_if_requested,_sync_planfile_if_requested,_export_yaml_if_requested,_get_priority_emoji,_display_tickets,cmd_tickets,cmd_metrics,cmd_auto,app_entry,main
+    PromptInputs:  # Repository, extra context and history depth needed to assemb...
     _generate_plan()
-    _render_prompt_text(repo;extra_context;max_commits)
+    _render_prompt_text(inputs)
     cmd_plan(repo;extra_context;model;base_url;as_json;max_commits)
     cmd_print_context(repo;max_commits;raw)
     cmd_print_prompt(repo;extra_context;max_commits)
@@ -108,11 +100,12 @@ Subc...
     app_entry()
     main(argv)
   src/nxdo/ticket_generator.py:
-    e: task_plan_to_tickets,_map_priority,sync_to_todo_md,_resolve_todo_path,_build_todo_section,_sync_todo_section,_remove_generated_todo_sections,_remove_managed_todo_blocks,_remove_legacy_generated_todo_sections,_ensure_planfile_installed,sync_to_planfile,export_to_planfile_yaml
+    e: task_plan_to_tickets,_map_priority,sync_to_todo_md,_resolve_todo_path,_todo_task_lines,_build_todo_section,_sync_todo_section,_remove_generated_todo_sections,_remove_managed_todo_blocks,_remove_legacy_generated_todo_sections,_ensure_planfile_installed,sync_to_planfile,export_to_planfile_yaml
     task_plan_to_tickets(task_plan)
     _map_priority(priority)
     sync_to_todo_md(task_plan;project_path)
     _resolve_todo_path(project_path)
+    _todo_task_lines(task)
     _build_todo_section(task_plan)
     _sync_todo_section(todo_path;lines)
     _remove_generated_todo_sections(content)
@@ -122,14 +115,12 @@ Subc...
     sync_to_planfile(task_plan;project_path)
     export_to_planfile_yaml(task_plan;output_path)
   src/nxdo/git_reader.py:
-    e: CommitInfo,GitContext,_run,_is_git_repo,_run_git_command,_get_git_branch,_get_git_remote,_get_git_commits,_count_file_frequencies,_format_file_summary,_get_file_frequency,_get_git_todos,_create_empty_context,read_git_context,_parse_commit_metadata,_create_commit_info,_finalize_commit,_parse_commits,_filter_git_paths,_should_ignore_git_path,_should_include_todo_line
+    e: CommitInfo,GitContext,_run,_is_git_repo,_run_git_command,_get_git_commits,_count_file_frequencies,_format_file_summary,_get_file_frequency,_get_git_todos,_create_empty_context,read_git_context,_parse_commit_metadata,_create_commit_info,_finalize_commit,_parse_commits,_filter_git_paths,_should_ignore_git_path,_should_include_todo_line
     CommitInfo: __str__(0)
     GitContext: to_text(0)
     _run(cmd;cwd)
     _is_git_repo(path)
     _run_git_command(repo_path;command;default)
-    _get_git_branch(repo_path)
-    _get_git_remote(repo_path)
     _get_git_commits(repo_path;max_commits)
     _count_file_frequencies(raw_output)
     _format_file_summary(file_freq)
@@ -161,11 +152,35 @@ Subc...
     TaskType(str,Enum):
     Task(BaseModel): __str__(0),to_dict(0)
     TaskPlan(BaseModel): __str__(0),to_dict(0)
+  src/nxdo/metrics/complexity.py:
+    e: LineCounts,ImportBreakdown,TypeCoverage,FileMetrics,_classify_line,_count_lines,_calculate_cyclomatic_complexity,_iter_imported_modules,_classify_import,_analyze_imports,_has_annotated_args,_function_has_annotations,_analyze_types,_read_text_or_empty,_build_module_to_file,_iter_matched_imports,_calculate_fan_in,_find_source_files,_build_file_metrics,collect_file_metrics,get_high_complexity_files,get_poorly_typed_files
+    LineCounts(NamedTuple):  # Line tallies for a single source file...
+    ImportBreakdown(NamedTuple):  # Import classification and total import count for a single so...
+    TypeCoverage(NamedTuple):  # Function annotation coverage for a single source file...
+    FileMetrics:  # Comprehensive metrics for a source file...
+    _classify_line(line)
+    _count_lines(content)
+    _calculate_cyclomatic_complexity(content)
+    _iter_imported_modules(content)
+    _classify_import(module)
+    _analyze_imports(content;file_path)
+    _has_annotated_args(args)
+    _function_has_annotations(node)
+    _analyze_types(content)
+    _read_text_or_empty(file_path)
+    _build_module_to_file(project_path;all_files)
+    _iter_matched_imports(content;module_to_file)
+    _calculate_fan_in(project_path;all_files)
+    _find_source_files(project_path;file_filter)
+    _build_file_metrics(project_path;file_path;fan_in_map)
+    collect_file_metrics(project_path;file_filter)
+    get_high_complexity_files(metrics;cc_threshold;fan_out_threshold)
+    get_poorly_typed_files(metrics;coverage_threshold)
   src/nxdo/planner.py:
     e: generate_next_tasks
     generate_next_tasks(repo_path;extra_context;provider;settings;koru_aware)
   src/nxdo/project_analyzer.py:
-    e: ProjectSnapshot,_read_file_safely,_truncate_file_content,_collect_file_contents,_resolve_name_and_description,analyze_project,_check_pattern_match,_detect_stack,_parse_pyproject_tomllib,_parse_pyproject_regex,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_should_ignore_entry,_get_tree_symbol,_get_connector,_get_extension,_build_tree
+    e: ProjectSnapshot,_read_file_safely,_truncate_file_content,_collect_file_contents,_resolve_name_and_description,analyze_project,_check_pattern_match,_detect_stack,_parse_pyproject_tomllib,_parse_pyproject_regex,_parse_pyproject,_parse_package_json,_parse_cargo,_readme_summary,_should_ignore_entry,_get_tree_symbol,_visible_children,_push_tree_children,_build_tree
     ProjectSnapshot: to_text(0)
     _read_file_safely(path)
     _truncate_file_content(text)
@@ -182,9 +197,13 @@ Subc...
     _readme_summary(text)
     _should_ignore_entry(name)
     _get_tree_symbol(is_last;connector)
-    _get_connector(is_last)
-    _get_extension(is_last)
+    _visible_children(directory)
+    _push_tree_children(stack;directory;node_depth;node_prefix)
     _build_tree(root;max_depth;depth;prefix)
+  src/nxdo/config.py:
+    e: NxdoSettings,get_settings
+    NxdoSettings(BaseSettings):  # Runtime configuration loaded from environment variables...
+    get_settings()
   src/nxdo/output.py:
     e: _resolve_console,render_plan,render_plan_json,render_context
     _resolve_console(console)
@@ -196,13 +215,13 @@ Subc...
     OpenAICompatibleLLMClient: __init__(4),generate_task_plan(4)  # Minimal client for OpenRouter or another OpenAI-compatible e...
     build_user_prompt(project_snapshot_text;git_context_text;extra_context;koru_schema)
     parse_task_plan_response(raw;project_name;model)
-  src/nxdo/config.py:
-    e: NxdoSettings,get_settings
-    NxdoSettings(BaseSettings):  # Runtime configuration loaded from environment variables...
-    get_settings()
+  src/nxdo/text_builder.py:
+    e: LineBuilder
+    LineBuilder: __init__(0),line(0),text(0)  # Single owner of the line-list mutation used to assemble text...
   src/nxdo/providers/base.py:
-    e: LLMProvider
-    LLMProvider(ABC): generate_plan(2)  # Interface every LLM backend must implement...
+    e: PlanRequest,LLMProvider
+    PlanRequest:  # User prompt plus project identity forwarded together to the ...
+    LLMProvider(ABC): generate_plan(1)  # Interface every LLM backend must implement...
   goal.yaml:
   regix.yaml:
   local.dev.txt:

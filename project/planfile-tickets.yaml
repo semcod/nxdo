@@ -3,295 +3,12 @@ source: code2llm
 schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/semcod/nxdo
 tickets:
-- signal: code2llm_smell_shotgun_surgery
-  title: 'Address code smell: Shotgun Surgery: cfg'
-  description: 'code2llm reports `Shotgun Surgery: cfg` in `src/nxdo/cli.py:279`.
-
-
-    Mutation of variable ''cfg'' spans 7 functions. Changing this logic requires work
-    in many places.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: high
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - shotgun-surgery
-  files:
-  - src/nxdo/cli.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nxdo/cli.py:279:Shotgun Surgery:
-    cfg'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project_name, model, raw'
-  description: 'code2llm reports `Data Clump: project_name, model, raw` in `src/nxdo/llm_client.py:49`.
-
-
-    Arguments (project_name, model, raw) are used together in multiple functions:
-    src.nxdo.llm_client.parse_task_plan_response, src.nxdo.providers.openai_compat._parse_response.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/llm_client.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/llm_client.py:49:Data Clump: project_name,
-    model, raw'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project_name, model, raw'
-  description: 'code2llm reports `Data Clump: project_name, model, raw` in `src/nxdo/providers/openai_compat.py:299`.
-
-
-    Arguments (project_name, model, raw) are used together in multiple functions:
-    src.nxdo.llm_client.parse_task_plan_response, src.nxdo.providers.openai_compat._parse_response.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/providers/openai_compat.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/providers/openai_compat.py:299:Data
-    Clump: project_name, model, raw'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project_name, user_prompt, self'
-  description: 'code2llm reports `Data Clump: project_name, user_prompt, self` in
-    `src/nxdo/providers/base.py:14`.
-
-
-    Arguments (project_name, user_prompt, self) are used together in multiple functions:
-    src.nxdo.providers.base.LLMProvider.generate_plan, src.nxdo.providers.openai_compat.OpenAICompatProvider.generate_plan.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/providers/base.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/providers/base.py:14:Data Clump:
-    project_name, user_prompt, self'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: project_name, user_prompt, self'
-  description: 'code2llm reports `Data Clump: project_name, user_prompt, self` in
-    `src/nxdo/providers/openai_compat.py:154`.
-
-
-    Arguments (project_name, user_prompt, self) are used together in multiple functions:
-    src.nxdo.providers.base.LLMProvider.generate_plan, src.nxdo.providers.openai_compat.OpenAICompatProvider.generate_plan.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/providers/openai_compat.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/providers/openai_compat.py:154:Data
-    Clump: project_name, user_prompt, self'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: repo, max_commits, extra_context'
-  description: 'code2llm reports `Data Clump: repo, max_commits, extra_context` in
-    `src/nxdo/cli.py:64`.
-
-
-    Arguments (repo, max_commits, extra_context) are used together in multiple functions:
-    src.nxdo.cli._render_prompt_text, src.nxdo.cli.cmd_print_prompt.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/cli.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/cli.py:64:Data Clump: repo, max_commits,
-    extra_context'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: repo, max_commits, extra_context'
-  description: 'code2llm reports `Data Clump: repo, max_commits, extra_context` in
-    `src/nxdo/cli.py:117`.
-
-
-    Arguments (repo, max_commits, extra_context) are used together in multiple functions:
-    src.nxdo.cli._render_prompt_text, src.nxdo.cli.cmd_print_prompt.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/cli.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/cli.py:117:Data Clump: repo, max_commits,
-    extra_context'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: since, file_path, repo_path'
-  description: 'code2llm reports `Data Clump: since, file_path, repo_path` in `src/nxdo/metrics/hotspots.py:23`.
-
-
-    Arguments (since, file_path, repo_path) are used together in multiple functions:
-    src.nxdo.metrics.hotspots._get_file_commits_with_info, src.nxdo.metrics.hotspots._get_bug_fix_commits,
-    src.nxdo.metrics.hotspots._file_hotspot.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/metrics/hotspots.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/metrics/hotspots.py:23:Data Clump:
-    since, file_path, repo_path'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: since, file_path, repo_path'
-  description: 'code2llm reports `Data Clump: since, file_path, repo_path` in `src/nxdo/metrics/hotspots.py:72`.
-
-
-    Arguments (since, file_path, repo_path) are used together in multiple functions:
-    src.nxdo.metrics.hotspots._get_file_commits_with_info, src.nxdo.metrics.hotspots._get_bug_fix_commits,
-    src.nxdo.metrics.hotspots._file_hotspot.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/metrics/hotspots.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/metrics/hotspots.py:72:Data Clump:
-    since, file_path, repo_path'
-- signal: code2llm_smell_data_clump
-  title: 'Address code smell: Data Clump: since, file_path, repo_path'
-  description: 'code2llm reports `Data Clump: since, file_path, repo_path` in `src/nxdo/metrics/hotspots.py:115`.
-
-
-    Arguments (since, file_path, repo_path) are used together in multiple functions:
-    src.nxdo.metrics.hotspots._get_file_commits_with_info, src.nxdo.metrics.hotspots._get_bug_fix_commits,
-    src.nxdo.metrics.hotspots._file_hotspot.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - data-clump
-  files:
-  - src/nxdo/metrics/hotspots.py
-  dedupe_key: 'code2llm:smell:data_clump:src/nxdo/metrics/hotspots.py:115:Data Clump:
-    since, file_path, repo_path'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _analyze_imports'
-  description: 'code2llm reports `God Function: _analyze_imports` in `src/nxdo/metrics/complexity.py:81`.
-
-
-    Function ''_analyze_imports'' is oversized: CC=6, fan-out=9, mutations=13.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/metrics/complexity.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/complexity.py:81:God Function:
-    _analyze_imports'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _analyze_types'
-  description: 'code2llm reports `God Function: _analyze_types` in `src/nxdo/metrics/complexity.py:123`.
-
-
-    Function ''_analyze_types'' is oversized: CC=14, fan-out=5, mutations=7.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/metrics/complexity.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/complexity.py:123:God
-    Function: _analyze_types'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _build_file_metrics'
-  description: 'code2llm reports `God Function: _build_file_metrics` in `src/nxdo/metrics/complexity.py:219`.
-
-
-    Function ''_build_file_metrics'' is oversized: CC=2, fan-out=9, mutations=24.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/metrics/complexity.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/complexity.py:219:God
-    Function: _build_file_metrics'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _build_todo_section'
-  description: 'code2llm reports `God Function: _build_todo_section` in `src/nxdo/ticket_generator.py:87`.
-
-
-    Function ''_build_todo_section'' is oversized: CC=4, fan-out=4, mutations=7.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/ticket_generator.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:87:God Function:
-    _build_todo_section'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _build_tree'
-  description: 'code2llm reports `God Function: _build_tree` in `src/nxdo/project_analyzer.py:255`.
+  description: 'code2llm reports `God Function: _build_tree` in `src/nxdo/project_analyzer.py:276`.
 
 
-    Function ''_build_tree'' is oversized: CC=4, fan-out=15, mutations=10.
+    Function ''_build_tree'' is oversized: CC=4, fan-out=6, mutations=10.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -303,90 +20,14 @@ tickets:
   - god-function
   files:
   - src/nxdo/project_analyzer.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:255:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:276:God Function:
     _build_tree'
 - signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _calculate_fan_in'
-  description: 'code2llm reports `God Function: _calculate_fan_in` in `src/nxdo/metrics/complexity.py:154`.
-
-
-    Function ''_calculate_fan_in'' is oversized: CC=12, fan-out=12, mutations=18.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/metrics/complexity.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/complexity.py:154:God
-    Function: _calculate_fan_in'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _call_api'
-  description: 'code2llm reports `God Function: _call_api` in `src/nxdo/providers/openai_compat.py:164`.
-
-
-    Function ''_call_api'' is oversized: CC=11, fan-out=13, mutations=0.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/providers/openai_compat.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/providers/openai_compat.py:164:God
-    Function: _call_api'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _count_lines'
-  description: 'code2llm reports `God Function: _count_lines` in `src/nxdo/metrics/complexity.py:36`.
-
-
-    Function ''_count_lines'' is oversized: CC=4, fan-out=3, mutations=8.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/metrics/complexity.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/complexity.py:36:God Function:
-    _count_lines'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: _create_commit_info'
-  description: 'code2llm reports `God Function: _create_commit_info` in `src/nxdo/git_reader.py:207`.
-
-
-    Function ''_create_commit_info'' is oversized: CC=1, fan-out=2, mutations=8.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/git_reader.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/git_reader.py:207:God Function:
-    _create_commit_info'
-- signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _file_hotspot'
-  description: 'code2llm reports `God Function: _file_hotspot` in `src/nxdo/metrics/hotspots.py:115`.
+  description: 'code2llm reports `God Function: _file_hotspot` in `src/nxdo/metrics/hotspots.py:129`.
 
 
-    Function ''_file_hotspot'' is oversized: CC=7, fan-out=9, mutations=10.
+    Function ''_file_hotspot'' is oversized: CC=6, fan-out=7, mutations=10.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -398,7 +39,7 @@ tickets:
   - god-function
   files:
   - src/nxdo/metrics/hotspots.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/hotspots.py:115:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/hotspots.py:129:God Function:
     _file_hotspot'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _format_operations_for_llm'
@@ -460,7 +101,7 @@ tickets:
     _get_commits_with_files'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _get_file_commits_with_info'
-  description: 'code2llm reports `God Function: _get_file_commits_with_info` in `src/nxdo/metrics/hotspots.py:23`.
+  description: 'code2llm reports `God Function: _get_file_commits_with_info` in `src/nxdo/metrics/hotspots.py:32`.
 
 
     Function ''_get_file_commits_with_info'' is oversized: CC=14, fan-out=10, mutations=18.
@@ -475,7 +116,7 @@ tickets:
   - god-function
   files:
   - src/nxdo/metrics/hotspots.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/hotspots.py:23:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/metrics/hotspots.py:32:God Function:
     _get_file_commits_with_info'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _load_project_state'
@@ -499,7 +140,7 @@ tickets:
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _remove_legacy_generated_todo_sections'
   description: 'code2llm reports `God Function: _remove_legacy_generated_todo_sections`
-    in `src/nxdo/ticket_generator.py:136`.
+    in `src/nxdo/ticket_generator.py:142`.
 
 
     Function ''_remove_legacy_generated_todo_sections'' is oversized: CC=6, fan-out=2,
@@ -515,12 +156,12 @@ tickets:
   - god-function
   files:
   - src/nxdo/ticket_generator.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:136:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:142:God Function:
     _remove_legacy_generated_todo_sections'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _resolve_name_and_description'
   description: 'code2llm reports `God Function: _resolve_name_and_description` in
-    `src/nxdo/project_analyzer.py:109`.
+    `src/nxdo/project_analyzer.py:111`.
 
 
     Function ''_resolve_name_and_description'' is oversized: CC=3, fan-out=5, mutations=7.
@@ -535,11 +176,11 @@ tickets:
   - god-function
   files:
   - src/nxdo/project_analyzer.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:109:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:111:God Function:
     _resolve_name_and_description'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: analyze_project'
-  description: 'code2llm reports `God Function: analyze_project` in `src/nxdo/project_analyzer.py:129`.
+  description: 'code2llm reports `God Function: analyze_project` in `src/nxdo/project_analyzer.py:131`.
 
 
     Function ''analyze_project'' is oversized: CC=1, fan-out=5, mutations=7.
@@ -554,14 +195,14 @@ tickets:
   - god-function
   files:
   - src/nxdo/project_analyzer.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:129:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/project_analyzer.py:131:God Function:
     analyze_project'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_auto'
   description: 'code2llm reports `God Function: cmd_auto` in `src/nxdo/cli.py:279`.
 
 
-    Function ''cmd_auto'' is oversized: CC=8, fan-out=15, mutations=10.
+    Function ''cmd_auto'' is oversized: CC=8, fan-out=15, mutations=9.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -594,7 +235,7 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:219:God Function: cmd_metrics'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_print_context'
-  description: 'code2llm reports `God Function: cmd_print_context` in `src/nxdo/cli.py:98`.
+  description: 'code2llm reports `God Function: cmd_print_context` in `src/nxdo/cli.py:99`.
 
 
     Function ''cmd_print_context'' is oversized: CC=2, fan-out=11, mutations=4.
@@ -609,13 +250,13 @@ tickets:
   - god-function
   files:
   - src/nxdo/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:98:God Function: cmd_print_context'
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:99:God Function: cmd_print_context'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: cmd_tickets'
-  description: 'code2llm reports `God Function: cmd_tickets` in `src/nxdo/cli.py:185`.
+  description: 'code2llm reports `God Function: cmd_tickets` in `src/nxdo/cli.py:187`.
 
 
-    Function ''cmd_tickets'' is oversized: CC=1, fan-out=14, mutations=3.
+    Function ''cmd_tickets'' is oversized: CC=1, fan-out=14, mutations=2.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -627,13 +268,13 @@ tickets:
   - god-function
   files:
   - src/nxdo/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:185:God Function: cmd_tickets'
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:187:God Function: cmd_tickets'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: generate_next_tasks'
   description: 'code2llm reports `God Function: generate_next_tasks` in `src/nxdo/planner.py:15`.
 
 
-    Function ''generate_next_tasks'' is oversized: CC=5, fan-out=9, mutations=8.
+    Function ''generate_next_tasks'' is oversized: CC=5, fan-out=10, mutations=8.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -667,10 +308,10 @@ tickets:
     get_coupling_clusters'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: main'
-  description: 'code2llm reports `God Function: main` in `src/nxdo/cli.py:356`.
+  description: 'code2llm reports `God Function: main` in `src/nxdo/cli.py:355`.
 
 
-    Function ''main'' is oversized: CC=4, fan-out=12, mutations=15.
+    Function ''main'' is oversized: CC=4, fan-out=13, mutations=15.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -682,7 +323,7 @@ tickets:
   - god-function
   files:
   - src/nxdo/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:356:God Function: main'
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/cli.py:355:God Function: main'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: render_plan'
   description: 'code2llm reports `God Function: render_plan` in `src/nxdo/output.py:26`.
@@ -703,7 +344,7 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/nxdo/output.py:26:God Function: render_plan'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: sync_to_planfile'
-  description: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:184`.
+  description: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:190`.
 
 
     Function ''sync_to_planfile'' is oversized: CC=8, fan-out=9, mutations=7.
@@ -718,7 +359,7 @@ tickets:
   - god-function
   files:
   - src/nxdo/ticket_generator.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:184:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:190:God Function:
     sync_to_planfile'
 applied: []
 skipped: []

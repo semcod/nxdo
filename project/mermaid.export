@@ -6,9 +6,96 @@ flowchart TD
         examples__check_examples__require_file["require_file"]
         examples__check_examples__print["print"]
     end
+    subgraph nxdo__git_reader
+        nxdo__git_reader__CommitInfo____str__["__str__"]
+        nxdo__git_reader__GitContext__to_text["to_text"]
+        nxdo__git_reader___run["_run"]
+        nxdo__git_reader___is_git_repo["_is_git_repo"]
+        nxdo__git_reader___run_git_command["_run_git_command"]
+        nxdo__git_reader___get_git_commits["_get_git_commits"]
+        nxdo__git_reader___count_file_frequencies["_count_file_frequencies"]
+        nxdo__git_reader___format_file_summary["_format_file_summary"]
+        nxdo__git_reader___get_file_frequency["_get_file_frequency"]
+        nxdo__git_reader___get_git_todos["_get_git_todos"]
+        nxdo__git_reader___create_empty_context["_create_empty_context"]
+        nxdo__git_reader__read_git_context["read_git_context"]
+        nxdo__git_reader___parse_commit_metadata["_parse_commit_metadata"]
+        nxdo__git_reader___create_commit_info["_create_commit_info"]
+        nxdo__git_reader___finalize_commit["_finalize_commit"]
+        nxdo__git_reader___parse_commits["_parse_commits"]
+        nxdo__git_reader___filter_git_paths["_filter_git_paths"]
+        nxdo__git_reader___should_ignore_git_path["_should_ignore_git_path"]
+        nxdo__git_reader___should_include_todo_line["_should_include_todo_line"]
+    end
+    subgraph nxdo__metrics
+        nxdo__metrics__complexity___classify_line["_classify_line"]
+        nxdo__metrics__complexity___count_lines["_count_lines"]
+        nxdo__metrics__complexity___calculate_cyclomatic_complexity["_calculate_cyclomatic_complexity"]
+        nxdo__metrics__complexity___iter_imported_modules["_iter_imported_modules"]
+        nxdo__metrics__complexity___classify_import["_classify_import"]
+        nxdo__metrics__complexity___analyze_imports["_analyze_imports"]
+        nxdo__metrics__complexity___has_annotated_args["_has_annotated_args"]
+        nxdo__metrics__complexity___function_has_annotations["_function_has_annotations"]
+        nxdo__metrics__complexity___analyze_types["_analyze_types"]
+        nxdo__metrics__complexity___read_text_or_empty["_read_text_or_empty"]
+        nxdo__metrics__complexity___build_module_to_file["_build_module_to_file"]
+        nxdo__metrics__complexity___iter_matched_imports["_iter_matched_imports"]
+        nxdo__metrics__complexity___calculate_fan_in["_calculate_fan_in"]
+        nxdo__metrics__complexity___find_source_files["_find_source_files"]
+        nxdo__metrics__complexity___build_file_metrics["_build_file_metrics"]
+        nxdo__metrics__complexity__collect_file_metrics["collect_file_metrics"]
+        nxdo__metrics__complexity__get_high_complexity_files["get_high_complexity_files"]
+        nxdo__metrics__complexity__get_poorly_typed_files["get_poorly_typed_files"]
+    end
+    subgraph nxdo__models
+        nxdo__models__Task____str__["__str__"]
+        nxdo__models__Task__to_dict["to_dict"]
+        nxdo__models__TaskPlan____str__["__str__"]
+        nxdo__models__TaskPlan__to_dict["to_dict"]
+    end
+    subgraph nxdo__project_analyzer
+        nxdo__project_analyzer__ProjectSnapshot__to_text["to_text"]
+        nxdo__project_analyzer___read_file_safely["_read_file_safely"]
+        nxdo__project_analyzer___truncate_file_content["_truncate_file_content"]
+        nxdo__project_analyzer___collect_file_contents["_collect_file_contents"]
+        nxdo__project_analyzer___resolve_name_and_description["_resolve_name_and_description"]
+        nxdo__project_analyzer__analyze_project["analyze_project"]
+        nxdo__project_analyzer___check_pattern_match["_check_pattern_match"]
+        nxdo__project_analyzer___detect_stack["_detect_stack"]
+        nxdo__project_analyzer___parse_pyproject_tomllib["_parse_pyproject_tomllib"]
+        nxdo__project_analyzer___parse_pyproject_regex["_parse_pyproject_regex"]
+        nxdo__project_analyzer___parse_pyproject["_parse_pyproject"]
+        nxdo__project_analyzer___parse_package_json["_parse_package_json"]
+        nxdo__project_analyzer___parse_cargo["_parse_cargo"]
+        nxdo__project_analyzer___readme_summary["_readme_summary"]
+        nxdo__project_analyzer___should_ignore_entry["_should_ignore_entry"]
+        nxdo__project_analyzer___get_tree_symbol["_get_tree_symbol"]
+        nxdo__project_analyzer___visible_children["_visible_children"]
+        nxdo__project_analyzer___push_tree_children["_push_tree_children"]
+        nxdo__project_analyzer___build_tree["_build_tree"]
+    end
+    subgraph nxdo__text_builder
+        nxdo__text_builder__LineBuilder____init__["__init__"]
+        nxdo__text_builder__LineBuilder__line["line"]
+        nxdo__text_builder__LineBuilder__text["text"]
+    end
+    subgraph nxdo__ticket_generator
+        nxdo__ticket_generator__task_plan_to_tickets["task_plan_to_tickets"]
+        nxdo__ticket_generator___map_priority["_map_priority"]
+        nxdo__ticket_generator__sync_to_todo_md["sync_to_todo_md"]
+        nxdo__ticket_generator___resolve_todo_path["_resolve_todo_path"]
+        nxdo__ticket_generator___todo_task_lines["_todo_task_lines"]
+        nxdo__ticket_generator___build_todo_section["_build_todo_section"]
+        nxdo__ticket_generator___sync_todo_section["_sync_todo_section"]
+        nxdo__ticket_generator___remove_generated_todo_sections["_remove_generated_todo_sections"]
+        nxdo__ticket_generator___remove_managed_todo_blocks["_remove_managed_todo_blocks"]
+        nxdo__ticket_generator___remove_legacy_generated_todo_sections["_remove_legacy_generated_todo_secti"]
+        nxdo__ticket_generator___ensure_planfile_installed["_ensure_planfile_installed"]
+        nxdo__ticket_generator__sync_to_planfile("sync_to_planfile CC=8")
+        nxdo__ticket_generator__export_to_planfile_yaml["export_to_planfile_yaml"]
+    end
     subgraph src__nxdo
         src__nxdo__config__get_settings["get_settings"]
-        src__nxdo__cli___settings_for["_settings_for"]
         src__nxdo__cli___generate_plan["_generate_plan"]
         src__nxdo__cli___render_prompt_text["_render_prompt_text"]
         src__nxdo__cli__cmd_plan["cmd_plan"]
@@ -25,27 +112,6 @@ flowchart TD
         src__nxdo__cli__cmd_auto("cmd_auto CC=8")
         src__nxdo__cli__app_entry["app_entry"]
         src__nxdo__cli__main["main"]
-        src__nxdo__git_reader__CommitInfo____str__["__str__"]
-        src__nxdo__git_reader__GitContext__to_text["to_text"]
-        src__nxdo__git_reader___run["_run"]
-        src__nxdo__git_reader___is_git_repo["_is_git_repo"]
-        src__nxdo__git_reader___run_git_command["_run_git_command"]
-        src__nxdo__git_reader___get_git_branch["_get_git_branch"]
-        src__nxdo__git_reader___get_git_remote["_get_git_remote"]
-        src__nxdo__git_reader___get_git_commits["_get_git_commits"]
-        src__nxdo__git_reader___count_file_frequencies["_count_file_frequencies"]
-        src__nxdo__git_reader___format_file_summary["_format_file_summary"]
-        src__nxdo__git_reader___get_file_frequency["_get_file_frequency"]
-        src__nxdo__git_reader___get_git_todos["_get_git_todos"]
-        src__nxdo__git_reader___create_empty_context["_create_empty_context"]
-        src__nxdo__git_reader__read_git_context["read_git_context"]
-        src__nxdo__git_reader___parse_commit_metadata["_parse_commit_metadata"]
-        src__nxdo__git_reader___create_commit_info["_create_commit_info"]
-        src__nxdo__git_reader___finalize_commit["_finalize_commit"]
-        src__nxdo__git_reader___parse_commits["_parse_commits"]
-        src__nxdo__git_reader___filter_git_paths["_filter_git_paths"]
-        src__nxdo__git_reader___should_ignore_git_path["_should_ignore_git_path"]
-        src__nxdo__git_reader___should_include_todo_line["_should_include_todo_line"]
         src__nxdo__output___resolve_console["_resolve_console"]
         src__nxdo__output__render_plan["render_plan"]
         src__nxdo__output__render_plan_json["render_plan_json"]
@@ -61,77 +127,94 @@ flowchart TD
         src__nxdo__koru_context___format_project_state_for_llm["_format_project_state_for_llm"]
         src__nxdo__koru_context__build_koru_context["build_koru_context"]
         src__nxdo__koru_context__get_koru_system_prompt_extension["get_koru_system_prompt_extension"]
-        src__nxdo__ticket_generator__task_plan_to_tickets["task_plan_to_tickets"]
-        src__nxdo__ticket_generator___map_priority["_map_priority"]
-        src__nxdo__ticket_generator__sync_to_todo_md["sync_to_todo_md"]
-        src__nxdo__ticket_generator___resolve_todo_path["_resolve_todo_path"]
-        src__nxdo__ticket_generator___build_todo_section["_build_todo_section"]
-        src__nxdo__ticket_generator___sync_todo_section["_sync_todo_section"]
+        src__nxdo__providers__base__LLMProvider__generate_plan["generate_plan"]
+        src__nxdo__providers__openai_compat__LLMAPIError____init__["__init__"]
+        src__nxdo__providers__openai_compat___extract_error_detail("_extract_error_detail CC=12")
+        src__nxdo__providers__openai_compat___http_status_hint["_http_status_hint"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider____init__["__init__"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider__generate_plan["generate_plan"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api["_call_api"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___build_system_prompt["_build_system_prompt"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___build_payload["_build_payload"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___build_headers["_build_headers"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___post_chat["_post_chat"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___http_error["_http_error"]
+        src__nxdo__providers__openai_compat__OpenAICompatProvider___parse_success_json["_parse_success_json"]
+        src__nxdo__providers__openai_compat___extract_content["_extract_content"]
+        src__nxdo__providers__openai_compat___strip_markdown_fences["_strip_markdown_fences"]
+        src__nxdo__providers__openai_compat___parse_json_response["_parse_json_response"]
+        src__nxdo__providers__openai_compat___create_task_from_dict["_create_task_from_dict"]
+        src__nxdo__providers__openai_compat___parse_tasks_from_data["_parse_tasks_from_data"]
+        src__nxdo__providers__openai_compat___parse_response["_parse_response"]
+        src__nxdo__metrics__hotspots___get_file_commits_with_info("_get_file_commits_with_info CC=14")
+        src__nxdo__metrics__hotspots___get_bug_fix_commits["_get_bug_fix_commits"]
+        src__nxdo__metrics__hotspots___resolve_target_files["_resolve_target_files"]
+        src__nxdo__metrics__hotspots___author_summary["_author_summary"]
+        src__nxdo__metrics__hotspots___file_hotspot["_file_hotspot"]
+        src__nxdo__metrics__hotspots___hotspot_risk_score["_hotspot_risk_score"]
+        src__nxdo__metrics__hotspots__identify_bug_hotspots["identify_bug_hotspots"]
+        src__nxdo__metrics__hotspots___get_file_authors["_get_file_authors"]
+        src__nxdo__metrics__hotspots__calculate_bus_factor["calculate_bus_factor"]
     end
-    src__nxdo__cli___settings_for --> src__nxdo__config__get_settings
     src__nxdo__cli___generate_plan --> src__nxdo__planner__generate_next_tasks
-    src__nxdo__cli___render_prompt_text --> src__nxdo__project_analyzer__analyze_project
-    src__nxdo__cli___render_prompt_text --> src__nxdo__git_reader__read_git_context
+    src__nxdo__cli___render_prompt_text --> nxdo__project_analyzer__analyze_project
+    src__nxdo__cli___render_prompt_text --> nxdo__git_reader__read_git_context
     src__nxdo__cli___render_prompt_text --> src__nxdo__llm_client__build_user_prompt
-    src__nxdo__cli__cmd_plan --> src__nxdo__cli___settings_for
     src__nxdo__cli__cmd_plan --> src__nxdo__cli___generate_plan
     src__nxdo__cli__cmd_plan --> src__nxdo__output__render_plan_json
     src__nxdo__cli__cmd_plan --> src__nxdo__output__render_plan
-    src__nxdo__cli__cmd_print_context --> src__nxdo__project_analyzer__analyze_project
-    src__nxdo__cli__cmd_print_context --> src__nxdo__git_reader__read_git_context
+    src__nxdo__cli__cmd_plan --> src__nxdo__config__get_settings
+    src__nxdo__cli__cmd_print_context --> nxdo__project_analyzer__analyze_project
+    src__nxdo__cli__cmd_print_context --> nxdo__git_reader__read_git_context
     src__nxdo__cli__cmd_print_context --> examples__check_examples__print
     src__nxdo__cli__cmd_print_context --> src__nxdo__output__render_context
     src__nxdo__cli__cmd_print_prompt --> examples__check_examples__print
     src__nxdo__cli__cmd_print_prompt --> src__nxdo__cli___render_prompt_text
-    src__nxdo__cli___sync_todos_if_requested --> src__nxdo__ticket_generator__sync_to_todo_md
-    src__nxdo__cli___sync_planfile_if_requested --> src__nxdo__ticket_generator__sync_to_planfile
-    src__nxdo__cli___export_yaml_if_requested --> src__nxdo__ticket_generator__export_to_planfile_yaml
+    src__nxdo__cli___sync_todos_if_requested --> nxdo__ticket_generator__sync_to_todo_md
+    src__nxdo__cli___sync_planfile_if_requested --> nxdo__ticket_generator__sync_to_planfile
+    src__nxdo__cli___export_yaml_if_requested --> nxdo__ticket_generator__export_to_planfile_yaml
     src__nxdo__cli___display_tickets --> src__nxdo__cli___get_priority_emoji
-    src__nxdo__cli__cmd_tickets --> src__nxdo__cli___settings_for
     src__nxdo__cli__cmd_tickets --> src__nxdo__cli___generate_plan
-    src__nxdo__cli__cmd_tickets --> src__nxdo__ticket_generator__task_plan_to_tickets
-    src__nxdo__cli__cmd_metrics --> src__nxdo__metrics__complexity__collect_file_metrics
+    src__nxdo__cli__cmd_tickets --> nxdo__ticket_generator__task_plan_to_tickets
+    src__nxdo__cli__cmd_tickets --> src__nxdo__cli___sync_todos_if_requested
+    src__nxdo__cli__cmd_metrics --> nxdo__metrics__complexity__collect_file_metrics
     src__nxdo__cli__cmd_metrics --> src__nxdo__metrics__coupling__collect_coupling_matrix
     src__nxdo__cli__cmd_metrics --> src__nxdo__metrics__coupling__get_coupling_clusters
     src__nxdo__cli__cmd_metrics --> src__nxdo__metrics__hotspots__identify_bug_hotspots
     src__nxdo__cli__cmd_auto --> src__nxdo__metrics__hotspots__identify_bug_hotspots
-    src__nxdo__cli__cmd_auto --> src__nxdo__metrics__complexity__collect_file_metrics
-    src__nxdo__cli__cmd_auto --> src__nxdo__cli___settings_for
+    src__nxdo__cli__cmd_auto --> nxdo__metrics__complexity__collect_file_metrics
     src__nxdo__cli__cmd_auto --> src__nxdo__cli___generate_plan
-    src__nxdo__cli__cmd_auto --> src__nxdo__ticket_generator__task_plan_to_tickets
-    src__nxdo__cli__main --> src__nxdo__cli___settings_for
+    src__nxdo__cli__cmd_auto --> nxdo__ticket_generator__task_plan_to_tickets
+    src__nxdo__cli__cmd_auto --> src__nxdo__cli___sync_planfile_if_requested
     src__nxdo__cli__main --> examples__check_examples__print
     src__nxdo__cli__main --> src__nxdo__cli___generate_plan
-    src__nxdo__git_reader___is_git_repo --> src__nxdo__git_reader___run
-    src__nxdo__git_reader___run_git_command --> src__nxdo__git_reader___run
-    src__nxdo__git_reader___get_git_branch --> src__nxdo__git_reader___run_git_command
-    src__nxdo__git_reader___get_git_remote --> src__nxdo__git_reader___run_git_command
-    src__nxdo__git_reader___get_git_commits --> src__nxdo__git_reader___run
-    src__nxdo__git_reader___get_git_commits --> src__nxdo__git_reader___parse_commits
-    src__nxdo__git_reader___count_file_frequencies --> src__nxdo__git_reader___should_ignore_git_path
-    src__nxdo__git_reader___get_file_frequency --> src__nxdo__git_reader___run
-    src__nxdo__git_reader___get_file_frequency --> src__nxdo__git_reader___count_file_frequencies
-    src__nxdo__git_reader___get_file_frequency --> src__nxdo__git_reader___format_file_summary
-    src__nxdo__git_reader___get_git_todos --> src__nxdo__git_reader___run
-    src__nxdo__git_reader___get_git_todos --> src__nxdo__git_reader___should_include_todo_line
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___get_git_branch
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___get_git_remote
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___get_git_commits
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___get_file_frequency
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___get_git_todos
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___is_git_repo
-    src__nxdo__git_reader__read_git_context --> src__nxdo__git_reader___create_empty_context
-    src__nxdo__git_reader___create_commit_info --> src__nxdo__git_reader___filter_git_paths
-    src__nxdo__git_reader___finalize_commit --> src__nxdo__git_reader___create_commit_info
-    src__nxdo__git_reader___parse_commits --> src__nxdo__git_reader___finalize_commit
-    src__nxdo__git_reader___parse_commits --> src__nxdo__git_reader___parse_commit_metadata
-    src__nxdo__git_reader___filter_git_paths --> src__nxdo__git_reader___should_ignore_git_path
-    src__nxdo__git_reader___should_include_todo_line --> src__nxdo__git_reader___should_ignore_git_path
+    nxdo__git_reader___is_git_repo --> nxdo__git_reader___run
+    nxdo__git_reader___run_git_command --> nxdo__git_reader___run
+    nxdo__git_reader___get_git_commits --> nxdo__git_reader___run
+    nxdo__git_reader___get_git_commits --> nxdo__git_reader___parse_commits
+    nxdo__git_reader___count_file_frequencies --> nxdo__git_reader___should_ignore_git_path
+    nxdo__git_reader___get_file_frequency --> nxdo__git_reader___run
+    nxdo__git_reader___get_file_frequency --> nxdo__git_reader___count_file_frequencies
+    nxdo__git_reader___get_file_frequency --> nxdo__git_reader___format_file_summary
+    nxdo__git_reader___get_git_todos --> nxdo__git_reader___run
+    nxdo__git_reader___get_git_todos --> nxdo__git_reader___should_include_todo_line
+    nxdo__git_reader__read_git_context --> nxdo__git_reader___run_git_command
+    nxdo__git_reader__read_git_context --> nxdo__git_reader___get_git_commits
+    nxdo__git_reader__read_git_context --> nxdo__git_reader___get_file_frequency
+    nxdo__git_reader__read_git_context --> nxdo__git_reader___get_git_todos
+    nxdo__git_reader__read_git_context --> nxdo__git_reader___is_git_repo
+    nxdo__git_reader__read_git_context --> nxdo__git_reader___create_empty_context
+    nxdo__git_reader___create_commit_info --> nxdo__git_reader___filter_git_paths
+    nxdo__git_reader___finalize_commit --> nxdo__git_reader___create_commit_info
+    nxdo__git_reader___parse_commits --> nxdo__git_reader___finalize_commit
+    nxdo__git_reader___parse_commits --> nxdo__git_reader___parse_commit_metadata
+    nxdo__git_reader___filter_git_paths --> nxdo__git_reader___should_ignore_git_path
+    nxdo__git_reader___should_include_todo_line --> nxdo__git_reader___should_ignore_git_path
     src__nxdo__output__render_plan --> src__nxdo__output___resolve_console
     src__nxdo__output__render_plan_json --> src__nxdo__output___resolve_console
     src__nxdo__output__render_context --> src__nxdo__output___resolve_console
-    src__nxdo__planner__generate_next_tasks --> src__nxdo__project_analyzer__analyze_project
-    src__nxdo__planner__generate_next_tasks --> src__nxdo__git_reader__read_git_context
+    src__nxdo__planner__generate_next_tasks --> nxdo__project_analyzer__analyze_project
+    src__nxdo__planner__generate_next_tasks --> nxdo__git_reader__read_git_context
     src__nxdo__planner__generate_next_tasks --> src__nxdo__llm_client__build_user_prompt
     src__nxdo__planner__generate_next_tasks --> src__nxdo__config__get_settings
     src__nxdo__planner__generate_next_tasks --> src__nxdo__koru_context__build_koru_context
@@ -141,63 +224,73 @@ flowchart TD
     src__nxdo__koru_context__build_koru_context --> src__nxdo__koru_context___format_operations_for_llm
     src__nxdo__koru_context__build_koru_context --> src__nxdo__koru_context___format_project_state_for_llm
     src__nxdo__koru_context__build_koru_context --> src__nxdo__koru_context___load_project_state
-    src__nxdo__ticket_generator__task_plan_to_tickets --> src__nxdo__ticket_generator___map_priority
-    src__nxdo__ticket_generator__sync_to_todo_md --> src__nxdo__ticket_generator___resolve_todo_path
-    src__nxdo__ticket_generator__sync_to_todo_md --> src__nxdo__ticket_generator___build_todo_section
-    src__nxdo__ticket_generator__sync_to_todo_md --> src__nxdo__ticket_generator___sync_todo_section
-    src__nxdo__ticket_generator___build_todo_section --> src__nxdo__ticket_generator___map_priority
-    src__nxdo__ticket_generator___sync_todo_section --> src__nxdo__ticket_generator___remove_generated_todo_sections
-    src__nxdo__ticket_generator___remove_generated_todo_sections --> src__nxdo__ticket_generator___remove_managed_todo_blocks
-    src__nxdo__ticket_generator___remove_generated_todo_sections --> src__nxdo__ticket_generator___remove_legacy_generated_todo_sections
-    src__nxdo__ticket_generator__sync_to_planfile --> src__nxdo__ticket_generator___ensure_planfile_installed
-    src__nxdo__ticket_generator__sync_to_planfile --> src__nxdo__ticket_generator___map_priority
-    src__nxdo__ticket_generator__export_to_planfile_yaml --> src__nxdo__ticket_generator___map_priority
-    src__nxdo__project_analyzer___collect_file_contents --> src__nxdo__project_analyzer___read_file_safely
-    src__nxdo__project_analyzer___collect_file_contents --> src__nxdo__project_analyzer___truncate_file_content
-    src__nxdo__project_analyzer___resolve_name_and_description --> src__nxdo__project_analyzer___parse_pyproject
-    src__nxdo__project_analyzer___resolve_name_and_description --> src__nxdo__project_analyzer___parse_package_json
-    src__nxdo__project_analyzer___resolve_name_and_description --> src__nxdo__project_analyzer___parse_cargo
-    src__nxdo__project_analyzer___resolve_name_and_description --> src__nxdo__project_analyzer___readme_summary
-    src__nxdo__project_analyzer__analyze_project --> src__nxdo__project_analyzer___collect_file_contents
-    src__nxdo__project_analyzer__analyze_project --> src__nxdo__project_analyzer___detect_stack
-    src__nxdo__project_analyzer__analyze_project --> src__nxdo__project_analyzer___resolve_name_and_description
-    src__nxdo__project_analyzer__analyze_project --> src__nxdo__project_analyzer___build_tree
-    src__nxdo__project_analyzer___detect_stack --> src__nxdo__project_analyzer___check_pattern_match
-    src__nxdo__project_analyzer___parse_pyproject --> src__nxdo__project_analyzer___parse_pyproject_tomllib
-    src__nxdo__project_analyzer___parse_pyproject --> src__nxdo__project_analyzer___parse_pyproject_regex
-    src__nxdo__project_analyzer___get_connector --> src__nxdo__project_analyzer___get_tree_symbol
-    src__nxdo__project_analyzer___get_extension --> src__nxdo__project_analyzer___get_tree_symbol
-    src__nxdo__project_analyzer___build_tree --> src__nxdo__project_analyzer___should_ignore_entry
-    src__nxdo__project_analyzer___build_tree --> src__nxdo__project_analyzer___get_extension
-    src__nxdo__project_analyzer___build_tree --> src__nxdo__project_analyzer___get_connector
+    nxdo__ticket_generator__task_plan_to_tickets --> nxdo__ticket_generator___map_priority
+    nxdo__ticket_generator__sync_to_todo_md --> nxdo__ticket_generator___resolve_todo_path
+    nxdo__ticket_generator__sync_to_todo_md --> nxdo__ticket_generator___build_todo_section
+    nxdo__ticket_generator__sync_to_todo_md --> nxdo__ticket_generator___sync_todo_section
+    nxdo__ticket_generator___todo_task_lines --> nxdo__ticket_generator___map_priority
+    nxdo__ticket_generator___build_todo_section --> nxdo__ticket_generator___todo_task_lines
+    nxdo__ticket_generator___sync_todo_section --> nxdo__ticket_generator___remove_generated_todo_sections
+    nxdo__ticket_generator___remove_generated_todo_sections --> nxdo__ticket_generator___remove_managed_todo_blocks
+    nxdo__ticket_generator___remove_generated_todo_sections --> nxdo__ticket_generator___remove_legacy_generated_todo_sections
+    nxdo__ticket_generator__sync_to_planfile --> nxdo__ticket_generator___ensure_planfile_installed
+    nxdo__ticket_generator__sync_to_planfile --> nxdo__ticket_generator___map_priority
+    nxdo__ticket_generator__export_to_planfile_yaml --> nxdo__ticket_generator___map_priority
+    nxdo__project_analyzer___collect_file_contents --> nxdo__project_analyzer___read_file_safely
+    nxdo__project_analyzer___collect_file_contents --> nxdo__project_analyzer___truncate_file_content
+    nxdo__project_analyzer___resolve_name_and_description --> nxdo__project_analyzer___parse_pyproject
+    nxdo__project_analyzer___resolve_name_and_description --> nxdo__project_analyzer___parse_package_json
+    nxdo__project_analyzer___resolve_name_and_description --> nxdo__project_analyzer___parse_cargo
+    nxdo__project_analyzer___resolve_name_and_description --> nxdo__project_analyzer___readme_summary
+    nxdo__project_analyzer__analyze_project --> nxdo__project_analyzer___collect_file_contents
+    nxdo__project_analyzer__analyze_project --> nxdo__project_analyzer___detect_stack
+    nxdo__project_analyzer__analyze_project --> nxdo__project_analyzer___resolve_name_and_description
+    nxdo__project_analyzer__analyze_project --> nxdo__project_analyzer___build_tree
+    nxdo__project_analyzer___detect_stack --> nxdo__project_analyzer___check_pattern_match
+    nxdo__project_analyzer___parse_pyproject --> nxdo__project_analyzer___parse_pyproject_tomllib
+    nxdo__project_analyzer___parse_pyproject --> nxdo__project_analyzer___parse_pyproject_regex
+    nxdo__project_analyzer___visible_children --> nxdo__project_analyzer___should_ignore_entry
+    nxdo__project_analyzer___push_tree_children --> nxdo__project_analyzer___visible_children
+    nxdo__project_analyzer___push_tree_children --> nxdo__project_analyzer___get_tree_symbol
+    nxdo__project_analyzer___build_tree --> nxdo__project_analyzer___push_tree_children
     src__nxdo__providers__openai_compat__OpenAICompatProvider____init__ --> src__nxdo__config__get_settings
     src__nxdo__providers__openai_compat__OpenAICompatProvider__generate_plan --> src__nxdo__providers__openai_compat___parse_response
-    src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api --> src__nxdo__koru_context__get_koru_system_prompt_extension
-    src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api --> src__nxdo__providers__openai_compat___extract_error_detail
-    src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api --> src__nxdo__providers__openai_compat___http_status_hint
+    src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api --> src__nxdo__providers__openai_compat___extract_content
+    src__nxdo__providers__openai_compat__OpenAICompatProvider___build_system_prompt --> src__nxdo__koru_context__get_koru_system_prompt_extension
+    src__nxdo__providers__openai_compat__OpenAICompatProvider___http_error --> src__nxdo__providers__openai_compat___extract_error_detail
+    src__nxdo__providers__openai_compat__OpenAICompatProvider___http_error --> src__nxdo__providers__openai_compat___http_status_hint
     src__nxdo__providers__openai_compat___parse_tasks_from_data --> src__nxdo__providers__openai_compat___create_task_from_dict
     src__nxdo__providers__openai_compat___parse_response --> src__nxdo__providers__openai_compat___strip_markdown_fences
     src__nxdo__providers__openai_compat___parse_response --> src__nxdo__providers__openai_compat___parse_json_response
     src__nxdo__providers__openai_compat___parse_response --> src__nxdo__providers__openai_compat___parse_tasks_from_data
-    src__nxdo__metrics__complexity___build_file_metrics --> src__nxdo__metrics__complexity___count_lines
-    src__nxdo__metrics__complexity___build_file_metrics --> src__nxdo__metrics__complexity___calculate_cyclomatic_complexity
-    src__nxdo__metrics__complexity___build_file_metrics --> src__nxdo__metrics__complexity___analyze_imports
-    src__nxdo__metrics__complexity___build_file_metrics --> src__nxdo__metrics__complexity___analyze_types
-    src__nxdo__metrics__complexity__collect_file_metrics --> src__nxdo__metrics__complexity___find_source_files
-    src__nxdo__metrics__complexity__collect_file_metrics --> src__nxdo__metrics__complexity___calculate_fan_in
-    src__nxdo__metrics__complexity__collect_file_metrics --> src__nxdo__metrics__complexity___build_file_metrics
-    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___get_commits_with_files
-    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___score_file_pairs
-    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___filtered_commit_files
+    nxdo__metrics__complexity___count_lines --> nxdo__metrics__complexity___classify_line
+    nxdo__metrics__complexity___analyze_imports --> nxdo__metrics__complexity___iter_imported_modules
+    nxdo__metrics__complexity___analyze_imports --> nxdo__metrics__complexity___classify_import
+    nxdo__metrics__complexity___function_has_annotations --> nxdo__metrics__complexity___has_annotated_args
+    nxdo__metrics__complexity___analyze_types --> nxdo__metrics__complexity___function_has_annotations
+    nxdo__metrics__complexity___calculate_fan_in --> nxdo__metrics__complexity___build_module_to_file
+    nxdo__metrics__complexity___calculate_fan_in --> nxdo__metrics__complexity___read_text_or_empty
+    nxdo__metrics__complexity___calculate_fan_in --> nxdo__metrics__complexity___iter_matched_imports
+    nxdo__metrics__complexity___build_file_metrics --> nxdo__metrics__complexity___count_lines
+    nxdo__metrics__complexity___build_file_metrics --> nxdo__metrics__complexity___analyze_imports
+    nxdo__metrics__complexity___build_file_metrics --> nxdo__metrics__complexity___analyze_types
+    nxdo__metrics__complexity___build_file_metrics --> nxdo__metrics__complexity___calculate_cyclomatic_complexity
+    nxdo__metrics__complexity__collect_file_metrics --> nxdo__metrics__complexity___find_source_files
+    nxdo__metrics__complexity__collect_file_metrics --> nxdo__metrics__complexity___calculate_fan_in
+    nxdo__metrics__complexity__collect_file_metrics --> nxdo__metrics__complexity___build_file_metrics
     src__nxdo__metrics__hotspots___file_hotspot --> src__nxdo__metrics__hotspots___get_file_commits_with_info
     src__nxdo__metrics__hotspots___file_hotspot --> src__nxdo__metrics__hotspots___get_bug_fix_commits
+    src__nxdo__metrics__hotspots___file_hotspot --> src__nxdo__metrics__hotspots___author_summary
     src__nxdo__metrics__hotspots__identify_bug_hotspots --> src__nxdo__metrics__hotspots___resolve_target_files
     src__nxdo__metrics__hotspots__identify_bug_hotspots --> src__nxdo__metrics__hotspots___file_hotspot
     src__nxdo__metrics__hotspots__calculate_bus_factor --> src__nxdo__metrics__hotspots___resolve_target_files
     src__nxdo__metrics__hotspots__calculate_bus_factor --> src__nxdo__metrics__hotspots___get_file_authors
     src__nxdo__metrics__hotspots__get_critical_bus_factor_files --> src__nxdo__metrics__hotspots__calculate_bus_factor
     src__nxdo__metrics__hotspots__get_critical_bus_factor_files --> src__nxdo__metrics__hotspots___get_file_authors
+    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___get_commits_with_files
+    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___score_file_pairs
+    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___filtered_commit_files
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class src__nxdo__cli__cmd_metrics,src__nxdo__cli__cmd_auto,src__nxdo__ticket_generator__sync_to_planfile,src__nxdo__providers__openai_compat___extract_error_detail,src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api,src__nxdo__metrics__complexity___analyze_types,src__nxdo__metrics__complexity___calculate_fan_in,src__nxdo__metrics__coupling___get_commits_with_files,src__nxdo__metrics__coupling___filtered_commit_files,src__nxdo__metrics__coupling__get_coupling_clusters,src__nxdo__metrics__hotspots___get_file_commits_with_info medCC
+    class src__nxdo__cli__cmd_metrics,src__nxdo__cli__cmd_auto,nxdo__ticket_generator__sync_to_planfile,src__nxdo__providers__openai_compat___extract_error_detail,src__nxdo__metrics__hotspots___get_file_commits_with_info,src__nxdo__metrics__coupling___get_commits_with_files,src__nxdo__metrics__coupling___filtered_commit_files,src__nxdo__metrics__coupling__get_coupling_clusters medCC
