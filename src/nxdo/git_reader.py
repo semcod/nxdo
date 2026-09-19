@@ -196,8 +196,7 @@ def _parse_commit_metadata(line: str) -> tuple[str, str, str, str] | None:
 
 def _create_commit_info(meta: tuple[str, str, str, str], files: list[str]) -> CommitInfo:
     """Create a CommitInfo object from metadata and files."""
-    commit_hash, author, date, message = meta
-    return CommitInfo(commit_hash, author, date, message, _filter_git_paths(files))
+    return CommitInfo(*meta, _filter_git_paths(files))
 
 
 def _finalize_commit(
