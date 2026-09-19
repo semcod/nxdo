@@ -36,6 +36,7 @@ dev = [
   "pytest-mock",
   "ruff",
   "mypy",
+  "types-PyYAML",
   "costs>=0.1.20",
   "pytest-cov>=5.0",
 ]
