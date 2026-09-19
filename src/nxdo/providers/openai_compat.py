@@ -158,6 +158,10 @@ class OpenAICompatProvider(LLMProvider):
             ResponseInputs(raw=raw, project_name=request.project_name, model=self.model)
         )
 
+    @property
+    def _chat_endpoint(self) -> str:
+        return f"{self.base_url}/chat/completions"
+
     @retry(
         retry=retry_if_exception_type(httpx.TransportError),
         stop=stop_after_attempt(3),
@@ -170,22 +174,32 @@ class OpenAICompatProvider(LLMProvider):
                 "Missing API key. Set OPENROUTER_API_KEY or OPENAI_API_KEY before generating a task plan."
             )
 
-        # Build system prompt with koru extension if enabled
+        response = self._post_chat(user_message)
+        if not response.is_success:
+            raise self._http_error(response)
+        response_json = self._parse_success_json(response)
+        return _extract_content(response_json, self.model)
+
+    def _build_system_prompt(self) -> str:
         system_prompt = SYSTEM_PROMPT
         if self.koru_aware:
             from ..koru_context import get_koru_system_prompt_extension
             system_prompt += get_koru_system_prompt_extension()
+        return system_prompt
 
-        payload = {
+    def _build_payload(self, user_message: str) -> dict:
+        return {
             "model": self.model,
             "messages": [
-                {"role": "system", "content": system_prompt},
+                {"role": "system", "content": self._build_system_prompt()},
                 {"role": "user", "content": user_message},
             ],
             "temperature": 0.2,
             "response_format": {"type": "json_object"},
         }
-        headers = {
+
+    def _build_headers(self) -> dict:
+        return {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
             "HTTP-Referer": os.getenv(
@@ -194,51 +208,56 @@ class OpenAICompatProvider(LLMProvider):
             "X-OpenRouter-Title": os.getenv("OPENROUTER_APP_NAME", self.app_name),
         }
 
-        endpoint = f"{self.base_url}/chat/completions"
+    def _post_chat(self, user_message: str) -> httpx.Response:
         with httpx.Client(timeout=self.timeout) as client:
-            response = client.post(
-                endpoint,
-                json=payload,
-                headers=headers,
+            return client.post(
+                self._chat_endpoint,
+                json=self._build_payload(user_message),
+                headers=self._build_headers(),
             )
 
-        if not response.is_success:
-            detail = _extract_error_detail(response.text)
-            hint = _http_status_hint(response.status_code)
-            message = f"LLM API request failed with HTTP {response.status_code}"
-            if detail:
-                message += f": {detail}"
-            message += f". Hint: {hint}."
-            if endpoint:
-                message += f" Endpoint: {endpoint}."
-            if self.model:
-                message += f" Model: {self.model}."
-            raise LLMAPIError(
-                message,
-                status_code=response.status_code,
-                endpoint=endpoint,
-                model=self.model,
-                response_body=(response.text or "")[:1000],
-            )
+    def _http_error(self, response: httpx.Response) -> LLMAPIError:
+        endpoint = self._chat_endpoint
+        detail = _extract_error_detail(response.text)
+        hint = _http_status_hint(response.status_code)
+        message = f"LLM API request failed with HTTP {response.status_code}"
+        if detail:
+            message += f": {detail}"
+        message += f". Hint: {hint}."
+        if endpoint:
+            message += f" Endpoint: {endpoint}."
+        if self.model:
+            message += f" Model: {self.model}."
+        return LLMAPIError(
+            message,
+            status_code=response.status_code,
+            endpoint=endpoint,
+            model=self.model,
+            response_body=(response.text or "")[:1000],
+        )
 
+    def _parse_success_json(self, response: httpx.Response) -> dict:
         try:
-            response_json = response.json()
+            return response.json()
         except (json.JSONDecodeError, ValueError) as exc:
             raise LLMAPIError(
                 f"LLM API returned a non-JSON success response: {exc}",
                 status_code=response.status_code,
-                endpoint=endpoint,
+                endpoint=self._chat_endpoint,
                 model=self.model,
                 response_body=(response.text or "")[:1000],
             ) from exc
 
-        try:
-            return response_json["choices"][0]["message"]["content"].strip()
-        except (KeyError, IndexError, AttributeError, TypeError) as exc:
-            raise LLMAPIError(
-                f"Unexpected LLM response payload (missing {exc}). Received: {response_json}",
-                model=self.model,
-            ) from exc
+
+def _extract_content(response_json: dict, model: str | None) -> str:
+    """Extract the assistant message content from a chat-completions payload."""
+    try:
+        return response_json["choices"][0]["message"]["content"].strip()
+    except (KeyError, IndexError, AttributeError, TypeError) as exc:
+        raise LLMAPIError(
+            f"Unexpected LLM response payload (missing {exc}). Received: {response_json}",
+            model=model,
+        ) from exc
 
 
 @dataclass
