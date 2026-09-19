@@ -8,12 +8,14 @@ from typing import Any
 import yaml
 from rich.console import Console
 
-from nxdo.models import TaskPlan
+from nxdo.models import Task, TaskPlan
 
 console = Console()
 
 TODO_MANAGED_START = "<!-- nxdo:generated-tasks:start -->"
 TODO_MANAGED_END = "<!-- nxdo:generated-tasks:end -->"
+
+_PRIORITY_EMOJI = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "⚪"}
 
 
 def task_plan_to_tickets(task_plan: TaskPlan) -> list[dict[str, Any]]:
@@ -84,9 +86,18 @@ def _resolve_todo_path(project_path: Path) -> Path:
     return project_path / "TODO.md"
 
 
+def _todo_task_lines(task: Task) -> list[str]:
+    """Build markdown checkbox lines for a single task."""
+    prio = _map_priority(task.priority.value)
+    emoji = _PRIORITY_EMOJI.get(prio, "⚪")
+    lines = [f"- [ ] {emoji} {task.title}  <!-- nxdo:task-{task.number} -->"]
+    if task.description:
+        lines.append(f"  {task.description}")
+    return lines
+
+
 def _build_todo_section(task_plan: TaskPlan) -> list[str]:
     """Build markdown lines for the generated task section."""
-    _PRIORITY_EMOJI = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "⚪"}
     todo_lines = [
         "",
         TODO_MANAGED_START,
@@ -94,11 +105,7 @@ def _build_todo_section(task_plan: TaskPlan) -> list[str]:
         "",
     ]
     for task in task_plan.tasks:
-        prio = _map_priority(task.priority.value)
-        emoji = _PRIORITY_EMOJI.get(prio, "⚪")
-        todo_lines.append(f"- [ ] {emoji} {task.title}  <!-- nxdo:task-{task.number} -->")
-        if task.description:
-            todo_lines.append(f"  {task.description}")
+        todo_lines.extend(_todo_task_lines(task))
     todo_lines.extend(["", TODO_MANAGED_END, ""])
     return todo_lines
 
