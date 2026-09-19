@@ -142,12 +142,12 @@ class OpenAICompatProvider(LLMProvider):
         app_name: str = "nxdo",
         koru_aware: bool = False,
     ) -> None:
-        cfg = settings or get_settings()
-        self.api_key = api_key or cfg.api_key
-        self.model = model or cfg.llm_model
-        self.base_url = (base_url or cfg.llm_base_url).rstrip("/")
-        self.timeout = cfg.llm_timeout
-        self.max_retries = cfg.llm_max_retries
+        settings = settings or get_settings()
+        self.api_key = api_key or settings.api_key
+        self.model = model or settings.llm_model
+        self.base_url = (base_url or settings.llm_base_url).rstrip("/")
+        self.timeout = settings.llm_timeout
+        self.max_retries = settings.llm_max_retries
         self.app_name = app_name
         self.koru_aware = koru_aware
 

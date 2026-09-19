@@ -27,14 +27,6 @@ console = Console()
 err_console = Console(stderr=True)
 
 
-def _settings_for(max_commits: int = 30) -> NxdoSettings:
-    """Return the shared settings with the CLI max-commits override applied."""
-    cfg = get_settings()
-    if max_commits != 30:
-        cfg.max_commits = max_commits  # type: ignore[misc]
-    return cfg
-
-
 def _generate_plan(
     *,
     repo_path: Path,
@@ -78,14 +70,12 @@ def cmd_plan(
     max_commits: int = typer.Option(30, "--max-commits", help="How many recent commits to inspect."),
 ) -> None:
     """Generate a 10-task plan for the repository."""
-    cfg = _settings_for(max_commits)
-
     plan = _generate_plan(
         repo_path=repo.resolve(),
         extra_context=extra_context,
         model=model,
         base_url=base_url,
-        settings=cfg,
+        settings=get_settings(max_commits=max_commits),
     )
 
     if as_json:
@@ -195,14 +185,12 @@ def cmd_tickets(
     koru_aware: bool = typer.Option(False, "--koru-aware", help="Enable koru integration schema for smart task planning."),
 ) -> None:
     """Generate tickets from a plan using planfile integration."""
-    cfg = _settings_for(max_commits)
-
     plan = _generate_plan(
         repo_path=repo.resolve(),
         extra_context=extra_context,
         model=model,
         base_url=base_url,
-        settings=cfg,
+        settings=get_settings(max_commits=max_commits),
         koru_aware=koru_aware,
     )
 
@@ -322,13 +310,12 @@ def cmd_auto(
     # Execute auto workflow
     console.print("\n[bold]Generating koru-aware tickets...[/bold]")
 
-    cfg = _settings_for()
     plan = _generate_plan(
         repo_path=repo_path,
         extra_context=extra_context or "Focus on critical hotspots and technical debt",
         model=None,
         base_url=None,
-        settings=cfg,
+        settings=get_settings(),
         koru_aware=True,
     )
 
@@ -372,14 +359,13 @@ def main(argv: list[str] | None = None) -> int:
         print(_render_prompt_text(repo_path, args.extra_context, args.max_commits))
         return 0
 
-    cfg = _settings_for(args.max_commits)
     try:
         plan = _generate_plan(
             repo_path=repo_path,
             extra_context=args.extra_context,
             model=args.model,
             base_url=args.base_url,
-            settings=cfg,
+            settings=get_settings(max_commits=args.max_commits),
         )
     except typer.Exit as exit_request:
         return int(exit_request.exit_code)

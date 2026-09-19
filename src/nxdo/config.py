@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -34,9 +36,11 @@ class NxdoSettings(BaseSettings):
 _settings: NxdoSettings | None = None
 
 
-def get_settings() -> NxdoSettings:
-    """Return a cached singleton of NxdoSettings."""
+def get_settings(**overrides: Any) -> NxdoSettings:
+    """Return the cached settings singleton, with overrides applied to a copy."""
     global _settings
     if _settings is None:
         _settings = NxdoSettings()
+    if overrides:
+        return _settings.model_copy(update=overrides)
     return _settings

@@ -31,10 +31,10 @@ def generate_next_tasks(
     Returns:
         A validated TaskPlan containing up to 10 prioritized tasks.
     """
-    cfg = settings or get_settings()
+    settings = settings or get_settings()
 
     snapshot = analyze_project(repo_path)
-    git_context = read_git_context(repo_path, max_commits=cfg.max_commits)
+    git_context = read_git_context(repo_path, max_commits=settings.max_commits)
 
     # Build koru context if requested
     koru_schema = ""
@@ -51,6 +51,6 @@ def generate_next_tasks(
         koru_schema=koru_schema,
     )
 
-    llm = OpenAICompatProvider(settings=cfg, koru_aware=koru_aware) if provider is None else provider
+    llm = OpenAICompatProvider(settings=settings, koru_aware=koru_aware) if provider is None else provider
 
     return llm.generate_plan(user_prompt, project_name=snapshot.name)
