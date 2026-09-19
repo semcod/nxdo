@@ -1691,6 +1691,14 @@ sprint:
           Make the smallest refactor that removes the smell and run local tests.'
         source: koru task
         timestamp: '2026-09-19T09:14:56.164023+00:00'
+      - action: status_change
+        changes:
+        - outputs
+        - status
+        previous_status: open
+        source: planfile.store
+        status: done
+        timestamp: '2026-09-19T16:32:00.000000+00:00'
       id: PLF-097
       inputs:
         api_headers: {}
@@ -1739,7 +1747,13 @@ sprint:
       name: 'Address code smell: Data Clump: project_name, model, raw'
       outputs:
         artifacts: []
-        notes: []
+        notes:
+        - 'Stale evidence, already resolved: ticket evidence files[].sha256 (b257da28)
+          matches the pre-fix tree; f842c2e (PLF-022) bundled raw/project_name/model
+          into ResponseInputs and _parse_response now takes one inputs object;
+          parse_task_plan_response in llm_client.py also delegates via ResponseInputs.
+          Current openai_compat.py sha256 is 4ef9ebbf. pytest 175 passed; ruff+mypy
+          clean. No code change needed (Closes #94).'
       priority: normal
       source:
         context:
@@ -1781,13 +1795,13 @@ sprint:
         timestamp: '2026-09-19T09:14:56.164023+00:00'
         tool: koru-project-discovery
       sprint: current
-      status: open
+      status: done
       sync:
         github:
           id: '94'
           key: semcod/nxdo#94
           url: https://github.com/semcod/nxdo/issues/94
-      updated_at: '2026-09-19T09:14:56.164023+00:00'
+      updated_at: '2026-09-19T16:32:00.000000+00:00'
     PLF-098:
       backend: github
       blocked_by: []
