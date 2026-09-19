@@ -1321,7 +1321,15 @@ sprint:
         receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMThUMTk6NTE6MTguNDMzMjAyWiIsImRlc2NyaXB0aW9uIjoiUExGLTAzMSBkaXNjb3ZlcnkgZmluZGluZyAoZ29kIG1vZHVsZSkuIGNvZGUybGxtIGV2b2x1dGlvbiAocHJvamVjdC9ldm9sdXRpb24udG9vbi55YW1sKSByYW5rcyBTUExJVCBnb2FsLnlhbWwgYXMgTkVYVFsxXTogNTI4IGxpbmVzLCB0aGUgbGFyZ2VzdCBub24tc291cmNlIGZpbGUgaW4gdGhlIHJlcG8uIEZpcnN0IHZlcmlmeSB3aGljaCB0b29sIGNvbnN1bWVzIGdvYWwueWFtbCAoZ29hbCBhZHZpc29yeSBhcnRpZmFjdCBzb3VyY2UgcGVyIGtvcnUueWFtbCkgYW5kIHdoZXRoZXIgaXQgYmVsb25ncyB0byBueGRvIGRlbGl2ZXJ5IG9yIHRoZSBzZW1jb2QgZ29hbCBwaXBlbGluZTsgaWYgaXQgaXMgbnhkby1vd25lZCwgc3BsaXQgaW50byBwZXItZG9tYWluIFlBTUwgZmlsZXMgb3IgbW92ZSB1bmRlciBkb2NzL2NvbmZpZyB3aXRoIGEgY29uc3VtZXIgdXBkYXRlOyBpZiBpdCBpcyB0b29sIHN0YXRlLCByZWxvY2F0ZSBvdXQgb2YgdGhlIHJlcG8gb3IgYWRkIGl0IHRvIGNvZGUybGxtIGV4Y2x1ZGVzIHdpdGggYSBub3RlLiBBY2NlcHRhbmNlOiBjb2RlMmxsbSBldm9sdXRpb24gbm8gbG9uZ2VyIGZsYWdzIGEgU1BMSVQgaW4gdGhlIHJlcG8gcm9vdCwgb3IgYSBkb2N1bWVudGVkIGRlY2lzaW9uIHJlcGxhY2VzIHRoZSB0aWNrZXQuIiwiZmlsZXMiOlsiZ29hbC55YW1sIl0sImlkIjoiUExGLTA3MyIsImxhYmVscyI6WyJrb3J1IiwibGxtLXJlYWR5IiwiY29kZTJsbG0iLCJnb2QtZmlsZSJdLCJuYW1lIjoiRXZhbHVhdGUgc3BsaXR0aW5nIGdvYWwueWFtbCAoNTI4TCBnb2QgZmlsZSBmbGFnZ2VkIGJ5IGNvZGUybGxtIGV2b2x1dGlvbikiLCJwcmlvcml0eSI6Im5vcm1hbCIsInNvdXJjZSI6eyJjb250ZXh0Ijp7fSwidGltZXN0YW1wIjoiMjAyNi0wOS0xOFQxOTo1MToxOC40MjMwNTZaIiwidG9vbCI6ImtvcnUtc2NhbiJ9LCJzcHJpbnQiOiJjdXJyZW50Iiwic3RhdHVzIjoib3BlbiIsInN5bmMiOnt9LCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0xOFQxOTo1MToxOC40MzMyMTNaIn19
       files:
       - goal.yaml
-      history: []
+      history:
+      - action: status_change
+        changes:
+        - outputs
+        - status
+        previous_status: open
+        source: planfile.store
+        status: done
+        timestamp: '2026-09-19T17:45:00.000000+00:00'
       id: PLF-073
       labels:
       - koru
@@ -1329,15 +1337,24 @@ sprint:
       - code2llm
       - god-file
       name: Evaluate splitting goal.yaml (528L god file flagged by code2llm evolution)
+      outputs:
+        artifacts: []
+        notes:
+        - 'Documented decision: goal.yaml is config for the external goal tool
+          (advisory source in koru.yaml), read from the repo root as one file;
+          split/relocate rejected. Added PLF-073 note to the goal.yaml header
+          and a canonical code2llm scan command with --exclude goal.yaml to
+          koru.yaml; verified evolution reports no SPLIT with the exclude.
+          goal config validate OK; pytest 175 passed; ruff+mypy clean.'
       priority: normal
       source:
         context: {}
         timestamp: '2026-09-18T19:51:18.423056Z'
         tool: koru-scan
       sprint: current
-      status: open
+      status: done
       sync: {}
-      updated_at: '2026-09-18T19:51:18.433213Z'
+      updated_at: '2026-09-19T17:45:00.000000+00:00'
     PLF-078:
       backend: github
       blocked_by: []
