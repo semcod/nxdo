@@ -52,13 +52,13 @@ def test_fix_commit_matches_many_keywords_but_is_counted_once(history, monkeypat
         return real_run(*args, **kwargs)
 
     monkeypatch.setattr(hotspots.subprocess, "run", run)
-    assert hotspots._get_bug_fix_commits(history, "a.py") == 1
+    assert hotspots._get_bug_fix_commits(hotspots.FileHistoryQuery(history, "a.py")) == 1
     assert len(calls) == 1
-    assert hotspots._get_bug_fix_commits(history, "c.py") == 0
+    assert hotspots._get_bug_fix_commits(hotspots.FileHistoryQuery(history, "c.py")) == 0
 
 
 def test_history_preserves_churn_authors_and_risk_density(history):
-    commits, churn = hotspots._get_file_commits_with_info(history, "a.py")
+    commits, churn = hotspots._get_file_commits_with_info(hotspots.FileHistoryQuery(history, "a.py"))
     assert len(commits) == 3
     assert {author for _, author, _ in commits} == {"Ada", "Bob", "Cara"}
     assert churn == sum(amount for _, _, amount in commits)
@@ -75,7 +75,7 @@ def test_history_preserves_churn_authors_and_risk_density(history):
 def test_file_hotspot_returns_none_when_no_risk(monkeypatch, tmp_path):
     monkeypatch.setattr(hotspots, "_get_file_commits_with_info", lambda *a: ([("h1", "Ada", 5), ("h2", "Bob", 5)], 10))
     monkeypatch.setattr(hotspots, "_get_bug_fix_commits", lambda *a: 0)
-    assert hotspots._file_hotspot(tmp_path, "sample.py", "30.days.ago") is None
+    assert hotspots._file_hotspot(hotspots.FileHistoryQuery(tmp_path, "sample.py", "30.days.ago")) is None
 
 
 
@@ -115,8 +115,8 @@ def test_metrics_degrade_when_git_is_unavailable(tmp_path, monkeypatch, fails_by
 
     monkeypatch.setattr(subprocess, "run", unavailable)
     assert coupling.collect_coupling_matrix(tmp_path) == []
-    assert hotspots._get_file_commits_with_info(tmp_path, "a.py") == ([], 0)
-    assert hotspots._get_bug_fix_commits(tmp_path, "a.py") == 0
+    assert hotspots._get_file_commits_with_info(hotspots.FileHistoryQuery(tmp_path, "a.py")) == ([], 0)
+    assert hotspots._get_bug_fix_commits(hotspots.FileHistoryQuery(tmp_path, "a.py")) == 0
     assert hotspots.identify_bug_hotspots(tmp_path) == []
     assert hotspots.calculate_bus_factor(tmp_path) == {}
     assert hotspots.calculate_bus_factor(tmp_path, files=["a.py", "README.md"]) == {}
@@ -126,7 +126,7 @@ def test_metrics_degrade_when_git_is_unavailable(tmp_path, monkeypatch, fails_by
 def test_numstat_tolerates_binary_and_malformed_entries(tmp_path, monkeypatch):
     output = "abc|Ada\n-\t-\timage.bin\ninvalid\t3\ta.py\n2\t3\ta.py\n"
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: SimpleNamespace(returncode=0, stdout=output))
-    assert hotspots._get_file_commits_with_info(tmp_path, "a.py") == ([("abc", "Ada", 5)], 5)
+    assert hotspots._get_file_commits_with_info(hotspots.FileHistoryQuery(tmp_path, "a.py")) == ([("abc", "Ada", 5)], 5)
 
 
 def test_coupling_filters_generated_files_and_normalizes_pair_order(tmp_path, monkeypatch):

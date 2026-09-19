@@ -20,17 +20,22 @@ class HotspotMetrics:
     top_authors: list[tuple[str, int]]  # [(author_name, commit_count), ...]
 
 
-def _get_file_commits_with_info(
-    repo_path: Path,
-    file_path: str,
-    since: str = "30.days.ago",
-) -> tuple[list[tuple[str, str, int]], int]:
+@dataclass
+class FileHistoryQuery:
+    """Repository, file and time window for one git-history lookup."""
+
+    repo_path: Path
+    file_path: str
+    since: str = "90.days.ago"
+
+
+def _get_file_commits_with_info(query: FileHistoryQuery) -> tuple[list[tuple[str, str, int]], int]:
     """Get commits for specific file: [(hash, author, added+deleted), ...]."""
     try:
         # Get commit info with stats
         commit_log_result = subprocess.run(
-            ["git", "log", f"--since={since}", "--format=%H|%an", "--numstat", "--", file_path],
-            cwd=repo_path,
+            ["git", "log", f"--since={query.since}", "--format=%H|%an", "--numstat", "--", query.file_path],
+            cwd=query.repo_path,
             capture_output=True,
             text=True,
             check=False,
@@ -69,15 +74,15 @@ def _get_file_commits_with_info(
         return [], 0
 
 
-def _get_bug_fix_commits(repo_path: Path, file_path: str, since: str = "90.days.ago") -> int:
+def _get_bug_fix_commits(query: FileHistoryQuery) -> int:
     """Count commits mentioning bug/fix/repair for specific file."""
     bug_patterns = ["fix", "bug", "repair", "hotfix", "patch", "resolve", "issue"]
     
     try:
         bug_log_result = subprocess.run(
-            ["git", "log", f"--since={since}", "--format=%H", "-i",
-             *(f"--grep={pattern}" for pattern in bug_patterns), "--", file_path],
-            cwd=repo_path,
+            ["git", "log", f"--since={query.since}", "--format=%H", "-i",
+             *(f"--grep={pattern}" for pattern in bug_patterns), "--", query.file_path],
+            cwd=query.repo_path,
             capture_output=True,
             text=True,
             check=False,
@@ -112,17 +117,17 @@ def _resolve_target_files(repo_path: Path, files: list[str] | None) -> list[str]
     return [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
 
 
-def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics | None:
+def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
     """Analyze a single file; returns None for non-code or untouched files."""
-    if file_path.endswith(_NON_CODE_EXTENSIONS):
+    if query.file_path.endswith(_NON_CODE_EXTENSIONS):
         return None
 
-    file_commits, churn = _get_file_commits_with_info(repo_path, file_path, since)
+    file_commits, churn = _get_file_commits_with_info(query)
     total_commits = len(file_commits)
     if total_commits == 0:
         return None
 
-    bug_fixes = _get_bug_fix_commits(repo_path, file_path, since)
+    bug_fixes = _get_bug_fix_commits(query)
 
     author_counts: dict[str, int] = defaultdict(int)
     for _, author, _ in file_commits:
@@ -137,7 +142,7 @@ def _file_hotspot(repo_path: Path, file_path: str, since: str) -> HotspotMetrics
         return None
 
     return HotspotMetrics(
-        file_path=file_path,
+        file_path=query.file_path,
         bug_fix_commits=bug_fixes,
         total_commits=total_commits,
         bug_density=round(bug_density, 2),
@@ -178,7 +183,7 @@ def identify_bug_hotspots(
     
     hotspots = [
         m for f in files
-        if (m := _file_hotspot(repo_path, f, since)) is not None
+        if (m := _file_hotspot(FileHistoryQuery(repo_path=repo_path, file_path=f, since=since))) is not None
     ]
     hotspots.sort(key=_hotspot_risk_score, reverse=True)
     return hotspots[:top_n]
