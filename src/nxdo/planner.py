@@ -52,7 +52,6 @@ def generate_next_tasks(
         koru_schema=koru_schema,
     )
 
-    if provider is None:
-        provider = OpenAICompatProvider(settings=cfg, koru_aware=koru_aware)
+    llm = OpenAICompatProvider(settings=cfg, koru_aware=koru_aware) if provider is None else provider
 
-    return provider.generate_plan(user_prompt, project_name=snapshot.name)
+    return llm.generate_plan(user_prompt, project_name=snapshot.name)
