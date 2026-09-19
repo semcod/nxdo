@@ -101,6 +101,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, user_prompt, self'
       outputs:
         artifacts: []
@@ -216,6 +217,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -401,6 +403,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: since, file_path, repo_path'
       outputs:
         artifacts: []
@@ -517,6 +520,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -694,6 +698,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: raw, project_name, model'
       outputs:
         artifacts: []
@@ -805,6 +810,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -980,6 +986,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, extra_context, max_commits'
       outputs:
         artifacts: []
@@ -1124,6 +1131,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: user_prompt, self, project_name'
       outputs:
         artifacts: []
@@ -1239,6 +1247,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1544,6 +1553,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _format_project_state_for_llm'
       outputs:
         artifacts: []
@@ -1653,6 +1663,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1816,6 +1827,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, self, user_prompt'
       outputs:
         artifacts: []
@@ -1931,6 +1943,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2092,6 +2105,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo_path, file_path, since'
       outputs:
         artifacts: []
@@ -2206,6 +2220,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2356,6 +2371,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _load_project_state'
       outputs:
         artifacts: []
@@ -2469,6 +2485,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2623,6 +2640,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _resolve_name_and_description'
       outputs:
         artifacts: []
@@ -2732,6 +2750,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2874,6 +2893,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_auto'
       outputs:
         artifacts: []
@@ -2981,6 +3001,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3119,6 +3140,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _build_tree'
       outputs:
         artifacts: []
@@ -3226,6 +3248,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3360,6 +3383,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_print_context'
       outputs:
         artifacts: []
@@ -3467,6 +3491,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3597,6 +3622,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: generate_next_tasks'
       outputs:
         artifacts: []
@@ -3704,6 +3730,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3830,6 +3857,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: main'
       outputs:
         artifacts: []
@@ -3945,6 +3973,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: render_plan'
       outputs:
         artifacts: []
@@ -4052,6 +4081,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -4335,6 +4365,7 @@ sprint:
       - god-function
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: check_file'
       outputs:
         artifacts: []
@@ -4443,6 +4474,7 @@ sprint:
       - code-smell
       - god-function
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: resolve_import'
       outputs:
         artifacts: []
@@ -4496,6 +4528,7 @@ sprint:
       updated_at: '2026-09-19T20:26:43.463138+00:00'
     PLF-143:
       acceptance_criteria: []
+      backend: github
       blocked_by: []
       blocks: []
       children: []
@@ -4537,6 +4570,7 @@ sprint:
         ticket_id=PLF-143 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-143%2Fcommand%2Fcreate
         mode=apply status=open correlation_id=PLF-143 causation_id=- input_hash=7d3526637b8761d146836bbc165559c1752c2f1ce1e18510e4236995f91f15d1
         receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMjA6NDM6MDIuOTAyNjIyWiIsImRlc2NyaXB0aW9uIjoiRGlzY292ZXJ5IHBhc3MgUExGLTE0MiB2ZXJpZmllZCB0aGF0IHBsYW5uaW5nIGFydGlmYWN0cyBhcmUgc3RhbGUgYW5kIG1pc2xlYWQgZXZlcnkgbGF0ZXIgTExNL2Rpc2NvdmVyeSBwYXNzLlxuXG5TdGFsZSBpdGVtcyB0byByZWNvbmNpbGUgKHZlcmlmaWVkIDIwMjYtMDktMTkpOlxuMS4gVE9ETy5tZCB0YXNrLTMgKHVuaXQgdGVzdHMgZm9yIHN5bmMtdG9kbyk6IHRlc3RzIGFscmVhZHkgZXhpc3QgKHRlc3RzL3Rlc3RfY2xpLnB5Ojp0ZXN0X2NtZF90aWNrZXRzX3N5bmNfdG9kbywgdGVzdHMvdGVzdF90aWNrZXRfZ2VuZXJhdG9yLnB5IHN5bmNfdG9kb19zZWN0aW9uIHRlc3RzKTsgdGhlIHJlZmVyZW5jZWQgYnJhbmNoIGZpeC9sYW5lLTYtYXBpLWVycm9yLWhhbmRsaW5nIG5vIGxvbmdlciBleGlzdHMuXG4yLiBUT0RPLm1kIHRhc2stNiAoZml4IEFQSSBlcnJvciBoYW5kbGluZyk6IHN1cGVyc2VkZWQgYnkgc3RydWN0dXJlZCBMTE1BUElFcnJvciArIHRlbmFjaXR5IHJldHJ5IGluIHNyYy9ueGRvL3Byb3ZpZGVycy9vcGVuYWlfY29tcGF0LnB5OyB0aGUgcmVmZXJlbmNlZCBicmFuY2ggaXMgZ29uZS5cbjMuIFRPRE8ubWQgdGFzay03IChDTEkgaW50ZWdyYXRpb24gdGVzdHMpOiB0ZXN0cy90ZXN0X2NsaV9pbnRlZ3JhdGlvbi5weSBhbmQgdGVzdHMvdGVzdF9hdXRvX2NsaS5weSBleGlzdCBhbmQgcGFzcy5cbjQuIHRvZG8ubWQgKHJvb3QpOiBjb3ZlcmFnZSB0YXJnZXRzIGFscmVhZHkgbWV0ICh0b3RhbCA5NiUgdnMgOTUlIGdvYWw7IF9fbWFpbl9fLnB5IDY3JSB2cyBjbGFpbWVkIDAlKTsgbGlzdGVkIENDIGhvdHNwb3RzIGFyZSBhbHJlYWR5IGNvdmVyZWQgYnkgb3BlbiB0aWNrZXRzIFBMRi0wOTkuLlBMRi0xNDE7IGxpc3RlZCBkdXBsaWNhdGlvbiBob3RzcG90cyBubyBsb25nZXIgZXhpc3QgaW4gY29kZS5cbjUuIHByb2plY3QvZHVwbGljYXRpb24udG9vbi55YW1sIChkYXRlZCAyMDI2LTA2LTE2KSBsaXN0cyBkdXBsaWNhdGVzIF9nZXRfZ2l0X2JyYW5jaC9fZ2V0X2dpdF9yZW1vdGUgKGdpdF9yZWFkZXIucHk6MTA5LTExNikgYW5kIF9nZXRfY29ubmVjdG9yL19nZXRfZXh0ZW5zaW9uIChwcm9qZWN0X2FuYWx5emVyLnB5OjI0NS0yNTIpIOKAlCBub25lIG9mIHRoZXNlIGZ1bmN0aW9ucyBleGlzdCBhbnltb3JlLiBSZWdlbmVyYXRlIHdpdGggcmVkdXAgb3IgZGVsZXRlIHRoZSBzdGFsZSBleHBvcnQuXG5cbldvcms6IHVwZGF0ZSBib3RoIFRPRE8gZmlsZXMgdG8gcmVmbGVjdCB2ZXJpZmllZCByZWFsaXR5IChjaGVjayBvZmYgLyByZW1vdmUgc3RhbGUgaXRlbXMsIGtlZXAgZ2VudWluZWx5IG9wZW4gb25lcyBsaWtlIGdpdC1jb250ZXh0IGV4dHJhY3Rpb24gdGFzay0yIG9ubHkgaWYgc3RpbGwgcmVsZXZhbnQpLCBhbmQgcmVnZW5lcmF0ZSBvciByZW1vdmUgdGhlIHN0YWxlIGR1cGxpY2F0aW9uIGV4cG9ydC4gTm8gYnJvYWQgY29kZSBlZGl0cy4gUnVuIHB5dGVzdCBhZnRlcndhcmRzLiIsImZpbGVzIjpbIlRPRE8ubWQiLCJ0b2RvLm1kIiwicHJvamVjdC9kdXBsaWNhdGlvbi50b29uLnlhbWwiXSwiaWQiOiJQTEYtMTQzIiwiaW50ZWdyYXRpb24iOlsiZ2l0aHViIl0sImxhYmVscyI6WyJrb3J1Iiwic2NhbiIsImRvY3MiLCJjbGVhbnVwIl0sIm5hbWUiOiJSZWNvbmNpbGUgc3RhbGUgcGxhbm5pbmcgYXJ0aWZhY3RzIChUT0RPLm1kLCB0b2RvLm1kLCBkdXBsaWNhdGlvbi50b29uLnlhbWwpIHdpdGggdmVyaWZpZWQgc3RhdGUiLCJwcmlvcml0eSI6Im5vcm1hbCIsInNvdXJjZSI6eyJjb250ZXh0Ijp7fSwidGltZXN0YW1wIjoiMjAyNi0wOS0xOVQyMDo0MzowMi44OTAwODNaIiwidG9vbCI6ImtvcnUtc2NhbiJ9LCJzcHJpbnQiOiJjdXJyZW50Iiwic3RhdHVzIjoib3BlbiIsInN5bmMiOnt9LCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0xOVQyMDo0MzowMi45MDI2MjdaIn19
+      external_id: '135'
       files:
       - TODO.md
       - todo.md
@@ -4559,5 +4593,73 @@ sprint:
         tool: koru-scan
       sprint: current
       status: open
-      sync: {}
+      sync:
+        github:
+          id: '135'
+          key: semcod/nxdo#135
+          url: https://github.com/semcod/nxdo/issues/135
       updated_at: '2026-09-19T20:43:02.902627Z'
+    PLF-145:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-19T21:20:22.558686Z'
+      description: 'Discovery pass PLF-144 verified an un-ticketed test gap in the
+        providers seam (coverage 95%, 7 missed statements).
+
+
+        Untested paths in src/nxdo/providers/openai_compat.py (verified 2026-09-19
+        via coverage --show-missing):
+
+        1. _extract_error_detail fallbacks (lines 110, 123-126): empty response body
+        returns ''''; top-level {"message": ...} JSON body is extracted; non-envelope
+        JSON falls back to truncated raw text. Current tests only cover the OpenAI
+        error-envelope shape via test_call_api_extracts_error_message_from_json_envelope.
+
+        2. _build_system_prompt koru_aware branch (lines 186-187): lazy koru_context
+        import and system-prompt extension append are never driven through _call_api
+        (tests/test_koru_context.py constructs koru_aware=True but does not exercise
+        the HTTP prompt-building path).
+
+
+        Analogous to PLF-132 (ticket_generator error paths) and PLF-134 (metrics/complexity
+        defensive paths); this completes the missing-tests coverage category for the
+        providers layer.
+
+
+        Acceptance: unit tests in tests/test_providers.py cover both fallback shapes
+        of _extract_error_detail and the koru_aware=True system prompt path (assert
+        extension text reaches the outbound payload); coverage for src/nxdo/providers/openai_compat.py
+        reaches 100%; full gate suite stays green (pytest, ruff, mypy, import-layer,
+        examples).'
+      dsl: SODL/1 id=evt_dd12fa824a06571eedf2c228 event_hash=9e89305692e1da0939c1170aeaf9519716e8bca5acba50609c6eb65aa79d22b7
+        timestamp=2026-09-19T21%3A20%3A22.558686%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-145 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-145%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-145 causation_id=- input_hash=1d53889a87bbadf7514815341860115fd59d6701923f1594591ea98dc20cffce
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMjE6MjA6MjIuNTU4Njg2WiIsImRlc2NyaXB0aW9uIjoiRGlzY292ZXJ5IHBhc3MgUExGLTE0NCB2ZXJpZmllZCBhbiB1bi10aWNrZXRlZCB0ZXN0IGdhcCBpbiB0aGUgcHJvdmlkZXJzIHNlYW0gKGNvdmVyYWdlIDk1JSwgNyBtaXNzZWQgc3RhdGVtZW50cykuXG5cblVudGVzdGVkIHBhdGhzIGluIHNyYy9ueGRvL3Byb3ZpZGVycy9vcGVuYWlfY29tcGF0LnB5ICh2ZXJpZmllZCAyMDI2LTA5LTE5IHZpYSBjb3ZlcmFnZSAtLXNob3ctbWlzc2luZyk6XG4xLiBfZXh0cmFjdF9lcnJvcl9kZXRhaWwgZmFsbGJhY2tzIChsaW5lcyAxMTAsIDEyMy0xMjYpOiBlbXB0eSByZXNwb25zZSBib2R5IHJldHVybnMgJyc7IHRvcC1sZXZlbCB7XCJtZXNzYWdlXCI6IC4uLn0gSlNPTiBib2R5IGlzIGV4dHJhY3RlZDsgbm9uLWVudmVsb3BlIEpTT04gZmFsbHMgYmFjayB0byB0cnVuY2F0ZWQgcmF3IHRleHQuIEN1cnJlbnQgdGVzdHMgb25seSBjb3ZlciB0aGUgT3BlbkFJIGVycm9yLWVudmVsb3BlIHNoYXBlIHZpYSB0ZXN0X2NhbGxfYXBpX2V4dHJhY3RzX2Vycm9yX21lc3NhZ2VfZnJvbV9qc29uX2VudmVsb3BlLlxuMi4gX2J1aWxkX3N5c3RlbV9wcm9tcHQga29ydV9hd2FyZSBicmFuY2ggKGxpbmVzIDE4Ni0xODcpOiBsYXp5IGtvcnVfY29udGV4dCBpbXBvcnQgYW5kIHN5c3RlbS1wcm9tcHQgZXh0ZW5zaW9uIGFwcGVuZCBhcmUgbmV2ZXIgZHJpdmVuIHRocm91Z2ggX2NhbGxfYXBpICh0ZXN0cy90ZXN0X2tvcnVfY29udGV4dC5weSBjb25zdHJ1Y3RzIGtvcnVfYXdhcmU9VHJ1ZSBidXQgZG9lcyBub3QgZXhlcmNpc2UgdGhlIEhUVFAgcHJvbXB0LWJ1aWxkaW5nIHBhdGgpLlxuXG5BbmFsb2dvdXMgdG8gUExGLTEzMiAodGlja2V0X2dlbmVyYXRvciBlcnJvciBwYXRocykgYW5kIFBMRi0xMzQgKG1ldHJpY3MvY29tcGxleGl0eSBkZWZlbnNpdmUgcGF0aHMpOyB0aGlzIGNvbXBsZXRlcyB0aGUgbWlzc2luZy10ZXN0cyBjb3ZlcmFnZSBjYXRlZ29yeSBmb3IgdGhlIHByb3ZpZGVycyBsYXllci5cblxuQWNjZXB0YW5jZTogdW5pdCB0ZXN0cyBpbiB0ZXN0cy90ZXN0X3Byb3ZpZGVycy5weSBjb3ZlciBib3RoIGZhbGxiYWNrIHNoYXBlcyBvZiBfZXh0cmFjdF9lcnJvcl9kZXRhaWwgYW5kIHRoZSBrb3J1X2F3YXJlPVRydWUgc3lzdGVtIHByb21wdCBwYXRoIChhc3NlcnQgZXh0ZW5zaW9uIHRleHQgcmVhY2hlcyB0aGUgb3V0Ym91bmQgcGF5bG9hZCk7IGNvdmVyYWdlIGZvciBzcmMvbnhkby9wcm92aWRlcnMvb3BlbmFpX2NvbXBhdC5weSByZWFjaGVzIDEwMCU7IGZ1bGwgZ2F0ZSBzdWl0ZSBzdGF5cyBncmVlbiAocHl0ZXN0LCBydWZmLCBteXB5LCBpbXBvcnQtbGF5ZXIsIGV4YW1wbGVzKS4iLCJmaWxlcyI6WyJzcmMvbnhkby9wcm92aWRlcnMvb3BlbmFpX2NvbXBhdC5weSIsInRlc3RzL3Rlc3RfcHJvdmlkZXJzLnB5Il0sImlkIjoiUExGLTE0NSIsImxhYmVscyI6WyJrb3J1IiwibmwtdGFzayIsImxsbS1yZWFkeSIsInByb2plY3QtZGlzY292ZXJ5IiwiY29kZTJsbG0iLCJ0ZXN0cyIsImNvdmVyYWdlIl0sIm5hbWUiOiJBZGQgdGVzdHMgZm9yIG9wZW5haV9jb21wYXQgZXJyb3ItZGV0YWlsIGZhbGxiYWNrcyBhbmQga29ydS1hd2FyZSBzeXN0ZW0gcHJvbXB0IiwicHJpb3JpdHkiOiJub3JtYWwiLCJzb3VyY2UiOnsiY29udGV4dCI6e30sInRpbWVzdGFtcCI6IjIwMjYtMDktMTlUMjE6MjA6MjIuNTQ3NTQxWiIsInRvb2wiOiJrb3J1LXNjYW4ifSwic3ByaW50IjoiY3VycmVudCIsInN0YXR1cyI6Im9wZW4iLCJzeW5jIjp7fSwidXBkYXRlZF9hdCI6IjIwMjYtMDktMTlUMjE6MjA6MjIuNTU4NjkwWiJ9fQ
+      files:
+      - src/nxdo/providers/openai_compat.py
+      - tests/test_providers.py
+      history: []
+      id: PLF-145
+      labels:
+      - koru
+      - nl-task
+      - llm-ready
+      - project-discovery
+      - code2llm
+      - tests
+      - coverage
+      name: Add tests for openai_compat error-detail fallbacks and koru-aware system
+        prompt
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-19T21:20:22.547541Z'
+        tool: koru-scan
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-19T21:20:22.558690Z'
