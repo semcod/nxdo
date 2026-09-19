@@ -242,34 +242,45 @@ def _get_tree_symbol(is_last: bool, connector: bool) -> str:
         return "    " if is_last else "│   "
 
 
-def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
-    """Build ASCII tree representation of directory structure."""
-    lines: list[str] = []
-    stack: list[tuple[str, Path, int, str]] = []
+TreeStackItem = tuple[str, Path, int, str]
 
-    def push_children(directory: Path, node_depth: int, node_prefix: str) -> None:
-        try:
-            entries = sorted(directory.iterdir(), key=lambda entry: (entry.is_file(), entry.name.lower()))
-        except OSError:
-            return
-        visible_entries = [entry for entry in entries if not _should_ignore_entry(entry.name)]
-        last_index = len(visible_entries) - 1
-        for index in range(last_index, -1, -1):
-            entry = visible_entries[index]
-            is_last = index == last_index
-            item = (
+
+def _visible_children(directory: Path) -> list[Path]:
+    """Return sorted, unignored child entries of a directory."""
+    try:
+        entries = sorted(directory.iterdir(), key=lambda entry: (entry.is_file(), entry.name.lower()))
+    except OSError:
+        return []
+    return [entry for entry in entries if not _should_ignore_entry(entry.name)]
+
+
+def _push_tree_children(stack: list[TreeStackItem], directory: Path, node_depth: int, node_prefix: str) -> None:
+    """Push child entries onto the traversal stack in reverse order."""
+    visible_entries = _visible_children(directory)
+    last_index = len(visible_entries) - 1
+    for index in range(last_index, -1, -1):
+        entry = visible_entries[index]
+        is_last = index == last_index
+        stack.append(
+            (
                 node_prefix + _get_tree_symbol(is_last, connector=True) + entry.name,
                 entry,
                 node_depth,
                 node_prefix + _get_tree_symbol(is_last, connector=False),
             )
-            stack.append(item)
+        )
 
-    push_children(root, depth, prefix)
+
+def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
+    """Build ASCII tree representation of directory structure."""
+    lines: list[str] = []
+    stack: list[TreeStackItem] = []
+
+    _push_tree_children(stack, root, depth, prefix)
     while stack:
         line, entry, node_depth, entry_prefix = stack.pop()
         lines.append(line)
         if entry.is_dir() and node_depth < max_depth - 1:
-            push_children(entry, node_depth + 1, entry_prefix)
+            _push_tree_children(stack, entry, node_depth + 1, entry_prefix)
 
     return "\n".join(lines)
