@@ -8,6 +8,7 @@ flowchart TD
     end
     subgraph src__nxdo
         src__nxdo__config__get_settings["get_settings"]
+        src__nxdo__cli___settings_for["_settings_for"]
         src__nxdo__cli___generate_plan["_generate_plan"]
         src__nxdo__cli___render_prompt_text["_render_prompt_text"]
         src__nxdo__cli__cmd_plan["cmd_plan"]
@@ -45,6 +46,7 @@ flowchart TD
         src__nxdo__git_reader___filter_git_paths["_filter_git_paths"]
         src__nxdo__git_reader___should_ignore_git_path["_should_ignore_git_path"]
         src__nxdo__git_reader___should_include_todo_line["_should_include_todo_line"]
+        src__nxdo__output___resolve_console["_resolve_console"]
         src__nxdo__output__render_plan["render_plan"]
         src__nxdo__output__render_plan_json["render_plan_json"]
         src__nxdo__output__render_context["render_context"]
@@ -65,14 +67,13 @@ flowchart TD
         src__nxdo__ticket_generator___resolve_todo_path["_resolve_todo_path"]
         src__nxdo__ticket_generator___build_todo_section["_build_todo_section"]
         src__nxdo__ticket_generator___sync_todo_section["_sync_todo_section"]
-        src__nxdo__ticket_generator___remove_generated_todo_sections["_remove_generated_todo_sections"]
-        src__nxdo__ticket_generator___remove_managed_todo_blocks["_remove_managed_todo_blocks"]
     end
+    src__nxdo__cli___settings_for --> src__nxdo__config__get_settings
     src__nxdo__cli___generate_plan --> src__nxdo__planner__generate_next_tasks
     src__nxdo__cli___render_prompt_text --> src__nxdo__project_analyzer__analyze_project
     src__nxdo__cli___render_prompt_text --> src__nxdo__git_reader__read_git_context
     src__nxdo__cli___render_prompt_text --> src__nxdo__llm_client__build_user_prompt
-    src__nxdo__cli__cmd_plan --> src__nxdo__config__get_settings
+    src__nxdo__cli__cmd_plan --> src__nxdo__cli___settings_for
     src__nxdo__cli__cmd_plan --> src__nxdo__cli___generate_plan
     src__nxdo__cli__cmd_plan --> src__nxdo__output__render_plan_json
     src__nxdo__cli__cmd_plan --> src__nxdo__output__render_plan
@@ -86,7 +87,7 @@ flowchart TD
     src__nxdo__cli___sync_planfile_if_requested --> src__nxdo__ticket_generator__sync_to_planfile
     src__nxdo__cli___export_yaml_if_requested --> src__nxdo__ticket_generator__export_to_planfile_yaml
     src__nxdo__cli___display_tickets --> src__nxdo__cli___get_priority_emoji
-    src__nxdo__cli__cmd_tickets --> src__nxdo__config__get_settings
+    src__nxdo__cli__cmd_tickets --> src__nxdo__cli___settings_for
     src__nxdo__cli__cmd_tickets --> src__nxdo__cli___generate_plan
     src__nxdo__cli__cmd_tickets --> src__nxdo__ticket_generator__task_plan_to_tickets
     src__nxdo__cli__cmd_metrics --> src__nxdo__metrics__complexity__collect_file_metrics
@@ -95,10 +96,10 @@ flowchart TD
     src__nxdo__cli__cmd_metrics --> src__nxdo__metrics__hotspots__identify_bug_hotspots
     src__nxdo__cli__cmd_auto --> src__nxdo__metrics__hotspots__identify_bug_hotspots
     src__nxdo__cli__cmd_auto --> src__nxdo__metrics__complexity__collect_file_metrics
-    src__nxdo__cli__cmd_auto --> src__nxdo__config__get_settings
+    src__nxdo__cli__cmd_auto --> src__nxdo__cli___settings_for
     src__nxdo__cli__cmd_auto --> src__nxdo__cli___generate_plan
     src__nxdo__cli__cmd_auto --> src__nxdo__ticket_generator__task_plan_to_tickets
-    src__nxdo__cli__main --> src__nxdo__config__get_settings
+    src__nxdo__cli__main --> src__nxdo__cli___settings_for
     src__nxdo__cli__main --> examples__check_examples__print
     src__nxdo__cli__main --> src__nxdo__cli___generate_plan
     src__nxdo__git_reader___is_git_repo --> src__nxdo__git_reader___run
@@ -126,6 +127,9 @@ flowchart TD
     src__nxdo__git_reader___parse_commits --> src__nxdo__git_reader___parse_commit_metadata
     src__nxdo__git_reader___filter_git_paths --> src__nxdo__git_reader___should_ignore_git_path
     src__nxdo__git_reader___should_include_todo_line --> src__nxdo__git_reader___should_ignore_git_path
+    src__nxdo__output__render_plan --> src__nxdo__output___resolve_console
+    src__nxdo__output__render_plan_json --> src__nxdo__output___resolve_console
+    src__nxdo__output__render_context --> src__nxdo__output___resolve_console
     src__nxdo__planner__generate_next_tasks --> src__nxdo__project_analyzer__analyze_project
     src__nxdo__planner__generate_next_tasks --> src__nxdo__git_reader__read_git_context
     src__nxdo__planner__generate_next_tasks --> src__nxdo__llm_client__build_user_prompt
@@ -182,15 +186,18 @@ flowchart TD
     src__nxdo__metrics__complexity__collect_file_metrics --> src__nxdo__metrics__complexity___find_source_files
     src__nxdo__metrics__complexity__collect_file_metrics --> src__nxdo__metrics__complexity___calculate_fan_in
     src__nxdo__metrics__complexity__collect_file_metrics --> src__nxdo__metrics__complexity___build_file_metrics
+    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___get_commits_with_files
+    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___score_file_pairs
+    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___filtered_commit_files
     src__nxdo__metrics__hotspots___file_hotspot --> src__nxdo__metrics__hotspots___get_file_commits_with_info
     src__nxdo__metrics__hotspots___file_hotspot --> src__nxdo__metrics__hotspots___get_bug_fix_commits
     src__nxdo__metrics__hotspots__identify_bug_hotspots --> src__nxdo__metrics__hotspots___resolve_target_files
     src__nxdo__metrics__hotspots__identify_bug_hotspots --> src__nxdo__metrics__hotspots___file_hotspot
+    src__nxdo__metrics__hotspots__calculate_bus_factor --> src__nxdo__metrics__hotspots___resolve_target_files
+    src__nxdo__metrics__hotspots__calculate_bus_factor --> src__nxdo__metrics__hotspots___get_file_authors
     src__nxdo__metrics__hotspots__get_critical_bus_factor_files --> src__nxdo__metrics__hotspots__calculate_bus_factor
-    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___get_commits_with_files
-    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___score_file_pairs
-    src__nxdo__metrics__coupling__collect_coupling_matrix --> src__nxdo__metrics__coupling___filtered_commit_files
+    src__nxdo__metrics__hotspots__get_critical_bus_factor_files --> src__nxdo__metrics__hotspots___get_file_authors
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class src__nxdo__cli__cmd_metrics,src__nxdo__cli__cmd_auto,src__nxdo__ticket_generator__sync_to_planfile,src__nxdo__providers__openai_compat___extract_error_detail,src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api,src__nxdo__metrics__complexity___analyze_types,src__nxdo__metrics__complexity___calculate_fan_in,src__nxdo__metrics__hotspots___get_file_commits_with_info,src__nxdo__metrics__hotspots__calculate_bus_factor,src__nxdo__metrics__coupling___get_commits_with_files,src__nxdo__metrics__coupling___filtered_commit_files,src__nxdo__metrics__coupling__get_coupling_clusters medCC
+    class src__nxdo__cli__cmd_metrics,src__nxdo__cli__cmd_auto,src__nxdo__ticket_generator__sync_to_planfile,src__nxdo__providers__openai_compat___extract_error_detail,src__nxdo__providers__openai_compat__OpenAICompatProvider___call_api,src__nxdo__metrics__complexity___analyze_types,src__nxdo__metrics__complexity___calculate_fan_in,src__nxdo__metrics__coupling___get_commits_with_files,src__nxdo__metrics__coupling___filtered_commit_files,src__nxdo__metrics__coupling__get_coupling_clusters,src__nxdo__metrics__hotspots___get_file_commits_with_info medCC

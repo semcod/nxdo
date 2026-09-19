@@ -1,9 +1,9 @@
-# nxdo | 35f 5498L | yaml:7,txt:6,toml:1,shell:2,python:19 | 2026-09-18
-# generated in 0.00s
-# stats: 126 func | 0 cls | 35 mod | CC̄=3.7 | critical:0 | cycles:0
+# nxdo | 35f 5498L | yaml:7,txt:6,toml:1,shell:2,python:19 | 2026-09-19
+# generated in 0.01s
+# stats: 129 func | 0 cls | 35 mod | CC̄=3.6 | critical:0 | cycles:0
 # alerts[5]: fan-out _build_tree=15; fan-out cmd_auto=15; fan-out cmd_metrics=15; fan-out cmd_tickets=14; fan-out OpenAICompatProvider._call_api=13
 # hotspots[5]: cmd_metrics fan=15; cmd_auto fan=15; _build_tree fan=15; cmd_tickets fan=14; OpenAICompatProvider._call_api fan=13
-# evolution: CC̄ 3.9→3.7 (improved -0.2)
+# evolution: CC̄ 3.8→3.6 (improved -0.2)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[35]:
   examples/check-examples.sh,70
@@ -15,27 +15,27 @@ M[35]:
   koru.yaml,141
   local.dev.txt,12
   project.sh,48
-  pyproject.toml,86
+  pyproject.toml,99
   regix.yaml,93
   src/nxdo/__init__.py,31
-  src/nxdo/__main__.py,6
-  src/nxdo/cli.py,388
-  src/nxdo/config.py,44
-  src/nxdo/git_reader.py,268
-  src/nxdo/koru_context.py,283
+  src/nxdo/__main__.py,5
+  src/nxdo/cli.py,391
+  src/nxdo/config.py,42
+  src/nxdo/git_reader.py,266
+  src/nxdo/koru_context.py,282
   src/nxdo/llm_client.py,85
   src/nxdo/metrics/__init__.py,16
   src/nxdo/metrics/complexity.py,301
-  src/nxdo/metrics/coupling.py,198
-  src/nxdo/metrics/hotspots.py,271
-  src/nxdo/models.py,90
-  src/nxdo/output.py,67
-  src/nxdo/planner.py,58
+  src/nxdo/metrics/coupling.py,199
+  src/nxdo/metrics/hotspots.py,257
+  src/nxdo/models.py,89
+  src/nxdo/output.py,71
+  src/nxdo/planner.py,56
   src/nxdo/project_analyzer.py,285
   src/nxdo/providers/__init__.py,6
   src/nxdo/providers/base.py,19
-  src/nxdo/providers/openai_compat.py,310
-  src/nxdo/ticket_generator.py,280
+  src/nxdo/providers/openai_compat.py,311
+  src/nxdo/ticket_generator.py,281
   strategy.yaml,142
   testql-scenarios/generated-cli-tests.testql.toon.yaml,20
   testql-scenarios/generated-from-pytests.testql.toon.yaml,10
@@ -56,7 +56,7 @@ D:
     get_high_complexity_files(metrics;cc_threshold;fan_out_threshold)
     get_poorly_typed_files(metrics;coverage_threshold)
   src/nxdo/metrics/hotspots.py:
-    e: HotspotMetrics,_get_file_commits_with_info,_get_bug_fix_commits,_resolve_target_files,_file_hotspot,_hotspot_risk_score,identify_bug_hotspots,calculate_bus_factor,get_critical_bus_factor_files
+    e: HotspotMetrics,_get_file_commits_with_info,_get_bug_fix_commits,_resolve_target_files,_file_hotspot,_hotspot_risk_score,identify_bug_hotspots,_get_file_authors,calculate_bus_factor,get_critical_bus_factor_files
     HotspotMetrics:  # Bug hotspot metrics for a file...
     _get_file_commits_with_info(repo_path;file_path;since)
     _get_bug_fix_commits(repo_path;file_path;since)
@@ -64,6 +64,7 @@ D:
     _file_hotspot(repo_path;file_path;since)
     _hotspot_risk_score(h)
     identify_bug_hotspots(repo_path;files;top_n;since)
+    _get_file_authors(repo_path;file_path)
     calculate_bus_factor(repo_path;files;critical_threshold)
     get_critical_bus_factor_files(repo_path;bus_factors)
   src/nxdo/metrics/coupling.py:
@@ -85,10 +86,11 @@ Subc...
     _strip_markdown_fences(raw)
     _parse_json_response(raw)
     _create_task_from_dict(item;task_index)
-    _parse_tasks_from_data(data)
+    _parse_tasks_from_data(plan_json)
     _parse_response(raw;project_name;model)
   src/nxdo/cli.py:
-    e: _generate_plan,_render_prompt_text,cmd_plan,cmd_print_context,cmd_print_prompt,cmd_validate,_sync_todos_if_requested,_sync_planfile_if_requested,_export_yaml_if_requested,_get_priority_emoji,_display_tickets,cmd_tickets,cmd_metrics,cmd_auto,app_entry,main
+    e: _settings_for,_generate_plan,_render_prompt_text,cmd_plan,cmd_print_context,cmd_print_prompt,cmd_validate,_sync_todos_if_requested,_sync_planfile_if_requested,_export_yaml_if_requested,_get_priority_emoji,_display_tickets,cmd_tickets,cmd_metrics,cmd_auto,app_entry,main
+    _settings_for(max_commits)
     _generate_plan()
     _render_prompt_text(repo;extra_context;max_commits)
     cmd_plan(repo;extra_context;model;base_url;as_json;max_commits)
@@ -184,7 +186,8 @@ Subc...
     _get_extension(is_last)
     _build_tree(root;max_depth;depth;prefix)
   src/nxdo/output.py:
-    e: render_plan,render_plan_json,render_context
+    e: _resolve_console,render_plan,render_plan_json,render_context
+    _resolve_console(console)
     render_plan(plan;console)
     render_plan_json(plan;console)
     render_context(project_text;git_text;console)

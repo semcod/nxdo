@@ -1,10 +1,10 @@
-# nxdo | 126 func | 16f | 5498L | python | 2026-09-18
+# nxdo | 129 func | 16f | 5498L | python | 2026-09-19
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.7  critical=9 (limit:10)  dup=0  cycles=0
+  CC̄=3.6  critical=8 (limit:10)  dup=0  cycles=0
 
-ALERTS[13]:
+ALERTS[12]:
   !!  high_fan_out     cmd_metrics = 15 (limit:10)
   !!  high_fan_out     cmd_auto = 15 (limit:10)
   !!  high_fan_out     _build_tree = 15 (limit:10)
@@ -20,15 +20,15 @@ MODULES[35] (top by size):
   M[goal.yaml] 528L C:0 F:0 CC↑0 D:0 (yaml)
   M[examples/nxdo-self-prompt.txt] 482L C:0 F:0 CC↑0 D:0 (txt)
   M[examples/nxdo-self-context.txt] 468L C:0 F:0 CC↑0 D:0 (txt)
-  M[src/nxdo/cli.py] 388L C:0 F:16 CC↑11 D:0 (python)
-  M[src/nxdo/providers/openai_compat.py] 310L C:2 F:11 CC↑12 D:1 (python)
+  M[src/nxdo/cli.py] 391L C:0 F:17 CC↑11 D:0 (python)
+  M[src/nxdo/providers/openai_compat.py] 311L C:2 F:11 CC↑12 D:1 (python)
   M[src/nxdo/metrics/complexity.py] 301L C:1 F:10 CC↑14 D:1 (python)
   M[src/nxdo/project_analyzer.py] 285L C:1 F:19 CC↑5 D:2 (python)
-  M[src/nxdo/koru_context.py] 283L C:3 F:6 CC↑7 D:2 (python)
-  M[src/nxdo/ticket_generator.py] 280L C:0 F:12 CC↑8 D:1 (python)
-  M[src/nxdo/metrics/hotspots.py] 271L C:1 F:8 CC↑14 D:1 (python)
-  M[src/nxdo/git_reader.py] 268L C:2 F:21 CC↑7 D:2 (python)
-  M[src/nxdo/metrics/coupling.py] 198L C:1 F:5 CC↑13 D:1 (python)
+  M[src/nxdo/koru_context.py] 282L C:3 F:6 CC↑7 D:2 (python)
+  M[src/nxdo/ticket_generator.py] 281L C:0 F:12 CC↑8 D:1 (python)
+  M[src/nxdo/git_reader.py] 266L C:2 F:21 CC↑7 D:2 (python)
+  M[src/nxdo/metrics/hotspots.py] 257L C:1 F:9 CC↑14 D:1 (python)
+  M[src/nxdo/metrics/coupling.py] 199L C:1 F:5 CC↑13 D:1 (python)
   M[examples/nxdo-self-plan.txt] 171L C:0 F:0 CC↑0 D:0 (txt)
   M[strategy.yaml] 142L C:0 F:0 CC↑0 D:0 (yaml)
   M[koru.yaml] 141L C:0 F:0 CC↑0 D:0 (yaml)
@@ -50,4 +50,4 @@ REFACTOR[4]:
   [4] M/M Reduce _build_tree fan-out (currently 15)
 
 EVOLUTION:
-  2026-09-18 CC̄=3.7 crit=9 5498L // Automated analysis
+  2026-09-19 CC̄=3.6 crit=8 5498L // Automated analysis

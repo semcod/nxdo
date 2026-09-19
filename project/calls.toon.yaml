@@ -1,7 +1,7 @@
 # code2llm call graph | /home/tom/github/semcod/nxdo
-# generated in 0.04s
-# nodes: 101 | edges: 103 | modules: 13
-# CC̄=3.7
+# generated in 0.05s
+# nodes: 107 | edges: 110 | modules: 14
+# CC̄=3.6
 
 HUBS[20]:
   src.nxdo.cli.cmd_metrics
@@ -12,53 +12,53 @@ HUBS[20]:
     CC=6  in:1  out:20  total:21
   src.nxdo.metrics.complexity._calculate_fan_in
     CC=12  in:1  out:17  total:18
-  src.nxdo.providers.openai_compat._extract_error_detail
-    CC=12  in:1  out:16  total:17
-  src.nxdo.project_analyzer._build_tree
-    CC=4  in:1  out:16  total:17
   src.nxdo.koru_context._format_project_state_for_llm
     CC=7  in:1  out:16  total:17
+  src.nxdo.project_analyzer._build_tree
+    CC=4  in:1  out:16  total:17
+  src.nxdo.providers.openai_compat._extract_error_detail
+    CC=12  in:1  out:16  total:17
   src.nxdo.providers.openai_compat.OpenAICompatProvider._call_api
     CC=11  in:0  out:17  total:17
-  src.nxdo.metrics.hotspots.calculate_bus_factor
-    CC=14  in:2  out:14  total:16
+  src.nxdo.output.render_plan
+    CC=3  in:1  out:14  total:15
   src.nxdo.koru_context._format_operations_for_llm
     CC=7  in:1  out:14  total:15
+  src.nxdo.ticket_generator.sync_to_planfile
+    CC=8  in:1  out:13  total:14
+  src.nxdo.metrics.coupling._get_commits_with_files
+    CC=13  in:1  out:13  total:14
   src.nxdo.metrics.hotspots._get_file_commits_with_info
     CC=14  in:1  out:13  total:14
   src.nxdo.cli.cmd_print_context
     CC=2  in:0  out:14  total:14
-  src.nxdo.metrics.coupling._get_commits_with_files
-    CC=13  in:1  out:13  total:14
-  src.nxdo.ticket_generator.sync_to_planfile
-    CC=8  in:1  out:12  total:13
-  src.nxdo.cli.cmd_plan
-    CC=3  in:0  out:13  total:13
-  src.nxdo.metrics.complexity._analyze_imports
-    CC=7  in:1  out:10  total:11
-  src.nxdo.metrics.hotspots._file_hotspot
-    CC=7  in:1  out:10  total:11
-  src.nxdo.metrics.hotspots.get_critical_bus_factor_files
-    CC=7  in:0  out:11  total:11
   src.nxdo.koru_context._load_project_state
-    CC=6  in:1  out:10  total:11
+    CC=6  in:1  out:12  total:13
+  src.nxdo.cli.cmd_plan
+    CC=2  in:0  out:13  total:13
   src.nxdo.git_reader.read_git_context
     CC=2  in:3  out:8  total:11
+  src.nxdo.metrics.hotspots._file_hotspot
+    CC=7  in:1  out:10  total:11
+  src.nxdo.providers.openai_compat._parse_response
+    CC=1  in:2  out:8  total:10
+  src.nxdo.metrics.complexity._build_file_metrics
+    CC=2  in:1  out:9  total:10
 
 MODULES:
   examples.check-examples  [1 funcs]
     print  CC=0  out:0
-  src.nxdo.cli  [12 funcs]
+  src.nxdo.cli  [13 funcs]
     _display_tickets  CC=3  out:5
     _export_yaml_if_requested  CC=3  out:1
     _generate_plan  CC=2  out:4
     _get_priority_emoji  CC=1  out:1
     _render_prompt_text  CC=1  out:7
+    _settings_for  CC=2  out:1
     _sync_planfile_if_requested  CC=3  out:3
     _sync_todos_if_requested  CC=2  out:4
     cmd_auto  CC=8  out:30
     cmd_metrics  CC=11  out:33
-    cmd_plan  CC=3  out:13
   src.nxdo.config  [1 funcs]
     get_settings  CC=2  out:1
   src.nxdo.git_reader  [19 funcs]
@@ -76,15 +76,15 @@ MODULES:
     _format_operations_for_llm  CC=7  out:14
     _format_project_state_for_llm  CC=7  out:16
     _load_operations  CC=3  out:2
-    _load_project_state  CC=6  out:10
-    build_koru_context  CC=3  out:9
+    _load_project_state  CC=6  out:12
+    build_koru_context  CC=3  out:8
     get_koru_system_prompt_extension  CC=1  out:0
   src.nxdo.llm_client  [3 funcs]
     generate_task_plan  CC=1  out:2
     build_user_prompt  CC=3  out:1
     parse_task_plan_response  CC=1  out:1
   src.nxdo.metrics.complexity  [8 funcs]
-    _analyze_imports  CC=7  out:10
+    _analyze_imports  CC=6  out:9
     _analyze_types  CC=14  out:6
     _build_file_metrics  CC=2  out:9
     _calculate_cyclomatic_complexity  CC=5  out:5
@@ -97,14 +97,20 @@ MODULES:
     _get_commits_with_files  CC=13  out:13
     _score_file_pairs  CC=5  out:5
     collect_coupling_matrix  CC=7  out:7
-  src.nxdo.metrics.hotspots  [7 funcs]
+  src.nxdo.metrics.hotspots  [8 funcs]
     _file_hotspot  CC=7  out:10
     _get_bug_fix_commits  CC=6  out:5
+    _get_file_authors  CC=5  out:6
     _get_file_commits_with_info  CC=14  out:13
     _resolve_target_files  CC=6  out:5
-    calculate_bus_factor  CC=14  out:14
-    get_critical_bus_factor_files  CC=7  out:11
+    calculate_bus_factor  CC=6  out:4
+    get_critical_bus_factor_files  CC=4  out:5
     identify_bug_hotspots  CC=4  out:3
+  src.nxdo.output  [4 funcs]
+    _resolve_console  CC=2  out:1
+    render_context  CC=1  out:5
+    render_plan  CC=3  out:14
+    render_plan_json  CC=1  out:4
   src.nxdo.planner  [1 funcs]
     generate_next_tasks  CC=5  out:9
   src.nxdo.project_analyzer  [17 funcs]
@@ -139,14 +145,15 @@ MODULES:
     _resolve_todo_path  CC=3  out:1
     _sync_todo_section  CC=2  out:6
     export_to_planfile_yaml  CC=3  out:4
-    sync_to_planfile  CC=8  out:12
+    sync_to_planfile  CC=8  out:13
 
 EDGES:
+  src.nxdo.cli._settings_for → src.nxdo.config.get_settings
   src.nxdo.cli._generate_plan → src.nxdo.planner.generate_next_tasks
   src.nxdo.cli._render_prompt_text → src.nxdo.project_analyzer.analyze_project
   src.nxdo.cli._render_prompt_text → src.nxdo.git_reader.read_git_context
   src.nxdo.cli._render_prompt_text → src.nxdo.llm_client.build_user_prompt
-  src.nxdo.cli.cmd_plan → src.nxdo.config.get_settings
+  src.nxdo.cli.cmd_plan → src.nxdo.cli._settings_for
   src.nxdo.cli.cmd_plan → src.nxdo.cli._generate_plan
   src.nxdo.cli.cmd_print_context → src.nxdo.project_analyzer.analyze_project
   src.nxdo.cli.cmd_print_context → src.nxdo.git_reader.read_git_context
@@ -184,11 +191,10 @@ EDGES:
   src.nxdo.git_reader._parse_commits → src.nxdo.git_reader._parse_commit_metadata
   src.nxdo.git_reader._filter_git_paths → src.nxdo.git_reader._should_ignore_git_path
   src.nxdo.git_reader._should_include_todo_line → src.nxdo.git_reader._should_ignore_git_path
+  src.nxdo.output.render_plan → src.nxdo.output._resolve_console
+  src.nxdo.output.render_plan_json → src.nxdo.output._resolve_console
+  src.nxdo.output.render_context → src.nxdo.output._resolve_console
   src.nxdo.planner.generate_next_tasks → src.nxdo.project_analyzer.analyze_project
   src.nxdo.planner.generate_next_tasks → src.nxdo.git_reader.read_git_context
   src.nxdo.planner.generate_next_tasks → src.nxdo.llm_client.build_user_prompt
   src.nxdo.planner.generate_next_tasks → src.nxdo.config.get_settings
-  src.nxdo.planner.generate_next_tasks → src.nxdo.koru_context.build_koru_context
-  src.nxdo.llm_client.parse_task_plan_response → src.nxdo.providers.openai_compat._parse_response
-  src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan → src.nxdo.llm_client.build_user_prompt
-  src.nxdo.koru_context.build_koru_context → src.nxdo.koru_context._load_operations

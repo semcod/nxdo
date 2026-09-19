@@ -7,7 +7,7 @@
 - **Primary Language**: python
 - **Languages**: python: 19, yaml: 7, txt: 6, shell: 2, toml: 1
 - **Analysis Mode**: static
-- **Total Functions**: 126
+- **Total Functions**: 129
 - **Total Classes**: 18
 - **Modules**: 35
 - **Entry Points**: 31
@@ -25,7 +25,7 @@
 - **File**: `project_analyzer.py`
 
 ### src.nxdo.cli
-- **Functions**: 16
+- **Functions**: 17
 - **File**: `cli.py`
 
 ### src.nxdo.ticket_generator
@@ -43,7 +43,7 @@
 - **File**: `complexity.py`
 
 ### src.nxdo.metrics.hotspots
-- **Functions**: 8
+- **Functions**: 9
 - **Classes**: 1
 - **File**: `hotspots.py`
 
@@ -61,6 +61,10 @@
 - **Functions**: 4
 - **File**: `check-examples.sh`
 
+### src.nxdo.output
+- **Functions**: 4
+- **File**: `output.py`
+
 ### src.nxdo.llm_client
 - **Functions**: 4
 - **Classes**: 1
@@ -70,10 +74,6 @@
 - **Functions**: 4
 - **Classes**: 4
 - **File**: `models.py`
-
-### src.nxdo.output
-- **Functions**: 3
-- **File**: `output.py`
 
 ### src.nxdo.config
 - **Functions**: 1
@@ -121,17 +121,10 @@ This command automatically:
 
 ### src.nxdo.cli.cmd_plan
 > Generate a 10-task plan for the repository.
-- **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, src.nxdo.config.get_settings
+- **Calls**: app.command, typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, src.nxdo.cli._settings_for
 
 ### src.nxdo.models.TaskPlan.__str__
 - **Calls**: None.join, lines.append, lines.append, lines.append, lines.append, str, lines.append, None.join
-
-### src.nxdo.metrics.hotspots.get_critical_bus_factor_files
-> Get files with critical bus factor (1-2 authors) + their authors.
-
-Returns:
-    [(file_path, author_count, [author_names]), ...]
-- **Calls**: bus_factors.items, critical.sort, src.nxdo.metrics.hotspots.calculate_bus_factor, subprocess.run, list, critical.append, set, line.strip
 
 ### src.nxdo.cli.cmd_validate
 > Validate a saved JSON plan file against the TaskPlan schema.
@@ -143,6 +136,13 @@ Returns:
 
 ### src.nxdo.git_reader.GitContext.to_text
 - **Calls**: None.join, lines.append, lines.append, lines.append, lines.append, lines.append, len
+
+### src.nxdo.metrics.hotspots.get_critical_bus_factor_files
+> Get files with critical bus factor (1-2 authors) + their authors.
+
+Returns:
+    [(file_path, author_count, [author_names]), ...]
+- **Calls**: bus_factors.items, critical.sort, src.nxdo.metrics.hotspots.calculate_bus_factor, src.nxdo.metrics.hotspots._get_file_authors, critical.append
 
 ### src.nxdo.git_reader.CommitInfo.__str__
 - **Calls**: None.join, len, len
@@ -246,15 +246,15 @@ cmd_plan [src.nxdo.cli]
 __str__ [src.nxdo.models.TaskPlan]
 ```
 
-### Flow 9: get_critical_bus_factor_files
-```
-get_critical_bus_factor_files [src.nxdo.metrics.hotspots]
-  └─> calculate_bus_factor
-```
-
-### Flow 10: cmd_validate
+### Flow 9: cmd_validate
 ```
 cmd_validate [src.nxdo.cli]
+```
+
+### Flow 10: cmd_print_prompt
+```
+cmd_print_prompt [src.nxdo.cli]
+  └─ →> print
 ```
 
 ## Key Classes
@@ -338,12 +338,12 @@ Subclasses :class:`ValueError` so existing c
 > Comprehensive metrics for a source file.
 - **Methods**: 0
 
-### src.nxdo.metrics.hotspots.HotspotMetrics
-> Bug hotspot metrics for a file.
-- **Methods**: 0
-
 ### src.nxdo.metrics.coupling.CouplingMetrics
 > Metrics for file pair coupling.
+- **Methods**: 0
+
+### src.nxdo.metrics.hotspots.HotspotMetrics
+> Bug hotspot metrics for a file.
 - **Methods**: 0
 
 ## Data Transformation Functions
@@ -390,7 +390,7 @@ Key functions that process and transform data:
 - **Output to**: src.nxdo.project_analyzer._parse_pyproject_tomllib, src.nxdo.project_analyzer._parse_pyproject_regex
 
 ### src.nxdo.project_analyzer._parse_package_json
-- **Output to**: json.loads, data.get, data.get, path.read_text
+- **Output to**: json.loads, package_json.get, package_json.get, path.read_text
 
 ### src.nxdo.project_analyzer._parse_cargo
 - **Output to**: re.search, re.search, name_match.group, description_match.group
@@ -400,12 +400,12 @@ Key functions that process and transform data:
 - **Output to**: json.loads, isinstance, ValueError, ValueError, type
 
 ### src.nxdo.providers.openai_compat._parse_tasks_from_data
-> Parse tasks from the response data.
-- **Output to**: enumerate, data.get, tasks.append, src.nxdo.providers.openai_compat._create_task_from_dict
+> Parse tasks from the parsed plan JSON.
+- **Output to**: enumerate, plan_json.get, tasks.append, src.nxdo.providers.openai_compat._create_task_from_dict
 
 ### src.nxdo.providers.openai_compat._parse_response
 > Parse and validate the raw JSON response from the LLM.
-- **Output to**: src.nxdo.providers.openai_compat._strip_markdown_fences, src.nxdo.providers.openai_compat._parse_json_response, src.nxdo.providers.openai_compat._parse_tasks_from_data, TaskPlan, data.get
+- **Output to**: src.nxdo.providers.openai_compat._strip_markdown_fences, src.nxdo.providers.openai_compat._parse_json_response, src.nxdo.providers.openai_compat._parse_tasks_from_data, TaskPlan, plan_json.get
 
 ## Public API Surface
 
@@ -417,24 +417,24 @@ Functions exposed as public API (no underscore prefix):
 - `src.nxdo.cli.main` - 20 calls
 - `src.nxdo.cli.cmd_print_context` - 14 calls
 - `src.nxdo.output.render_plan` - 14 calls
-- `src.nxdo.metrics.hotspots.calculate_bus_factor` - 14 calls
 - `src.nxdo.cli.cmd_plan` - 13 calls
+- `src.nxdo.ticket_generator.sync_to_planfile` - 13 calls
 - `src.nxdo.metrics.coupling.get_coupling_clusters` - 13 calls
-- `src.nxdo.ticket_generator.sync_to_planfile` - 12 calls
-- `src.nxdo.metrics.hotspots.get_critical_bus_factor_files` - 11 calls
 - `src.nxdo.cli.cmd_validate` - 9 calls
 - `src.nxdo.planner.generate_next_tasks` - 9 calls
-- `src.nxdo.koru_context.build_koru_context` - 9 calls
 - `src.nxdo.git_reader.read_git_context` - 8 calls
+- `src.nxdo.koru_context.build_koru_context` - 8 calls
 - `src.nxdo.cli.cmd_print_prompt` - 7 calls
 - `src.nxdo.git_reader.GitContext.to_text` - 7 calls
 - `src.nxdo.metrics.coupling.collect_coupling_matrix` - 7 calls
 - `src.nxdo.ticket_generator.sync_to_todo_md` - 6 calls
 - `src.nxdo.output.render_context` - 5 calls
 - `src.nxdo.project_analyzer.analyze_project` - 5 calls
+- `src.nxdo.metrics.hotspots.get_critical_bus_factor_files` - 5 calls
 - `src.nxdo.output.render_plan_json` - 4 calls
 - `src.nxdo.ticket_generator.export_to_planfile_yaml` - 4 calls
 - `src.nxdo.metrics.complexity.collect_file_metrics` - 4 calls
+- `src.nxdo.metrics.hotspots.calculate_bus_factor` - 4 calls
 - `src.nxdo.project_analyzer.ProjectSnapshot.to_text` - 3 calls
 - `src.nxdo.metrics.hotspots.identify_bug_hotspots` - 3 calls
 - `src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan` - 2 calls
@@ -484,10 +484,10 @@ graph TD
     cmd_plan --> Option
     __str__ --> join
     __str__ --> append
-    get_critical_bus_fac --> items
-    get_critical_bus_fac --> sort
-    get_critical_bus_fac --> calculate_bus_factor
-    get_critical_bus_fac --> run
+    cmd_validate --> command
+    cmd_validate --> Argument
+    cmd_validate --> print
+    cmd_validate --> loads
 ```
 
 ## Reverse Engineering Guidelines

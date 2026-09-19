@@ -5,6 +5,7 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
+        src__nxdo__cli___settings_for["_settings_for"]
         src__nxdo__cli___generate_plan["_generate_plan"]
         src__nxdo__cli___render_prompt_text["_render_prompt_text"]
         src__nxdo__cli__cmd_plan["cmd_plan"]
@@ -19,12 +20,11 @@ flowchart TD
         src__nxdo__cli__cmd_metrics["cmd_metrics"]
         src__nxdo__cli__cmd_auto["cmd_auto"]
         src__nxdo__cli__app_entry["app_entry"]
-        src__nxdo__cli__main["main"]
-        ...["+25 more"]
+        ...["+26 more"]
     end
 
     subgraph Exporters
         src__nxdo__cli___export_yaml_if_requested["_export_yaml_if_requested"]
     end
 
-    class src__nxdo__cli___generate_plan,src__nxdo__cli___render_prompt_text,src__nxdo__cli__cmd_plan,src__nxdo__cli__cmd_print_context,src__nxdo__cli__cmd_print_prompt,src__nxdo__cli__cmd_validate,src__nxdo__cli___sync_todos_if_requested,src__nxdo__cli___sync_planfile_if_requested,src__nxdo__cli___export_yaml_if_requested,src__nxdo__cli___get_priority_emoji entry
+    class src__nxdo__cli___settings_for,src__nxdo__cli___generate_plan,src__nxdo__cli___render_prompt_text,src__nxdo__cli__cmd_plan,src__nxdo__cli__cmd_print_context,src__nxdo__cli__cmd_print_prompt,src__nxdo__cli__cmd_validate,src__nxdo__cli___sync_todos_if_requested,src__nxdo__cli___sync_planfile_if_requested,src__nxdo__cli___export_yaml_if_requested entry

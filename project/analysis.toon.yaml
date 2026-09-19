@@ -1,13 +1,13 @@
-# code2llm | 35f 5498L | python:19,yaml:7,txt:6,shell:2,toml:1 | 2026-09-18
+# code2llm | 35f 5498L | python:19,yaml:7,txt:6,shell:2,toml:1 | 2026-09-19
 # generated in 0.01s
-# CC̅=3.7 | critical:0/126 | dups:0 | cycles:0
+# CC̅=3.6 | critical:0/129 | dups:0 | cycles:0
 
 HEALTH[0]: ok
 
 REFACTOR[0]: none needed
 
 PIPELINES[24]:
-  [1] Src [cmd_plan]: cmd_plan → get_settings
+  [1] Src [cmd_plan]: cmd_plan → _settings_for → get_settings
       PURITY: 100% pure
   [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
       PURITY: 100% pure
@@ -15,7 +15,7 @@ PIPELINES[24]:
       PURITY: 100% pure
   [4] Src [cmd_validate]: cmd_validate
       PURITY: 100% pure
-  [5] Src [cmd_tickets]: cmd_tickets → get_settings
+  [5] Src [cmd_tickets]: cmd_tickets → _settings_for → get_settings
       PURITY: 100% pure
   [6] Src [cmd_metrics]: cmd_metrics → collect_file_metrics → _find_source_files
       PURITY: 100% pure
@@ -23,7 +23,7 @@ PIPELINES[24]:
       PURITY: 100% pure
   [8] Src [app_entry]: app_entry
       PURITY: 100% pure
-  [9] Src [main]: main → get_settings
+  [9] Src [main]: main → _settings_for → get_settings
       PURITY: 100% pure
   [10] Src [__str__]: __str__
       PURITY: 100% pure
@@ -53,30 +53,30 @@ PIPELINES[24]:
       PURITY: 100% pure
   [23] Src [_call_api]: _call_api → get_koru_system_prompt_extension
       PURITY: 100% pure
-  [24] Src [get_critical_bus_factor_files]: get_critical_bus_factor_files → calculate_bus_factor
+  [24] Src [get_critical_bus_factor_files]: get_critical_bus_factor_files → calculate_bus_factor → _resolve_target_files
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=3.9    ←in:0  →out:0
-  │ cli                        388L  0C   16m  CC=11     ←0
-  │ openai_compat              310L  2C   11m  CC=12     ←1
+  src/                            CC̄=3.7    ←in:0  →out:0
+  │ cli                        391L  0C   17m  CC=11     ←0
+  │ openai_compat              311L  2C   11m  CC=12     ←1
   │ complexity                 301L  1C   10m  CC=14     ←1
   │ project_analyzer           285L  1C   19m  CC=5      ←2
-  │ koru_context               283L  3C    6m  CC=7      ←2
-  │ ticket_generator           280L  0C   12m  CC=8      ←1
-  │ hotspots                   271L  1C    8m  CC=14     ←1
-  │ git_reader                 268L  2C   21m  CC=7      ←2
-  │ coupling                   198L  1C    5m  CC=13     ←1
-  │ models                      90L  4C    4m  CC=7      ←0
+  │ koru_context               282L  3C    6m  CC=7      ←2
+  │ ticket_generator           281L  0C   12m  CC=8      ←1
+  │ git_reader                 266L  2C   21m  CC=7      ←2
+  │ hotspots                   257L  1C    9m  CC=14     ←1
+  │ coupling                   199L  1C    5m  CC=13     ←1
+  │ models                      89L  4C    4m  CC=7      ←0
   │ llm_client                  85L  1C    4m  CC=3      ←2
-  │ output                      67L  0C    3m  CC=4      ←1
-  │ planner                     58L  0C    1m  CC=5      ←1
-  │ config                      44L  1C    1m  CC=2      ←3
+  │ output                      71L  0C    4m  CC=3      ←1
+  │ planner                     56L  0C    1m  CC=5      ←1
+  │ config                      42L  1C    1m  CC=2      ←3
   │ __init__                    31L  0C    0m  CC=0.0    ←0
   │ base                        19L  1C    1m  CC=1      ←0
   │ __init__                    16L  0C    0m  CC=0.0    ←0
-  │ __main__                     6L  0C    0m  CC=0.0    ←0
   │ __init__                     6L  0C    0m  CC=0.0    ←0
+  │ __main__                     5L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=0.0    ←in:6  →out:0
   │ nxdo-self-prompt.txt       482L  0C    0m  CC=0.0    ←0
@@ -90,8 +90,8 @@ LAYERS:
   │ strategy.yaml              142L  0C    0m  CC=0.0    ←0
   │ koru.yaml                  141L  0C    0m  CC=0.0    ←0
   │ wup.yaml                   100L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              99L  0C    0m  CC=0.0    ←0
   │ regix.yaml                  93L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              86L  0C    0m  CC=0.0    ←0
   │ tree.txt                    73L  0C    0m  CC=0.0    ←0
   │ project.sh                  48L  0C    0m  CC=0.0    ←0
   │ local.dev.txt               12L  0C    0m  CC=0.0    ←0
