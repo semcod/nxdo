@@ -95,6 +95,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, user_prompt, self'
       outputs:
         artifacts: []
@@ -210,6 +211,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -383,6 +385,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: since, file_path, repo_path'
       outputs:
         artifacts: []
@@ -499,6 +502,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -664,6 +668,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: raw, project_name, model'
       outputs:
         artifacts: []
@@ -775,6 +780,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -938,6 +944,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, extra_context, max_commits'
       outputs:
         artifacts: []
@@ -1053,6 +1060,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1213,6 +1221,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: user_prompt, self, project_name'
       outputs:
         artifacts: []
@@ -1323,6 +1332,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1478,6 +1488,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _format_project_state_for_llm'
       outputs:
         artifacts: []
@@ -1587,6 +1598,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1738,6 +1750,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, self, user_prompt'
       outputs:
         artifacts: []
@@ -1853,6 +1866,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2002,6 +2016,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo_path, file_path, since'
       outputs:
         artifacts: []
@@ -2116,6 +2131,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2254,6 +2270,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _load_project_state'
       outputs:
         artifacts: []
@@ -2367,6 +2384,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2509,6 +2527,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _resolve_name_and_description'
       outputs:
         artifacts: []
@@ -2618,6 +2637,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2748,6 +2768,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_auto'
       outputs:
         artifacts: []
@@ -2855,6 +2876,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2981,6 +3003,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _build_tree'
       outputs:
         artifacts: []
@@ -3088,6 +3111,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3210,6 +3234,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_print_context'
       outputs:
         artifacts: []
@@ -3317,6 +3342,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3435,6 +3461,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: generate_next_tasks'
       outputs:
         artifacts: []
@@ -3542,6 +3569,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3656,6 +3684,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: main'
       outputs:
         artifacts: []
@@ -3765,6 +3794,7 @@ sprint:
       - god-function
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: render_plan'
       outputs:
         artifacts: []
@@ -3872,6 +3902,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       name: 'Address code smell: God Function: sync_to_planfile'
       outputs:
@@ -4042,3 +4073,52 @@ sprint:
       status: open
       sync: {}
       updated_at: '2026-09-19T19:31:02.608450Z'
+    PLF-136:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-19T19:40:41.349578Z'
+      description: 'Discovery pass PLF-135 found 31 tickets (PLF-099..PLF-130) in
+        .planfile/sprints/current.yaml carrying a ''priority: normal'' label duplicated
+        2-31 times (~500 redundant entries total; older tickets accumulated one copy
+        per sync cycle). Healthy tickets (PLF-131+) keep priority only in the dedicated
+        ''priority'' field and carry no ''priority: *'' label.
+
+
+        Scope:
+
+        1. Remove all duplicated ''priority: *'' labels from .planfile/sprints/current.yaml
+        (drop the label entirely; keep the priority field).
+
+        2. Regenerate fast.json caches / verify ''planfile ticket list'' renders without
+        label spam.
+
+        3. Root cause is in koru''s code2llm ticket sync (semcod/koru repo) appending
+        the label on every cycle - track the fix there separately; this ticket only
+        cleans nxdo data.'
+      dsl: SODL/1 id=evt_d86e2f30fe8a126bf9ee4e03 event_hash=0b3ce2981ccb7a9a0d54ff6ffd2074f13e3373e740f196b3fb4e3e8a81b57919
+        timestamp=2026-09-19T19%3A40%3A41.349578%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-136 actor=koru-project-discovery oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-136%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-136 causation_id=- input_hash=a5cd317cf125490cc468c723d6d7be8c681fd43b8832e3a1ba1d6164ca569b44
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMTlUMTk6NDA6NDEuMzQ5NTc4WiIsImRlc2NyaXB0aW9uIjoiRGlzY292ZXJ5IHBhc3MgUExGLTEzNSBmb3VuZCAzMSB0aWNrZXRzIChQTEYtMDk5Li5QTEYtMTMwKSBpbiAucGxhbmZpbGUvc3ByaW50cy9jdXJyZW50LnlhbWwgY2FycnlpbmcgYSAncHJpb3JpdHk6IG5vcm1hbCcgbGFiZWwgZHVwbGljYXRlZCAyLTMxIHRpbWVzICh-NTAwIHJlZHVuZGFudCBlbnRyaWVzIHRvdGFsOyBvbGRlciB0aWNrZXRzIGFjY3VtdWxhdGVkIG9uZSBjb3B5IHBlciBzeW5jIGN5Y2xlKS4gSGVhbHRoeSB0aWNrZXRzIChQTEYtMTMxKykga2VlcCBwcmlvcml0eSBvbmx5IGluIHRoZSBkZWRpY2F0ZWQgJ3ByaW9yaXR5JyBmaWVsZCBhbmQgY2Fycnkgbm8gJ3ByaW9yaXR5OiAqJyBsYWJlbC5cblxuU2NvcGU6XG4xLiBSZW1vdmUgYWxsIGR1cGxpY2F0ZWQgJ3ByaW9yaXR5OiAqJyBsYWJlbHMgZnJvbSAucGxhbmZpbGUvc3ByaW50cy9jdXJyZW50LnlhbWwgKGRyb3AgdGhlIGxhYmVsIGVudGlyZWx5OyBrZWVwIHRoZSBwcmlvcml0eSBmaWVsZCkuXG4yLiBSZWdlbmVyYXRlIGZhc3QuanNvbiBjYWNoZXMgLyB2ZXJpZnkgJ3BsYW5maWxlIHRpY2tldCBsaXN0JyByZW5kZXJzIHdpdGhvdXQgbGFiZWwgc3BhbS5cbjMuIFJvb3QgY2F1c2UgaXMgaW4ga29ydSdzIGNvZGUybGxtIHRpY2tldCBzeW5jIChzZW1jb2Qva29ydSByZXBvKSBhcHBlbmRpbmcgdGhlIGxhYmVsIG9uIGV2ZXJ5IGN5Y2xlIC0gdHJhY2sgdGhlIGZpeCB0aGVyZSBzZXBhcmF0ZWx5OyB0aGlzIHRpY2tldCBvbmx5IGNsZWFucyBueGRvIGRhdGEuIiwiZmlsZXMiOlsiLnBsYW5maWxlL3NwcmludHMvY3VycmVudC55YW1sIl0sImlkIjoiUExGLTEzNiIsImxhYmVscyI6WyJrb3J1IiwicHJvamVjdC1kaXNjb3ZlcnkiLCJkYXRhLXF1YWxpdHkiLCJsbG0tcmVhZHkiXSwibmFtZSI6IkRlZHVwbGljYXRlIHByaW9yaXR5IGxhYmVscyBhY2N1bXVsYXRlZCBpbiBwbGFuZmlsZSBzcHJpbnQgdGlja2V0cyIsInByaW9yaXR5Ijoibm9ybWFsIiwic291cmNlIjp7ImNvbnRleHQiOnt9LCJ0aW1lc3RhbXAiOiIyMDI2LTA5LTE5VDE5OjQwOjQxLjMzODA1MVoiLCJ0b29sIjoia29ydS1wcm9qZWN0LWRpc2NvdmVyeSJ9LCJzcHJpbnQiOiJjdXJyZW50Iiwic3RhdHVzIjoib3BlbiIsInN5bmMiOnt9LCJ1cGRhdGVkX2F0IjoiMjAyNi0wOS0xOVQxOTo0MDo0MS4zNDk1OTBaIn19
+      files:
+      - .planfile/sprints/current.yaml
+      history: []
+      id: PLF-136
+      labels:
+      - koru
+      - project-discovery
+      - data-quality
+      - llm-ready
+      name: Deduplicate priority labels accumulated in planfile sprint tickets
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-19T19:40:41.338051Z'
+        tool: koru-project-discovery
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-19T19:40:41.349590Z'
