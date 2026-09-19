@@ -72,6 +72,13 @@ def test_history_preserves_churn_authors_and_risk_density(history):
     assert hotspots.identify_bug_hotspots(history, files=["missing.py"]) == []
 
 
+def test_file_hotspot_returns_none_when_no_risk(monkeypatch, tmp_path):
+    monkeypatch.setattr(hotspots, "_get_file_commits_with_info", lambda *a: ([("h1", "Ada", 5), ("h2", "Bob", 5)], 10))
+    monkeypatch.setattr(hotspots, "_get_bug_fix_commits", lambda *a: 0)
+    assert hotspots._file_hotspot(tmp_path, "sample.py", "30.days.ago") is None
+
+
+
 def test_bus_factor_identifies_single_author_and_shared_files(history):
     assert hotspots.calculate_bus_factor(history) == {"b.py": 2, "c.py": 1}
     critical = hotspots.get_critical_bus_factor_files(history)
