@@ -229,6 +229,13 @@ sprint:
           Make the smallest refactor that removes the smell and run local tests.'
         source: koru task
         timestamp: '2026-09-18T10:38:19.048824+00:00'
+      - action: status_change
+        changes:
+        - status
+        previous_status: open
+        source: planfile.store
+        status: done
+        timestamp: '2026-09-19T15:40:00.000000+00:00'
       id: PLF-030
       inputs:
         api_headers: {}
@@ -370,13 +377,13 @@ sprint:
         timestamp: '2026-09-18T10:38:19.048824+00:00'
         tool: koru-project-discovery
       sprint: current
-      status: open
+      status: done
       sync:
         github:
           id: '32'
           key: semcod/nxdo#32
           url: https://github.com/semcod/nxdo/issues/32
-      updated_at: '2026-09-18T10:38:19.048824+00:00'
+      updated_at: '2026-09-19T15:40:00.000000+00:00'
     PLF-044:
       backend: github
       blocked_by: []
