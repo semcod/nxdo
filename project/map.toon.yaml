@@ -1,5 +1,5 @@
-# nxdo | 37f 5784L | yaml:7,txt:6,toml:1,shell:2,python:21 | 2026-09-19
-# generated in 0.01s
+# nxdo | 37f 5784L | yaml:7,txt:6,toml:1,shell:2,python:21 | 2026-09-20
+# generated in 0.00s
 # stats: 150 func | 0 cls | 37 mod | CC̄=3.4 | critical:0 | cycles:0
 # alerts[5]: fan-out cmd_auto=15; fan-out cmd_metrics=15; fan-out cmd_tickets=14; fan-out main=13; fan-out check_file=11
 # hotspots[5]: cmd_metrics fan=15; cmd_auto fan=15; cmd_tickets fan=14; main fan=13; cmd_print_context fan=11

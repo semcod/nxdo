@@ -1,5 +1,5 @@
-source: code2llm
-# generated in 0.02s
+source: koru-project-discovery
+# generated in 11.93s
 schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/semcod/nxdo
 tickets:
@@ -380,24 +380,25 @@ tickets:
   - scripts/check_import_layers.py
   dedupe_key: 'code2llm:smell:god_function:scripts/check_import_layers.py:70:God Function:
     resolve_import'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: sync_to_planfile'
-  description: 'code2llm reports `God Function: sync_to_planfile` in `src/nxdo/ticket_generator.py:190`.
-
-
-    Function ''sync_to_planfile'' is oversized: CC=8, fan-out=9, mutations=7.
-
-
-    Make the smallest refactor that removes the smell and run local tests.'
-  priority: normal
-  labels:
-  - llm-ready
-  - code2llm
-  - code-smell
-  - god-function
-  files:
-  - src/nxdo/ticket_generator.py
-  dedupe_key: 'code2llm:smell:god_function:src/nxdo/ticket_generator.py:190:God Function:
-    sync_to_planfile'
-applied: []
+applied:
+- 'Address code smell: God Function: _build_tree'
+- 'Address code smell: God Function: _file_hotspot'
+- 'Address code smell: God Function: _format_operations_for_llm'
+- 'Address code smell: God Function: _format_project_state_for_llm'
+- 'Address code smell: God Function: _get_commits_with_files'
+- 'Address code smell: God Function: _get_file_commits_with_info'
+- 'Address code smell: God Function: _load_project_state'
+- 'Address code smell: God Function: _remove_legacy_generated_todo_sections'
+- 'Address code smell: God Function: _resolve_name_and_description'
+- 'Address code smell: God Function: analyze_project'
+- 'Address code smell: God Function: check_file'
+- 'Address code smell: God Function: cmd_auto'
+- 'Address code smell: God Function: cmd_metrics'
+- 'Address code smell: God Function: cmd_print_context'
+- 'Address code smell: God Function: cmd_tickets'
+- 'Address code smell: God Function: generate_next_tasks'
+- 'Address code smell: God Function: get_coupling_clusters'
+- 'Address code smell: God Function: main'
+- 'Address code smell: God Function: render_plan'
+- 'Address code smell: God Function: resolve_import'
 skipped: []
