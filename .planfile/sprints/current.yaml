@@ -125,6 +125,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, user_prompt, self'
       outputs:
         artifacts: []
@@ -240,6 +241,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -473,6 +475,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: since, file_path, repo_path'
       outputs:
         artifacts: []
@@ -589,6 +592,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -814,6 +818,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: raw, project_name, model'
       outputs:
         artifacts: []
@@ -925,6 +930,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1148,6 +1154,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, extra_context, max_commits'
       outputs:
         artifacts: []
@@ -1263,6 +1270,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1482,6 +1490,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: user_prompt, self, project_name'
       outputs:
         artifacts: []
@@ -1592,6 +1601,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1806,6 +1816,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _format_project_state_for_llm'
       outputs:
         artifacts: []
@@ -1915,6 +1926,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2125,6 +2137,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, self, user_prompt'
       outputs:
         artifacts: []
@@ -2240,6 +2253,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2449,6 +2463,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo_path, file_path, since'
       outputs:
         artifacts: []
@@ -2563,6 +2578,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2760,6 +2776,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _load_project_state'
       outputs:
         artifacts: []
@@ -2873,6 +2890,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3075,6 +3093,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _resolve_name_and_description'
       outputs:
         artifacts: []
@@ -3184,6 +3203,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3374,6 +3394,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_auto'
       outputs:
         artifacts: []
@@ -3481,6 +3502,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3667,6 +3689,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _build_tree'
       outputs:
         artifacts: []
@@ -3774,6 +3797,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3956,6 +3980,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_print_context'
       outputs:
         artifacts: []
@@ -4063,6 +4088,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -4241,6 +4267,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: generate_next_tasks'
       outputs:
         artifacts: []
@@ -4348,6 +4375,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -4522,6 +4550,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: main'
       outputs:
         artifacts: []
@@ -4661,6 +4690,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: render_plan'
       outputs:
         artifacts: []
@@ -4768,6 +4798,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -5099,6 +5130,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: check_file'
       outputs:
         artifacts: []
@@ -5206,6 +5238,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -5340,6 +5373,7 @@ sprint:
       - scan
       - docs
       - cleanup
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
