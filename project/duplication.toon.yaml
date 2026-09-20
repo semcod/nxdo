@@ -1,9 +1,9 @@
-# redup/duplication | 0 groups | 17f 3213L | 2026-09-20
+# redup/duplication | 0 groups | 21f 3271L | 2026-09-20
 
 SUMMARY:
-  files_scanned: 17
-  total_lines:   3213
+  files_scanned: 21
+  total_lines:   3271
   dup_groups:    0
   dup_fragments: 0
   saved_lines:   0
-  scan_ms:       5107
+  scan_ms:       2350
