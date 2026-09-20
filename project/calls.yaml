@@ -5,167 +5,20 @@ stats:
   total_edges: 124
   modules_count: 15
 nodes:
-  nxdo.metrics.complexity._build_module_to_file:
-    name: _build_module_to_file
-    module: nxdo.metrics.complexity
-    line: 244
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 1
-  src.nxdo.git_reader._count_file_frequencies:
-    name: _count_file_frequencies
-    module: src.nxdo.git_reader
-    line: 124
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.providers.openai_compat.OpenAICompatProvider.generate_plan:
-    name: generate_plan
-    module: src.nxdo.providers.openai_compat
-    line: 155
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  src.nxdo.koru_context._load_operations:
-    name: _load_operations
-    module: src.nxdo.koru_context
-    line: 54
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  src.nxdo.providers.openai_compat.OpenAICompatProvider._http_error:
-    name: _http_error
-    module: src.nxdo.providers.openai_compat
-    line: 219
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 0
-  nxdo.metrics.complexity._calculate_fan_in:
-    name: _calculate_fan_in
-    module: nxdo.metrics.complexity
-    line: 267
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 1
-  src.nxdo.providers.openai_compat._parse_response:
-    name: _parse_response
-    module: src.nxdo.providers.openai_compat
-    line: 330
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 2
-  src.nxdo.project_analyzer._detect_stack:
-    name: _detect_stack
-    module: src.nxdo.project_analyzer
-    line: 155
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.cli._sync_todos_if_requested:
-    name: _sync_todos_if_requested
+  src.nxdo.cli.cmd_auto:
+    name: cmd_auto
     module: src.nxdo.cli
-    line: 145
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.koru_context.get_koru_system_prompt_extension:
-    name: get_koru_system_prompt_extension
+    line: 279
+    cyclomatic_complexity: 8
+    calls_out: 30
+    calls_in: 0
+  src.nxdo.koru_context._format_operations_for_llm:
+    name: _format_operations_for_llm
     module: src.nxdo.koru_context
-    line: 234
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 1
-  src.nxdo.providers.openai_compat.OpenAICompatProvider._call_api:
-    name: _call_api
-    module: src.nxdo.providers.openai_compat
-    line: 171
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 0
-  nxdo.metrics.complexity._read_text_or_empty:
-    name: _read_text_or_empty
-    module: nxdo.metrics.complexity
-    line: 236
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  src.nxdo.cli.cmd_print_context:
-    name: cmd_print_context
-    module: src.nxdo.cli
-    line: 99
-    cyclomatic_complexity: 2
-    calls_out: 14
-    calls_in: 0
-  src.nxdo.git_reader._parse_commits:
-    name: _parse_commits
-    module: src.nxdo.git_reader
-    line: 214
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 1
-  src.nxdo.ticket_generator._remove_managed_todo_blocks:
-    name: _remove_managed_todo_blocks
-    module: src.nxdo.ticket_generator
-    line: 126
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 1
-  scripts.check_import_layers.check_file:
-    name: check_file
-    module: scripts.check_import_layers
-    line: 93
-    cyclomatic_complexity: 11
-    calls_out: 15
-    calls_in: 1
-  src.nxdo.git_reader._get_git_todos:
-    name: _get_git_todos
-    module: src.nxdo.git_reader
-    line: 152
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  src.nxdo.providers.openai_compat.OpenAICompatProvider.__init__:
-    name: __init__
-    module: src.nxdo.providers.openai_compat
     line: 137
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 0
-  src.nxdo.providers.openai_compat._parse_tasks_from_data:
-    name: _parse_tasks_from_data
-    module: src.nxdo.providers.openai_compat
-    line: 322
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  nxdo.metrics.complexity._build_file_metrics:
-    name: _build_file_metrics
-    module: nxdo.metrics.complexity
-    line: 294
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  src.nxdo.output.render_plan:
-    name: render_plan
-    module: src.nxdo.output
-    line: 26
-    cyclomatic_complexity: 3
+    cyclomatic_complexity: 7
     calls_out: 14
     calls_in: 1
-  src.nxdo.metrics.hotspots._get_file_authors:
-    name: _get_file_authors
-    module: src.nxdo.metrics.hotspots
-    line: 194
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 2
-  src.nxdo.llm_client.build_user_prompt:
-    name: build_user_prompt
-    module: src.nxdo.llm_client
-    line: 36
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 3
   src.nxdo.project_analyzer._read_file_safely:
     name: _read_file_safely
     module: src.nxdo.project_analyzer
@@ -173,20 +26,27 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 1
     calls_in: 1
-  nxdo.metrics.complexity._calculate_cyclomatic_complexity:
-    name: _calculate_cyclomatic_complexity
-    module: nxdo.metrics.complexity
-    line: 82
-    cyclomatic_complexity: 5
-    calls_out: 5
+  src.nxdo.metrics.hotspots._file_hotspot:
+    name: _file_hotspot
+    module: src.nxdo.metrics.hotspots
+    line: 129
+    cyclomatic_complexity: 6
+    calls_out: 7
     calls_in: 1
-  src.nxdo.cli._export_yaml_if_requested:
-    name: _export_yaml_if_requested
-    module: src.nxdo.cli
-    line: 163
-    cyclomatic_complexity: 3
-    calls_out: 1
+  src.nxdo.project_analyzer._truncate_file_content:
+    name: _truncate_file_content
+    module: src.nxdo.project_analyzer
+    line: 90
+    cyclomatic_complexity: 2
+    calls_out: 2
     calls_in: 1
+  src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan:
+    name: generate_task_plan
+    module: src.nxdo.llm_client
+    line: 78
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
   scripts.check_import_layers.main:
     name: main
     module: scripts.check_import_layers
@@ -194,83 +54,20 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 12
     calls_in: 0
-  nxdo.metrics.complexity.collect_file_metrics:
-    name: collect_file_metrics
-    module: nxdo.metrics.complexity
-    line: 327
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 2
-  src.nxdo.cli.cmd_plan:
-    name: cmd_plan
-    module: src.nxdo.cli
-    line: 75
-    cyclomatic_complexity: 2
-    calls_out: 13
-    calls_in: 0
-  src.nxdo.cli._generate_plan:
-    name: _generate_plan
-    module: src.nxdo.cli
-    line: 40
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 4
-  src.nxdo.output._resolve_console:
-    name: _resolve_console
-    module: src.nxdo.output
-    line: 21
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 3
-  src.nxdo.ticket_generator._sync_todo_section:
-    name: _sync_todo_section
+  src.nxdo.ticket_generator._remove_generated_todo_sections:
+    name: _remove_generated_todo_sections
     module: src.nxdo.ticket_generator
-    line: 112
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 1
-  src.nxdo.planner.generate_next_tasks:
-    name: generate_next_tasks
-    module: src.nxdo.planner
-    line: 15
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 1
-  src.nxdo.providers.openai_compat._http_status_hint:
-    name: _http_status_hint
-    module: src.nxdo.providers.openai_compat
-    line: 129
+    line: 119
     cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  nxdo.metrics.complexity._iter_imported_modules:
-    name: _iter_imported_modules
-    module: nxdo.metrics.complexity
-    line: 166
-    cyclomatic_complexity: 5
-    calls_out: 6
-    calls_in: 1
-  src.nxdo.project_analyzer._resolve_name_and_description:
-    name: _resolve_name_and_description
-    module: src.nxdo.project_analyzer
-    line: 111
-    cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 1
-  src.nxdo.cli.cmd_print_prompt:
-    name: cmd_print_prompt
-    module: src.nxdo.cli
-    line: 118
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  src.nxdo.config.get_settings:
-    name: get_settings
-    module: src.nxdo.config
-    line: 39
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 6
+  src.nxdo.project_analyzer._visible_children:
+    name: _visible_children
+    module: src.nxdo.project_analyzer
+    line: 250
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
   src.nxdo.metrics.coupling._score_file_pairs:
     name: _score_file_pairs
     module: src.nxdo.metrics.coupling
@@ -285,88 +82,18 @@ nodes:
     cyclomatic_complexity: 13
     calls_out: 7
     calls_in: 1
-  src.nxdo.project_analyzer._parse_pyproject:
-    name: _parse_pyproject
+  src.nxdo.project_analyzer._parse_package_json:
+    name: _parse_package_json
     module: src.nxdo.project_analyzer
-    line: 196
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.nxdo.cli.cmd_auto:
-    name: cmd_auto
-    module: src.nxdo.cli
-    line: 279
-    cyclomatic_complexity: 8
-    calls_out: 30
-    calls_in: 0
-  src.nxdo.metrics.hotspots._author_summary:
-    name: _author_summary
-    module: src.nxdo.metrics.hotspots
-    line: 120
+    line: 203
     cyclomatic_complexity: 2
     calls_out: 4
     calls_in: 1
-  src.nxdo.output.render_context:
-    name: render_context
-    module: src.nxdo.output
-    line: 67
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  src.nxdo.project_analyzer.analyze_project:
-    name: analyze_project
-    module: src.nxdo.project_analyzer
-    line: 131
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 3
-  nxdo.metrics.complexity._classify_line:
-    name: _classify_line
-    module: nxdo.metrics.complexity
-    line: 64
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  src.nxdo.git_reader._get_git_commits:
-    name: _get_git_commits
+  src.nxdo.git_reader._get_git_todos:
+    name: _get_git_todos
     module: src.nxdo.git_reader
-    line: 109
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.nxdo.metrics.hotspots.identify_bug_hotspots:
-    name: identify_bug_hotspots
-    module: src.nxdo.metrics.hotspots
-    line: 163
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 2
-  src.nxdo.project_analyzer._should_ignore_entry:
-    name: _should_ignore_entry
-    module: src.nxdo.project_analyzer
-    line: 228
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.metrics.coupling._filtered_commit_files:
-    name: _filtered_commit_files
-    module: src.nxdo.metrics.coupling
-    line: 64
-    cyclomatic_complexity: 8
-    calls_out: 3
-    calls_in: 1
-  src.nxdo.llm_client.parse_task_plan_response:
-    name: parse_task_plan_response
-    module: src.nxdo.llm_client
-    line: 50
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  src.nxdo.project_analyzer._readme_summary:
-    name: _readme_summary
-    module: src.nxdo.project_analyzer
-    line: 220
-    cyclomatic_complexity: 4
+    line: 152
+    cyclomatic_complexity: 3
     calls_out: 3
     calls_in: 1
   src.nxdo.project_analyzer._get_tree_symbol:
@@ -376,75 +103,19 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 0
     calls_in: 2
-  src.nxdo.ticket_generator.sync_to_planfile:
-    name: sync_to_planfile
-    module: src.nxdo.ticket_generator
-    line: 190
-    cyclomatic_complexity: 8
-    calls_out: 13
+  src.nxdo.providers.openai_compat._extract_error_detail:
+    name: _extract_error_detail
+    module: src.nxdo.providers.openai_compat
+    line: 101
+    cyclomatic_complexity: 12
+    calls_out: 16
     calls_in: 1
-  src.nxdo.koru_context.build_koru_context:
-    name: build_koru_context
-    module: src.nxdo.koru_context
-    line: 193
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 1
-  nxdo.metrics.complexity._has_annotated_args:
-    name: _has_annotated_args
-    module: nxdo.metrics.complexity
-    line: 196
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  nxdo.metrics.complexity._analyze_types:
-    name: _analyze_types
-    module: nxdo.metrics.complexity
-    line: 211
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 1
-  src.nxdo.metrics.hotspots.calculate_bus_factor:
-    name: calculate_bus_factor
-    module: src.nxdo.metrics.hotspots
-    line: 211
-    cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 2
-  src.nxdo.git_reader._should_include_todo_line:
-    name: _should_include_todo_line
+  src.nxdo.git_reader._is_git_repo:
+    name: _is_git_repo
     module: src.nxdo.git_reader
-    line: 252
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  nxdo.metrics.complexity._classify_import:
-    name: _classify_import
-    module: nxdo.metrics.complexity
-    line: 173
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 1
-  src.nxdo.project_analyzer._check_pattern_match:
-    name: _check_pattern_match
-    module: src.nxdo.project_analyzer
-    line: 147
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  src.nxdo.providers.openai_compat._extract_content:
-    name: _extract_content
-    module: src.nxdo.providers.openai_compat
-    line: 252
-    cyclomatic_complexity: 2
+    line: 99
+    cyclomatic_complexity: 1
     calls_out: 2
-    calls_in: 1
-  src.nxdo.providers.openai_compat._create_task_from_dict:
-    name: _create_task_from_dict
-    module: src.nxdo.providers.openai_compat
-    line: 295
-    cyclomatic_complexity: 6
-    calls_out: 20
     calls_in: 1
   examples.check-examples.print:
     name: print
@@ -453,104 +124,6 @@ nodes:
     cyclomatic_complexity: 0
     calls_out: 0
     calls_in: 9
-  nxdo.metrics.complexity._find_source_files:
-    name: _find_source_files
-    module: nxdo.metrics.complexity
-    line: 285
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.ticket_generator._todo_task_lines:
-    name: _todo_task_lines
-    module: src.nxdo.ticket_generator
-    line: 89
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 1
-  src.nxdo.ticket_generator._map_priority:
-    name: _map_priority
-    module: src.nxdo.ticket_generator
-    line: 50
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 4
-  src.nxdo.git_reader._finalize_commit:
-    name: _finalize_commit
-    module: src.nxdo.git_reader
-    line: 204
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  src.nxdo.project_analyzer._push_tree_children:
-    name: _push_tree_children
-    module: src.nxdo.project_analyzer
-    line: 259
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 2
-  nxdo.metrics.complexity._iter_matched_imports:
-    name: _iter_matched_imports
-    module: nxdo.metrics.complexity
-    line: 258
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 1
-  scripts.check_import_layers.module_name:
-    name: module_name
-    module: scripts.check_import_layers
-    line: 62
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 2
-  src.nxdo.project_analyzer._parse_pyproject_regex:
-    name: _parse_pyproject_regex
-    module: src.nxdo.project_analyzer
-    line: 186
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.cli.cmd_metrics:
-    name: cmd_metrics
-    module: src.nxdo.cli
-    line: 219
-    cyclomatic_complexity: 11
-    calls_out: 33
-    calls_in: 0
-  src.nxdo.providers.openai_compat._parse_json_response:
-    name: _parse_json_response
-    module: src.nxdo.providers.openai_compat
-    line: 280
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  nxdo.metrics.complexity._function_has_annotations:
-    name: _function_has_annotations
-    module: nxdo.metrics.complexity
-    line: 206
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  src.nxdo.providers.openai_compat._strip_markdown_fences:
-    name: _strip_markdown_fences
-    module: src.nxdo.providers.openai_compat
-    line: 272
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.git_reader._get_file_frequency:
-    name: _get_file_frequency
-    module: src.nxdo.git_reader
-    line: 142
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.nxdo.ticket_generator.task_plan_to_tickets:
-    name: task_plan_to_tickets
-    module: src.nxdo.ticket_generator
-    line: 21
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 2
   src.nxdo.git_reader._parse_commit_metadata:
     name: _parse_commit_metadata
     module: src.nxdo.git_reader
@@ -558,124 +131,12 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 2
     calls_in: 1
-  src.nxdo.ticket_generator.sync_to_todo_md:
-    name: sync_to_todo_md
-    module: src.nxdo.ticket_generator
-    line: 60
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  src.nxdo.project_analyzer._parse_package_json:
-    name: _parse_package_json
+  src.nxdo.project_analyzer._resolve_name_and_description:
+    name: _resolve_name_and_description
     module: src.nxdo.project_analyzer
-    line: 203
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.ticket_generator._remove_legacy_generated_todo_sections:
-    name: _remove_legacy_generated_todo_sections
-    module: src.nxdo.ticket_generator
-    line: 142
-    cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.koru_context._format_project_state_for_llm:
-    name: _format_project_state_for_llm
-    module: src.nxdo.koru_context
-    line: 163
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 1
-  src.nxdo.git_reader.read_git_context:
-    name: read_git_context
-    module: src.nxdo.git_reader
-    line: 170
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 3
-  src.nxdo.ticket_generator._ensure_planfile_installed:
-    name: _ensure_planfile_installed
-    module: src.nxdo.ticket_generator
-    line: 164
+    line: 111
     cyclomatic_complexity: 3
     calls_out: 5
-    calls_in: 1
-  src.nxdo.metrics.hotspots._file_hotspot:
-    name: _file_hotspot
-    module: src.nxdo.metrics.hotspots
-    line: 129
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 1
-  nxdo.metrics.complexity._analyze_imports:
-    name: _analyze_imports
-    module: nxdo.metrics.complexity
-    line: 182
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  src.nxdo.cli._sync_planfile_if_requested:
-    name: _sync_planfile_if_requested
-    module: src.nxdo.cli
-    line: 154
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 2
-  src.nxdo.metrics.hotspots._get_file_commits_with_info:
-    name: _get_file_commits_with_info
-    module: src.nxdo.metrics.hotspots
-    line: 32
-    cyclomatic_complexity: 14
-    calls_out: 13
-    calls_in: 1
-  src.nxdo.providers.openai_compat.OpenAICompatProvider._build_system_prompt:
-    name: _build_system_prompt
-    module: src.nxdo.providers.openai_compat
-    line: 183
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 0
-  src.nxdo.git_reader._format_file_summary:
-    name: _format_file_summary
-    module: src.nxdo.git_reader
-    line: 134
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.nxdo.git_reader._create_empty_context:
-    name: _create_empty_context
-    module: src.nxdo.git_reader
-    line: 158
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  src.nxdo.ticket_generator.export_to_planfile_yaml:
-    name: export_to_planfile_yaml
-    module: src.nxdo.ticket_generator
-    line: 246
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.metrics.hotspots._resolve_target_files:
-    name: _resolve_target_files
-    module: src.nxdo.metrics.hotspots
-    line: 101
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 2
-  src.nxdo.git_reader._filter_git_paths:
-    name: _filter_git_paths
-    module: src.nxdo.git_reader
-    line: 234
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 1
-  src.nxdo.git_reader._create_commit_info:
-    name: _create_commit_info
-    module: src.nxdo.git_reader
-    line: 199
-    cyclomatic_complexity: 1
-    calls_out: 2
     calls_in: 1
   src.nxdo.ticket_generator._build_todo_section:
     name: _build_todo_section
@@ -684,18 +145,312 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 3
     calls_in: 1
-  src.nxdo.cli._display_tickets:
-    name: _display_tickets
+  src.nxdo.git_reader._should_ignore_git_path:
+    name: _should_ignore_git_path
+    module: src.nxdo.git_reader
+    line: 239
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 3
+  src.nxdo.cli.cmd_print_prompt:
+    name: cmd_print_prompt
     module: src.nxdo.cli
-    line: 176
+    line: 118
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
+  src.nxdo.cli._generate_plan:
+    name: _generate_plan
+    module: src.nxdo.cli
+    line: 40
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 4
+  src.nxdo.providers.openai_compat._parse_tasks_from_data:
+    name: _parse_tasks_from_data
+    module: src.nxdo.providers.openai_compat
+    line: 322
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.project_analyzer._readme_summary:
+    name: _readme_summary
+    module: src.nxdo.project_analyzer
+    line: 220
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  src.nxdo.koru_context._load_project_state:
+    name: _load_project_state
+    module: src.nxdo.koru_context
+    line: 75
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 1
+  src.nxdo.koru_context.build_koru_context:
+    name: build_koru_context
+    module: src.nxdo.koru_context
+    line: 193
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  src.nxdo.ticket_generator.export_to_planfile_yaml:
+    name: export_to_planfile_yaml
+    module: src.nxdo.ticket_generator
+    line: 246
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.git_reader._get_git_commits:
+    name: _get_git_commits
+    module: src.nxdo.git_reader
+    line: 109
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  src.nxdo.metrics.coupling._get_commits_with_files:
+    name: _get_commits_with_files
+    module: src.nxdo.metrics.coupling
+    line: 22
+    cyclomatic_complexity: 13
+    calls_out: 13
+    calls_in: 1
+  src.nxdo.project_analyzer._parse_cargo:
+    name: _parse_cargo
+    module: src.nxdo.project_analyzer
+    line: 211
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.metrics.hotspots._get_file_authors:
+    name: _get_file_authors
+    module: src.nxdo.metrics.hotspots
+    line: 194
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 2
+  src.nxdo.metrics.hotspots.identify_bug_hotspots:
+    name: identify_bug_hotspots
+    module: src.nxdo.metrics.hotspots
+    line: 163
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 2
+  nxdo.metrics.complexity._iter_matched_imports:
+    name: _iter_matched_imports
+    module: nxdo.metrics.complexity
+    line: 258
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 1
+  src.nxdo.output.render_context:
+    name: render_context
+    module: src.nxdo.output
+    line: 67
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  nxdo.metrics.complexity._build_file_metrics:
+    name: _build_file_metrics
+    module: nxdo.metrics.complexity
+    line: 294
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
+  src.nxdo.metrics.hotspots._resolve_target_files:
+    name: _resolve_target_files
+    module: src.nxdo.metrics.hotspots
+    line: 101
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 2
+  nxdo.metrics.complexity._function_has_annotations:
+    name: _function_has_annotations
+    module: nxdo.metrics.complexity
+    line: 206
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.nxdo.cli._sync_todos_if_requested:
+    name: _sync_todos_if_requested
+    module: src.nxdo.cli
+    line: 145
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  nxdo.metrics.complexity.collect_file_metrics:
+    name: collect_file_metrics
+    module: nxdo.metrics.complexity
+    line: 327
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 2
+  src.nxdo.git_reader._create_commit_info:
+    name: _create_commit_info
+    module: src.nxdo.git_reader
+    line: 199
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  src.nxdo.output.render_plan:
+    name: render_plan
+    module: src.nxdo.output
+    line: 26
+    cyclomatic_complexity: 3
+    calls_out: 14
+    calls_in: 1
+  src.nxdo.ticket_generator._remove_managed_todo_blocks:
+    name: _remove_managed_todo_blocks
+    module: src.nxdo.ticket_generator
+    line: 126
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  src.nxdo.metrics.hotspots._get_file_commits_with_info:
+    name: _get_file_commits_with_info
+    module: src.nxdo.metrics.hotspots
+    line: 32
+    cyclomatic_complexity: 14
+    calls_out: 13
+    calls_in: 1
+  src.nxdo.ticket_generator._todo_task_lines:
+    name: _todo_task_lines
+    module: src.nxdo.ticket_generator
+    line: 89
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 1
+  nxdo.metrics.complexity._calculate_fan_in:
+    name: _calculate_fan_in
+    module: nxdo.metrics.complexity
+    line: 267
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  src.nxdo.koru_context._format_project_state_for_llm:
+    name: _format_project_state_for_llm
+    module: src.nxdo.koru_context
+    line: 163
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 1
+  nxdo.metrics.complexity._build_module_to_file:
+    name: _build_module_to_file
+    module: nxdo.metrics.complexity
+    line: 244
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 1
+  src.nxdo.project_analyzer._parse_pyproject:
+    name: _parse_pyproject
+    module: src.nxdo.project_analyzer
+    line: 196
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.nxdo.metrics.hotspots.get_critical_bus_factor_files:
+    name: get_critical_bus_factor_files
+    module: src.nxdo.metrics.hotspots
+    line: 243
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 0
+  nxdo.metrics.complexity._classify_line:
+    name: _classify_line
+    module: nxdo.metrics.complexity
+    line: 64
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  src.nxdo.git_reader._count_file_frequencies:
+    name: _count_file_frequencies
+    module: src.nxdo.git_reader
+    line: 124
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.project_analyzer._push_tree_children:
+    name: _push_tree_children
+    module: src.nxdo.project_analyzer
+    line: 259
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 2
+  src.nxdo.metrics.coupling.collect_coupling_matrix:
+    name: collect_coupling_matrix
+    module: src.nxdo.metrics.coupling
+    line: 105
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 1
+  src.nxdo.providers.openai_compat.OpenAICompatProvider.generate_plan:
+    name: generate_plan
+    module: src.nxdo.providers.openai_compat
+    line: 155
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  src.nxdo.ticket_generator._sync_todo_section:
+    name: _sync_todo_section
+    module: src.nxdo.ticket_generator
+    line: 112
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 1
+  src.nxdo.ticket_generator._ensure_planfile_installed:
+    name: _ensure_planfile_installed
+    module: src.nxdo.ticket_generator
+    line: 164
     cyclomatic_complexity: 3
     calls_out: 5
     calls_in: 1
-  src.nxdo.git_reader._is_git_repo:
-    name: _is_git_repo
+  nxdo.metrics.complexity._count_lines:
+    name: _count_lines
+    module: nxdo.metrics.complexity
+    line: 72
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.git_reader._filter_git_paths:
+    name: _filter_git_paths
     module: src.nxdo.git_reader
-    line: 99
-    cyclomatic_complexity: 1
+    line: 234
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  src.nxdo.git_reader.read_git_context:
+    name: read_git_context
+    module: src.nxdo.git_reader
+    line: 170
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 3
+  nxdo.metrics.complexity._calculate_cyclomatic_complexity:
+    name: _calculate_cyclomatic_complexity
+    module: nxdo.metrics.complexity
+    line: 82
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  src.nxdo.ticket_generator.sync_to_planfile:
+    name: sync_to_planfile
+    module: src.nxdo.ticket_generator
+    line: 190
+    cyclomatic_complexity: 8
+    calls_out: 13
+    calls_in: 1
+  src.nxdo.git_reader._parse_commits:
+    name: _parse_commits
+    module: src.nxdo.git_reader
+    line: 214
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  src.nxdo.git_reader._format_file_summary:
+    name: _format_file_summary
+    module: src.nxdo.git_reader
+    line: 134
+    cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 1
   src.nxdo.project_analyzer._parse_pyproject_tomllib:
@@ -705,18 +460,32 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 5
     calls_in: 1
-  src.nxdo.git_reader._should_ignore_git_path:
-    name: _should_ignore_git_path
-    module: src.nxdo.git_reader
-    line: 239
-    cyclomatic_complexity: 5
+  src.nxdo.cli._display_tickets:
+    name: _display_tickets
+    module: src.nxdo.cli
+    line: 176
+    cyclomatic_complexity: 3
     calls_out: 5
+    calls_in: 1
+  src.nxdo.config.get_settings:
+    name: get_settings
+    module: src.nxdo.config
+    line: 39
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 6
+  src.nxdo.llm_client.build_user_prompt:
+    name: build_user_prompt
+    module: src.nxdo.llm_client
+    line: 36
+    cyclomatic_complexity: 3
+    calls_out: 1
     calls_in: 3
-  src.nxdo.output.render_plan_json:
-    name: render_plan_json
-    module: src.nxdo.output
-    line: 62
-    cyclomatic_complexity: 1
+  src.nxdo.ticket_generator._remove_legacy_generated_todo_sections:
+    name: _remove_legacy_generated_todo_sections
+    module: src.nxdo.ticket_generator
+    line: 142
+    cyclomatic_complexity: 6
     calls_out: 4
     calls_in: 1
   src.nxdo.git_reader._run_git_command:
@@ -726,6 +495,258 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 1
     calls_in: 2
+  src.nxdo.providers.openai_compat._http_status_hint:
+    name: _http_status_hint
+    module: src.nxdo.providers.openai_compat
+    line: 129
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.nxdo.koru_context._load_operations:
+    name: _load_operations
+    module: src.nxdo.koru_context
+    line: 54
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  src.nxdo.providers.openai_compat.OpenAICompatProvider._call_api:
+    name: _call_api
+    module: src.nxdo.providers.openai_compat
+    line: 171
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  scripts.check_import_layers.check_file:
+    name: check_file
+    module: scripts.check_import_layers
+    line: 93
+    cyclomatic_complexity: 11
+    calls_out: 15
+    calls_in: 1
+  src.nxdo.providers.openai_compat._parse_response:
+    name: _parse_response
+    module: src.nxdo.providers.openai_compat
+    line: 330
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 2
+  src.nxdo.cli.cmd_plan:
+    name: cmd_plan
+    module: src.nxdo.cli
+    line: 75
+    cyclomatic_complexity: 2
+    calls_out: 13
+    calls_in: 0
+  src.nxdo.ticket_generator.task_plan_to_tickets:
+    name: task_plan_to_tickets
+    module: src.nxdo.ticket_generator
+    line: 21
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 2
+  src.nxdo.output.render_plan_json:
+    name: render_plan_json
+    module: src.nxdo.output
+    line: 62
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.ticket_generator._map_priority:
+    name: _map_priority
+    module: src.nxdo.ticket_generator
+    line: 50
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 4
+  nxdo.metrics.complexity._classify_import:
+    name: _classify_import
+    module: nxdo.metrics.complexity
+    line: 173
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  nxdo.metrics.complexity._analyze_types:
+    name: _analyze_types
+    module: nxdo.metrics.complexity
+    line: 211
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  src.nxdo.providers.openai_compat.OpenAICompatProvider.__init__:
+    name: __init__
+    module: src.nxdo.providers.openai_compat
+    line: 137
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 0
+  src.nxdo.ticket_generator.sync_to_todo_md:
+    name: sync_to_todo_md
+    module: src.nxdo.ticket_generator
+    line: 60
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  src.nxdo.providers.openai_compat._create_task_from_dict:
+    name: _create_task_from_dict
+    module: src.nxdo.providers.openai_compat
+    line: 295
+    cyclomatic_complexity: 6
+    calls_out: 20
+    calls_in: 1
+  src.nxdo.metrics.hotspots._author_summary:
+    name: _author_summary
+    module: src.nxdo.metrics.hotspots
+    line: 120
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.cli.cmd_print_context:
+    name: cmd_print_context
+    module: src.nxdo.cli
+    line: 99
+    cyclomatic_complexity: 2
+    calls_out: 14
+    calls_in: 0
+  src.nxdo.cli._render_prompt_text:
+    name: _render_prompt_text
+    module: src.nxdo.cli
+    line: 66
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 2
+  src.nxdo.project_analyzer._parse_pyproject_regex:
+    name: _parse_pyproject_regex
+    module: src.nxdo.project_analyzer
+    line: 186
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.git_reader._should_include_todo_line:
+    name: _should_include_todo_line
+    module: src.nxdo.git_reader
+    line: 252
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  src.nxdo.llm_client.parse_task_plan_response:
+    name: parse_task_plan_response
+    module: src.nxdo.llm_client
+    line: 50
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.nxdo.providers.openai_compat._parse_json_response:
+    name: _parse_json_response
+    module: src.nxdo.providers.openai_compat
+    line: 280
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  nxdo.metrics.complexity._analyze_imports:
+    name: _analyze_imports
+    module: nxdo.metrics.complexity
+    line: 182
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  src.nxdo.git_reader._create_empty_context:
+    name: _create_empty_context
+    module: src.nxdo.git_reader
+    line: 158
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  src.nxdo.metrics.coupling._filtered_commit_files:
+    name: _filtered_commit_files
+    module: src.nxdo.metrics.coupling
+    line: 64
+    cyclomatic_complexity: 8
+    calls_out: 3
+    calls_in: 1
+  src.nxdo.providers.openai_compat.OpenAICompatProvider._http_error:
+    name: _http_error
+    module: src.nxdo.providers.openai_compat
+    line: 219
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 0
+  src.nxdo.project_analyzer._collect_file_contents:
+    name: _collect_file_contents
+    module: src.nxdo.project_analyzer
+    line: 97
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  nxdo.metrics.complexity._read_text_or_empty:
+    name: _read_text_or_empty
+    module: nxdo.metrics.complexity
+    line: 236
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  src.nxdo.output._resolve_console:
+    name: _resolve_console
+    module: src.nxdo.output
+    line: 21
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 3
+  scripts.check_import_layers.module_name:
+    name: module_name
+    module: scripts.check_import_layers
+    line: 62
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 2
+  src.nxdo.providers.openai_compat._strip_markdown_fences:
+    name: _strip_markdown_fences
+    module: src.nxdo.providers.openai_compat
+    line: 272
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  nxdo.metrics.complexity._has_annotated_args:
+    name: _has_annotated_args
+    module: nxdo.metrics.complexity
+    line: 196
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  src.nxdo.ticket_generator._resolve_todo_path:
+    name: _resolve_todo_path
+    module: src.nxdo.ticket_generator
+    line: 80
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 1
+  src.nxdo.project_analyzer._should_ignore_entry:
+    name: _should_ignore_entry
+    module: src.nxdo.project_analyzer
+    line: 228
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  nxdo.metrics.complexity._iter_imported_modules:
+    name: _iter_imported_modules
+    module: nxdo.metrics.complexity
+    line: 166
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  src.nxdo.providers.openai_compat.OpenAICompatProvider._build_system_prompt:
+    name: _build_system_prompt
+    module: src.nxdo.providers.openai_compat
+    line: 183
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 0
+  src.nxdo.providers.openai_compat._extract_content:
+    name: _extract_content
+    module: src.nxdo.providers.openai_compat
+    line: 252
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
   src.nxdo.cli._get_priority_emoji:
     name: _get_priority_emoji
     module: src.nxdo.cli
@@ -733,60 +754,18 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 1
     calls_in: 1
-  src.nxdo.project_analyzer._parse_cargo:
-    name: _parse_cargo
-    module: src.nxdo.project_analyzer
-    line: 211
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.nxdo.metrics.hotspots._get_bug_fix_commits:
-    name: _get_bug_fix_commits
-    module: src.nxdo.metrics.hotspots
-    line: 77
-    cyclomatic_complexity: 6
-    calls_out: 5
-    calls_in: 1
+  src.nxdo.cli.cmd_metrics:
+    name: cmd_metrics
+    module: src.nxdo.cli
+    line: 219
+    cyclomatic_complexity: 11
+    calls_out: 33
+    calls_in: 0
   src.nxdo.project_analyzer._build_tree:
     name: _build_tree
     module: src.nxdo.project_analyzer
     line: 276
     cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
-  src.nxdo.metrics.coupling._get_commits_with_files:
-    name: _get_commits_with_files
-    module: src.nxdo.metrics.coupling
-    line: 22
-    cyclomatic_complexity: 13
-    calls_out: 13
-    calls_in: 1
-  src.nxdo.koru_context._load_project_state:
-    name: _load_project_state
-    module: src.nxdo.koru_context
-    line: 75
-    cyclomatic_complexity: 6
-    calls_out: 12
-    calls_in: 1
-  src.nxdo.providers.openai_compat._extract_error_detail:
-    name: _extract_error_detail
-    module: src.nxdo.providers.openai_compat
-    line: 101
-    cyclomatic_complexity: 12
-    calls_out: 16
-    calls_in: 1
-  src.nxdo.koru_context._format_operations_for_llm:
-    name: _format_operations_for_llm
-    module: src.nxdo.koru_context
-    line: 137
-    cyclomatic_complexity: 7
-    calls_out: 14
-    calls_in: 1
-  src.nxdo.metrics.coupling.collect_coupling_matrix:
-    name: collect_coupling_matrix
-    module: src.nxdo.metrics.coupling
-    line: 105
-    cyclomatic_complexity: 7
     calls_out: 7
     calls_in: 1
   src.nxdo.git_reader._run:
@@ -796,68 +775,89 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 2
     calls_in: 5
-  src.nxdo.ticket_generator._remove_generated_todo_sections:
-    name: _remove_generated_todo_sections
-    module: src.nxdo.ticket_generator
-    line: 119
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  src.nxdo.llm_client.OpenAICompatibleLLMClient.generate_task_plan:
-    name: generate_task_plan
-    module: src.nxdo.llm_client
-    line: 78
-    cyclomatic_complexity: 1
+  src.nxdo.metrics.hotspots.calculate_bus_factor:
+    name: calculate_bus_factor
+    module: src.nxdo.metrics.hotspots
+    line: 211
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 2
+  src.nxdo.project_analyzer._check_pattern_match:
+    name: _check_pattern_match
+    module: src.nxdo.project_analyzer
+    line: 147
+    cyclomatic_complexity: 2
     calls_out: 3
-    calls_in: 0
-  src.nxdo.ticket_generator._resolve_todo_path:
-    name: _resolve_todo_path
-    module: src.nxdo.ticket_generator
-    line: 80
+    calls_in: 1
+  src.nxdo.koru_context.get_koru_system_prompt_extension:
+    name: get_koru_system_prompt_extension
+    module: src.nxdo.koru_context
+    line: 234
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  src.nxdo.git_reader._finalize_commit:
+    name: _finalize_commit
+    module: src.nxdo.git_reader
+    line: 204
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  src.nxdo.project_analyzer._detect_stack:
+    name: _detect_stack
+    module: src.nxdo.project_analyzer
+    line: 155
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.nxdo.cli._export_yaml_if_requested:
+    name: _export_yaml_if_requested
+    module: src.nxdo.cli
+    line: 163
     cyclomatic_complexity: 3
     calls_out: 1
     calls_in: 1
-  src.nxdo.project_analyzer._collect_file_contents:
-    name: _collect_file_contents
-    module: src.nxdo.project_analyzer
-    line: 97
-    cyclomatic_complexity: 4
+  src.nxdo.planner.generate_next_tasks:
+    name: generate_next_tasks
+    module: src.nxdo.planner
+    line: 15
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 1
+  src.nxdo.git_reader._get_file_frequency:
+    name: _get_file_frequency
+    module: src.nxdo.git_reader
+    line: 142
+    cyclomatic_complexity: 1
     calls_out: 3
     calls_in: 1
-  src.nxdo.cli._render_prompt_text:
-    name: _render_prompt_text
+  src.nxdo.cli._sync_planfile_if_requested:
+    name: _sync_planfile_if_requested
     module: src.nxdo.cli
-    line: 66
-    cyclomatic_complexity: 1
-    calls_out: 6
+    line: 154
+    cyclomatic_complexity: 3
+    calls_out: 3
     calls_in: 2
-  src.nxdo.metrics.hotspots.get_critical_bus_factor_files:
-    name: get_critical_bus_factor_files
-    module: src.nxdo.metrics.hotspots
-    line: 243
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 0
-  src.nxdo.project_analyzer._visible_children:
-    name: _visible_children
+  src.nxdo.project_analyzer.analyze_project:
+    name: analyze_project
     module: src.nxdo.project_analyzer
-    line: 250
-    cyclomatic_complexity: 4
+    line: 131
+    cyclomatic_complexity: 1
     calls_out: 5
-    calls_in: 1
-  src.nxdo.project_analyzer._truncate_file_content:
-    name: _truncate_file_content
-    module: src.nxdo.project_analyzer
-    line: 90
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  nxdo.metrics.complexity._count_lines:
-    name: _count_lines
+    calls_in: 3
+  nxdo.metrics.complexity._find_source_files:
+    name: _find_source_files
     module: nxdo.metrics.complexity
-    line: 72
-    cyclomatic_complexity: 2
+    line: 285
+    cyclomatic_complexity: 5
     calls_out: 4
+    calls_in: 1
+  src.nxdo.metrics.hotspots._get_bug_fix_commits:
+    name: _get_bug_fix_commits
+    module: src.nxdo.metrics.hotspots
+    line: 77
+    cyclomatic_complexity: 6
+    calls_out: 5
     calls_in: 1
 edges:
 - caller: src.nxdo.cli._generate_plan
