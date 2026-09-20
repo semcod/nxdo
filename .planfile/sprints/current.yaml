@@ -5884,3 +5884,96 @@ sprint:
       status: open
       sync: {}
       updated_at: '2026-09-19T21:20:22.558690Z'
+    PLF-204:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-20T07:18:33.534222Z'
+      description: 'code2llm project/analysis.toon.yaml COUPLING reports: SMELL src.nxdo/
+        fan-out=8 -> split needed. The root src/nxdo/__init__.py eagerly imports from
+        7 submodules (config, git_reader, llm_client, models, planner, project_analyzer,
+        providers), so any ''import nxdo'' loads the whole dependency web including
+        the legacy llm_client compatibility shim. Make the smallest architecture refactor
+        that removes the smell (e.g. PEP 562 module-level __getattr__ lazy re-exports,
+        or trim the re-export surface) while keeping the public API in __all__ stable.
+        Run local tests (pytest, ruff, mypy).'
+      dsl: SODL/1 id=evt_3d30097692a5cbc5b59f3955 event_hash=e9784a7b51d13b9357fe7c32df2caa435236bb44745417d9430f231230af0f56
+        timestamp=2026-09-20T07%3A18%3A33.534222%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-204 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-204%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-204 causation_id=- input_hash=b13ccc191e283c09b8d107aff519c16c2568776b7692554dc572426de902e91b
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMjBUMDc6MTg6MzMuNTM0MjIyWiIsImRlc2NyaXB0aW9uIjoiY29kZTJsbG0gcHJvamVjdC9hbmFseXNpcy50b29uLnlhbWwgQ09VUExJTkcgcmVwb3J0czogU01FTEwgc3JjLm54ZG8vIGZhbi1vdXQ9OCAtPiBzcGxpdCBuZWVkZWQuIFRoZSByb290IHNyYy9ueGRvL19faW5pdF9fLnB5IGVhZ2VybHkgaW1wb3J0cyBmcm9tIDcgc3VibW9kdWxlcyAoY29uZmlnLCBnaXRfcmVhZGVyLCBsbG1fY2xpZW50LCBtb2RlbHMsIHBsYW5uZXIsIHByb2plY3RfYW5hbHl6ZXIsIHByb3ZpZGVycyksIHNvIGFueSAnaW1wb3J0IG54ZG8nIGxvYWRzIHRoZSB3aG9sZSBkZXBlbmRlbmN5IHdlYiBpbmNsdWRpbmcgdGhlIGxlZ2FjeSBsbG1fY2xpZW50IGNvbXBhdGliaWxpdHkgc2hpbS4gTWFrZSB0aGUgc21hbGxlc3QgYXJjaGl0ZWN0dXJlIHJlZmFjdG9yIHRoYXQgcmVtb3ZlcyB0aGUgc21lbGwgKGUuZy4gUEVQIDU2MiBtb2R1bGUtbGV2ZWwgX19nZXRhdHRyX18gbGF6eSByZS1leHBvcnRzLCBvciB0cmltIHRoZSByZS1leHBvcnQgc3VyZmFjZSkgd2hpbGUga2VlcGluZyB0aGUgcHVibGljIEFQSSBpbiBfX2FsbF9fIHN0YWJsZS4gUnVuIGxvY2FsIHRlc3RzIChweXRlc3QsIHJ1ZmYsIG15cHkpLiIsImZpbGVzIjpbInNyYy9ueGRvL19faW5pdF9fLnB5Il0sImlkIjoiUExGLTIwNCIsImxhYmVscyI6WyJjb2RlMmxsbSIsImFyY2hpdGVjdHVyZSIsImNvdXBsaW5nIiwibGxtLXJlYWR5Il0sIm5hbWUiOiJTcGxpdCBzcmMubnhkbyByb290IHBhY2thZ2UgZmFuLW91dCAoOCkgdmlhIGxhenkgcmUtZXhwb3J0cyIsInByaW9yaXR5Ijoibm9ybWFsIiwic291cmNlIjp7ImNvbnRleHQiOnt9LCJ0aW1lc3RhbXAiOiIyMDI2LTA5LTIwVDA3OjE4OjMzLjUyNTQ4MloiLCJ0b29sIjoia29ydS1zY2FuIn0sInNwcmludCI6ImN1cnJlbnQiLCJzdGF0dXMiOiJvcGVuIiwic3luYyI6e30sInVwZGF0ZWRfYXQiOiIyMDI2LTA5LTIwVDA3OjE4OjMzLjUzNDIyN1oifX0
+      files:
+      - src/nxdo/__init__.py
+      history: []
+      id: PLF-204
+      labels:
+      - code2llm
+      - architecture
+      - coupling
+      - llm-ready
+      name: Split src.nxdo root package fan-out (8) via lazy re-exports
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-20T07:18:33.525482Z'
+        tool: koru-scan
+      sprint: current
+      status: open
+      sync: {}
+      updated_at: '2026-09-20T07:18:33.534227Z'
+    PLF-205:
+      acceptance_criteria: []
+      blocked_by: []
+      blocks: []
+      children: []
+      contract_version: planfile.ticket/v1
+      created_at: '2026-09-20T07:18:38.959961Z'
+      description: 'project/duplication.toon.yaml reports 2 duplication groups (dup_groups=2,
+        6 recoverable lines, METRICS-TARGET 2 -> 0): [398e7fc98c20a6ea] ''_get_git_branch''
+        vs ''_get_git_remote'' structural 3-line blocks at src/nxdo/git_reader.py:109-116
+        (sim=1.00), and [dba932c7fb158cc5] ''_get_connector'' vs ''_get_extension''
+        at src/nxdo/project_analyzer.py:245-252 (sim=1.00). Extract the shared helper
+        per redup''s extract_function suggestion in each file, then re-run ''redup
+        scan .'' to confirm dup_groups=0. Run local tests (pytest, ruff, mypy).'
+      dsl: SODL/1 id=evt_ea236e1151a24858f25d0073 event_hash=98151cae723ff1cea1be99c28a2fc1c317403839660693f4800cfd8ea2e0c545
+        timestamp=2026-09-20T07%3A18%3A38.959961%2B00%3A00 kind=task source=planfile.ticket
+        ticket_id=PLF-205 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-205%2Fcommand%2Fcreate
+        mode=apply status=open correlation_id=PLF-205 causation_id=- input_hash=4c1731d4241095221c7c5f0ff2f435c6194146cfd467b56e5518370816991f53
+        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMjBUMDc6MTg6MzguOTU5OTYxWiIsImRlc2NyaXB0aW9uIjoicHJvamVjdC9kdXBsaWNhdGlvbi50b29uLnlhbWwgcmVwb3J0cyAyIGR1cGxpY2F0aW9uIGdyb3VwcyAoZHVwX2dyb3Vwcz0yLCA2IHJlY292ZXJhYmxlIGxpbmVzLCBNRVRSSUNTLVRBUkdFVCAyIC0-IDApOiBbMzk4ZTdmYzk4YzIwYTZlYV0gJ19nZXRfZ2l0X2JyYW5jaCcgdnMgJ19nZXRfZ2l0X3JlbW90ZScgc3RydWN0dXJhbCAzLWxpbmUgYmxvY2tzIGF0IHNyYy9ueGRvL2dpdF9yZWFkZXIucHk6MTA5LTExNiAoc2ltPTEuMDApLCBhbmQgW2RiYTkzMmM3ZmIxNThjYzVdICdfZ2V0X2Nvbm5lY3RvcicgdnMgJ19nZXRfZXh0ZW5zaW9uJyBhdCBzcmMvbnhkby9wcm9qZWN0X2FuYWx5emVyLnB5OjI0NS0yNTIgKHNpbT0xLjAwKS4gRXh0cmFjdCB0aGUgc2hhcmVkIGhlbHBlciBwZXIgcmVkdXAncyBleHRyYWN0X2Z1bmN0aW9uIHN1Z2dlc3Rpb24gaW4gZWFjaCBmaWxlLCB0aGVuIHJlLXJ1biAncmVkdXAgc2NhbiAuJyB0byBjb25maXJtIGR1cF9ncm91cHM9MC4gUnVuIGxvY2FsIHRlc3RzIChweXRlc3QsIHJ1ZmYsIG15cHkpLiIsImZpbGVzIjpbInNyYy9ueGRvL2dpdF9yZWFkZXIucHkiLCJzcmMvbnhkby9wcm9qZWN0X2FuYWx5emVyLnB5Il0sImlkIjoiUExGLTIwNSIsImxhYmVscyI6WyJjb2RlMmxsbSIsImNvZGUtc21lbGwiLCJkdXBsaWNhdGlvbiIsImxsbS1yZWFkeSJdLCJuYW1lIjoiRWxpbWluYXRlIHJlZHVwIGR1cGxpY2F0aW9uIGdyb3VwcyBpbiBnaXRfcmVhZGVyIGFuZCBwcm9qZWN0X2FuYWx5emVyIiwicHJpb3JpdHkiOiJub3JtYWwiLCJzb3VyY2UiOnsiY29udGV4dCI6e30sInRpbWVzdGFtcCI6IjIwMjYtMDktMjBUMDc6MTg6MzguOTUxMzI4WiIsInRvb2wiOiJrb3J1LXNjYW4ifSwic3ByaW50IjoiY3VycmVudCIsInN0YXR1cyI6Im9wZW4iLCJzeW5jIjp7fSwidXBkYXRlZF9hdCI6IjIwMjYtMDktMjBUMDc6MTg6MzguOTU5OTY2WiJ9fQ
+      files:
+      - src/nxdo/git_reader.py
+      - src/nxdo/project_analyzer.py
+      history:
+      - action: status_change
+        changes:
+        - outputs
+        - status
+        previous_status: open
+        source: planfile.store
+        status: cancelled
+        timestamp: '2026-09-20T07:20:39.140965+00:00'
+      id: PLF-205
+      labels:
+      - code2llm
+      - code-smell
+      - duplication
+      - llm-ready
+      name: Eliminate redup duplication groups in git_reader and project_analyzer
+      outputs:
+        artifacts: []
+        notes:
+        - 'Invalidated during PLF-203 discovery: the duplication signal came from
+          a stale code2llm cache dated 2026-06-16. Fresh ''redup scan .'' on 2026-09-20
+          reports 0 duplicate groups (17 files, 3213 lines). No duplication work remains
+          in git_reader.py or project_analyzer.py.'
+      priority: normal
+      source:
+        context: {}
+        timestamp: '2026-09-20T07:18:38.951328Z'
+        tool: koru-scan
+      sprint: current
+      status: cancelled
+      sync: {}
+      updated_at: '2026-09-20T07:20:39.140938+00:00'
