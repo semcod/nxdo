@@ -23,6 +23,16 @@ def _resolve_console(console: Console | None) -> Console:
     return console if console is not None else Console()
 
 
+def _add_task_columns(table: Table) -> None:
+    """Add the standard column layout to a plan's task table."""
+    table.add_column("#", style="dim", width=4, no_wrap=True)
+    table.add_column("Type", width=10, no_wrap=True)
+    table.add_column("Priority", width=8, no_wrap=True)
+    table.add_column("Est.", width=6, no_wrap=True)
+    table.add_column("Title")
+    table.add_column("Description")
+
+
 def render_plan(plan: TaskPlan, console: Console | None = None) -> None:
     """Render a TaskPlan as a Rich table with a summary panel."""
     out = _resolve_console(console)
@@ -37,12 +47,7 @@ def render_plan(plan: TaskPlan, console: Console | None = None) -> None:
     )
 
     table = Table(box=box.ROUNDED, show_lines=True, expand=True)
-    table.add_column("#", style="dim", width=4, no_wrap=True)
-    table.add_column("Type", width=10, no_wrap=True)
-    table.add_column("Priority", width=8, no_wrap=True)
-    table.add_column("Est.", width=6, no_wrap=True)
-    table.add_column("Title")
-    table.add_column("Description")
+    _add_task_columns(table)
 
     for task in plan.tasks:
         style = _PRIORITY_STYLE.get(task.priority, "")
