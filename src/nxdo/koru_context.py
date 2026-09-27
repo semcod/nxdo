@@ -72,6 +72,27 @@ def _load_operations() -> list[KoruOperation]:
         return []
 
 
+def _load_doctor_status(project_path: Path, state: KoruProjectState) -> None:
+    """Load koru doctor report status into project state."""
+    try:
+        from koruapi.invoke import invoke_integration
+        doctor_result = invoke_integration(
+            "doctor.run",
+            project=project_path,
+            method="run",
+            body={},
+        )
+        if doctor_result.get("ok") is not None:
+            report = doctor_result.get("report", {})
+            state.doctor_ok = doctor_result.get("ok", True)
+            state.doctor_issues = [
+                f"{check}: {msg}"
+                for check, msg in report.get("failures", {}).items()
+            ]
+    except (ImportError, RuntimeError) as exc:
+        logger.debug("doctor.run state unavailable: %s", exc)
+
+
 def _load_project_state(project_path: Path) -> KoruProjectState:
     """Load current project state via koru APIs."""
     state = KoruProjectState()
@@ -90,24 +111,7 @@ def _load_project_state(project_path: Path) -> KoruProjectState:
     except (ImportError, RuntimeError) as exc:
         logger.debug("planfile.tickets state unavailable: %s", exc)
 
-    # Load doctor status
-    try:
-        from koruapi.invoke import invoke_integration
-        doctor_result = invoke_integration(
-            "doctor.run",
-            project=project_path,
-            method="run",
-            body={},
-        )
-        if doctor_result.get("ok") is not None:
-            report = doctor_result.get("report", {})
-            state.doctor_ok = doctor_result.get("ok", True)
-            state.doctor_issues = [
-                f"{check}: {msg}"
-                for check, msg in report.get("failures", {}).items()
-            ]
-    except (ImportError, RuntimeError) as exc:
-        logger.debug("doctor.run state unavailable: %s", exc)
+    _load_doctor_status(project_path, state)
 
     return state
 
