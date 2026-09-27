@@ -134,27 +134,43 @@ _DOMAIN_LABELS = {
 }
 
 
-def _format_operations_for_llm(operations: list[KoruOperation]) -> str:
-    """Format koru operations as structured text for LLM prompt."""
-    # Group by primary tag
+def _group_operations_by_domain(
+    operations: list[KoruOperation],
+) -> dict[str, list[KoruOperation]]:
+    """Group operations by their primary tag."""
     by_domain: dict[str, list[KoruOperation]] = {}
     for op in operations:
         primary_tag = op.tags[0] if op.tags else "other"
         by_domain.setdefault(primary_tag, []).append(op)
+    return by_domain
 
-    ops_lines: list[str] = ["Available koru operations (use integration IDs in task steps):"]
-    ops_lines.append("")
 
+def _format_operation_entry(op: KoruOperation) -> list[str]:
+    """Render a single operation as its prompt lines."""
+    methods_str = " | ".join(op.methods) if op.methods else "invoke"
+    entry_lines: list[str] = [
+        f"    [{op.id}] {op.title}",
+        f"      Methods: {methods_str}",
+        f"      {op.description}",
+    ]
+    if op.cli_equivalent:
+        entry_lines.append(f"      CLI: {op.cli_equivalent}")
+    return entry_lines
+
+
+def _format_operations_for_llm(operations: list[KoruOperation]) -> str:
+    """Format koru operations as structured text for LLM prompt."""
+    by_domain = _group_operations_by_domain(operations)
+
+    ops_lines: list[str] = [
+        "Available koru operations (use integration IDs in task steps):",
+        "",
+    ]
     for tag, ops in sorted(by_domain.items()):
         label = _DOMAIN_LABELS.get(tag, f"[{tag}]")
         ops_lines.append(f"  {label}")
         for op in ops:
-            methods_str = " | ".join(op.methods) if op.methods else "invoke"
-            ops_lines.append(f"    [{op.id}] {op.title}")
-            ops_lines.append(f"      Methods: {methods_str}")
-            ops_lines.append(f"      {op.description}")
-            if op.cli_equivalent:
-                ops_lines.append(f"      CLI: {op.cli_equivalent}")
+            ops_lines.extend(_format_operation_entry(op))
         ops_lines.append("")
 
     return "\n".join(ops_lines)
