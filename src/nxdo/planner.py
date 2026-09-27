@@ -36,13 +36,7 @@ def generate_next_tasks(
     snapshot = analyze_project(repo_path)
     git_context = read_git_context(repo_path, max_commits=settings.max_commits)
 
-    # Build koru context if requested
-    koru_schema = ""
-    if koru_aware:
-        from .koru_context import build_koru_context
-        koru_ctx = build_koru_context(repo_path, include_project_state=True)
-        if koru_ctx.available:
-            koru_schema = koru_ctx.schema_text
+    koru_schema = _koru_schema_text(repo_path, koru_aware)
 
     user_prompt = build_user_prompt(
         snapshot.to_text(),
@@ -56,3 +50,16 @@ def generate_next_tasks(
     return llm.generate_plan(
         PlanRequest(user_prompt=user_prompt, project_name=snapshot.name)
     )
+
+
+def _koru_schema_text(repo_path: Path, koru_aware: bool) -> str:
+    """Return the koru integration schema text, or "" if unavailable/not requested."""
+    if not koru_aware:
+        return ""
+
+    from .koru_context import build_koru_context
+
+    koru_ctx = build_koru_context(repo_path, include_project_state=True)
+    if koru_ctx.available:
+        return koru_ctx.schema_text
+    return ""
