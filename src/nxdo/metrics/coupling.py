@@ -19,9 +19,30 @@ class CouplingMetrics:
     total_commits_b: int
 
 
+def _parse_commit_files(log_output: str) -> list[list[str]]:
+    """Split ``git log --name-only`` output into per-commit file lists."""
+    commits: list[list[str]] = []
+    current_files: list[str] = []
+
+    for line in log_output.strip().split("\n"):
+        if not line or (len(line) == 40 and all(c in "0123456789abcdef" for c in line.lower())):
+            # Blank separator or commit hash: close the current commit group
+            if current_files:
+                commits.append(current_files)
+                current_files = []
+        elif line.strip() and not line.startswith("commit "):
+            # This is a file path
+            current_files.append(line.strip())
+
+    if current_files:
+        commits.append(current_files)
+
+    return commits
+
+
 def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[list[str]]:
     """Get list of commits with their changed files.
-    
+
     Returns: List of [file1, file2, ...] for each commit
     """
     try:
@@ -32,33 +53,11 @@ def _get_commits_with_files(repo_path: Path, max_commits: int = 100) -> list[lis
             text=True,
             check=False,
         )
-        if log_result.returncode != 0:
-            return []
-
-        commits = []
-        current_files: list[str] = []
-
-        for line in log_result.stdout.strip().split("\n"):
-            if not line:
-                if current_files:
-                    commits.append(current_files)
-                    current_files = []
-            elif len(line) == 40 and all(c in "0123456789abcdef" for c in line.lower()):
-                # This is a commit hash, skip it
-                if current_files:
-                    commits.append(current_files)
-                    current_files = []
-            else:
-                # This is a file path
-                if line.strip() and not line.startswith("commit "):
-                    current_files.append(line.strip())
-        
-        if current_files:
-            commits.append(current_files)
-        
-        return commits
     except OSError:
         return []
+    if log_result.returncode != 0:
+        return []
+    return _parse_commit_files(log_result.stdout)
 
 
 def _filtered_commit_files(
