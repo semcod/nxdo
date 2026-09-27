@@ -1,8 +1,10 @@
 """CLI for generating the next 10 project tasks."""
 
+import argparse
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import typer
 from rich.console import Console
@@ -398,24 +400,38 @@ def app_entry() -> None:
 # Legacy compatibility: keep `main()` so existing callers (tests, __main__)
 # continue to work using argparse-style argv lists.
 # ---------------------------------------------------------------------------
+_LEGACY_ARGUMENTS: tuple[tuple[tuple[str, ...], dict[str, Any]], ...] = (
+    (("repo",), {"nargs": "?", "default": "."}),
+    (("--extra-context",), {"default": ""}),
+    (("--max-commits",), {"type": int, "default": 30}),
+    (("--model",), {"default": None}),
+    (("--base-url",), {"default": None}),
+    (("--print-prompt",), {"action": "store_true"}),
+    (("--json",), {"action": "store_true"}),
+)
+
+
+def _parse_legacy_args(argv: list[str] | None) -> argparse.Namespace:
+    """Parse legacy argparse-style argv; unknown flags are ignored."""
+    parser = argparse.ArgumentParser(prog="nxdo", add_help=False)
+    for names, kwargs in _LEGACY_ARGUMENTS:
+        parser.add_argument(*names, **kwargs)
+    return parser.parse_known_args(argv)[0]
+
+
+def _print_legacy_prompt(args: argparse.Namespace, repo_path: Path) -> None:
+    """Assemble and print the LLM prompt for the legacy --print-prompt mode."""
+    inputs = PromptInputs(repo=repo_path, extra_context=args.extra_context, max_commits=args.max_commits)
+    print(_render_prompt_text(inputs))
+
+
 def main(argv: list[str] | None = None) -> int:
     """Compatibility shim — maps legacy argparse argv to Typer sub-commands."""
-    import argparse
-
-    parser = argparse.ArgumentParser(prog="nxdo", add_help=False)
-    parser.add_argument("repo", nargs="?", default=".")
-    parser.add_argument("--extra-context", default="")
-    parser.add_argument("--max-commits", type=int, default=30)
-    parser.add_argument("--model", default=None)
-    parser.add_argument("--base-url", default=None)
-    parser.add_argument("--print-prompt", action="store_true")
-    parser.add_argument("--json", action="store_true")
-    args, _ = parser.parse_known_args(argv)
+    args = _parse_legacy_args(argv)
 
     repo_path = Path(args.repo).resolve()
     if args.print_prompt:
-        inputs = PromptInputs(repo=repo_path, extra_context=args.extra_context, max_commits=args.max_commits)
-        print(_render_prompt_text(inputs))
+        _print_legacy_prompt(args, repo_path)
         return 0
 
     try:
