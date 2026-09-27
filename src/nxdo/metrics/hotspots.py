@@ -40,38 +40,60 @@ def _get_file_commits_with_info(query: FileHistoryQuery) -> tuple[list[tuple[str
             text=True,
             check=False,
         )
-        if commit_log_result.returncode != 0:
-            return [], 0
-        
-        commits = []
-        current_author = ""
-        churn = 0
-        
-        for line in commit_log_result.stdout.strip().split("\n"):
-            if "|" in line and not line.startswith("\t"):
-                # Commit hash|author line
-                parts = line.split("|")
-                if len(parts) >= 2:
-                    current_author = parts[1].strip()
-                    commits.append((parts[0], current_author, 0))
-            elif line.strip() and "\t" in line:
-                # numstat line: added\tdeleted\tfile
-                stats = line.split("\t")
-                if len(stats) >= 2:
-                    try:
-                        added = int(stats[0]) if stats[0] != "-" else 0
-                        deleted = int(stats[1]) if stats[1] != "-" else 0
-                        churn += added + deleted
-                        if commits:
-                            # Update churn for current commit
-                            h, a, c = commits[-1]
-                            commits[-1] = (h, a, c + added + deleted)
-                    except ValueError:
-                        pass
-        
-        return commits, churn
     except OSError:
         return [], 0
+    if commit_log_result.returncode != 0:
+        return [], 0
+    return _parse_commit_log(commit_log_result.stdout)
+
+
+def _parse_commit_header(line: str) -> tuple[str, str] | None:
+    """Return (hash, author) from a ``%H|%an`` log line, or None."""
+    parts = line.split("|")
+    if len(parts) >= 2:
+        return parts[0], parts[1].strip()
+    return None
+
+
+def _numstat_churn(line: str) -> int | None:
+    """Return added+deleted for one numstat line, or None when unparseable."""
+    stats = line.split("\t")
+    if len(stats) < 2:
+        return None
+    try:
+        added = int(stats[0]) if stats[0] != "-" else 0
+        deleted = int(stats[1]) if stats[1] != "-" else 0
+    except ValueError:
+        return None
+    return added + deleted
+
+
+def _add_commit_churn(commits: list[tuple[str, str, int]], extra: int) -> None:
+    """Fold numstat churn into the most recent commit entry."""
+    if commits:
+        last = commits[-1]
+        commits[-1] = (last[0], last[1], last[2] + extra)
+
+
+def _parse_commit_log(stdout: str) -> tuple[list[tuple[str, str, int]], int]:
+    """Parse ``git log --numstat`` output into commits and total churn."""
+    commits: list[tuple[str, str, int]] = []
+    churn: int = 0
+
+    for line in stdout.strip().split("\n"):
+        if "|" in line and not line.startswith("\t"):
+            # Commit hash|author line
+            header = _parse_commit_header(line)
+            if header is not None:
+                commits.append((*header, 0))
+        elif line.strip() and "\t" in line:
+            # numstat line: added\tdeleted\tfile
+            line_churn = _numstat_churn(line)
+            if line_churn is not None:
+                churn += line_churn
+                _add_commit_churn(commits, line_churn)
+
+    return commits, churn
 
 
 def _get_bug_fix_commits(query: FileHistoryQuery) -> int:
