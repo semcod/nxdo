@@ -6,6 +6,7 @@ import subprocess
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+from typing import NamedTuple
 
 
 @dataclass
@@ -29,7 +30,21 @@ class FileHistoryQuery:
     since: str = "90.days.ago"
 
 
-def _get_file_commits_with_info(query: FileHistoryQuery) -> tuple[list[tuple[str, str, int]], int]:
+class FileHistory(NamedTuple):
+    """Commits and churn parsed from one file's git log."""
+
+    commits: list[tuple[str, str, int]]  # [(hash, author, added+deleted), ...]
+    churn: int
+
+
+class AuthorSummary(NamedTuple):
+    """Author statistics for one file's commits."""
+
+    author_count: int
+    top: list[tuple[str, int]]
+
+
+def _get_file_commits_with_info(query: FileHistoryQuery) -> FileHistory:
     """Get commits for specific file: [(hash, author, added+deleted), ...]."""
     try:
         # Get commit info with stats
@@ -41,10 +56,11 @@ def _get_file_commits_with_info(query: FileHistoryQuery) -> tuple[list[tuple[str
             check=False,
         )
     except OSError:
-        return [], 0
+        return FileHistory(commits=[], churn=0)
     if commit_log_result.returncode != 0:
-        return [], 0
-    return _parse_commit_log(commit_log_result.stdout)
+        return FileHistory(commits=[], churn=0)
+    commits, churn = _parse_commit_log(commit_log_result.stdout)
+    return FileHistory(commits=commits, churn=churn)
 
 
 def _parse_commit_header(line: str) -> tuple[str, str] | None:
@@ -139,13 +155,13 @@ def _resolve_target_files(repo_path: Path, files: list[str] | None) -> list[str]
     return [f.strip() for f in ls_files_result.stdout.strip().split("\n") if f.strip()]
 
 
-def _author_summary(file_commits: list[tuple[str, str, int]]) -> tuple[int, list[tuple[str, int]]]:
+def _author_summary(file_commits: list[tuple[str, str, int]]) -> AuthorSummary:
     """Return the unique author count and the top three (author, commits) pairs."""
     author_counts: dict[str, int] = defaultdict(int)
     for _, author, _ in file_commits:
         author_counts[author] += 1
     top_authors = sorted(author_counts.items(), key=lambda x: x[1], reverse=True)[:3]
-    return len(author_counts), top_authors
+    return AuthorSummary(author_count=len(author_counts), top=top_authors)
 
 
 def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
@@ -153,16 +169,16 @@ def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
     if query.file_path.endswith(_NON_CODE_EXTENSIONS):
         return None
 
-    file_commits, churn = _get_file_commits_with_info(query)
-    total_commits = len(file_commits)
+    history = _get_file_commits_with_info(query)
+    total_commits = len(history.commits)
     if total_commits == 0:
         return None
 
     bug_fixes = _get_bug_fix_commits(query)
-    author_count, top_authors = _author_summary(file_commits)
+    authors = _author_summary(history.commits)
 
     # Only include if there's actual risk
-    if not (bug_fixes > 0 or churn > 50 or author_count == 1):
+    if not (bug_fixes > 0 or history.churn > 50 or authors.author_count == 1):
         return None
 
     return HotspotMetrics(
@@ -170,9 +186,9 @@ def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
         bug_fix_commits=bug_fixes,
         total_commits=total_commits,
         bug_density=round(bug_fixes / total_commits, 2),
-        code_churn_lines=churn,
-        author_count=author_count,
-        top_authors=top_authors,
+        code_churn_lines=history.churn,
+        author_count=authors.author_count,
+        top_authors=authors.top,
     )
 
 
