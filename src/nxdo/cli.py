@@ -63,6 +63,14 @@ def _generate_plan(
         raise typer.Exit(code=1)
 
 
+def _collect_context_texts(repo: Path, max_commits: int) -> tuple[str, str]:
+    """Snapshot the project and recent git history and return both as text."""
+    resolved = repo.resolve()
+    snapshot = analyze_project(resolved)
+    git_ctx = read_git_context(resolved, max_commits=max_commits)
+    return snapshot.to_text(), git_ctx.to_text()
+
+
 def _render_prompt_text(inputs: PromptInputs) -> str:
     """Assemble the full LLM prompt without making an API call."""
     repo = inputs.repo.resolve()
@@ -102,10 +110,7 @@ def cmd_print_context(
     raw: bool = typer.Option(False, "--raw", help="Print raw text instead of Rich panels."),
 ) -> None:
     """Print the assembled project and git context (no LLM call)."""
-    snapshot = analyze_project(repo.resolve())
-    git_ctx = read_git_context(repo.resolve(), max_commits=max_commits)
-    project_text = snapshot.to_text()
-    git_text = git_ctx.to_text()
+    project_text, git_text = _collect_context_texts(repo, max_commits)
 
     if raw:
         print(project_text)
