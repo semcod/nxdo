@@ -1,3 +1,4 @@
+schema: planfile.sprint/v1
 sprint:
   id: current
   name: Current
@@ -65,6 +66,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -333,6 +335,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, max_commits, extra_context'
       outputs:
         artifacts: []
@@ -449,6 +452,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -714,6 +718,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: file_path, repo_path, since'
       outputs:
         artifacts: []
@@ -899,6 +904,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: raw, project_name, model'
       outputs:
         artifacts: []
@@ -1010,6 +1016,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1267,6 +1274,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo, extra_context, max_commits'
       outputs:
         artifacts: []
@@ -1382,6 +1390,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1635,6 +1644,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: user_prompt, self, project_name'
       outputs:
         artifacts: []
@@ -1745,6 +1755,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -1993,6 +2004,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _format_project_state_for_llm'
       outputs:
         artifacts: []
@@ -2102,6 +2114,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2346,6 +2359,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: project_name, self, user_prompt'
       outputs:
         artifacts: []
@@ -2461,6 +2475,7 @@ sprint:
       - code2llm
       - code-smell
       - data-clump
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -2704,6 +2719,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: Data Clump: repo_path, file_path, since'
       outputs:
         artifacts: []
@@ -2818,6 +2834,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3049,6 +3066,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _load_project_state'
       outputs:
         artifacts: []
@@ -3162,6 +3180,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3398,6 +3417,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _resolve_name_and_description'
       outputs:
         artifacts: []
@@ -3507,6 +3527,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -3731,6 +3752,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_auto'
       outputs:
         artifacts: []
@@ -3838,6 +3860,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -4058,6 +4081,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: _build_tree'
       outputs:
         artifacts: []
@@ -4165,6 +4189,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -4381,6 +4406,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: cmd_print_context'
       outputs:
         artifacts: []
@@ -4488,6 +4514,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -4700,6 +4727,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: generate_next_tasks'
       outputs:
         artifacts: []
@@ -4807,6 +4835,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -5015,6 +5044,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: main'
       outputs:
         artifacts: []
@@ -5171,6 +5201,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: render_plan'
       outputs:
         artifacts: []
@@ -5278,6 +5309,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -5643,6 +5675,7 @@ sprint:
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
+      - 'priority: normal'
       name: 'Address code smell: God Function: check_file'
       outputs:
         artifacts: []
@@ -5750,6 +5783,7 @@ sprint:
       - code2llm
       - code-smell
       - god-function
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -5901,6 +5935,7 @@ sprint:
       - scan
       - docs
       - cleanup
+      - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
       - 'priority: normal'
@@ -6113,74 +6148,173 @@ sprint:
       status: cancelled
       sync: {}
       updated_at: '2026-09-20T07:20:39.140938+00:00'
-    PLF-211:
-      acceptance_criteria: []
+    PLF-212:
+      backend: github
       blocked_by: []
       blocks: []
-      children: []
-      contract_version: planfile.ticket/v1
-      created_at: '2026-09-20T08:23:54.726614Z'
-      description: 'Root cause diagnosed in discovery pass PLF-210 (reproduced 3x
-        deterministically).
-
-
-        SYMPTOM: every ''code2llm ./ -f all -o ./project --no-chunk'' run rewrites
-        project/duplication.toon.yaml from fresh redup data (0 groups, 17f 3213L,
-        2026-09-20) back to a stale 2026-06-16 export (2 groups, 19f 2883L). PLF-208
-        and PLF-209 manually restored the file without fixing the cause; PLF-205 was
-        canceled as a stale-cache artifact of it.
-
-
-        MECHANISM (audit-hook stack trace): code2llm cli_exports/orchestrator.py:114
-        _try_serve_from_cache -> _copy_cached_export -> shutil.copy2. PersistentCache
-        (~/.code2llm/projects/11e41ea72f6e/exports/14f9da615c4c_d099a3aa/ and 4 sibling
-        dirs) snapshots the ENTIRE output dir via _copy_to_cache — including foreign-tool
-        artifacts that merely live there (redup duplication.toon.yaml, vallm validation.toon.yaml)
-        — then restores that snapshot on every cache hit, silently reverting newer
-        external exports.
-
-
-        FIX SCOPE:
-
-        1. Upstream (repo /home/tom/github/semcod/code2llm): restrict _copy_to_cache/_copy_cached_export
-        to code2llm-owned outputs (FORMAT_DRY_RUN_FILES registry) or never overwrite
-        output-dir files whose mtime/content differs from the cached copy when the
-        file was not produced by code2llm. Add a regression test with a foreign file
-        in the output dir.
-
-        2. Repo mitigation (koru.yaml backlog_hygiene): refresh redup export after
-        each code2llm refresh, or document --no-cache for the canonical command.
-
-        3. Cleanup: stale export dirs under ~/.code2llm/projects/11e41ea72f6e/exports/
-        containing the 2026-06-16 snapshot.
-
-
-        ACCEPTANCE: running ''code2llm ./ -f all -o ./project --no-chunk --exclude
-        *.md'' twice in a row leaves a freshly-generated duplication.toon.yaml byte-identical
-        (no 2026-06-16 regression); koru scan --semcod-artifacts stays clean; pytest/ruff/mypy
-        gates green.'
-      dsl: SODL/1 id=evt_3796b85f96d3bd2c63da41ef event_hash=72a04a04093847ab1a09e703a2baee2d00f2db802b2e361d6ceef22f6572fcb7
-        timestamp=2026-09-20T08%3A23%3A54.726614%2B00%3A00 kind=task source=planfile.ticket
-        ticket_id=PLF-211 actor=koru-scan oql=ticket.create uri=planfile%3A%2F%2Ftickets%2FPLF-211%2Fcommand%2Fcreate
-        mode=apply status=open correlation_id=PLF-211 causation_id=- input_hash=9ab65cc758fe47398ca8e6ce978b5fc025e6de1375dbb521b55a3eb7a3062d96
-        receipt_ref=- replayable=true data=eyJwYXlsb2FkIjp7ImFjY2VwdGFuY2VfY3JpdGVyaWEiOltdLCJibG9ja2VkX2J5IjpbXSwiYmxvY2tzIjpbXSwiY2hpbGRyZW4iOltdLCJjb250cmFjdF92ZXJzaW9uIjoicGxhbmZpbGUudGlja2V0L3YxIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDktMjBUMDg6MjM6NTQuNzI2NjE0WiIsImRlc2NyaXB0aW9uIjoiUm9vdCBjYXVzZSBkaWFnbm9zZWQgaW4gZGlzY292ZXJ5IHBhc3MgUExGLTIxMCAocmVwcm9kdWNlZCAzeCBkZXRlcm1pbmlzdGljYWxseSkuXG5cblNZTVBUT006IGV2ZXJ5ICdjb2RlMmxsbSAuLyAtZiBhbGwgLW8gLi9wcm9qZWN0IC0tbm8tY2h1bmsnIHJ1biByZXdyaXRlcyBwcm9qZWN0L2R1cGxpY2F0aW9uLnRvb24ueWFtbCBmcm9tIGZyZXNoIHJlZHVwIGRhdGEgKDAgZ3JvdXBzLCAxN2YgMzIxM0wsIDIwMjYtMDktMjApIGJhY2sgdG8gYSBzdGFsZSAyMDI2LTA2LTE2IGV4cG9ydCAoMiBncm91cHMsIDE5ZiAyODgzTCkuIFBMRi0yMDggYW5kIFBMRi0yMDkgbWFudWFsbHkgcmVzdG9yZWQgdGhlIGZpbGUgd2l0aG91dCBmaXhpbmcgdGhlIGNhdXNlOyBQTEYtMjA1IHdhcyBjYW5jZWxlZCBhcyBhIHN0YWxlLWNhY2hlIGFydGlmYWN0IG9mIGl0LlxuXG5NRUNIQU5JU00gKGF1ZGl0LWhvb2sgc3RhY2sgdHJhY2UpOiBjb2RlMmxsbSBjbGlfZXhwb3J0cy9vcmNoZXN0cmF0b3IucHk6MTE0IF90cnlfc2VydmVfZnJvbV9jYWNoZSAtPiBfY29weV9jYWNoZWRfZXhwb3J0IC0-IHNodXRpbC5jb3B5Mi4gUGVyc2lzdGVudENhY2hlICh-Ly5jb2RlMmxsbS9wcm9qZWN0cy8xMWU0MWVhNzJmNmUvZXhwb3J0cy8xNGY5ZGE2MTVjNGNfZDA5OWEzYWEvIGFuZCA0IHNpYmxpbmcgZGlycykgc25hcHNob3RzIHRoZSBFTlRJUkUgb3V0cHV0IGRpciB2aWEgX2NvcHlfdG9fY2FjaGUg4oCUIGluY2x1ZGluZyBmb3JlaWduLXRvb2wgYXJ0aWZhY3RzIHRoYXQgbWVyZWx5IGxpdmUgdGhlcmUgKHJlZHVwIGR1cGxpY2F0aW9uLnRvb24ueWFtbCwgdmFsbG0gdmFsaWRhdGlvbi50b29uLnlhbWwpIOKAlCB0aGVuIHJlc3RvcmVzIHRoYXQgc25hcHNob3Qgb24gZXZlcnkgY2FjaGUgaGl0LCBzaWxlbnRseSByZXZlcnRpbmcgbmV3ZXIgZXh0ZXJuYWwgZXhwb3J0cy5cblxuRklYIFNDT1BFOlxuMS4gVXBzdHJlYW0gKHJlcG8gL2hvbWUvdG9tL2dpdGh1Yi9zZW1jb2QvY29kZTJsbG0pOiByZXN0cmljdCBfY29weV90b19jYWNoZS9fY29weV9jYWNoZWRfZXhwb3J0IHRvIGNvZGUybGxtLW93bmVkIG91dHB1dHMgKEZPUk1BVF9EUllfUlVOX0ZJTEVTIHJlZ2lzdHJ5KSBvciBuZXZlciBvdmVyd3JpdGUgb3V0cHV0LWRpciBmaWxlcyB3aG9zZSBtdGltZS9jb250ZW50IGRpZmZlcnMgZnJvbSB0aGUgY2FjaGVkIGNvcHkgd2hlbiB0aGUgZmlsZSB3YXMgbm90IHByb2R1Y2VkIGJ5IGNvZGUybGxtLiBBZGQgYSByZWdyZXNzaW9uIHRlc3Qgd2l0aCBhIGZvcmVpZ24gZmlsZSBpbiB0aGUgb3V0cHV0IGRpci5cbjIuIFJlcG8gbWl0aWdhdGlvbiAoa29ydS55YW1sIGJhY2tsb2dfaHlnaWVuZSk6IHJlZnJlc2ggcmVkdXAgZXhwb3J0IGFmdGVyIGVhY2ggY29kZTJsbG0gcmVmcmVzaCwgb3IgZG9jdW1lbnQgLS1uby1jYWNoZSBmb3IgdGhlIGNhbm9uaWNhbCBjb21tYW5kLlxuMy4gQ2xlYW51cDogc3RhbGUgZXhwb3J0IGRpcnMgdW5kZXIgfi8uY29kZTJsbG0vcHJvamVjdHMvMTFlNDFlYTcyZjZlL2V4cG9ydHMvIGNvbnRhaW5pbmcgdGhlIDIwMjYtMDYtMTYgc25hcHNob3QuXG5cbkFDQ0VQVEFOQ0U6IHJ1bm5pbmcgJ2NvZGUybGxtIC4vIC1mIGFsbCAtbyAuL3Byb2plY3QgLS1uby1jaHVuayAtLWV4Y2x1ZGUgKi5tZCcgdHdpY2UgaW4gYSByb3cgbGVhdmVzIGEgZnJlc2hseS1nZW5lcmF0ZWQgZHVwbGljYXRpb24udG9vbi55YW1sIGJ5dGUtaWRlbnRpY2FsIChubyAyMDI2LTA2LTE2IHJlZ3Jlc3Npb24pOyBrb3J1IHNjYW4gLS1zZW1jb2QtYXJ0aWZhY3RzIHN0YXlzIGNsZWFuOyBweXRlc3QvcnVmZi9teXB5IGdhdGVzIGdyZWVuLiIsImZpbGVzIjpbImtvcnUueWFtbCJdLCJpZCI6IlBMRi0yMTEiLCJsYWJlbHMiOlsiY29kZTJsbG0iLCJjYWNoZSIsImR1cGxpY2F0aW9uIiwibGxtLXJlYWR5Il0sIm5hbWUiOiJGaXggY29kZTJsbG0gZXhwb3J0LWNhY2hlIGNsb2JiZXJpbmcgbGl2ZSByZWR1cCBhcnRpZmFjdCAoZHVwbGljYXRpb24udG9vbi55YW1sIHN0YWxlIHJlZ3Jlc3Npb24pIiwicHJpb3JpdHkiOiJoaWdoIiwic291cmNlIjp7ImNvbnRleHQiOnt9LCJ0aW1lc3RhbXAiOiIyMDI2LTA5LTIwVDA4OjIzOjU0LjcxODQ4NVoiLCJ0b29sIjoia29ydS1zY2FuIn0sInNwcmludCI6ImN1cnJlbnQiLCJzdGF0dXMiOiJvcGVuIiwic3luYyI6e30sInVwZGF0ZWRfYXQiOiIyMDI2LTA5LTIwVDA4OjIzOjU0LjcyNjYxNloifX0
+      created_at: '2026-09-20T08:27:18.040412+00:00'
+      description: "Run a broad project discovery pass because the planfile queue
+        is idle.\n\nGoal: move Koru from local implementation mode back to whole-project
+        strategy,\nthen create concrete tickets and let the normal queue work through
+        them.\n\n1. Generate fresh whole-project context:\n    code2llm ./ -f all
+        -o ./project --no-chunk --exclude '*.md'\n\n2. Ask IDE LLM after the code2llm
+        refresh:\n    \"Co jeszcze zostalo do wykonania? zrob z tego nastepne tickety
+        do planfile.\"\n    Keep the answer ticket-oriented (no broad multi-file edits
+        in this step).\n\n3. Convert findings into tickets:\n    koru scan --apply
+        --semcod-artifacts --source koru-scan\n\n4. Prefer high-signal work: failing
+        gates, god modules, duplicated code, high\n    cyclomatic complexity, missing
+        tests, and architecture seams that block future tickets.\n\n5. When new tickets
+        exist, stop broad discovery and work the tickets one by one.\n    After those
+        tickets are done and the queue is empty again, another discovery pass\n    is
+        allowed."
+      execution:
+        attempt: 0
+        max_attempts: 1
+        queue: operator
+        state: ready
+      executor:
+        kind: human
+        mode: interactive
+      external_id: '180'
       files:
-      - koru.yaml
-      history: []
-      id: PLF-211
+      - project/analysis.toon.yaml
+      history:
+      - action: created
+        message: "Run a broad project discovery pass because the planfile queue is
+          idle.\n\nGoal: move Koru from local implementation mode back to whole-project
+          strategy,\nthen create concrete tickets and let the normal queue work through
+          them.\n\n1. Generate fresh whole-project context:\n    code2llm ./ -f all
+          -o ./project --no-chunk --exclude '*.md'\n\n2. Ask IDE LLM after the code2llm
+          refresh:\n    \"Co jeszcze zostalo do wykonania? zrob z tego nastepne tickety
+          do planfile.\"\n    Keep the answer ticket-oriented (no broad multi-file
+          edits in this step).\n\n3. Convert findings into tickets:\n    koru scan
+          --apply --semcod-artifacts --source koru-scan\n\n4. Prefer high-signal work:
+          failing gates, god modules, duplicated code, high\n    cyclomatic complexity,
+          missing tests, and architecture seams that block future tickets.\n\n5. When
+          new tickets exist, stop broad discovery and work the tickets one by one.\n
+          \   After those tickets are done and the queue is empty again, another discovery
+          pass\n    is allowed."
+        source: koru task
+        timestamp: '2026-09-20T08:27:18.040412+00:00'
+      id: PLF-212
+      inputs:
+        api_headers: {}
+        api_method: GET
+        api_timeout_seconds: 30.0
+        env_keys: []
+        prompt: "Run a broad project discovery pass because the planfile queue is
+          idle.\n\nGoal: move Koru from local implementation mode back to whole-project
+          strategy,\nthen create concrete tickets and let the normal queue work through
+          them.\n\n1. Generate fresh whole-project context:\n    code2llm ./ -f all
+          -o ./project --no-chunk --exclude '*.md'\n\n2. Ask IDE LLM after the code2llm
+          refresh:\n    \"Co jeszcze zostalo do wykonania? zrob z tego nastepne tickety
+          do planfile.\"\n    Keep the answer ticket-oriented (no broad multi-file
+          edits in this step).\n\n3. Convert findings into tickets:\n    koru scan
+          --apply --semcod-artifacts --source koru-scan\n\n4. Prefer high-signal work:
+          failing gates, god modules, duplicated code, high\n    cyclomatic complexity,
+          missing tests, and architecture seams that block future tickets.\n\n5. When
+          new tickets exist, stop broad discovery and work the tickets one by one.\n
+          \   After those tickets are done and the queue is empty again, another discovery
+          pass\n    is allowed."
+      integration:
+      - github
       labels:
-      - code2llm
-      - cache
-      - duplication
+      - koru
+      - nl-task
       - llm-ready
-      name: Fix code2llm export-cache clobbering live redup artifact (duplication.toon.yaml
-        stale regression)
+      - project-discovery
+      - code2llm
+      - scan
+      - strategy
+      name: 'Project discovery: generate code2llm analysis and tickets'
+      outputs:
+        artifacts: []
+        notes: []
       priority: high
       source:
-        context: {}
-        timestamp: '2026-09-20T08:23:54.718485Z'
-        tool: koru-scan
+        context:
+          dedupe_key: koru:project-discovery:2026-09-20T08:27:17.583095+00:00
+          generation: '2026-09-20T08:27:17.583095+00:00'
+          input: "Run a broad project discovery pass because the planfile queue is
+            idle.\n\nGoal: move Koru from local implementation mode back to whole-project
+            strategy,\nthen create concrete tickets and let the normal queue work
+            through them.\n\n1. Generate fresh whole-project context:\n    code2llm
+            ./ -f all -o ./project --no-chunk --exclude '*.md'\n\n2. Ask IDE LLM after
+            the code2llm refresh:\n    \"Co jeszcze zostalo do wykonania? zrob z tego
+            nastepne tickety do planfile.\"\n    Keep the answer ticket-oriented (no
+            broad multi-file edits in this step).\n\n3. Convert findings into tickets:\n
+            \   koru scan --apply --semcod-artifacts --source koru-scan\n\n4. Prefer
+            high-signal work: failing gates, god modules, duplicated code, high\n
+            \   cyclomatic complexity, missing tests, and architecture seams that
+            block future tickets.\n\n5. When new tickets exist, stop broad discovery
+            and work the tickets one by one.\n    After those tickets are done and
+            the queue is empty again, another discovery pass\n    is allowed."
+          signal: project_discovery
+        timestamp: '2026-09-20T08:27:18.040412+00:00'
+        tool: koru-project-discovery
       sprint: current
       status: open
-      sync: {}
-      updated_at: '2026-09-20T08:23:54.726616Z'
+      sync:
+        github:
+          id: '180'
+          key: semcod/nxdo#180
+          url: https://github.com/semcod/nxdo/issues/180
+      updated_at: '2026-09-20T08:27:18.040412+00:00'
+tasks:
+- created_at: '2026-09-25T15:59:41.381032+00:00'
+  description: '## Context
+
+    Observed technical defect in `semcod/nxdo`:
+
+    - **Code**: `DIRTY_WORKTREE`
+
+    - **Severity**: WARNING
+
+    - **Evidence**: git status --porcelain reports 30 modified/untracked files.
+
+
+    ## Problem & Action
+
+    Investigate uncommitted changes in primary checkout, commit or isolate in dedicated
+    delivery worktree.
+
+
+    ## Acceptance Criteria
+
+    - [ ] AC-01: Repository has 30 uncommitted changes in primary checkout..
+
+    - [ ] AC-02: Verification checks and automated test suite pass with exit code
+    0.
+
+
+    ## Verification
+
+    ```sh
+
+    git status --porcelain && npm test || pytest -q
+
+    ```
+
+
+    ## Planfile & Koru Autonomous Handoff
+
+    - Driven by: `koru autonomous`
+
+    - When checks pass and the work is complete, mark done via: `planfile ticket done
+    <id>`
+
+    - Git discipline: commit only files modified for this ticket; stage explicitly
+    by path; write conventional commit message.'
+  id: task_1790352042_1
+  labels:
+  - monag
+  - autodiagnosis
+  - koru-autonomous
+  - tier:floor
+  priority: critical
+  satisfied_when: DIRTY_WORKTREE condition is resolved and verified.
+  source: monag.autodiagnosis
+  status: todo
+  tier: floor
+  title: '[semcod/nxdo] fix(dirty-worktree): Repository has 30 uncommitted changes
+    in primary checkout.'

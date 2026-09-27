@@ -59,6 +59,13 @@ when:
       # discovery run uses hardcoded default excludes (semcod/koru
       # DEFAULT_EXCLUDES); this command is the canonical manual refresh
       # until that default grows a per-project override.
+      # PLF-211: the export cache (>= code2llm 0.5.177) only snapshots and
+      # restores code2llm-owned outputs, so foreign artifacts in ./project
+      # (redup duplication.toon.yaml, vallm validation.toon.yaml,
+      # code2logic logic.pl) are never reverted by a cache hit anymore. If a
+      # cache-served refresh ever looks wrong, add --no-cache to bypass the
+      # export cache entirely, or re-run the owning tool (e.g. redup) to
+      # refresh its artifact after this command.
       - code2llm ./ -f all -o ./project --no-chunk --no-png --exclude '*.md' --exclude plugins --exclude goal.yaml
 
   autonomous_outer_loop:
