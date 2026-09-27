@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import subprocess
-from collections import defaultdict
+from collections import defaultdict, deque
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -146,53 +146,62 @@ def collect_coupling_matrix(
     return results
 
 
+def _collect_component(
+    start_node: str,
+    graph: dict[str, set[str]],
+    visited: set[str],
+) -> set[str]:
+    """BFS from ``start_node``, marking nodes visited and collecting the cluster."""
+    cluster: set[str] = set()
+    queue = deque([start_node])
+
+    while queue:
+        node = queue.popleft()
+        if node in visited:
+            continue
+        visited.add(node)
+        cluster.add(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+
+    return cluster
+
+
 def get_coupling_clusters(
     coupling_metrics: list[CouplingMetrics],
     min_coupling: float = 0.5,
 ) -> list[set[str]]:
     """Group files into clusters based on high coupling.
-    
+
     Files in same cluster should be refactored together in same sprint.
-    
+
     Uses simple connected components algorithm.
     """
-    from collections import deque
-    
     # Build adjacency list for high-coupling pairs
     graph: dict[str, set[str]] = defaultdict(set)
-    
+
     for m in coupling_metrics:
         if m.coupling_score >= min_coupling:
             graph[m.file_a].add(m.file_b)
             graph[m.file_b].add(m.file_a)
-    
+
     # Find connected components (clusters)
     visited: set[str] = set()
     clusters: list[set[str]] = []
-    
+
     for start_node in graph:
         if start_node in visited:
             continue
-        
+
         # BFS to find all connected nodes
-        cluster: set[str] = set()
-        queue = deque([start_node])
-        
-        while queue:
-            node = queue.popleft()
-            if node in visited:
-                continue
-            visited.add(node)
-            cluster.add(node)
-            
-            for neighbor in graph[node]:
-                if neighbor not in visited:
-                    queue.append(neighbor)
-        
+        cluster = _collect_component(start_node, graph, visited)
+
         if len(cluster) > 1:  # Only clusters with 2+ files
             clusters.append(cluster)
-    
+
     # Sort by cluster size (largest first)
     clusters.sort(key=len, reverse=True)
-    
+
     return clusters
