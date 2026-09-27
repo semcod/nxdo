@@ -188,6 +188,23 @@ def _display_tickets(tickets: list[dict[str, str]]) -> None:
             console.print(f"    {ticket['description'][:100]}...")
 
 
+def _emit_generated_tickets(
+    plan: TaskPlan,
+    tickets: list[dict[str, str]],
+    repo: Path,
+    sync_todo: bool,
+    sync_planfile: bool,
+    export_yaml: bool,
+    output_path: Path | None,
+) -> None:
+    """Report the generated ticket count, run requested syncs/exports, and list tickets."""
+    console.print(f"[green]✓[/green] Generated {len(tickets)} tickets from plan")
+    _sync_todos_if_requested(plan, repo, sync_todo)
+    _sync_planfile_if_requested(plan, repo, sync_planfile)
+    _export_yaml_if_requested(plan, repo, export_yaml, output_path)
+    _display_tickets(tickets)
+
+
 @app.command("tickets")
 def cmd_tickets(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
@@ -212,12 +229,15 @@ def cmd_tickets(
     )
 
     tickets = task_plan_to_tickets(plan)
-    console.print(f"[green]✓[/green] Generated {len(tickets)} tickets from plan")
-
-    _sync_todos_if_requested(plan, repo.resolve(), sync_todo)
-    _sync_planfile_if_requested(plan, repo.resolve(), sync_planfile)
-    _export_yaml_if_requested(plan, repo.resolve(), export_yaml, output_path)
-    _display_tickets(tickets)
+    _emit_generated_tickets(
+        plan,
+        tickets,
+        repo.resolve(),
+        sync_todo,
+        sync_planfile,
+        export_yaml,
+        output_path,
+    )
 
 
 def _print_complexity_report(repo_path: Path, top: int) -> None:
