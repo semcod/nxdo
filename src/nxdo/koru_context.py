@@ -176,20 +176,31 @@ def _format_operations_for_llm(operations: list[KoruOperation]) -> str:
     return "\n".join(ops_lines)
 
 
+def _format_ticket_line(ticket: dict[str, Any]) -> str:
+    """Render a single open ticket as its prompt line."""
+    tid = ticket.get("id", "?")
+    name = ticket.get("name", ticket.get("title", "?"))
+    status = ticket.get("status", "open")
+    priority = ticket.get("priority", "normal")
+    return f"  [{tid}] {name} ({status}, {priority})"
+
+
+def _format_ticket_lines(tickets: list[dict[str, Any]]) -> list[str]:
+    """Render open-ticket header, first five tickets and overflow note."""
+    lines: list[str] = [f"Open planfile tickets ({len(tickets)}):"]
+    for ticket in tickets[:5]:
+        lines.append(_format_ticket_line(ticket))
+    if len(tickets) > 5:
+        lines.append(f"  ... and {len(tickets) - 5} more")
+    return lines
+
+
 def _format_project_state_for_llm(state: KoruProjectState) -> str:
     """Format current koru project state for LLM prompt."""
     state_lines: list[str] = []
 
     if state.open_tickets:
-        state_lines.append(f"Open planfile tickets ({len(state.open_tickets)}):")
-        for t in state.open_tickets[:5]:
-            tid = t.get("id", "?")
-            name = t.get("name", t.get("title", "?"))
-            status = t.get("status", "open")
-            priority = t.get("priority", "normal")
-            state_lines.append(f"  [{tid}] {name} ({status}, {priority})")
-        if len(state.open_tickets) > 5:
-            state_lines.append(f"  ... and {len(state.open_tickets) - 5} more")
+        state_lines.extend(_format_ticket_lines(state.open_tickets))
     else:
         state_lines.append("Open planfile tickets: none")
 
