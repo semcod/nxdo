@@ -275,25 +275,9 @@ def cmd_metrics(
         console.print(f"  {icon} {count} author(s): {file_path}")
 
 
-@app.command("auto")
-def cmd_auto(
-    repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
-    extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
-    dry_run: bool = typer.Option(False, "--dry-run", help="Show what would be done without executing."),
-) -> None:
-    """Auto-generate and sync tickets for the most important work.
-
-    This command automatically:
-    1. Analyzes the project for high-priority issues (hotspots, complexity, coupling)
-    2. Generates tickets using koru-aware planning
-    3. Syncs to .planfile/ for execution via koru queue
-
-    Equivalent to: nxdo tickets . --koru-aware --sync-planfile
-    """
+def _print_auto_health_report(repo_path: Path) -> None:
+    """Analyze repo_path and print a short critical-issue summary for auto mode."""
     from .metrics import collect_file_metrics, identify_bug_hotspots
-
-    repo_path = repo.resolve()
-    console.print(f"[bold]🚀 Nxdo Auto Mode for {repo_path.name}[/bold]\n")
 
     # Quick analysis to inform user
     console.print("[dim]Analyzing project...[/dim]")
@@ -303,7 +287,7 @@ def cmd_auto(
     complexity = collect_file_metrics(repo_path, file_filter={".py"})
     high_cc = [m for m in complexity[:5] if m.cyclomatic_complexity > 10]
 
-    issues_found = []
+    issues_found: list[str] = []
     if hotspots:
         issues_found.append(f"{len(hotspots)} bug hotspots")
     if high_cc:
@@ -314,14 +298,9 @@ def cmd_auto(
     else:
         console.print("[green]✓ Project looks healthy[/green]")
 
-    if dry_run:
-        console.print("\n[dim]Dry run mode - would execute:[/dim]")
-        console.print(f"  nxdo tickets {repo_path} --koru-aware --sync-planfile")
-        return
 
-    # Execute auto workflow
-    console.print("\n[bold]Generating koru-aware tickets...[/bold]")
-
+def _generate_and_sync_auto_tickets(repo_path: Path, extra_context: str) -> None:
+    """Run koru-aware planning for repo_path and sync the tickets to .planfile/."""
     plan = _generate_plan(
         repo_path=repo_path,
         extra_context=extra_context or "Focus on critical hotspots and technical debt",
@@ -341,6 +320,36 @@ def cmd_auto(
     # Summary
     console.print(f"\n[bold green]🎉 Done![/bold green] {len(tickets)} tickets queued in .planfile/")
     console.print("[dim]Run 'koru --queue --loop' or 'planfile apply' to execute[/dim]")
+
+
+@app.command("auto")
+def cmd_auto(
+    repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
+    extra_context: str = typer.Option("", "--extra-context", "-e", help="Additional prompt context."),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Show what would be done without executing."),
+) -> None:
+    """Auto-generate and sync tickets for the most important work.
+
+    This command automatically:
+    1. Analyzes the project for high-priority issues (hotspots, complexity, coupling)
+    2. Generates tickets using koru-aware planning
+    3. Syncs to .planfile/ for execution via koru queue
+
+    Equivalent to: nxdo tickets . --koru-aware --sync-planfile
+    """
+    repo_path = repo.resolve()
+    console.print(f"[bold]🚀 Nxdo Auto Mode for {repo_path.name}[/bold]\n")
+
+    _print_auto_health_report(repo_path)
+
+    if dry_run:
+        console.print("\n[dim]Dry run mode - would execute:[/dim]")
+        console.print(f"  nxdo tickets {repo_path} --koru-aware --sync-planfile")
+        return
+
+    # Execute auto workflow
+    console.print("\n[bold]Generating koru-aware tickets...[/bold]")
+    _generate_and_sync_auto_tickets(repo_path, extra_context)
 
 
 def app_entry() -> None:
