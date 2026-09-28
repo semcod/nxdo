@@ -1,36 +1,10 @@
 """Verify auto mode dispatch and its dry-run boundary without a live provider."""
 
-from dataclasses import dataclass, field
-import sys
 from types import SimpleNamespace
-from unittest.mock import MagicMock, Mock
+from unittest.mock import Mock
 
 import pytest
 from typer.testing import CliRunner
-
-# Guard against broken or placeholder nxdo.project_analyzer raising during collection
-if "nxdo.project_analyzer" not in sys.modules:
-    try:
-        import nxdo.project_analyzer  # noqa: F401
-    except RuntimeError:
-        @dataclass
-        class ProjectSnapshot:
-            name: str = ""
-            description: str = ""
-            language_stack: list[str] = field(default_factory=list)
-            file_contents: dict[str, str] = field(default_factory=dict)
-            directory_tree: list[str] = field(default_factory=list)
-
-        mock_analyzer = MagicMock()
-        mock_analyzer.ProjectSnapshot = ProjectSnapshot
-        mock_analyzer.analyze_project = MagicMock(return_value=ProjectSnapshot(name="demo"))
-        mock_analyzer._should_ignore_entry = MagicMock(return_value=False)
-        sys.modules["nxdo.project_analyzer"] = mock_analyzer
-        try:
-            import nxdo
-            nxdo.project_analyzer = mock_analyzer
-        except Exception:
-            pass
 
 from nxdo import cli, metrics
 from nxdo.models import Task, TaskPlan
