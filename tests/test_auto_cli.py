@@ -6,12 +6,11 @@ from unittest.mock import Mock
 import pytest
 from typer.testing import CliRunner
 
-from nxdo.models import Task, TaskPlan
-
 
 @pytest.fixture
 def workflow(monkeypatch):
     from nxdo import cli, metrics
+    from nxdo.models import Task, TaskPlan
 
     plan = TaskPlan(project_name="demo", summary="Repair the parser", tasks=[
         Task(number=1, title="Parser tests", description="Cover malformed input"),
