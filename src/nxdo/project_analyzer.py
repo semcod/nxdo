@@ -21,6 +21,19 @@ def _format_node(entry: Path, is_last: bool, prefix: str) -> tuple[str, str]:
     return f"{prefix}{connector}{entry.name}", f"{prefix}{extension}"
 
 
+def _entry_lines(
+    child: Path,
+    is_last: bool,
+    prefix: str,
+    depth: int,
+    max_depth: int,
+) -> list[str]:
+    line, child_prefix = _format_node(child, is_last, prefix)
+    if child.is_dir() and depth + 1 < max_depth:
+        return [line, *_collect_tree_lines(child, max_depth, depth + 1, child_prefix)]
+    return [line]
+
+
 def _collect_tree_lines(
     root: Path,
     max_depth: int,
@@ -30,22 +43,15 @@ def _collect_tree_lines(
     if depth >= max_depth or not root.is_dir():
         return []
 
-    lines: list[str] = []
     children = _visible_children(root)
-    total = len(children)
-
-    for index, child in enumerate(children):
-        is_last = index == total - 1
-        line, child_prefix = _format_node(child, is_last, prefix)
-        lines.append(line)
-        if child.is_dir() and depth + 1 < max_depth:
-            sublines = _collect_tree_lines(child, max_depth, depth + 1, child_prefix)
-            lines.extend(sublines)
-
-    return lines
+    last_idx = len(children) - 1
+    return [
+        line
+        for idx, child in enumerate(children)
+        for line in _entry_lines(child, idx == last_idx, prefix, depth, max_depth)
+    ]
 
 
 def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
     """Build ASCII tree representation of directory structure."""
-    lines = _collect_tree_lines(root, max_depth, depth, prefix)
-    return LineBuilder(*lines).text()
+    return LineBuilder(*_collect_tree_lines(root, max_depth, depth, prefix)).text()
