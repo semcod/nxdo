@@ -1,1 +1,1 @@
-planfile ticket done PLF-231
+planfile ticket input PLF-231 --prompt "Please restore src/nxdo/project_analyzer.py via 'git checkout 1d2dc43~1 -- src/nxdo/project_analyzer.py' and add its full contents to the chat." --note "Commit 1d2dc43 replaced project_analyzer.py with the completion command text, causing a SyntaxError and wiping out the original implementation."
