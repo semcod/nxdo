@@ -4,6 +4,7 @@ from pathlib import Path
 
 from nxdo.project_analyzer import (
     _build_tree,
+    _collect_tree_lines,
     _detect_stack,
     _parse_cargo,
     _parse_package_json,
@@ -11,6 +12,7 @@ from nxdo.project_analyzer import (
     _parse_pyproject_tomllib,
     _readme_summary,
     _should_ignore_entry,
+    _visible_children,
     analyze_project,
 )
 
@@ -174,7 +176,6 @@ class ProjectAnalyzerTests(unittest.TestCase):
             self.assertEqual(snapshot.name, "rustcrate")
             self.assertEqual(snapshot.description, "Rust crate")
 
-
     def test_parse_pyproject_tomllib_returns_none_when_tomllib_unavailable(self) -> None:
         """Test _parse_pyproject_tomllib returns None when tomllib is None (line 152)."""
         import nxdo.project_analyzer as pa
@@ -222,6 +223,36 @@ class ProjectAnalyzerTests(unittest.TestCase):
         self.assertTrue(_should_ignore_entry("diagram.png"))
         self.assertTrue(_should_ignore_entry("uv.lock"))
         self.assertFalse(_should_ignore_entry("pyproject.toml"))
+
+    def test_visible_children_filters_and_sorts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            (root / "b_file.py").write_text("", encoding="utf-8")
+            (root / "a_file.py").write_text("", encoding="utf-8")
+            (root / "z_dir").mkdir()
+            (root / ".git").mkdir()
+
+            children = _visible_children(root)
+            names = [c.name for c in children]
+            self.assertEqual(names, ["z_dir", "a_file.py", "b_file.py"])
+
+    def test_collect_tree_lines_respects_max_depth(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            d1 = root / "lvl1"
+            d1.mkdir()
+            d2 = d1 / "lvl2"
+            d2.mkdir()
+            (d2 / "leaf.txt").write_text("", encoding="utf-8")
+
+            lines = _collect_tree_lines(root, max_depth=1)
+            self.assertEqual(len(lines), 1)
+            self.assertIn("lvl1", lines[0])
+
+            lines = _collect_tree_lines(root, max_depth=2)
+            self.assertTrue(any("lvl1" in line for line in lines))
+            self.assertTrue(any("lvl2" in line for line in lines))
+            self.assertFalse(any("leaf.txt" in line for line in lines))
 
 
 if __name__ == "__main__":
