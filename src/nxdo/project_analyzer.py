@@ -188,6 +188,28 @@ def _visible_children(path: Path) -> list[Path]:
     return dirs + files
 
 
+def _lines_for_child(
+    child: Path,
+    is_last: bool,
+    max_depth: int,
+    current_depth: int,
+    prefix: str,
+) -> list[str]:
+    connector = "└── " if is_last else "├── "
+    display_name = f"{child.name}/" if child.is_dir() else child.name
+    child_line = f"{prefix}{connector}{display_name}"
+    if not child.is_dir() or current_depth >= max_depth:
+        return [child_line]
+    indent = "    " if is_last else "│   "
+    sub_lines = _collect_tree_lines(
+        child,
+        max_depth=max_depth,
+        current_depth=current_depth + 1,
+        prefix=f"{prefix}{indent}",
+    )
+    return [child_line, *sub_lines]
+
+
 def _collect_tree_lines(
     path: Path,
     max_depth: int = 3,
@@ -197,23 +219,18 @@ def _collect_tree_lines(
     if current_depth > max_depth:
         return []
     children = _visible_children(path)
-    lines: list[str] = []
-    for i, child in enumerate(children):
-        is_last = i == len(children) - 1
-        connector = "└── " if is_last else "├── "
-        display_name = f"{child.name}/" if child.is_dir() else child.name
-        lines.append(f"{prefix}{connector}{display_name}")
-        if child.is_dir() and current_depth < max_depth:
-            sub_prefix = f"{prefix}{'    ' if is_last else '│   '}"
-            lines.extend(
-                _collect_tree_lines(
-                    child,
-                    max_depth=max_depth,
-                    current_depth=current_depth + 1,
-                    prefix=sub_prefix,
-                )
-            )
-    return lines
+    last_idx = len(children) - 1
+    return [
+        line
+        for i, child in enumerate(children)
+        for line in _lines_for_child(
+            child,
+            is_last=(i == last_idx),
+            max_depth=max_depth,
+            current_depth=current_depth,
+            prefix=prefix,
+        )
+    ]
 
 
 def _get_tree_lines(root: Path, max_depth: int = 3) -> list[str]:
