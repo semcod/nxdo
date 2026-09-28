@@ -1,0 +1,1 @@
+planfile ticket input PLF-231 --prompt "Please provide the complete contents of src/nxdo/project_analyzer.py" --note "The file src/nxdo/project_analyzer.py was not provided or only contained a git checkout command."
