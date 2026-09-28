@@ -1,2 +1,0 @@
-git add tests/test_auto_cli.py
-git commit -m "fix(tests): defer nxdo model imports to avoid collect-time failure"
