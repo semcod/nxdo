@@ -1,11 +1,14 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from nxdo.project_analyzer import (
     _build_tree,
     _collect_tree_lines,
     _detect_stack,
+    _entry_lines,
+    _format_tree_node,
     _parse_cargo,
     _parse_package_json,
     _parse_pyproject,
@@ -193,10 +196,12 @@ class ProjectAnalyzerTests(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_build_tree_returns_empty_on_oserror(self) -> None:
-        """Test _build_tree returns empty string on OSError (lines 242-243)."""
-        from pathlib import Path
+        """Test _build_tree returns empty string on OSError."""
         result = _build_tree(Path("/nonexistent/path/xyz"), max_depth=3)
         self.assertEqual(result, "")
+
+        with patch("nxdo.project_analyzer._collect_tree_lines", side_effect=OSError("read failed")):
+            self.assertEqual(_build_tree(Path("/some/path")), "")
 
     def test_build_tree_ignores_generated_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -235,6 +240,30 @@ class ProjectAnalyzerTests(unittest.TestCase):
             children = _visible_children(root)
             names = [c.name for c in children]
             self.assertEqual(names, ["z_dir", "a_file.py", "b_file.py"])
+
+    def test_format_tree_node_formats_file_and_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            f = root / "file.py"
+            f.write_text("", encoding="utf-8")
+            d = root / "sub"
+            d.mkdir()
+
+            self.assertEqual(_format_tree_node(f, "  "), "  file.py")
+            self.assertEqual(_format_tree_node(d, "  "), "  sub/")
+
+    def test_entry_lines_includes_children_when_depth_allowed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            d = root / "sub"
+            d.mkdir()
+            (d / "leaf.py").write_text("", encoding="utf-8")
+
+            lines = _entry_lines(d, max_depth=2, depth=1, prefix="")
+            self.assertEqual(lines, ["sub/", "  leaf.py"])
+
+            lines_bounded = _entry_lines(d, max_depth=1, depth=1, prefix="")
+            self.assertEqual(lines_bounded, ["sub/"])
 
     def test_collect_tree_lines_respects_max_depth(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

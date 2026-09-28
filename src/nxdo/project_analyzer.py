@@ -205,6 +205,25 @@ def _visible_children(directory: Path) -> list[Path]:
     return dirs + files
 
 
+def _format_tree_node(child: Path, prefix: str) -> str:
+    suffix = "/" if child.is_dir() else ""
+    return f"{prefix}{child.name}{suffix}"
+
+
+def _entry_lines(
+    child: Path,
+    max_depth: int,
+    depth: int,
+    prefix: str,
+) -> list[str]:
+    lines = [_format_tree_node(child, prefix)]
+    if child.is_dir() and depth < max_depth:
+        lines.extend(
+            _collect_tree_lines(child, max_depth, depth + 1, f"{prefix}  ")
+        )
+    return lines
+
+
 def _collect_tree_lines(
     root: Path,
     max_depth: int = 3,
@@ -215,23 +234,13 @@ def _collect_tree_lines(
         return []
     lines: list[str] = []
     for child in _visible_children(root):
-        display_name = f"{prefix}{child.name}{'/' if child.is_dir() else ''}"
-        lines.append(display_name)
-        if child.is_dir() and current_depth < max_depth:
-            sub_lines = _collect_tree_lines(
-                child,
-                max_depth=max_depth,
-                current_depth=current_depth + 1,
-                prefix=f"{prefix}  ",
-            )
-            lines.extend(sub_lines)
+        lines.extend(_entry_lines(child, max_depth, current_depth, prefix))
     return lines
 
 
 def _build_tree(root: Path, max_depth: int = 3) -> str:
     try:
-        lines = _collect_tree_lines(root, max_depth=max_depth)
-        return "\n".join(lines)
+        return "\n".join(_collect_tree_lines(root, max_depth=max_depth))
     except OSError:
         return ""
 
