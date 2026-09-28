@@ -22,6 +22,20 @@ class ProjectSnapshot:
     file_contents: dict[str, str] = field(default_factory=dict)
     directory_tree: str = ""
 
+    def to_text(self) -> str:
+        lines: list[str] = [f"Project: {self.name}"]
+        if self.description:
+            lines.append(f"Description: {self.description}")
+        if self.language_stack:
+            lines.append(f"Language stack: {', '.join(self.language_stack)}")
+        if self.directory_tree:
+            lines.append(f"Directory tree:\n{self.directory_tree}")
+        if self.file_contents:
+            lines.append("Files:")
+            for fname, content in sorted(self.file_contents.items()):
+                lines.append(f"--- {fname} ---\n{content}")
+        return "\n\n".join(lines)
+
 
 def _parse_pyproject_tomllib(text: str, fallback_name: str) -> tuple[str, str] | None:
     if tomllib is None:
