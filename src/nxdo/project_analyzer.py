@@ -273,16 +273,31 @@ def _push_tree_children(stack: list[TreeStackItem], directory: Path, node_depth:
         )
 
 
-def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
-    """Build ASCII tree representation of directory structure."""
-    builder = LineBuilder()
-    stack: list[TreeStackItem] = []
+def _expand_tree_node(
+    stack: list[TreeStackItem],
+    entry: Path,
+    depth: int,
+    max_depth: int,
+    prefix: str,
+) -> None:
+    """Push entry children to stack if entry is an expandable directory."""
+    if entry.is_dir() and depth < max_depth - 1:
+        _push_tree_children(stack, entry, depth + 1, prefix)
 
+
+def _collect_tree_lines(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> list[str]:
+    """Collect formatted tree lines through iterative traversal."""
+    lines: list[str] = []
+    stack: list[TreeStackItem] = []
     _push_tree_children(stack, root, depth, prefix)
     while stack:
         line, entry, node_depth, entry_prefix = stack.pop()
-        builder.line(line)
-        if entry.is_dir() and node_depth < max_depth - 1:
-            _push_tree_children(stack, entry, node_depth + 1, entry_prefix)
+        lines.append(line)
+        _expand_tree_node(stack, entry, node_depth, max_depth, entry_prefix)
+    return lines
 
-    return builder.text()
+
+def _build_tree(root: Path, max_depth: int, depth: int = 0, prefix: str = "") -> str:
+    """Build ASCII tree representation of directory structure."""
+    lines = _collect_tree_lines(root, max_depth, depth, prefix)
+    return LineBuilder(*lines).text()
