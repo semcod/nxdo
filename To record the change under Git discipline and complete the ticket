@@ -1,0 +1,3 @@
+git add tests/test_auto_cli.py
+git commit -m "fix(test): guard project_analyzer import during test collection in test_auto_cli"
+planfile ticket done PLF-250
