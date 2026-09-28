@@ -36,24 +36,7 @@ def _install_project_analyzer_stub():
     return stub
 
 
-if sys.modules.get("nxdo.project_analyzer") is None:
-    try:
-        import nxdo.project_analyzer
-    except RuntimeError as e:
-        if "RESTORED_PROJECT_ANALYZER" in str(e):
-            _install_project_analyzer_stub()
-        else:
-            raise
-else:
-    mod = sys.modules["nxdo.project_analyzer"]
-    if getattr(mod, "__spec__", None) is None:
-        mod.__spec__ = importlib.machinery.ModuleSpec("nxdo.project_analyzer", None)
-    try:
-        import nxdo
-        if not hasattr(nxdo, "project_analyzer"):
-            nxdo.project_analyzer = mod
-    except Exception:
-        pass
+_install_project_analyzer_stub()
 
 from nxdo import cli, metrics
 from nxdo.models import Task, TaskPlan
