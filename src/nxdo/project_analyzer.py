@@ -17,7 +17,7 @@ MAX_FILE_CHARS: int = 3000
 @dataclass
 class ProjectSnapshot:
     name: str
-    description: str
+    description: str = ""
     language_stack: list[str] = field(default_factory=list)
     file_contents: dict[str, str] = field(default_factory=dict)
     directory_tree: str = ""
@@ -171,7 +171,8 @@ def _build_tree(root: Path, max_depth: int = 3) -> str:
         return ""
 
 
-def analyze_project(root: Path) -> ProjectSnapshot:
+def analyze_project(root: Path | str) -> ProjectSnapshot:
+    root = Path(root)
     name = root.name
     description = ""
 
