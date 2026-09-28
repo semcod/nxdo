@@ -1,1 +1,1 @@
-git checkout a66dc59~1 -- src/nxdo/project_analyzer.py
+planfile ticket input PLF-231 --prompt "Please provide the complete contents of src/nxdo/project_analyzer.py so the _build_tree refactor can be applied and verified." --note "tests/test_project_analyzer.py is present, but src/nxdo/project_analyzer.py content was received containing only a git checkout command instead of the source code."
