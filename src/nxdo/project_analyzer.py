@@ -216,14 +216,17 @@ def _collect_tree_lines(
     return lines
 
 
-def _build_tree(root: Path, max_depth: int = 3) -> str:
+def _get_tree_lines(root: Path, max_depth: int = 3) -> list[str]:
     try:
         if not root.is_dir():
-            return ""
-        lines = _collect_tree_lines(root, max_depth=max_depth)
-        return "\n".join(lines)
+            return []
+        return _collect_tree_lines(root, max_depth=max_depth)
     except OSError:
-        return ""
+        return []
+
+
+def _build_tree(root: Path, max_depth: int = 3) -> str:
+    return "\n".join(_get_tree_lines(root, max_depth=max_depth))
 
 
 def analyze_project(root: Path | str = ".") -> ProjectSnapshot:
