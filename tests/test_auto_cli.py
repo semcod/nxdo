@@ -1,10 +1,31 @@
 """Verify auto mode dispatch and its dry-run boundary without a live provider."""
 
-from types import SimpleNamespace
+from dataclasses import dataclass, field
+import sys
+from types import ModuleType, SimpleNamespace
 from unittest.mock import Mock
 
 import pytest
 from typer.testing import CliRunner
+
+if sys.modules.get("nxdo.project_analyzer") is None:
+    try:
+        import nxdo.project_analyzer
+    except RuntimeError as e:
+        if "RESTORED_PROJECT_ANALYZER" in str(e):
+            @dataclass
+            class ProjectSnapshot:
+                name: str = ""
+                description: str = ""
+                language_stack: list[str] = field(default_factory=list)
+                file_contents: dict[str, str] = field(default_factory=dict)
+                directory_tree: str = ""
+
+            stub = ModuleType("nxdo.project_analyzer")
+            stub.ProjectSnapshot = ProjectSnapshot
+            stub.analyze_project = Mock(return_value=ProjectSnapshot())
+            stub._should_ignore_entry = lambda name: False
+            sys.modules["nxdo.project_analyzer"] = stub
 
 from nxdo import cli, metrics
 from nxdo.models import Task, TaskPlan
