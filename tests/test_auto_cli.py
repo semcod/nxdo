@@ -1,6 +1,7 @@
 """Verify auto mode dispatch and its dry-run boundary without a live provider."""
 
 from dataclasses import dataclass, field
+import importlib.machinery
 import sys
 from types import ModuleType, SimpleNamespace
 from unittest.mock import Mock
@@ -8,24 +9,51 @@ from unittest.mock import Mock
 import pytest
 from typer.testing import CliRunner
 
+
+@dataclass
+class ProjectSnapshot:
+    name: str = ""
+    description: str = ""
+    language_stack: list[str] = field(default_factory=list)
+    file_contents: dict[str, str] = field(default_factory=dict)
+    directory_tree: str = ""
+
+
+def _install_project_analyzer_stub():
+    stub = ModuleType("nxdo.project_analyzer")
+    stub.__spec__ = importlib.machinery.ModuleSpec("nxdo.project_analyzer", None)
+    stub.__loader__ = None
+    stub.ProjectSnapshot = ProjectSnapshot
+    stub.analyze_project = Mock(return_value=ProjectSnapshot())
+    stub._should_ignore_entry = lambda name: False
+    stub.MAX_FILE_CHARS = 50000
+    sys.modules["nxdo.project_analyzer"] = stub
+    try:
+        import nxdo
+        nxdo.project_analyzer = stub
+    except Exception:
+        pass
+    return stub
+
+
 if sys.modules.get("nxdo.project_analyzer") is None:
     try:
         import nxdo.project_analyzer
     except RuntimeError as e:
         if "RESTORED_PROJECT_ANALYZER" in str(e):
-            @dataclass
-            class ProjectSnapshot:
-                name: str = ""
-                description: str = ""
-                language_stack: list[str] = field(default_factory=list)
-                file_contents: dict[str, str] = field(default_factory=dict)
-                directory_tree: str = ""
-
-            stub = ModuleType("nxdo.project_analyzer")
-            stub.ProjectSnapshot = ProjectSnapshot
-            stub.analyze_project = Mock(return_value=ProjectSnapshot())
-            stub._should_ignore_entry = lambda name: False
-            sys.modules["nxdo.project_analyzer"] = stub
+            _install_project_analyzer_stub()
+        else:
+            raise
+else:
+    mod = sys.modules["nxdo.project_analyzer"]
+    if getattr(mod, "__spec__", None) is None:
+        mod.__spec__ = importlib.machinery.ModuleSpec("nxdo.project_analyzer", None)
+    try:
+        import nxdo
+        if not hasattr(nxdo, "project_analyzer"):
+            nxdo.project_analyzer = mod
+    except Exception:
+        pass
 
 from nxdo import cli, metrics
 from nxdo.models import Task, TaskPlan
