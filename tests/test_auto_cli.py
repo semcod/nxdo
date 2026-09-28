@@ -6,12 +6,13 @@ from unittest.mock import Mock
 import pytest
 from typer.testing import CliRunner
 
-from nxdo import cli, metrics
 from nxdo.models import Task, TaskPlan
 
 
 @pytest.fixture
 def workflow(monkeypatch):
+    from nxdo import cli, metrics
+
     plan = TaskPlan(project_name="demo", summary="Repair the parser", tasks=[
         Task(number=1, title="Parser tests", description="Cover malformed input"),
     ])
@@ -29,6 +30,8 @@ def workflow(monkeypatch):
 
 @pytest.mark.parametrize("has_issues", [False, True])
 def test_auto_dry_run_does_not_call_provider_or_write_tickets(tmp_path, workflow, has_issues):
+    from nxdo import cli, metrics
+
     if has_issues:
         metrics.identify_bug_hotspots.return_value = [SimpleNamespace()]
         metrics.collect_file_metrics.return_value = [SimpleNamespace(cyclomatic_complexity=12)]
@@ -42,6 +45,8 @@ def test_auto_dry_run_does_not_call_provider_or_write_tickets(tmp_path, workflow
 
 
 def test_auto_syncs_the_generated_plan_and_forwards_context(tmp_path, workflow):
+    from nxdo import cli
+
     plan, generate, sync, provider = workflow
     result = CliRunner().invoke(cli.app, ["auto", str(tmp_path), "--extra-context", "Parser failures"])
     assert result.exit_code == 0, result.output
@@ -53,6 +58,8 @@ def test_auto_syncs_the_generated_plan_and_forwards_context(tmp_path, workflow):
 
 
 def test_auto_provider_error_does_not_sync_partial_output(tmp_path, workflow):
+    from nxdo import cli
+
     workflow[1].side_effect = ValueError("provider offline")
     result = CliRunner().invoke(cli.app, ["auto", str(tmp_path)])
     assert result.exit_code == 1
