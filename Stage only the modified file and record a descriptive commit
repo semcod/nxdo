@@ -1,0 +1,2 @@
+git add tests/test_auto_cli.py
+git commit -m "fix(tests): guard project analyzer import in auto CLI tests"
