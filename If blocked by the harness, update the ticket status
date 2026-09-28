@@ -1,0 +1,1 @@
+planfile ticket input PLF-231 --prompt "Restore src/nxdo/project_analyzer.py from HEAD~1 and add it to chat" --note "project_analyzer.py was overwritten by command string in commit 4ef55cc"
