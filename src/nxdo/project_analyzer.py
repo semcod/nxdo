@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import json
 import os
 from pathlib import Path
 import re
+from dataclasses import dataclass, field
 
 try:
     import tomllib
@@ -132,7 +132,7 @@ def _detect_stack(root: Path) -> list[str]:
 def _should_ignore_entry(name: str) -> bool:
     if name.startswith("."):
         return True
-    if name.endswith(".egg-info") or name.endswith(".lock") or name.endswith(".png"):
+    if name.endswith((".egg-info", ".lock", ".png")):
         return True
     if name in {"__pycache__", "node_modules"}:
         return True
