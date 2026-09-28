@@ -1,229 +1,300 @@
-import ast
-import subprocess
+from __future__ import annotations
+
+import json
+import re
+from dataclasses import dataclass, field
 from pathlib import Path
 
-
-def _refactor_analyzer(orig_source: str) -> str:
-    tree = ast.parse(orig_source)
-    target_func = None
-    is_method = False
-
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ClassDef):
-            for child in node.body:
-                if (
-                    isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef))
-                    and child.name == "_build_tree"
-                ):
-                    target_func = child
-                    is_method = True
-                    break
-        elif (
-            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and node.name == "_build_tree"
-        ):
-            if target_func is None:
-                target_func = node
-
-    if target_func is None:
-        return orig_source
-
-    lines = orig_source.splitlines(keepends=True)
-
-    loop_node = None
-    for stmt in target_func.body:
-        if isinstance(stmt, (ast.For, ast.While)):
-            loop_node = stmt
-            break
-
-    if loop_node is not None and loop_node.body:
-        start_line = loop_node.body[0].lineno
-        end_line = loop_node.body[-1].end_lineno
-
-        loads = set()
-        stores = set()
-        for stmt in loop_node.body:
-            for n in ast.walk(stmt):
-                if isinstance(n, ast.Name):
-                    if isinstance(n.ctx, ast.Load):
-                        loads.add(n.id)
-                    elif isinstance(n.ctx, ast.Store):
-                        stores.add(n.id)
-
-        arg_names = [a.arg for a in target_func.args.args]
-        loop_target_names = [
-            n.id for n in ast.walk(loop_node.target) if isinstance(n, ast.Name)
-        ]
-
-        pre_loop_names = set()
-        for stmt in target_func.body:
-            if stmt is loop_node:
-                break
-            for n in ast.walk(stmt):
-                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
-                    pre_loop_names.add(n.id)
-
-        needed_params = []
-        if is_method:
-            needed_params.append("self")
-
-        for name in arg_names + loop_target_names + sorted(pre_loop_names):
-            if (
-                name in loads
-                and name != "self"
-                and name not in needed_params
-            ):
-                needed_params.append(name)
-
-        post_loop_loads = set()
-        found_loop = False
-        for stmt in target_func.body:
-            if stmt is loop_node:
-                found_loop = True
-                continue
-            if found_loop:
-                for n in ast.walk(stmt):
-                    if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
-                        post_loop_loads.add(n.id)
-
-        returned_vars = sorted(stores & post_loop_loads)
-
-        call_args = [p for p in needed_params if p != "self"]
-        caller = "self._build_tree_node" if is_method else "_build_tree_node"
-        call_str = f"{caller}({', '.join(call_args)})"
-
-        func_indent = " " * target_func.col_offset
-        helper_indent = func_indent
-        helper_body_indent = func_indent + "    "
-        loop_body_indent = " " * loop_node.body[0].col_offset
-
-        orig_body_lines = lines[start_line - 1 : end_line]
-        orig_body_indent_len = len(loop_body_indent)
-
-        reindented_body_lines = []
-        for line in orig_body_lines:
-            stripped = line.lstrip()
-            if not stripped:
-                reindented_body_lines.append("\n")
-            else:
-                current_indent_len = len(line) - len(stripped)
-                new_indent = helper_body_indent + " " * max(
-                    0, current_indent_len - orig_body_indent_len
-                )
-                reindented_body_lines.append(new_indent + stripped)
-
-        if returned_vars:
-            reindented_body_lines.append(
-                f"{helper_body_indent}return {', '.join(returned_vars)}\n"
-            )
-
-        helper_def = (
-            f"\n{helper_indent}def _build_tree_node("
-            f"{', '.join(needed_params)}):\n"
-            + "".join(reindented_body_lines)
-            + "\n"
-        )
-
-        call_line = (
-            loop_body_indent
-            + (f"{', '.join(returned_vars)} = " if returned_vars else "")
-            + call_str
-            + "\n"
-        )
-
-        new_lines = (
-            lines[: start_line - 1] + [call_line] + lines[end_line:]
-        )
-        func_start_line = target_func.lineno
-        new_lines = (
-            new_lines[: func_start_line - 1]
-            + [helper_def]
-            + new_lines[func_start_line - 1 :]
-        )
-        return "".join(new_lines)
-
-    if len(target_func.body) >= 2:
-        split_idx = len(target_func.body) // 2
-        split_stmt = target_func.body[split_idx]
-        start_line = split_stmt.lineno
-        end_line = target_func.body[-1].end_lineno
-
-        loads = set()
-        for stmt in target_func.body[split_idx:]:
-            for n in ast.walk(stmt):
-                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
-                    loads.add(n.id)
-
-        arg_names = [a.arg for a in target_func.args.args]
-        pre_split_names = set()
-        for stmt in target_func.body[:split_idx]:
-            for n in ast.walk(stmt):
-                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
-                    pre_split_names.add(n.id)
-
-        needed_params = []
-        if is_method:
-            needed_params.append("self")
-        for name in arg_names + sorted(pre_split_names):
-            if name in loads and name != "self" and name not in needed_params:
-                needed_params.append(name)
-
-        call_args = [p for p in needed_params if p != "self"]
-        caller = (
-            "self._build_tree_helper" if is_method else "_build_tree_helper"
-        )
-        call_str = f"{caller}({', '.join(call_args)})"
-
-        func_indent = " " * target_func.col_offset
-        helper_body_indent = func_indent + "    "
-        split_indent = " " * split_stmt.col_offset
-
-        orig_body_lines = lines[start_line - 1 : end_line]
-        reindented_body_lines = []
-        for line in orig_body_lines:
-            stripped = line.lstrip()
-            if not stripped:
-                reindented_body_lines.append("\n")
-            else:
-                curr_indent_len = len(line) - len(stripped)
-                new_indent = helper_body_indent + " " * max(
-                    0, curr_indent_len - len(split_indent)
-                )
-                reindented_body_lines.append(new_indent + stripped)
-
-        helper_def = (
-            f"\n{func_indent}def _build_tree_helper("
-            f"{', '.join(needed_params)}):\n"
-            + "".join(reindented_body_lines)
-            + "\n"
-        )
-        call_line = split_indent + f"return {call_str}\n"
-
-        new_lines = (
-            lines[: start_line - 1] + [call_line] + lines[end_line:]
-        )
-        func_start_line = target_func.lineno
-        new_lines = (
-            new_lines[: func_start_line - 1]
-            + [helper_def]
-            + new_lines[func_start_line - 1 :]
-        )
-        return "".join(new_lines)
-
-    return orig_source
-
-
-_file_path = Path(__file__).resolve()
 try:
-    _repo_root = _file_path.parents[2]
-    _orig = subprocess.check_output(
-        ["git", "show", "HEAD:src/nxdo/project_analyzer.py"],
-        text=True,
-        cwd=_repo_root,
+    import tomllib
+except ImportError:
+    try:
+        import tomli as tomllib  # type: ignore[no-redef]
+    except ImportError:
+        tomllib = None  # type: ignore[assignment]
+
+MAX_FILE_CHARS = 3000
+
+KEY_FILES: tuple[str, ...] = (
+    "README.md",
+    "README.rst",
+    "README.txt",
+    "README",
+    "CHANGELOG.md",
+    "CHANGELOG.rst",
+    "CHANGELOG.txt",
+    "CHANGELOG",
+    "CONTRIBUTING.md",
+    "ARCHITECTURE.md",
+    "pyproject.toml",
+    "package.json",
+    "Cargo.toml",
+)
+
+_IGNORE_SUFFIXES: frozenset[str] = frozenset(
+    {".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".lock", ".pyc"}
+)
+_IGNORE_NAMES: frozenset[str] = frozenset(
+    {"__pycache__", "uv.lock", "node_modules", ".git"}
+)
+
+
+@dataclass
+class ProjectSnapshot:
+    name: str
+    description: str = ""
+    language_stack: list[str] = field(default_factory=list)
+    file_contents: dict[str, str] = field(default_factory=dict)
+    directory_tree: str = ""
+
+    def to_text(self) -> str:
+        parts: list[str] = [f"Project: {self.name}"]
+        if self.description:
+            parts.append(f"Description: {self.description}")
+        if self.language_stack:
+            parts.append(f"Stack: {', '.join(self.language_stack)}")
+        if self.directory_tree:
+            parts.append(f"\nDirectory Tree:\n{self.directory_tree}")
+        if self.file_contents:
+            parts.append("\nKey Files:")
+            for fname, content in sorted(self.file_contents.items()):
+                parts.append(f"--- {fname} ---\n{content}")
+        return "\n".join(parts)
+
+    def __str__(self) -> str:
+        return self.to_text()
+
+
+def _read_file_content(path: Path) -> str | None:
+    try:
+        content = path.read_text(encoding="utf-8", errors="replace")
+        if len(content) > MAX_FILE_CHARS:
+            return content[:MAX_FILE_CHARS] + "\n... [truncated]"
+        return content
+    except OSError:
+        return None
+
+
+def _readme_summary(text: str) -> str:
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        return stripped
+    return ""
+
+
+def _parse_pyproject_tomllib(text: str, fallback_name: str) -> tuple[str, str] | None:
+    if tomllib is None:
+        return None
+    try:
+        data = tomllib.loads(text)
+    except (ValueError, TypeError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    project = data.get("project")
+    if not isinstance(project, dict):
+        return None
+    name = project.get("name") or fallback_name
+    description = project.get("description") or ""
+    return str(name), str(description)
+
+
+def _parse_pyproject(text: str, fallback_name: str) -> tuple[str, str]:
+    parsed = _parse_pyproject_tomllib(text, fallback_name)
+    if parsed is not None:
+        return parsed
+    name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', text)
+    desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', text)
+    name = name_match.group(1) if name_match else fallback_name
+    desc = desc_match.group(1) if desc_match else ""
+    return name, desc
+
+
+def _parse_package_json(pkg_file: Path, fallback_name: str) -> tuple[str, str]:
+    try:
+        data = json.loads(pkg_file.read_text(encoding="utf-8"))
+        if isinstance(data, dict):
+            name = data.get("name") or fallback_name
+            desc = data.get("description") or ""
+            return str(name), str(desc)
+    except (ValueError, TypeError, OSError):
+        return fallback_name, ""
+    return fallback_name, ""
+
+
+def _parse_cargo(text: str, fallback_name: str) -> tuple[str, str]:
+    if tomllib is not None:
+        try:
+            data = tomllib.loads(text)
+            if isinstance(data, dict):
+                pkg = data.get("package", data)
+                if isinstance(pkg, dict):
+                    name = pkg.get("name") or fallback_name
+                    desc = pkg.get("description") or ""
+                    return str(name), str(desc)
+        except (ValueError, TypeError):
+            data = None
+    name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', text)
+    desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', text)
+    name = name_match.group(1) if name_match else fallback_name
+    desc = desc_match.group(1) if desc_match else ""
+    return name, desc
+
+
+def _detect_stack(root: Path) -> list[str]:
+    stack: list[str] = []
+
+    def _add(lang: str) -> None:
+        if lang not in stack:
+            stack.append(lang)
+
+    if (
+        (root / "pyproject.toml").is_file()
+        or (root / "setup.py").is_file()
+        or (root / "requirements.txt").is_file()
+    ):
+        _add("Python")
+    if (root / "package.json").is_file() or (root / "tsconfig.json").is_file():
+        _add("JavaScript/TypeScript")
+    if (root / "Cargo.toml").is_file():
+        _add("Rust")
+    if (root / "go.mod").is_file():
+        _add("Go")
+
+    try:
+        entries = list(root.rglob("*"))
+    except OSError:
+        entries = []
+
+    for path in entries:
+        if _should_ignore_entry(path.name):
+            continue
+        if path.is_file():
+            suffix = path.suffix.lower()
+            if suffix == ".py":
+                _add("Python")
+            elif suffix in {".js", ".ts", ".jsx", ".tsx"}:
+                _add("JavaScript/TypeScript")
+            elif suffix == ".rs":
+                _add("Rust")
+            elif suffix == ".go":
+                _add("Go")
+
+    return stack
+
+
+def _should_ignore_entry(name: str) -> bool:
+    if name.startswith(".") or name.endswith(".egg-info"):
+        return True
+    if name in _IGNORE_NAMES:
+        return True
+    return Path(name).suffix.lower() in _IGNORE_SUFFIXES
+
+
+def _visible_children(directory: Path) -> list[Path]:
+    try:
+        entries = [
+            p for p in directory.iterdir() if not _should_ignore_entry(p.name)
+        ]
+    except OSError:
+        return []
+    dirs = sorted([p for p in entries if p.is_dir()], key=lambda p: p.name)
+    files = sorted([p for p in entries if not p.is_dir()], key=lambda p: p.name)
+    return dirs + files
+
+
+def _collect_tree_lines(
+    root: Path,
+    max_depth: int = 3,
+    current_depth: int = 1,
+    prefix: str = "",
+) -> list[str]:
+    if current_depth > max_depth:
+        return []
+    lines: list[str] = []
+    for child in _visible_children(root):
+        display_name = f"{prefix}{child.name}{'/' if child.is_dir() else ''}"
+        lines.append(display_name)
+        if child.is_dir() and current_depth < max_depth:
+            sub_lines = _collect_tree_lines(
+                child,
+                max_depth=max_depth,
+                current_depth=current_depth + 1,
+                prefix=f"{prefix}  ",
+            )
+            lines.extend(sub_lines)
+    return lines
+
+
+def _build_tree(root: Path, max_depth: int = 3) -> str:
+    try:
+        lines = _collect_tree_lines(root, max_depth=max_depth)
+        return "\n".join(lines)
+    except OSError:
+        return ""
+
+
+def analyze_project(root: Path) -> ProjectSnapshot:
+    name = root.name
+    desc = ""
+
+    pyproject_path = root / "pyproject.toml"
+    if pyproject_path.is_file():
+        try:
+            text = pyproject_path.read_text(encoding="utf-8")
+        except OSError:
+            text = ""
+        if text:
+            name, desc = _parse_pyproject(text, name)
+
+    package_json_path = root / "package.json"
+    if package_json_path.is_file() and name == root.name:
+        try:
+            name, desc = _parse_package_json(package_json_path, name)
+        except OSError:
+            name, desc = root.name, ""
+
+    cargo_path = root / "Cargo.toml"
+    if cargo_path.is_file() and name == root.name:
+        try:
+            text = cargo_path.read_text(encoding="utf-8")
+        except OSError:
+            text = ""
+        if text:
+            name, desc = _parse_cargo(text, name)
+
+    if not desc:
+        for readme_name in ("README.md", "README.rst", "README.txt", "README"):
+            readme_path = root / readme_name
+            if readme_path.is_file():
+                try:
+                    text = readme_path.read_text(
+                        encoding="utf-8", errors="replace"
+                    )
+                    summary = _readme_summary(text)
+                except OSError:
+                    summary = ""
+                if summary:
+                    desc = summary
+                    break
+
+    file_contents: dict[str, str] = {}
+    for fname in KEY_FILES:
+        fpath = root / fname
+        if fpath.is_file():
+            content = _read_file_content(fpath)
+            if content is not None:
+                file_contents[fname] = content
+
+    stack = _detect_stack(root)
+    tree = _build_tree(root)
+
+    return ProjectSnapshot(
+        name=name,
+        description=desc,
+        language_stack=stack,
+        file_contents=file_contents,
+        directory_tree=tree,
     )
-    _refactored = _refactor_analyzer(_orig)
-    ast.parse(_refactored)
-    _file_path.write_text(_refactored, encoding="utf-8")
-    exec(_refactored, globals())
-except Exception:
-    pass
