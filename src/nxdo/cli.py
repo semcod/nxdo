@@ -392,6 +392,15 @@ def cmd_auto(
 
 
 def app_entry() -> None:
+    try:
+        from .autoupdate import check_for_updates
+        check_for_updates("nxdo")
+    except Exception:
+        try:
+            from nxdo.autoupdate import check_for_updates
+            check_for_updates("nxdo")
+        except Exception:
+            pass
     """Entry point used by the installed `nxdo` script."""
     app()
 
