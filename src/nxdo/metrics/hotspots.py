@@ -44,8 +44,8 @@ class AuthorSummary(NamedTuple):
     top: list[tuple[str, int]]
 
 
-def _get_file_commits_with_info(query: FileHistoryQuery) -> FileHistory:
-    """Get commits for specific file: [(hash, author, added+deleted), ...]."""
+def _fetch_file_commit_log(query: FileHistoryQuery) -> str | None:
+    """Run git log to fetch numstat and author history for a file."""
     try:
         # Get commit info with stats
         commit_log_result = subprocess.run(
@@ -56,10 +56,18 @@ def _get_file_commits_with_info(query: FileHistoryQuery) -> FileHistory:
             check=False,
         )
     except OSError:
-        return FileHistory(commits=[], churn=0)
+        return None
     if commit_log_result.returncode != 0:
+        return None
+    return commit_log_result.stdout
+
+
+def _get_file_commits_with_info(query: FileHistoryQuery) -> FileHistory:
+    """Get commits for specific file: [(hash, author, added+deleted), ...]."""
+    log_output = _fetch_file_commit_log(query)
+    if log_output is None:
         return FileHistory(commits=[], churn=0)
-    commits, churn = _parse_commit_log(commit_log_result.stdout)
+    commits, churn = _parse_commit_log(log_output)
     return FileHistory(commits=commits, churn=churn)
 
 
