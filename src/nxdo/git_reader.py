@@ -98,7 +98,10 @@ def _run(cmd: list[str], cwd: Path) -> str:
 
 def _is_git_repo(path: Path) -> bool:
     """Return True if *path* is inside a git repository."""
-    return bool(_run(["git", "rev-parse", "--git-dir"], path))
+    if (path / ".git").exists():
+        return True
+    top = _run(["git", "rev-parse", "--show-toplevel"], path)
+    return bool(top) and Path(top).resolve() == path.resolve()
 
 
 def _run_git_command(repo_path: Path, command: list[str], default: str) -> str:
