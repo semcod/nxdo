@@ -164,23 +164,19 @@ def _author_summary(file_commits: list[tuple[str, str, int]]) -> AuthorSummary:
     return AuthorSummary(author_count=len(author_counts), top=top_authors)
 
 
-def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
-    """Analyze a single file; returns None for non-code or untouched files."""
-    if query.file_path.endswith(_NON_CODE_EXTENSIONS):
-        return None
+def _has_hotspot_risk(bug_fixes: int, churn: int, author_count: int) -> bool:
+    """Return True if file meets risk criteria (fixes, high churn, or low bus factor)."""
+    return bug_fixes > 0 or churn > 50 or author_count == 1
 
-    history = _get_file_commits_with_info(query)
+
+def _build_hotspot_metrics(
+    query: FileHistoryQuery,
+    history: FileHistory,
+    bug_fixes: int,
+    authors: AuthorSummary,
+) -> HotspotMetrics:
+    """Build HotspotMetrics record for an analyzed file."""
     total_commits = len(history.commits)
-    if total_commits == 0:
-        return None
-
-    bug_fixes = _get_bug_fix_commits(query)
-    authors = _author_summary(history.commits)
-
-    # Only include if there's actual risk
-    if not (bug_fixes > 0 or history.churn > 50 or authors.author_count == 1):
-        return None
-
     return HotspotMetrics(
         file_path=query.file_path,
         bug_fix_commits=bug_fixes,
@@ -190,6 +186,23 @@ def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
         author_count=authors.author_count,
         top_authors=authors.top,
     )
+
+
+def _file_hotspot(query: FileHistoryQuery) -> HotspotMetrics | None:
+    """Analyze a single file; returns None for non-code or untouched files."""
+    if query.file_path.endswith(_NON_CODE_EXTENSIONS):
+        return None
+
+    history = _get_file_commits_with_info(query)
+    if not history.commits:
+        return None
+
+    bug_fixes = _get_bug_fix_commits(query)
+    authors = _author_summary(history.commits)
+    if not _has_hotspot_risk(bug_fixes, history.churn, authors.author_count):
+        return None
+
+    return _build_hotspot_metrics(query, history, bug_fixes, authors)
 
 
 def _hotspot_risk_score(h: HotspotMetrics) -> float:
