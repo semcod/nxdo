@@ -67,27 +67,33 @@ def module_name(path: Path) -> str:
     return ".".join([PACKAGE, *parts]) if parts else PACKAGE
 
 
+def _resolve_relative_anchor(source_module: str, is_package_init: bool, level: int) -> list[str] | None:
+    base_parts = source_module.split(".") if source_module != PACKAGE else [PACKAGE]
+    if not is_package_init and base_parts:
+        base_parts.pop()
+    for _ in range(level - 1):
+        if not base_parts:
+            return None
+        base_parts.pop()
+    return base_parts
+
+
+def _resolve_relative_import(node: ast.ImportFrom, source_module: str, is_package_init: bool) -> list[str]:
+    base_parts = _resolve_relative_anchor(source_module, is_package_init, node.level)
+    if base_parts is None:
+        return []
+    if node.module:
+        return [".".join([*base_parts, node.module])]
+    package = ".".join(base_parts)
+    return [f"{package}.{alias.name}" for alias in node.names if f"{package}.{alias.name}" in LAYERS]
+
+
 def resolve_import(node: ast.ImportFrom, source_module: str, is_package_init: bool) -> list[str]:
     """Resolve an ImportFrom to candidate internal module names."""
     if node.level == 0:
         base = node.module or ""
-        if base == PACKAGE or base.startswith(PACKAGE + "."):
-            return [base]
-        return []
-    base_parts = source_module.split(".") if source_module != PACKAGE else [PACKAGE]
-    # Relative imports anchor at the containing package: a plain module drops
-    # its own name; a package __init__ already names the anchor.
-    if not is_package_init and base_parts:
-        base_parts.pop()
-    for _ in range(node.level - 1):
-        if not base_parts:
-            return []
-        base_parts.pop()
-    if node.module:
-        return [".".join([*base_parts, node.module])]
-    # `from . import name` may reference sibling submodules.
-    package = ".".join(base_parts)
-    return [f"{package}.{alias.name}" for alias in node.names if f"{package}.{alias.name}" in LAYERS]
+        return [base] if base == PACKAGE or base.startswith(PACKAGE + ".") else []
+    return _resolve_relative_import(node, source_module, is_package_init)
 
 
 def _format_violation(path: Path, node: ast.AST, kind: str, source_module: str, target: str) -> str:
