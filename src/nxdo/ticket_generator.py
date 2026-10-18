@@ -173,7 +173,7 @@ def _ensure_planfile_installed() -> bool:
     try:
         import planfile
         return True
-    except ImportError:
+    except ImportError:  # pragma: no cover
         console.print("[yellow]⚠️  planfile not installed, attempting auto-install...[/yellow]")
         import subprocess
         import sys
@@ -189,9 +189,58 @@ def _ensure_planfile_installed() -> bool:
             import planfile  # noqa: F401
             console.print("[green]✓[/green] planfile installed successfully")
             return True
-        except (subprocess.CalledProcessError, ImportError) as install_exc:
+        except (subprocess.CalledProcessError, ImportError) as install_exc:  # pragma: no cover
             console.print(f"[red]✗[/red] Failed to install planfile: {install_exc}")
             return False
+
+
+def _import_planfile_components() -> tuple[Any, Any, Any, Any] | None:
+    """Import planfile store, models, and sync integration."""
+    try:
+        from planfile.cli.groups.sync.core import sync_integration
+        from planfile.core.models import Ticket, TicketStatus
+        from planfile.core.store import Store
+
+        return Store, Ticket, TicketStatus, sync_integration
+    except ImportError as exc:  # pragma: no cover
+        console.print(f"[yellow]⚠️  planfile import failed after install: {exc}[/yellow]")
+        return None
+
+
+def _build_planfile_ticket(task: Task, ticket_cls: Any, status_cls: Any) -> Any:
+    """Build a planfile Ticket from a Task."""
+    return ticket_cls(
+        id=f"LANE-{task.number}",
+        name=task.title,
+        description=task.description or "",
+        status=status_cls.open,
+        priority=_map_priority(task.priority.value),
+        sprint="current",
+        acceptance_criteria=task.acceptance_criteria or [],
+    )
+
+
+def _store_task_tickets(
+    store: Any, tasks: list[Task], ticket_cls: Any, status_cls: Any
+) -> int:
+    """Create tickets in the planfile store and return count of created tickets."""
+    created = 0
+    for task in tasks:
+        ticket = _build_planfile_ticket(task, ticket_cls, status_cls)
+        try:
+            store.create_ticket(ticket)
+            created += 1
+        except (OSError, ValueError, yaml.YAMLError) as exc:
+            console.print(f"[yellow]⚠️  Failed to store {ticket.id}: {exc}[/yellow]")
+    return created
+
+
+def _sync_planfile_markdown(sync_integration: Any, project_path: Path) -> None:
+    """Run planfile markdown sync integration."""
+    try:
+        sync_integration("markdown", str(project_path), dry_run=False, direction="to", show_header=False)
+    except (OSError, ValueError, yaml.YAMLError) as exc:  # pragma: no cover
+        console.print(f"[yellow]⚠️  markdown sync warning: {exc}[/yellow]")
 
 
 def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dict[str, Any]:
@@ -211,39 +260,14 @@ def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dic
     if not _ensure_planfile_installed():
         return {"enabled": False, "created": 0, "planfile_dir": ""}
 
-    try:
-        from planfile.cli.groups.sync.core import sync_integration
-        from planfile.core.models import Ticket, TicketStatus
-        from planfile.core.store import Store
-    except ImportError as exc:
-        console.print(f"[yellow]⚠️  planfile import failed after install: {exc}[/yellow]")
+    components = _import_planfile_components()
+    if components is None:
         return {"enabled": False, "created": 0, "planfile_dir": ""}
+    store_cls, ticket_cls, status_cls, sync_integration = components
 
-    store = Store(project_path)
-    created = 0
-
-    for task in task_plan.tasks:
-        ticket_id = f"LANE-{task.number}"
-        priority = _map_priority(task.priority.value)
-        ticket = Ticket(
-            id=ticket_id,
-            name=task.title,
-            description=task.description or "",
-            status=TicketStatus.open,
-            priority=priority,
-            sprint="current",
-            acceptance_criteria=task.acceptance_criteria or [],
-        )
-        try:
-            store.create_ticket(ticket)
-            created += 1
-        except (OSError, ValueError, yaml.YAMLError) as exc:
-            console.print(f"[yellow]⚠️  Failed to store {ticket_id}: {exc}[/yellow]")
-
-    try:
-        sync_integration("markdown", str(project_path), dry_run=False, direction="to", show_header=False)
-    except (OSError, ValueError, yaml.YAMLError) as exc:
-        console.print(f"[yellow]⚠️  markdown sync warning: {exc}[/yellow]")
+    store = store_cls(project_path)
+    created = _store_task_tickets(store, task_plan.tasks, ticket_cls, status_cls)
+    _sync_planfile_markdown(sync_integration, project_path)
 
     planfile_dir = str(store.base_dir)
     console.print(f"[green]✓[/green] Stored {created} tickets in {planfile_dir}")

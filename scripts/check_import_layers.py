@@ -26,6 +26,7 @@ PACKAGE = "nxdo"
 # Layer map: lower number = deeper layer. See docs/architecture.md.
 LAYERS: dict[str, int] = {
     # L0 foundation: no internal imports.
+    f"{PACKAGE}.autoupdate": 0,
     f"{PACKAGE}.config": 0,
     f"{PACKAGE}.koru_context": 0,
     f"{PACKAGE}.text_builder": 0,
