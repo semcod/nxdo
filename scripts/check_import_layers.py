@@ -90,33 +90,53 @@ def resolve_import(node: ast.ImportFrom, source_module: str, is_package_init: bo
     return [f"{package}.{alias.name}" for alias in node.names if f"{package}.{alias.name}" in LAYERS]
 
 
+def _format_violation(path: Path, node: ast.AST, kind: str, source_module: str, target: str) -> str:
+    line = getattr(node, "lineno", "?")
+    return f"{path.relative_to(REPO_ROOT)}:{line}: {kind} violation: {source_module} -> {target} ({VIOLATION_HINTS[kind]})"
+
+
+def _check_import(node: ast.Import, path: Path, source_module: str) -> list[str]:
+    violations: list[str] = []
+    for alias in node.names:
+        target = alias.name
+        if target == PACKAGE or target.startswith(PACKAGE + "."):
+            violations.append(_format_violation(path, node, "style", source_module, target))
+    return violations
+
+
+def _check_import_from(
+    node: ast.ImportFrom, path: Path, source_module: str, source_layer: int, is_package_init: bool
+) -> list[str]:
+    violations: list[str] = []
+    for target in resolve_import(node, source_module, is_package_init):
+        if target not in LAYERS:
+            violations.append(_format_violation(path, node, "unknown", source_module, target))
+            continue
+        if node.level == 0:
+            violations.append(_format_violation(path, node, "style", source_module, target))
+        if LAYERS[target] > source_layer:
+            violations.append(_format_violation(path, node, "layer", source_module, target))
+    return violations
+
+
+def _check_node(
+    node: ast.AST, path: Path, source_module: str, source_layer: int, is_package_init: bool
+) -> list[str]:
+    if isinstance(node, ast.Import):
+        return _check_import(node, path, source_module)
+    if isinstance(node, ast.ImportFrom):
+        return _check_import_from(node, path, source_module, source_layer, is_package_init)
+    return []
+
+
 def check_file(path: Path) -> list[str]:
     source_module = module_name(path)
     source_layer = LAYERS[source_module]
     is_package_init = path.name == "__init__.py"
     tree = ast.parse(path.read_text(encoding="utf-8"))
     violations: list[str] = []
-
-    def record(kind: str, target: str, node: ast.AST) -> None:
-        line = getattr(node, "lineno", "?")
-        violations.append(f"{path.relative_to(REPO_ROOT)}:{line}: {kind} violation: {source_module} -> {target} ({VIOLATION_HINTS[kind]})")
-
     for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            for alias in node.names:
-                target = alias.name
-                if target == PACKAGE or target.startswith(PACKAGE + "."):
-                    record("style", target, node)
-        elif isinstance(node, ast.ImportFrom):
-            targets = resolve_import(node, source_module, is_package_init)
-            for target in targets:
-                if target not in LAYERS:
-                    record("unknown", target, node)
-                    continue
-                if node.level == 0:
-                    record("style", target, node)
-                if LAYERS[target] > source_layer:
-                    record("layer", target, node)
+        violations.extend(_check_node(node, path, source_module, source_layer, is_package_init))
     return violations
 
 
