@@ -8,7 +8,7 @@ version = "0.2.27"
 description = "Generate the next 10 project tasks from project state, git history and an LLM prompt."
 readme = "README.md"
 requires-python = ">=3.10"
-license = "Apache-2.0"
+license = {text = "Apache-2.0"}
 authors = [{ name = "semcod" }, {name = "Tom Sapletta",email = "tom@sapletta.com"}]
 keywords = ["planning", "llm", "git", "roadmap", "tasks"]
 classifiers = [
