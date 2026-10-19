@@ -89,11 +89,15 @@ def _resolve_relative_import(node: ast.ImportFrom, source_module: str, is_packag
     return [f"{package}.{alias.name}" for alias in node.names if f"{package}.{alias.name}" in LAYERS]
 
 
+def _resolve_absolute_import(node: ast.ImportFrom) -> list[str]:
+    base = node.module or ""
+    return [base] if base == PACKAGE or base.startswith(PACKAGE + ".") else []
+
+
 def resolve_import(node: ast.ImportFrom, source_module: str, is_package_init: bool) -> list[str]:
     """Resolve an ImportFrom to candidate internal module names."""
     if node.level == 0:
-        base = node.module or ""
-        return [base] if base == PACKAGE or base.startswith(PACKAGE + ".") else []
+        return _resolve_absolute_import(node)
     return _resolve_relative_import(node, source_module, is_package_init)
 
 
