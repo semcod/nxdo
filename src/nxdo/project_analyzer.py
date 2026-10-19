@@ -116,16 +116,20 @@ def _detect_manifest_stack(root: Path) -> list[str]:
     return stack
 
 
+def _record_file_language(filename: str, stack: list[str]) -> None:
+    if _should_ignore_entry(filename):
+        return
+    lang = _EXTENSION_TO_STACK.get(Path(filename).suffix.lower())
+    if lang and lang not in stack:
+        stack.append(lang)
+
+
 def _walk_stack(root: Path, stack: list[str]) -> None:
     try:
         for _, dirnames, filenames in os.walk(root):
             dirnames[:] = [d for d in dirnames if not _should_ignore_entry(d)]
             for filename in filenames:
-                if _should_ignore_entry(filename):
-                    continue
-                lang = _EXTENSION_TO_STACK.get(Path(filename).suffix.lower())
-                if lang and lang not in stack:
-                    stack.append(lang)
+                _record_file_language(filename, stack)
     except OSError:
         pass
 
