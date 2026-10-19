@@ -22,6 +22,14 @@ class ProjectSnapshot:
     file_contents: dict[str, str] = field(default_factory=dict)
     directory_tree: str = ""
 
+    def _format_file_sections(self) -> list[str]:
+        if not self.file_contents:
+            return []
+        lines: list[str] = ["Files:"]
+        for fname, content in sorted(self.file_contents.items()):
+            lines.append(f"--- {fname} ---\n{content}")
+        return lines
+
     def to_text(self) -> str:
         lines: list[str] = [f"Project: {self.name}"]
         if self.description:
@@ -30,10 +38,7 @@ class ProjectSnapshot:
             lines.append(f"Language stack: {', '.join(self.language_stack)}")
         if self.directory_tree:
             lines.append(f"Directory tree:\n{self.directory_tree}")
-        if self.file_contents:
-            lines.append("Files:")
-            for fname, content in sorted(self.file_contents.items()):
-                lines.append(f"--- {fname} ---\n{content}")
+        lines.extend(self._format_file_sections())
         return "\n\n".join(lines)
 
 
@@ -244,21 +249,28 @@ def _resolve_name_and_description(root: Path, fallback_name: str | None = None) 
     return name, description or _find_readme_description(root)
 
 
+def _read_file_content(entry: Path) -> str | None:
+    try:
+        text = entry.read_text(encoding="utf-8")
+        if len(text) > MAX_FILE_CHARS:
+            return text[:MAX_FILE_CHARS] + "\n... [truncated]"
+        return text
+    except (OSError, UnicodeDecodeError):
+        return None
+
+
 def _collect_file_contents(root: Path) -> dict[str, str]:
     file_contents: dict[str, str] = {}
     try:
-        for entry in sorted(root.iterdir(), key=lambda p: p.name):
-            if not entry.is_file() or _should_ignore_entry(entry.name):
-                continue
-            try:
-                text = entry.read_text(encoding="utf-8")
-                if len(text) > MAX_FILE_CHARS:
-                    text = text[:MAX_FILE_CHARS] + "\n... [truncated]"
-                file_contents[entry.name] = text
-            except (OSError, UnicodeDecodeError):
-                continue
+        entries = sorted(root.iterdir(), key=lambda p: p.name)
     except OSError:
-        pass
+        return file_contents
+    for entry in entries:
+        if not entry.is_file() or _should_ignore_entry(entry.name):
+            continue
+        content = _read_file_content(entry)
+        if content is not None:
+            file_contents[entry.name] = content
     return file_contents
 
 
