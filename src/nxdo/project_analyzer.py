@@ -192,8 +192,8 @@ def _extract_pyproject_metadata(root: Path, fallback_name: str) -> tuple[str, st
     if not path.is_file():
         return None
     try:
-        name, desc = _parse_pyproject(path.read_text(encoding="utf-8"), fallback_name)
-        return name or fallback_name, desc
+        parsed_name, desc = _parse_pyproject(path.read_text(encoding="utf-8"), fallback_name)
+        return parsed_name or fallback_name, desc
     except OSError:
         return fallback_name, ""
 
@@ -202,8 +202,8 @@ def _extract_package_json_metadata(root: Path, fallback_name: str) -> tuple[str,
     path = root / "package.json"
     if not path.is_file():
         return None
-    name, desc = _parse_package_json(path, fallback_name)
-    return name or fallback_name, desc
+    parsed_name, desc = _parse_package_json(path, fallback_name)
+    return parsed_name or fallback_name, desc
 
 
 def _extract_cargo_metadata(root: Path, fallback_name: str) -> tuple[str, str] | None:
@@ -211,8 +211,8 @@ def _extract_cargo_metadata(root: Path, fallback_name: str) -> tuple[str, str] |
     if not path.is_file():
         return None
     try:
-        name, desc = _parse_cargo(path.read_text(encoding="utf-8"), fallback_name)
-        return name or fallback_name, desc
+        parsed_name, desc = _parse_cargo(path.read_text(encoding="utf-8"), fallback_name)
+        return parsed_name or fallback_name, desc
     except OSError:
         return fallback_name, ""
 
@@ -245,8 +245,8 @@ def _find_readme_description(root: Path) -> str:
 
 def _resolve_name_and_description(root: Path, fallback_name: str | None = None) -> tuple[str, str]:
     fallback = root.name if fallback_name is None else fallback_name
-    name, description = _extract_manifest_metadata(root, fallback)
-    return name, description or _find_readme_description(root)
+    resolved_name, description = _extract_manifest_metadata(root, fallback)
+    return resolved_name, description or _find_readme_description(root)
 
 
 def _read_file_content(entry: Path) -> str | None:
@@ -276,10 +276,10 @@ def _collect_file_contents(root: Path) -> dict[str, str]:
 
 def analyze_project(root: Path | str) -> ProjectSnapshot:
     root = Path(root)
-    name, description = _resolve_name_and_description(root, root.name)
+    project_name, description = _resolve_name_and_description(root, root.name)
 
     return ProjectSnapshot(
-        name=name,
+        name=project_name,
         description=description,
         language_stack=_detect_stack(root),
         file_contents=_collect_file_contents(root),
