@@ -93,11 +93,8 @@ def _load_doctor_status(project_path: Path, state: KoruProjectState) -> None:
         logger.debug("doctor.run state unavailable: %s", exc)
 
 
-def _load_project_state(project_path: Path) -> KoruProjectState:
-    """Load current project state via koru APIs."""
-    state = KoruProjectState()
-
-    # Load open planfile tickets
+def _load_open_tickets(project_path: Path, state: KoruProjectState) -> None:
+    """Load open planfile tickets into project state."""
     try:
         from koruapi.invoke import invoke_integration
         tickets_result = invoke_integration(
@@ -111,8 +108,12 @@ def _load_project_state(project_path: Path) -> KoruProjectState:
     except (ImportError, RuntimeError) as exc:
         logger.debug("planfile.tickets state unavailable: %s", exc)
 
-    _load_doctor_status(project_path, state)
 
+def _load_project_state(project_path: Path) -> KoruProjectState:
+    """Load current project state via koru APIs."""
+    state = KoruProjectState()
+    _load_open_tickets(project_path, state)
+    _load_doctor_status(project_path, state)
     return state
 
 
