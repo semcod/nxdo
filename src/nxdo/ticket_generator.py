@@ -250,6 +250,13 @@ def _prepare_planfile_components() -> tuple[Any, Any, Any, Any] | None:
     return _import_planfile_components()
 
 
+def _report_planfile_sync(store: Any, created: int) -> dict[str, Any]:
+    """Build the planfile sync report and log the stored ticket count."""
+    planfile_dir = str(store.base_dir)
+    console.print(f"[green]✓[/green] Stored {created} tickets in {planfile_dir}")
+    return {"enabled": True, "created": created, "planfile_dir": planfile_dir}
+
+
 def _apply_planfile_sync(
     components: tuple[Any, Any, Any, Any],
     task_plan: TaskPlan,
@@ -260,9 +267,7 @@ def _apply_planfile_sync(
     store = store_cls(project_path)
     created = _store_task_tickets(store, task_plan.tasks, ticket_cls, status_cls)
     _sync_planfile_markdown(sync_integration, project_path)
-    planfile_dir = str(store.base_dir)
-    console.print(f"[green]✓[/green] Stored {created} tickets in {planfile_dir}")
-    return {"enabled": True, "created": created, "planfile_dir": planfile_dir}
+    return _report_planfile_sync(store, created)
 
 
 def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dict[str, Any]:
