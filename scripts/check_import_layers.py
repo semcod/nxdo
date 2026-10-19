@@ -77,9 +77,9 @@ def module_name(path: Path) -> str:
     return ".".join([PACKAGE, *parts]) if parts else PACKAGE
 
 
-def _resolve_relative_anchor(source_module: str, is_package_init: bool, level: int) -> list[str] | None:
-    base_parts = source_module.split(".") if source_module != PACKAGE else [PACKAGE]
-    if not is_package_init and base_parts:
+def _resolve_relative_anchor(ctx: ModuleContext, level: int) -> list[str] | None:
+    base_parts = ctx.source_module.split(".") if ctx.source_module != PACKAGE else [PACKAGE]
+    if not ctx.is_package_init and base_parts:
         base_parts.pop()
     for _ in range(level - 1):
         if not base_parts:
@@ -88,8 +88,8 @@ def _resolve_relative_anchor(source_module: str, is_package_init: bool, level: i
     return base_parts
 
 
-def _resolve_relative_import(node: ast.ImportFrom, source_module: str, is_package_init: bool) -> list[str]:
-    base_parts = _resolve_relative_anchor(source_module, is_package_init, node.level)
+def _resolve_relative_import(node: ast.ImportFrom, ctx: ModuleContext) -> list[str]:
+    base_parts = _resolve_relative_anchor(ctx, node.level)
     if base_parts is None:
         return []
     if node.module:
@@ -103,11 +103,11 @@ def _resolve_absolute_import(node: ast.ImportFrom) -> list[str]:
     return [base] if base == PACKAGE or base.startswith(PACKAGE + ".") else []
 
 
-def resolve_import(node: ast.ImportFrom, source_module: str, is_package_init: bool) -> list[str]:
+def resolve_import(node: ast.ImportFrom, ctx: ModuleContext) -> list[str]:
     """Resolve an ImportFrom to candidate internal module names."""
     if node.level == 0:
         return _resolve_absolute_import(node)
-    return _resolve_relative_import(node, source_module, is_package_init)
+    return _resolve_relative_import(node, ctx)
 
 
 def _format_violation(path: Path, node: ast.AST, kind: str, source_module: str, target: str) -> str:
@@ -126,7 +126,7 @@ def _check_import(node: ast.Import, ctx: ModuleContext) -> list[str]:
 
 def _check_import_from(node: ast.ImportFrom, ctx: ModuleContext) -> list[str]:
     violations: list[str] = []
-    for target in resolve_import(node, ctx.source_module, ctx.is_package_init):
+    for target in resolve_import(node, ctx):
         if target not in LAYERS:
             violations.append(_format_violation(ctx.path, node, "unknown", ctx.source_module, target))
             continue
