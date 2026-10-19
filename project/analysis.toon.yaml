@@ -1,75 +1,84 @@
-# code2llm | 37f 5784L | python:21,yaml:7,txt:6,shell:2,toml:1 | 2026-09-19
+# code2llm | 51f 7611L | python:22,md:12,yaml:6,txt:6,shell:3,json:1,toml:1 | 2026-10-19
 # generated in 0.01s
-# CC̅=3.4 | critical:0/150 | dups:0 | cycles:0
+# CC̅=3.2 | critical:2/191 | dups:0 | cycles:1
 
-HEALTH[0]: ok
+project_analyzer:
+  stable_modules: |
+    - model
+    - data_pipeline
+    - feature_engineering
+HEALTH[2]:
+  🟡 CC    _detect_stack CC=18 (limit:15)
+  🟡 CC    analyze_project CC=22 (limit:15)
 
-REFACTOR[0]: none needed
+REFACTOR[2]:
+  1. split 2 high-CC methods  (CC>15)
+  2. break 1 circular dependencies
 
 PIPELINES[34]:
-  [1] Src [cmd_plan]: cmd_plan → _generate_plan → generate_next_tasks → analyze_project → ...(2 more)
+  [1] Src [__str__]: __str__
       PURITY: 100% pure
-  [2] Src [cmd_print_context]: cmd_print_context → analyze_project → _collect_file_contents → _read_file_safely
+  [2] Src [to_text]: to_text
       PURITY: 100% pure
-  [3] Src [cmd_print_prompt]: cmd_print_prompt → print
+  [3] Src [__init__]: __init__
       PURITY: 100% pure
-  [4] Src [cmd_validate]: cmd_validate
+  [4] Src [__init__]: __init__ → get_settings
       PURITY: 100% pure
-  [5] Src [cmd_tickets]: cmd_tickets → _generate_plan → generate_next_tasks → analyze_project → ...(2 more)
+  [5] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [6] Src [cmd_metrics]: cmd_metrics → collect_file_metrics → _find_source_files
+  [6] Src [_call_api]: _call_api → _extract_content
       PURITY: 100% pure
-  [7] Src [cmd_auto]: cmd_auto → identify_bug_hotspots → _resolve_target_files
+  [7] Src [_build_system_prompt]: _build_system_prompt → get_koru_system_prompt_extension
       PURITY: 100% pure
-  [8] Src [app_entry]: app_entry
+  [8] Src [_build_payload]: _build_payload
       PURITY: 100% pure
-  [9] Src [main]: main → print
+  [9] Src [_build_headers]: _build_headers
       PURITY: 100% pure
-  [10] Src [__str__]: __str__
+  [10] Src [_post_chat]: _post_chat
       PURITY: 100% pure
-  [11] Src [to_text]: to_text
+  [11] Src [_http_error]: _http_error → _extract_error_detail
       PURITY: 100% pure
-  [12] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
+  [12] Src [_parse_success_json]: _parse_success_json
       PURITY: 100% pure
-  [13] Src [__init__]: __init__
+  [13] Src [parse_task_plan_response]: parse_task_plan_response → _parse_response → _strip_markdown_fences
       PURITY: 100% pure
-  [14] Src [generate_task_plan]: generate_task_plan → build_user_prompt
+  [14] Src [__init__]: __init__
       PURITY: 100% pure
-  [15] Src [__init__]: __init__
+  [15] Src [generate_task_plan]: generate_task_plan → build_user_prompt
       PURITY: 100% pure
-  [16] Src [line]: line
+  [16] Src [__init__]: __init__
       PURITY: 100% pure
-  [17] Src [text]: text
+  [17] Src [line]: line
       PURITY: 100% pure
-  [18] Src [to_text]: to_text
+  [18] Src [text]: text
       PURITY: 100% pure
-  [19] Src [__str__]: __str__
+  [19] Src [to_text]: to_text
       PURITY: 100% pure
-  [20] Src [to_dict]: to_dict
+  [20] Src [__str__]: __str__
       PURITY: 100% pure
-  [21] Src [__str__]: __str__
+  [21] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [22] Src [to_dict]: to_dict
+  [22] Src [__str__]: __str__
       PURITY: 100% pure
-  [23] Src [__init__]: __init__
+  [23] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [24] Src [__init__]: __init__ → get_settings
+  [24] Src [cmd_plan]: cmd_plan → _generate_plan → generate_next_tasks → analyze_project → ...(2 more)
       PURITY: 100% pure
-  [25] Src [generate_plan]: generate_plan → _parse_response → _strip_markdown_fences
+  [25] Src [cmd_print_context]: cmd_print_context → _collect_context_texts → analyze_project → _detect_stack → ...(1 more)
       PURITY: 100% pure
-  [26] Src [_call_api]: _call_api → _extract_content
+  [26] Src [cmd_print_prompt]: cmd_print_prompt → print
       PURITY: 100% pure
-  [27] Src [_build_system_prompt]: _build_system_prompt → get_koru_system_prompt_extension
+  [27] Src [cmd_validate]: cmd_validate
       PURITY: 100% pure
-  [28] Src [_build_payload]: _build_payload
+  [28] Src [cmd_tickets]: cmd_tickets → _generate_plan → generate_next_tasks → analyze_project → ...(2 more)
       PURITY: 100% pure
-  [29] Src [_build_headers]: _build_headers
+  [29] Src [cmd_metrics]: cmd_metrics → _print_complexity_report → collect_file_metrics → _find_source_files
       PURITY: 100% pure
-  [30] Src [_post_chat]: _post_chat
+  [30] Src [cmd_auto]: cmd_auto → _print_auto_health_report → identify_bug_hotspots → _resolve_target_files
       PURITY: 100% pure
-  [31] Src [_http_error]: _http_error → _extract_error_detail
+  [31] Src [app_entry]: app_entry → check_for_updates → _get_cache_dir
       PURITY: 100% pure
-  [32] Src [_parse_success_json]: _parse_success_json
+  [32] Src [main]: main → _parse_legacy_args
       PURITY: 100% pure
   [33] Src [get_critical_bus_factor_files]: get_critical_bus_factor_files → calculate_bus_factor → _resolve_target_files
       PURITY: 100% pure
@@ -77,23 +86,24 @@ PIPELINES[34]:
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=8.0    ←in:0  →out:3
-  │ check_import_layers        142L  0C    4m  CC=13     ←0
+  scripts/                        CC̄=3.9    ←in:0  →out:3
+  │ check_import_layers        169L  0C   10m  CC=6      ←0
   │
-  src/                            CC̄=3.4    ←in:0  →out:0
-  │ cli                        390L  1C   16m  CC=11     ←0
+  src/                            CC̄=3.2    ←in:0  →out:0
+  │ cli                        460L  1C   27m  CC=6      ←0
   │ complexity                 366L  4C   18m  CC=6      ←1
   │ openai_compat              342L  3C   18m  CC=12     ←1
-  │ project_analyzer           288L  1C   19m  CC=5      ←2
-  │ ticket_generator           287L  0C   13m  CC=8      ←1
-  │ koru_context               282L  3C    6m  CC=7      ←2
-  │ hotspots                   264L  2C   10m  CC=14     ←1
-  │ git_reader                 257L  2C   19m  CC=7      ←2
-  │ coupling                   199L  1C    5m  CC=13     ←1
+  │ ticket_generator           329L  0C   21m  CC=5      ←1
+  │ hotspots                   323L  4C   17m  CC=8      ←1
+  │ koru_context               313L  3C   11m  CC=5      ←2
+  │ git_reader                 260L  2C   19m  CC=7      ←2
+  │ !! project_analyzer           245L  1C   14m  CC=22     ←2
+  │ coupling                   207L  1C    7m  CC=10     ←1
+  │ autoupdate                 178L  0C    5m  CC=14     ←1
   │ models                      91L  4C    4m  CC=7      ←0
   │ llm_client                  88L  1C    4m  CC=3      ←2
-  │ output                      71L  0C    4m  CC=3      ←1
-  │ planner                     58L  0C    1m  CC=5      ←1
+  │ output                      76L  0C    5m  CC=3      ←1
+  │ planner                     65L  0C    2m  CC=3      ←1
   │ config                      46L  1C    1m  CC=3      ←3
   │ __init__                    31L  0C    0m  CC=0.0    ←0
   │ base                        24L  2C    1m  CC=1      ←0
@@ -106,19 +116,34 @@ LAYERS:
   │ nxdo-self-prompt.txt       482L  0C    0m  CC=0.0    ←0
   │ nxdo-self-context.txt      468L  0C    0m  CC=0.0    ←0
   │ nxdo-self-plan.txt         171L  0C    0m  CC=0.0    ←0
+  │ nxdo-self-plan.json        148L  0C    0m  CC=0.0    ←0
   │ check-examples.sh           70L  0C    4m  CC=0.0    ←2
   │ nxdo-self-metrics.txt       48L  0C    0m  CC=0.0    ←0
+  │ README.md                   47L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! goal.yaml                  528L  0C    0m  CC=0.0    ←0
-  │ koru.yaml                  148L  0C    0m  CC=0.0    ←0
+  │ !! goal.yaml                  535L  0C    0m  CC=0.0    ←0
+  │ CHANGELOG.md               483L  0C    0m  CC=0.0    ←0
+  │ README.md                  376L  0C    0m  CC=0.0    ←0
   │ strategy.yaml              142L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml             104L  0C    0m  CC=0.0    ←0
   │ wup.yaml                   100L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml             100L  0C    0m  CC=0.0    ←0
+  │ CONTRIBUTING.md             95L  0C    0m  CC=0.0    ←0
   │ regix.yaml                  93L  0C    0m  CC=0.0    ←0
   │ tree.txt                    73L  0C    0m  CC=0.0    ←0
   │ project.sh                  48L  0C    0m  CC=0.0    ←0
+  │ AGENTS.md                   32L  0C    0m  CC=0.0    ←0
+  │ TODO.md                     29L  0C    0m  CC=0.0    ←0
+  │ todo.md                     26L  0C    0m  CC=0.0    ←0
   │ local.dev.txt               12L  0C    0m  CC=0.0    ←0
+  │ tree.sh                      1L  0C    0m  CC=0.0    ←0
+  │
+  docs/                           CC̄=0.0    ←in:0  →out:0
+  │ how-it-works.md            186L  0C    0m  CC=0.0    ←0
+  │ architecture.md             61L  0C    0m  CC=0.0    ←0
+  │ planfile-integration.md     42L  0C    0m  CC=0.0    ←0
+  │ dependencies.md             31L  0C    0m  CC=0.0    ←0
+  │ README.md                   20L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
   │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
@@ -126,14 +151,12 @@ LAYERS:
   │
 
 COUPLING:
-                    examples      src.nxdo       scripts  nxdo.metrics
-      examples            ──            ←6            ←3                hub
-      src.nxdo             6            ──                           2  !! fan-out
-       scripts             3                          ──              
-  nxdo.metrics                          ←2                          ──
-  CYCLES: none
+            examples  src.nxdo   scripts
+  examples        ──        ←6        ←3  hub
+  src.nxdo         6        ──          
+   scripts         3                  ──
+  CYCLES: 1
   HUB: examples/ (fan-in=9)
-  SMELL: src.nxdo/ fan-out=8 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
