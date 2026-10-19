@@ -105,6 +105,14 @@ def cmd_plan(
         render_plan(plan, console)
 
 
+def _display_context(project_text: str, git_text: str, raw: bool) -> None:
+    if raw:
+        print(project_text)
+        print(git_text)
+    else:
+        render_context(project_text, git_text, console)
+
+
 @app.command("print-context")
 def cmd_print_context(
     repo: Path = typer.Argument(Path("."), help="Path to the repository to analyze."),
@@ -113,12 +121,7 @@ def cmd_print_context(
 ) -> None:
     """Print the assembled project and git context (no LLM call)."""
     project_text, git_text = _collect_context_texts(repo, max_commits)
-
-    if raw:
-        print(project_text)
-        print(git_text)
-    else:
-        render_context(project_text, git_text, console)
+    _display_context(project_text, git_text, raw=raw)
 
 
 @app.command("print-prompt")
