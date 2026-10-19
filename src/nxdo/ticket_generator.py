@@ -243,6 +243,28 @@ def _sync_planfile_markdown(sync_integration: Any, project_path: Path) -> None:
         console.print(f"[yellow]⚠️  markdown sync warning: {exc}[/yellow]")
 
 
+def _prepare_planfile_components() -> tuple[Any, Any, Any, Any] | None:
+    """Ensure planfile is available and return imported components."""
+    if not _ensure_planfile_installed():
+        return None
+    return _import_planfile_components()
+
+
+def _apply_planfile_sync(
+    components: tuple[Any, Any, Any, Any],
+    task_plan: TaskPlan,
+    project_path: Path,
+) -> dict[str, Any]:
+    """Store tickets in planfile and sync markdown integration."""
+    store_cls, ticket_cls, status_cls, sync_integration = components
+    store = store_cls(project_path)
+    created = _store_task_tickets(store, task_plan.tasks, ticket_cls, status_cls)
+    _sync_planfile_markdown(sync_integration, project_path)
+    planfile_dir = str(store.base_dir)
+    console.print(f"[green]✓[/green] Stored {created} tickets in {planfile_dir}")
+    return {"enabled": True, "created": created, "planfile_dir": planfile_dir}
+
+
 def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dict[str, Any]:
     """Store TaskPlan tasks as planfile tickets in .planfile/ and sync to markdown.
 
@@ -257,21 +279,10 @@ def sync_to_planfile(task_plan: TaskPlan, project_path: Path = Path(".")) -> dic
     Returns:
         Report dict with created count and planfile directory path
     """
-    if not _ensure_planfile_installed():
-        return {"enabled": False, "created": 0, "planfile_dir": ""}
-
-    components = _import_planfile_components()
+    components = _prepare_planfile_components()
     if components is None:
         return {"enabled": False, "created": 0, "planfile_dir": ""}
-    store_cls, ticket_cls, status_cls, sync_integration = components
-
-    store = store_cls(project_path)
-    created = _store_task_tickets(store, task_plan.tasks, ticket_cls, status_cls)
-    _sync_planfile_markdown(sync_integration, project_path)
-
-    planfile_dir = str(store.base_dir)
-    console.print(f"[green]✓[/green] Stored {created} tickets in {planfile_dir}")
-    return {"enabled": True, "created": created, "planfile_dir": planfile_dir}
+    return _apply_planfile_sync(components, task_plan, project_path)
 
 
 def export_to_planfile_yaml(task_plan: TaskPlan, output_path: Path) -> None:
