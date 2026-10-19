@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import ast
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -58,6 +59,14 @@ VIOLATION_HINTS = {
     "style": "use the relative form (from .module import ...) inside src/nxdo",
     "unknown": "add the new module to the LAYERS map in scripts/check_import_layers.py",
 }
+
+
+@dataclass(frozen=True)
+class ModuleContext:
+    path: Path
+    source_module: str
+    source_layer: int
+    is_package_init: bool
 
 
 def module_name(path: Path) -> str:
@@ -106,48 +115,48 @@ def _format_violation(path: Path, node: ast.AST, kind: str, source_module: str, 
     return f"{path.relative_to(REPO_ROOT)}:{line}: {kind} violation: {source_module} -> {target} ({VIOLATION_HINTS[kind]})"
 
 
-def _check_import(node: ast.Import, path: Path, source_module: str) -> list[str]:
+def _check_import(node: ast.Import, ctx: ModuleContext) -> list[str]:
     violations: list[str] = []
     for alias in node.names:
         target = alias.name
         if target == PACKAGE or target.startswith(PACKAGE + "."):
-            violations.append(_format_violation(path, node, "style", source_module, target))
+            violations.append(_format_violation(ctx.path, node, "style", ctx.source_module, target))
     return violations
 
 
-def _check_import_from(
-    node: ast.ImportFrom, path: Path, source_module: str, source_layer: int, is_package_init: bool
-) -> list[str]:
+def _check_import_from(node: ast.ImportFrom, ctx: ModuleContext) -> list[str]:
     violations: list[str] = []
-    for target in resolve_import(node, source_module, is_package_init):
+    for target in resolve_import(node, ctx.source_module, ctx.is_package_init):
         if target not in LAYERS:
-            violations.append(_format_violation(path, node, "unknown", source_module, target))
+            violations.append(_format_violation(ctx.path, node, "unknown", ctx.source_module, target))
             continue
         if node.level == 0:
-            violations.append(_format_violation(path, node, "style", source_module, target))
-        if LAYERS[target] > source_layer:
-            violations.append(_format_violation(path, node, "layer", source_module, target))
+            violations.append(_format_violation(ctx.path, node, "style", ctx.source_module, target))
+        if LAYERS[target] > ctx.source_layer:
+            violations.append(_format_violation(ctx.path, node, "layer", ctx.source_module, target))
     return violations
 
 
-def _check_node(
-    node: ast.AST, path: Path, source_module: str, source_layer: int, is_package_init: bool
-) -> list[str]:
+def _check_node(node: ast.AST, ctx: ModuleContext) -> list[str]:
     if isinstance(node, ast.Import):
-        return _check_import(node, path, source_module)
+        return _check_import(node, ctx)
     if isinstance(node, ast.ImportFrom):
-        return _check_import_from(node, path, source_module, source_layer, is_package_init)
+        return _check_import_from(node, ctx)
     return []
 
 
 def check_file(path: Path) -> list[str]:
     source_module = module_name(path)
-    source_layer = LAYERS[source_module]
-    is_package_init = path.name == "__init__.py"
+    ctx = ModuleContext(
+        path=path,
+        source_module=source_module,
+        source_layer=LAYERS[source_module],
+        is_package_init=path.name == "__init__.py",
+    )
     tree = ast.parse(path.read_text(encoding="utf-8"))
     violations: list[str] = []
     for node in ast.walk(tree):
-        violations.extend(_check_node(node, path, source_module, source_layer, is_package_init))
+        violations.extend(_check_node(node, ctx))
     return violations
 
 
