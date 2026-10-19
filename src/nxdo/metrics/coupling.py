@@ -85,8 +85,6 @@ def _score_file_pairs(
     for (file_a, file_b), together in file_pair_commits.items():
         total_a = file_commits[file_a]
         total_b = file_commits[file_b]
-        if total_a <= 0 or total_b <= 0:
-            continue
         coupling = together / min(total_a, total_b)
         if coupling < min_coupling:
             continue
