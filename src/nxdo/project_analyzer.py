@@ -90,40 +90,49 @@ def _readme_summary(text: str) -> str:
     return ""
 
 
-def _detect_stack(root: Path) -> list[str]:
+_ROOT_MANIFESTS: tuple[tuple[tuple[str, ...], str], ...] = (
+    (("pyproject.toml", "setup.py", "requirements.txt"), "Python"),
+    (("package.json", "tsconfig.json"), "JavaScript/TypeScript"),
+    (("Cargo.toml",), "Rust"),
+    (("go.mod",), "Go"),
+)
+
+_EXTENSION_TO_STACK: dict[str, str] = {
+    ".py": "Python",
+    ".js": "JavaScript/TypeScript",
+    ".ts": "JavaScript/TypeScript",
+    ".jsx": "JavaScript/TypeScript",
+    ".tsx": "JavaScript/TypeScript",
+    ".rs": "Rust",
+    ".go": "Go",
+}
+
+
+def _detect_manifest_stack(root: Path) -> list[str]:
     stack: list[str] = []
-
-    def _add(lang: str) -> None:
-        if lang not in stack:
+    for filenames, lang in _ROOT_MANIFESTS:
+        if any((root / fname).is_file() for fname in filenames):
             stack.append(lang)
+    return stack
 
-    if (root / "pyproject.toml").is_file() or (root / "setup.py").is_file() or (root / "requirements.txt").is_file():
-        _add("Python")
-    if (root / "package.json").is_file() or (root / "tsconfig.json").is_file():
-        _add("JavaScript/TypeScript")
-    if (root / "Cargo.toml").is_file():
-        _add("Rust")
-    if (root / "go.mod").is_file():
-        _add("Go")
 
+def _walk_stack(root: Path, stack: list[str]) -> None:
     try:
         for _, dirnames, filenames in os.walk(root):
             dirnames[:] = [d for d in dirnames if not _should_ignore_entry(d)]
             for filename in filenames:
                 if _should_ignore_entry(filename):
                     continue
-                ext = Path(filename).suffix.lower()
-                if ext == ".py":
-                    _add("Python")
-                elif ext in {".js", ".ts", ".jsx", ".tsx"}:
-                    _add("JavaScript/TypeScript")
-                elif ext == ".rs":
-                    _add("Rust")
-                elif ext == ".go":
-                    _add("Go")
+                lang = _EXTENSION_TO_STACK.get(Path(filename).suffix.lower())
+                if lang and lang not in stack:
+                    stack.append(lang)
     except OSError:
         pass
 
+
+def _detect_stack(root: Path) -> list[str]:
+    stack = _detect_manifest_stack(root)
+    _walk_stack(root, stack)
     return stack
 
 
