@@ -238,6 +238,12 @@ def _find_readme_description(root: Path) -> str:
     return ""
 
 
+def _resolve_name_and_description(root: Path, fallback_name: str | None = None) -> tuple[str, str]:
+    fallback = root.name if fallback_name is None else fallback_name
+    name, description = _extract_manifest_metadata(root, fallback)
+    return name, description or _find_readme_description(root)
+
+
 def _collect_file_contents(root: Path) -> dict[str, str]:
     file_contents: dict[str, str] = {}
     try:
@@ -258,9 +264,7 @@ def _collect_file_contents(root: Path) -> dict[str, str]:
 
 def analyze_project(root: Path | str) -> ProjectSnapshot:
     root = Path(root)
-    name, description = _extract_manifest_metadata(root, root.name)
-    if not description:
-        description = _find_readme_description(root)
+    name, description = _resolve_name_and_description(root, root.name)
 
     return ProjectSnapshot(
         name=name,
