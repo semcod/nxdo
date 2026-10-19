@@ -152,6 +152,36 @@ def _handle_available_update(pkg_name: str, current_version: str, cached_latest:
         sys.stderr.flush()
 
 
+def _is_disabled() -> bool:
+    """Check whether autoupdate is disabled via environment."""
+    return bool(os.environ.get("CI") or os.environ.get("NO_AUTOUPDATE"))
+
+
+def _get_current_version(pkg_name: str) -> str | None:
+    """Get package version or None if not found."""
+    try:
+        return metadata.version(pkg_name)
+    except Exception:
+        return None
+
+
+def _check_and_notify(
+    pkg_name: str,
+    current_version: str,
+    cache_file: Path,
+    ttl_seconds: int,
+) -> None:
+    """Inspect cache and notify or spawn background check if needed."""
+    cached_latest, should_query = _read_cached_check(cache_file, ttl_seconds)
+    if cached_latest and cached_latest != current_version:
+        try:
+            _handle_available_update(pkg_name, current_version, cached_latest)
+        except Exception:
+            pass
+    if should_query:
+        _spawn_detached_check(pkg_name, current_version, cache_file)
+
+
 def check_for_updates(
     pkg_name: str,
     ttl_seconds: int = 86400,  # 24 hours
@@ -164,23 +194,12 @@ def check_for_updates(
     - Otherwise, displays a friendly notice on stderr.
     Spawns a detached process to query PyPI in the background only when the cache is expired.
     """
-    if os.environ.get("CI") or os.environ.get("NO_AUTOUPDATE"):
+    if _is_disabled():
         return
 
-    try:
-        current_version = metadata.version(pkg_name)
-    except Exception:
+    current_version = _get_current_version(pkg_name)
+    if not current_version:
         return
 
-    cache_dir = _get_cache_dir(pkg_name)
-    cache_file = cache_dir / "update_check.json"
-    cached_latest, should_query = _read_cached_check(cache_file, ttl_seconds)
-
-    if cached_latest and cached_latest != current_version:
-        try:
-            _handle_available_update(pkg_name, current_version, cached_latest)
-        except Exception:
-            pass
-
-    if should_query:
-        _spawn_detached_check(pkg_name, current_version, cache_file)
+    cache_file = _get_cache_dir(pkg_name) / "update_check.json"
+    _check_and_notify(pkg_name, current_version, cache_file, ttl_seconds)
