@@ -47,9 +47,7 @@ def _parse_pyproject_tomllib(text: str, fallback_name: str) -> tuple[str, str] |
     project = data.get("project")
     if not isinstance(project, dict):
         return None
-    name = project.get("name", fallback_name)
-    description = project.get("description", "")
-    return str(name), str(description)
+    return str(project.get("name", fallback_name)), str(project.get("description", ""))
 
 
 def _parse_pyproject(text: str, fallback_name: str) -> tuple[str, str]:
@@ -58,18 +56,17 @@ def _parse_pyproject(text: str, fallback_name: str) -> tuple[str, str]:
         return parsed
     name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', text)
     desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', text)
-    name = name_match.group(1) if name_match else fallback_name
-    desc = desc_match.group(1) if desc_match else ""
-    return name, desc
+    return (
+        name_match.group(1) if name_match else fallback_name,
+        desc_match.group(1) if desc_match else "",
+    )
 
 
 def _parse_package_json(pkg_file: Path, fallback_name: str) -> tuple[str, str]:
     try:
         data = json.loads(pkg_file.read_text(encoding="utf-8"))
         if isinstance(data, dict):
-            name = data.get("name", fallback_name)
-            desc = data.get("description", "")
-            return str(name), str(desc)
+            return str(data.get("name", fallback_name)), str(data.get("description", ""))
     except (ValueError, OSError):
         pass
     return fallback_name, ""
@@ -78,9 +75,10 @@ def _parse_package_json(pkg_file: Path, fallback_name: str) -> tuple[str, str]:
 def _parse_cargo(text: str, fallback_name: str) -> tuple[str, str]:
     name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', text)
     desc_match = re.search(r'description\s*=\s*["\']([^"\']+)["\']', text)
-    name = name_match.group(1) if name_match else fallback_name
-    desc = desc_match.group(1) if desc_match else ""
-    return name, desc
+    return (
+        name_match.group(1) if name_match else fallback_name,
+        desc_match.group(1) if desc_match else "",
+    )
 
 
 def _readme_summary(text: str) -> str:
