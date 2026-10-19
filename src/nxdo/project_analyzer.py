@@ -182,28 +182,46 @@ def _build_tree(root: Path, max_depth: int = 3) -> str:
         return ""
 
 
-def _extract_manifest_metadata(root: Path, fallback_name: str) -> tuple[str, str]:
-    pyproject_file = root / "pyproject.toml"
-    package_json = root / "package.json"
-    cargo_toml = root / "Cargo.toml"
+def _extract_pyproject_metadata(root: Path, fallback_name: str) -> tuple[str, str] | None:
+    path = root / "pyproject.toml"
+    if not path.is_file():
+        return None
+    try:
+        name, desc = _parse_pyproject(path.read_text(encoding="utf-8"), fallback_name)
+        return name or fallback_name, desc
+    except OSError:
+        return fallback_name, ""
 
-    if pyproject_file.is_file():
-        try:
-            content = pyproject_file.read_text(encoding="utf-8")
-            p_name, p_desc = _parse_pyproject(content, fallback_name)
-            return p_name or fallback_name, p_desc
-        except OSError:
-            return fallback_name, ""
-    elif package_json.is_file():
-        p_name, p_desc = _parse_package_json(package_json, fallback_name)
-        return p_name or fallback_name, p_desc
-    elif cargo_toml.is_file():
-        try:
-            content = cargo_toml.read_text(encoding="utf-8")
-            c_name, c_desc = _parse_cargo(content, fallback_name)
-            return c_name or fallback_name, c_desc
-        except OSError:
-            return fallback_name, ""
+
+def _extract_package_json_metadata(root: Path, fallback_name: str) -> tuple[str, str] | None:
+    path = root / "package.json"
+    if not path.is_file():
+        return None
+    name, desc = _parse_package_json(path, fallback_name)
+    return name or fallback_name, desc
+
+
+def _extract_cargo_metadata(root: Path, fallback_name: str) -> tuple[str, str] | None:
+    path = root / "Cargo.toml"
+    if not path.is_file():
+        return None
+    try:
+        name, desc = _parse_cargo(path.read_text(encoding="utf-8"), fallback_name)
+        return name or fallback_name, desc
+    except OSError:
+        return fallback_name, ""
+
+
+def _extract_manifest_metadata(root: Path, fallback_name: str) -> tuple[str, str]:
+    extractors = (
+        _extract_pyproject_metadata,
+        _extract_package_json_metadata,
+        _extract_cargo_metadata,
+    )
+    for extractor in extractors:
+        metadata = extractor(root, fallback_name)
+        if metadata is not None:
+            return metadata
     return fallback_name, ""
 
 
