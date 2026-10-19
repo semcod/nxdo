@@ -258,16 +258,25 @@ def _report_planfile_sync(store: Any, created: int) -> dict[str, Any]:
     return {"enabled": True, "created": created, "planfile_dir": planfile_dir}
 
 
+def _persist_planfile_sync(
+    components: tuple[Any, Any, Any, Any],
+    task_plan: TaskPlan,
+    project_path: Path,
+) -> tuple[Any, int]:
+    """Store tickets in planfile and sync markdown integration."""
+    store = components[0](project_path)
+    created = _store_task_tickets(store, task_plan.tasks, components[1], components[2])
+    _sync_planfile_markdown(components[3], project_path)
+    return store, created
+
+
 def _apply_planfile_sync(
     components: tuple[Any, Any, Any, Any],
     task_plan: TaskPlan,
     project_path: Path,
 ) -> dict[str, Any]:
     """Store tickets in planfile and sync markdown integration."""
-    store_cls, ticket_cls, status_cls, sync_integration = components
-    store = store_cls(project_path)
-    created = _store_task_tickets(store, task_plan.tasks, ticket_cls, status_cls)
-    _sync_planfile_markdown(sync_integration, project_path)
+    store, created = _persist_planfile_sync(components, task_plan, project_path)
     return _report_planfile_sync(store, created)
 
 
