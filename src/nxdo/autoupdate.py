@@ -111,6 +111,47 @@ def _spawn_background_upgrade(pkg_name: str) -> None:
         pass
 
 
+def _read_cached_check(cache_file: Path, ttl_seconds: int) -> tuple[str | None, bool]:
+    """Read cached check result, returning (cached_latest, should_query)."""
+    if not cache_file.exists():
+        return None, True
+    try:
+        cached = json.loads(cache_file.read_text(encoding="utf-8"))
+        last_check = cached.get("last_check", 0)
+        cached_latest = cached.get("latest_version")
+        should_query = time.time() - last_check >= ttl_seconds
+        return cached_latest, should_query
+    except Exception:
+        return None, True
+
+
+def _handle_available_update(pkg_name: str, current_version: str, cached_latest: str) -> None:
+    """Notify user or spawn background upgrade if a newer version is cached."""
+    if not _is_newer(cached_latest, current_version):
+        return
+    safe_pkg = pkg_name.upper().replace("-", "_")
+    env_pkg_key = safe_pkg + "_AUTO_UPGRADE"
+    auto_upgrade_enabled = (
+        os.environ.get("AUTO_UPGRADE") == "1" or
+        os.environ.get(env_pkg_key) == "1"
+    )
+    if auto_upgrade_enabled:
+        sys.stderr.write(
+            "\n⚡ [" + pkg_name + "] Automatyczna aktualizacja w tle: "
+            + current_version + " → " + cached_latest + "...\n"
+        )
+        sys.stderr.flush()
+        _spawn_background_upgrade(pkg_name)
+    else:
+        sys.stderr.write(
+            "\n💡 [" + pkg_name + "] Nowa wersja dostępna: "
+            + current_version + " → " + cached_latest + "\n"
+            + "   Aby zaktualizować, uruchom: pip install --upgrade " + pkg_name + "\n"
+            + "   (lub ustaw AUTO_UPGRADE=1)\n\n"
+        )
+        sys.stderr.flush()
+
+
 def check_for_updates(
     pkg_name: str,
     ttl_seconds: int = 86400,  # 24 hours
@@ -133,44 +174,11 @@ def check_for_updates(
 
     cache_dir = _get_cache_dir(pkg_name)
     cache_file = cache_dir / "update_check.json"
-
-    should_query = True
-    cached_latest = None
-
-    if cache_file.exists():
-        try:
-            cached = json.loads(cache_file.read_text(encoding="utf-8"))
-            last_check = cached.get("last_check", 0)
-            cached_latest = cached.get("latest_version")
-            if time.time() - last_check < ttl_seconds:
-                should_query = False
-        except Exception:
-            pass
+    cached_latest, should_query = _read_cached_check(cache_file, ttl_seconds)
 
     if cached_latest and cached_latest != current_version:
         try:
-            if _is_newer(cached_latest, current_version):
-                safe_pkg = pkg_name.upper().replace("-", "_")
-                env_pkg_key = safe_pkg + "_AUTO_UPGRADE"
-                auto_upgrade_enabled = (
-                    os.environ.get("AUTO_UPGRADE") == "1" or
-                    os.environ.get(env_pkg_key) == "1"
-                )
-                if auto_upgrade_enabled:
-                    sys.stderr.write(
-                        "\n⚡ [" + pkg_name + "] Automatyczna aktualizacja w tle: "
-                        + current_version + " → " + cached_latest + "...\n"
-                    )
-                    sys.stderr.flush()
-                    _spawn_background_upgrade(pkg_name)
-                else:
-                    sys.stderr.write(
-                        "\n💡 [" + pkg_name + "] Nowa wersja dostępna: "
-                        + current_version + " → " + cached_latest + "\n"
-                        + "   Aby zaktualizować, uruchom: pip install --upgrade " + pkg_name + "\n"
-                        + "   (lub ustaw AUTO_UPGRADE=1)\n\n"
-                    )
-                    sys.stderr.flush()
+            _handle_available_update(pkg_name, current_version, cached_latest)
         except Exception:
             pass
 
