@@ -169,11 +169,7 @@ def _build_tree(root: Path, max_depth: int = 3) -> str:
         return ""
 
 
-def analyze_project(root: Path | str) -> ProjectSnapshot:
-    root = Path(root)
-    name = root.name
-    description = ""
-
+def _extract_manifest_metadata(root: Path, fallback_name: str) -> tuple[str, str]:
     pyproject_file = root / "pyproject.toml"
     package_json = root / "package.json"
     cargo_toml = root / "Cargo.toml"
@@ -181,44 +177,37 @@ def analyze_project(root: Path | str) -> ProjectSnapshot:
     if pyproject_file.is_file():
         try:
             content = pyproject_file.read_text(encoding="utf-8")
-            p_name, p_desc = _parse_pyproject(content, name)
-            if p_name:
-                name = p_name
-            if p_desc:
-                description = p_desc
+            p_name, p_desc = _parse_pyproject(content, fallback_name)
+            return p_name or fallback_name, p_desc
         except OSError:
-            pass
+            return fallback_name, ""
     elif package_json.is_file():
-        p_name, p_desc = _parse_package_json(package_json, name)
-        if p_name:
-            name = p_name
-        if p_desc:
-            description = p_desc
+        p_name, p_desc = _parse_package_json(package_json, fallback_name)
+        return p_name or fallback_name, p_desc
     elif cargo_toml.is_file():
         try:
             content = cargo_toml.read_text(encoding="utf-8")
-            c_name, c_desc = _parse_cargo(content, name)
-            if c_name:
-                name = c_name
-            if c_desc:
-                description = c_desc
+            c_name, c_desc = _parse_cargo(content, fallback_name)
+            return c_name or fallback_name, c_desc
+        except OSError:
+            return fallback_name, ""
+    return fallback_name, ""
+
+
+def _find_readme_description(root: Path) -> str:
+    readme_file = root / "README.md"
+    if not readme_file.is_file():
+        readme_file = root / "README"
+    if readme_file.is_file():
+        try:
+            readme_text = readme_file.read_text(encoding="utf-8")
+            return _readme_summary(readme_text)
         except OSError:
             pass
+    return ""
 
-    if not description:
-        readme_file = root / "README.md"
-        if not readme_file.is_file():
-            readme_file = root / "README"
-        if readme_file.is_file():
-            try:
-                readme_text = readme_file.read_text(encoding="utf-8")
-                description = _readme_summary(readme_text)
-            except OSError:
-                pass
 
-    language_stack = _detect_stack(root)
-    directory_tree = _build_tree(root)
-
+def _collect_file_contents(root: Path) -> dict[str, str]:
     file_contents: dict[str, str] = {}
     try:
         for entry in sorted(root.iterdir(), key=lambda p: p.name):
@@ -233,11 +222,19 @@ def analyze_project(root: Path | str) -> ProjectSnapshot:
                 continue
     except OSError:
         pass
+    return file_contents
+
+
+def analyze_project(root: Path | str) -> ProjectSnapshot:
+    root = Path(root)
+    name, description = _extract_manifest_metadata(root, root.name)
+    if not description:
+        description = _find_readme_description(root)
 
     return ProjectSnapshot(
         name=name,
         description=description,
-        language_stack=language_stack,
-        file_contents=file_contents,
-        directory_tree=directory_tree,
+        language_stack=_detect_stack(root),
+        file_contents=_collect_file_contents(root),
+        directory_tree=_build_tree(root),
     )
