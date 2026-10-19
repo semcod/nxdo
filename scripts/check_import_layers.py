@@ -105,9 +105,7 @@ def _resolve_absolute_import(node: ast.ImportFrom) -> list[str]:
 
 def resolve_import(node: ast.ImportFrom, ctx: ModuleContext) -> list[str]:
     """Resolve an ImportFrom to candidate internal module names."""
-    if node.level == 0:
-        return _resolve_absolute_import(node)
-    return _resolve_relative_import(node, ctx)
+    return _resolve_absolute_import(node) if node.level == 0 else _resolve_relative_import(node, ctx)
 
 
 def _format_violation(path: Path, node: ast.AST, kind: str, source_module: str, target: str) -> str:
