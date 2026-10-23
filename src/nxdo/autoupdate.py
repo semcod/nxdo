@@ -10,12 +10,15 @@ If an update is available:
 from __future__ import annotations
 
 import json
+import logging
 import os
 import subprocess
 import sys
 import time
 from importlib import metadata
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 
 def _get_cache_dir(pkg_name: str) -> Path:
@@ -36,7 +39,7 @@ def _is_newer(latest: str, current: str) -> bool:
         from packaging import version
         return version.parse(latest) > version.parse(current)
     except Exception:
-        pass
+        logger.error("Optional update operation failed", exc_info=True)
 
     def parse_simple(v: str) -> tuple:
         nums = []
@@ -94,7 +97,7 @@ except Exception:
             start_new_session=True,
         )
     except Exception:
-        pass
+        logger.error("Optional update operation failed", exc_info=True)
 
 
 def _spawn_background_upgrade(pkg_name: str) -> None:
@@ -108,7 +111,7 @@ def _spawn_background_upgrade(pkg_name: str) -> None:
             start_new_session=True,
         )
     except Exception:
-        pass
+        logger.error("Optional update operation failed", exc_info=True)
 
 
 def _read_cached_check(cache_file: Path, ttl_seconds: int) -> tuple[str | None, bool]:
@@ -122,6 +125,7 @@ def _read_cached_check(cache_file: Path, ttl_seconds: int) -> tuple[str | None, 
         should_query = time.time() - last_check >= ttl_seconds
         return cached_latest, should_query
     except Exception:
+        logger.error("Unable to read update cache", exc_info=True)
         return None, True
 
 
@@ -162,6 +166,7 @@ def _get_current_version(pkg_name: str) -> str | None:
     try:
         return metadata.version(pkg_name)
     except Exception:
+        logger.error("Unable to read installed package version", exc_info=True)
         return None
 
 
@@ -177,7 +182,7 @@ def _check_and_notify(
         try:
             _handle_available_update(pkg_name, current_version, cached_latest)
         except Exception:
-            pass
+            logger.error("Unable to report available update", exc_info=True)
     if should_query:
         _spawn_detached_check(pkg_name, current_version, cache_file)
 
