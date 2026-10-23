@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -18,6 +19,8 @@ from .planner import generate_next_tasks
 from .project_analyzer import analyze_project
 from .providers import OpenAICompatProvider
 from .ticket_generator import export_to_planfile_yaml, sync_to_planfile, sync_to_todo_md, task_plan_to_tickets
+
+logger = logging.getLogger(__name__)
 
 app = typer.Typer(
     name="nxdo",
@@ -400,7 +403,7 @@ def app_entry() -> None:
         from .autoupdate import check_for_updates
         check_for_updates("nxdo")
     except Exception:
-        pass
+        logger.error("Optional update check failed", exc_info=True)
     app()
 
 
